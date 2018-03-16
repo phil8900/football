@@ -1,3 +1,6 @@
+# Cache Folder #
+node_modules/hquery.php/cache
+
 # INI files #
 *.ini
 
@@ -38,3 +41,4 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+.Rproj.user
