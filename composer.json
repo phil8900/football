@@ -1,0 +1,6 @@
+{
+    "require": {
+        "kreait/firebase-php": "4.0",
+        "duzun/hquery": "^1.7"
+    }
+}
