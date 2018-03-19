@@ -1,8 +1,9 @@
 # Cache Folder #
 node_modules/hquery.php/cache
 
-# INI files #
+# INI/Config files #
 *.ini
+google-service-account.json
 
 # Compiled source #
 ###################
