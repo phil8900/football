@@ -7,9 +7,16 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'duzun\\' => array($vendorDir . '/duzun/hquery/psr-4'),
+    'Twig\\' => array($vendorDir . '/twig/twig/src'),
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
+    'Symfony\\Component\\DependencyInjection\\' => array($vendorDir . '/symfony/dependency-injection'),
+    'Symfony\\Component\\Config\\' => array($vendorDir . '/symfony/config'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
+    'PhantomInstaller\\Test\\' => array($vendorDir . '/jakoch/phantomjs-installer/tests'),
     'Lcobucci\\JWT\\' => array($vendorDir . '/lcobucci/jwt/src'),
     'Kreait\\Firebase\\' => array($vendorDir . '/kreait/firebase-php/src/Firebase'),
     'JmesPath\\' => array($vendorDir . '/mtdowling/jmespath.php/src'),

@@ -1,6 +1,8 @@
 <?php
 
 require_once 'node_modules/hquery.php/hquery.php';
+require 'vendor/autoload.php';
+use JonnyW\PhantomJs\Client;
 
 hQuery::$cache_path = "node_modules/hquery.php/cache";
 //hQuery::$cache_expires = 3600;
@@ -9,7 +11,11 @@ $url = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/3377';
 //$url = 'https://www.transfermarkt.co.uk/tottenham-hotspur/startseite/verein/148';
 $url = 'https://www.transfermarkt.co.uk/premier-league/startseite/pokalwettbewerb/WM18';
 
-echo scrapeTeams(getTeamURLsForCompetition($url));
+$gameurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/3018417';
+
+$testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
+
+echo getGameEvents($testurl);
 
 function getTeamURLsForCompetition($url) {
 	$base_url = 'http://www.transfermarkt.co.uk';
@@ -125,4 +131,71 @@ function getPlayerDetails($table) {
 	return $squad;
 }
 
+function getGameEvents($url) {
+	$url = str_replace('begegnung', 'getSpielverlauf', $url);
+
+	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
+
+	return $doc;
+}
+
+function fillPlayerArray($players) {
+	$lineup = array();
+	foreach ($players as $key => $value) {
+		array_push($lineup, (string) applyRegExp('/<a.*?id="(.*?)".*>/', $value[0])[1]);
+	}
+	return $lineup;
+}
+
+function fillPlayerArrayDiv($players) {
+	$lineup = array();
+	foreach ($players as $key => $value) {
+		array_push($lineup, (string) applyRegExp('/<div.*?id="(.*?)".*>/', $value[0])[1]);
+	}
+	return $lineup;
+}
+
+function createLineupArray($starting, $bench) {
+	$lineup = array();
+	$lineup['starting'] = fillPlayerArrayDiv($starting);
+	$lineup['bench'] = fillPlayerArray($bench);
+
+	return $lineup;
+}
+
+function getStartingEleven($url) {
+	$client = Client::getInstance();
+	//$client->getEngine()->setPath('/bin/phantomjs');
+	$client->getEngine()->setPath(dirname(__FILE__) . '/bin/phantomjs.exe');
+
+	$request = $client->getMessageFactory()->createRequest($url, 'GET');
+	$response = $client->getMessageFactory()->createResponse();
+	$client->send($request, $response);
+
+	if ($response->getStatus() === 200) {
+		$doc = hQuery::fromHTML($response->getContent());
+
+		$lineup_box = $doc->find('.aufstellung-box');
+		$squads = $doc->find('#lt-formation');
+		$clubs = $squads->find('.sb-vereinslink');
+		$club_home = $clubs[0];
+		$club_away = $clubs[1];
+		$bench = $squads->find('.ersatzbank');
+
+		//Backup version without lineup-box
+		//$starting_home = $lineups[0]->find('tr');
+		//$bench_home = $lineups[1]->find('tr');
+		//$starting_away = $lineups[2]->find('tr');
+		//$bench_away = $lineups[3]->find('tr');
+
+		$bench_home = $bench[0]->find('tr');
+		$bench_away = $bench[1]->find('tr');
+
+		$starting_home = $lineup_box[0]->find('.aufstellung-spieler-container');
+		$starting_away = $lineup_box[1]->find('.aufstellung-spieler-container');
+
+		$lineup_home = createLineupArray($starting_home, $bench_home);
+		$lineup_away = createLineupArray($starting_away, $bench_away);
+	}
+}
 ?>
