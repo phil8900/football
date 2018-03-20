@@ -9,13 +9,13 @@ hQuery::$cache_path = "node_modules/hquery.php/cache";
 
 $url = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/3377';
 //$url = 'https://www.transfermarkt.co.uk/tottenham-hotspur/startseite/verein/148';
-$url = 'https://www.transfermarkt.co.uk/premier-league/startseite/pokalwettbewerb/WM18';
+//$url = 'https://www.transfermarkt.co.uk/premier-league/startseite/pokalwettbewerb/WM18';
 
 $gameurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/3018417';
 
 $testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
 
-echo getGameEvents($testurl);
+getTeamInformation($url);
 
 function getTeamURLsForCompetition($url) {
 	$base_url = 'http://www.transfermarkt.co.uk';
@@ -68,9 +68,22 @@ function getTeamInformation($url) {
 	$continental_titles = trim(strip_tags($teamtable[6]));
 	$ranking = trim(str_replace('no. ', '', strip_tags($teamtable[7])));
 
-	$teaminformation = array('teamname' => (string) $teamname, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking);
+	$teaminformation = array('teamname' => (string) $teamname, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($url));
+
+	echo json_encode($teaminformation);
 
 	return $teaminformation;
+}
+
+function getTeamFixtures($url) {
+	$fixtures = array();
+	$table = getElementForSelector($url, '#begegnungenVereinSlider');
+
+	foreach ($table->find('li') as $key => $value) {
+		array_push($fixtures, applyRegExp("/\/(\d+)$/", $value['data-src'])[1]);
+	}
+
+	return $fixtures;
 }
 
 function getElementForSelector($url, $sel) {
