@@ -7,7 +7,7 @@ hQuery::$cache_path = "../cache";
 
 $url = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/3377';
 //$url = 'https://www.transfermarkt.co.uk/tottenham-hotspur/startseite/verein/148';
-//$url = 'https://www.transfermarkt.co.uk/premier-league/startseite/pokalwettbewerb/WM18';
+$competition_url = 'https://www.transfermarkt.co.uk/premier-league/startseite/pokalwettbewerb/WM18';
 
 $gameurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/3018417';
 
@@ -15,18 +15,18 @@ $testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
 
 $prematchurl = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/2991905';
 
-echo json_encode(getTeamInformation($url));
+getStartingEleven($testurl);
 
 function getTeamURLsForCompetition($competition_url) {
 	$base_url = 'http://www.transfermarkt.co.uk';
 	$table = getElementForSelector($competition_url, '#yw1');
 	$teams = array();
 
-	$teamrows = $table->find('.hauptlink');
+	$teamrows = $table->find('.hauptlink a');
 
 	foreach ($teamrows as $key => $value) {
-		$teamurl = ($base_url . applyRegExp('/<a.*?href="(.*?)".*>/', $value)[1]);
-		$team_id = applyRegExp('/<a.*?id="(.*?)".*>/', $value)[1];
+		$teamurl = $base_url . $value['href'];
+		$team_id = $value['id'];
 		$teams[$team_id] = $teamurl;
 	}
 	return $teams;
@@ -110,12 +110,6 @@ function getElementForSelector($url, $sel) {
 function applyRegExp($regex, $string) {
 	$match = array();
 	preg_match($regex, $string, $match);
-
-	if (empty($match)) {
-		array_push($match, 'N/A');
-		array_push($match, 'Free Agent');
-	}
-
 	return $match;
 }
 
@@ -130,12 +124,12 @@ function getPlayerDetails($table) {
 		$short_name = $row->find('.show-for-small a');
 		$position = $row->find('.inline-table td')[2];
 		$status = 'FIT';
-		$club = applyRegExp('/<img.*?alt="(.*?)".*>/', $row->find('.vereinprofil_tooltip'))[1];
+		$club = $row->find('.vereinprofil_tooltip img')['alt'];
 		$market_value = applyRegExp('/£.*?m|.*?k/', strip_tags($row->find('.rechts.hauptlink')[1]))[0];
 
-		$player_row = $row->find('.hide-for-small');
-		$player_id = applyRegExp('/<a.*?id="(.*?)".*>/', $player_row)[1];
-		$playerlink = $base_url . applyRegExp('/<a.*?href="(.*?)".*>/', $player_row)[1];
+		$player_row = $row->find('.hide-for-small a');
+		$player_id = $player_row['id'];
+		$playerlink = $base_url . $player_row['href'];
 		$birthday = $row->find('.zentriert')[1];
 
 		if ($row->find('.verletzt-table') != '') {
@@ -180,29 +174,19 @@ function getPregameInformation($pregameurl) {
 		echo $i;
 		echo '<br>';
 	}
-
-	//echo $factstable;
 }
 
 function fillPlayerArray($players) {
 	$lineup = array();
 	foreach ($players as $key => $value) {
-		array_push($lineup, (string) applyRegExp('/<a.*?id="(.*?)".*>/', $value[0])[1]);
-	}
-	return $lineup;
-}
-
-function fillPlayerArrayDiv($players) {
-	$lineup = array();
-	foreach ($players as $key => $value) {
-		array_push($lineup, (string) applyRegExp('/<div.*?id="(.*?)".*>/', $value[0])[1]);
+		array_push($lineup, (string) $value[0]['id']);
 	}
 	return $lineup;
 }
 
 function createLineupArray($starting, $bench) {
 	$lineup = array();
-	$lineup['starting'] = fillPlayerArrayDiv($starting);
+	$lineup['starting'] = fillPlayerArray($starting);
 	$lineup['bench'] = fillPlayerArray($bench);
 
 	return $lineup;
@@ -239,11 +223,11 @@ function getStartingEleven($liveurl) {
 		//$starting_away = $lineups[2]->find('tr');
 		//$bench_away = $lineups[3]->find('tr');
 
-		$bench_home = $bench[0]->find('tr');
-		$bench_away = $bench[1]->find('tr');
+		$bench_home = $bench[0]->find('a');
+		$bench_away = $bench[1]->find('a');
 
-		$starting_home = $lineup_box[0]->find('.aufstellung-spieler-container');
-		$starting_away = $lineup_box[1]->find('.aufstellung-spieler-container');
+		$starting_home = $lineup_box[0]->find('.aufstellung-rueckennummer-box');
+		$starting_away = $lineup_box[1]->find('.aufstellung-rueckennummer-box');
 
 		$lineup_home = createLineupArray($starting_home, $bench_home);
 		$lineup_away = createLineupArray($starting_away, $bench_away);
