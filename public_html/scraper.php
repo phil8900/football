@@ -207,7 +207,7 @@ function getStartingEleven($url) {
 	$client = Client::getInstance();
 
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-		$client->getEngine()->setPath(dirname(__FILE__) . '../bin/phantomjs.exe');
+		$client->getEngine()->setPath(dirname(__FILE__) . '/../bin/phantomjs.exe');
 	} else {
 		$client->getEngine()->setPath('../bin/phantomjs');
 	}
