@@ -1,5 +1,8 @@
 # Cache Folder #
-node_modules/hquery.php/cache
+cache/
+
+# Composer Folder #
+vendor/
 
 # INI/Config files #
 *.ini

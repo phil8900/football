@@ -1,10 +1,10 @@
 <?php
 
-require_once 'node_modules/hquery.php/hquery.php';
+//require_once 'node_modules/hquery.php/hquery.php';
 require 'vendor/autoload.php';
 use JonnyW\PhantomJs\Client;
 
-hQuery::$cache_path = "node_modules/hquery.php/cache";
+hQuery::$cache_path = "cache";
 //hQuery::$cache_expires = 3600;
 
 $url = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/3377';
@@ -15,7 +15,9 @@ $gameurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/3018417';
 
 $testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
 
-getTeamInformation($url);
+$prematchurl = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/2991905';
+
+getPregameInformation($prematchurl);
 
 function getTeamURLsForCompetition($url) {
 	$base_url = 'http://www.transfermarkt.co.uk';
@@ -150,6 +152,31 @@ function getGameEvents($url) {
 	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
 
 	return $doc;
+}
+
+function getPregameInformation($url) {
+	$table = getElementForSelector($url, '#main');
+
+	$header = $table->find('.sb-spielbericht-head');
+	$hometeam_id = $header->find('.sb-heim a')['id'];
+	$awayteam_id = $header->find('.sb-gast a')['id'];
+	$game_infos = $header->find('.sb-spieldaten');
+	$timearray = explode('|', $header->find('.sb-datum')[0]);
+	$date = $timearray[1];
+	$time = $timearray[2];
+	$location = $header->find('.sb-zusatzinfos a');
+
+	$factstable = $table->find('.zentriert');
+	$previous_games = array();
+
+	for ($i = 1; $i <= count($factstable); $i++) {
+		echo $factstable[$i];
+		echo '<br>';
+		echo $i;
+		echo '<br>';
+	}
+
+	//echo $factstable;
 }
 
 function fillPlayerArray($players) {
