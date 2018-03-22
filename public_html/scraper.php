@@ -15,13 +15,11 @@ $testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
 
 $prematchurl = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/2991905';
 
-//getPregameInformation($prematchurl);
+echo json_encode(getTeamInformation($url));
 
-echo json_encode(getStartingEleven($testurl));
-
-function getTeamURLsForCompetition($url) {
+function getTeamURLsForCompetition($competition_url) {
 	$base_url = 'http://www.transfermarkt.co.uk';
-	$table = getElementForSelector($url, '#yw1');
+	$table = getElementForSelector($competition_url, '#yw1');
 	$teams = array();
 
 	$teamrows = $table->find('.hauptlink');
@@ -42,24 +40,24 @@ function scrapeTeams($teamurls) {
 	return json_encode($teams);
 }
 
-function scrapeTeamURL($url) {
+function scrapeTeamURL($teamurl) {
 	$team = array();
-	$team['information'] = getTeamInformation($url);
-	$team['squad'] = getPlayersForTeam($url);
+	$team['information'] = getTeamInformation($teamurl);
+	$team['squad'] = getPlayersForTeam($teamurl);
 
 	return $team;
 }
 
-function getPlayersForTeam($url) {
+function getPlayersForTeam($teamurl) {
 	$sel = '#yw1';
-	$table = getElementForSelector($url, $sel);
+	$table = getElementForSelector($teamurl, $sel);
 
 	return getPlayerDetails($table);
 }
 
-function getTeamInformation($url) {
+function getTeamInformation($teamurl) {
 	$sel = '#verein_head';
-	$table = getElementForSelector($url, $sel);
+	$table = getElementForSelector($teamurl, $sel);
 
 	$teamname = trim(strip_tags($table->find('.spielername-profil')));
 
@@ -70,14 +68,23 @@ function getTeamInformation($url) {
 	$continental_titles = trim(strip_tags($teamtable[6]));
 	$ranking = trim(str_replace('no. ', '', strip_tags($teamtable[7])));
 
-	$teaminformation = array('teamname' => (string) $teamname, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($url));
+	$coachtable = getElementForSelector($teamurl, '.mitarbeiterVereinSlider .container-inhalt');
+	$coach_name = $coachtable->find('.container-hauptinfo a')['title'];
+	$coach_additionalinfos = $coachtable->find('.container-zusatzinfo')[0];
+	$coach_age = applyRegExp('/(\d+)( Years)/', $coach_additionalinfos[0])[1];
+	$coach_nationality = $coach_additionalinfos->find('.flaggenrahmen')['title'];
+	$coach_since = applyRegExp('/(\w{3}\s{1}\d+,\s{1}\d{4})/', $coach_additionalinfos[0])[1];
+
+	$coach = array('coachname' => (string) $coach_name, 'coachage' => (string) $coach_age, 'coachnationality' => $coach_nationality, 'coachsince' => $coach_since);
+
+	$teaminformation = array('teamname' => (string) $teamname, 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl));
 
 	return $teaminformation;
 }
 
-function getTeamFixtures($url) {
+function getTeamFixtures($teamurl) {
 	$fixtures = array();
-	$table = getElementForSelector($url, '#begegnungenVereinSlider');
+	$table = getElementForSelector($teamurl, '#begegnungenVereinSlider');
 
 	foreach ($table->find('li') as $key => $value) {
 		array_push($fixtures, applyRegExp("/\/(\d+)$/", $value['data-src'])[1]);
@@ -144,16 +151,16 @@ function getPlayerDetails($table) {
 	return $squad;
 }
 
-function getGameEvents($url) {
-	$url = str_replace('begegnung', 'getSpielverlauf', $url);
+function getGameEvents($liveurl) {
+	$url = str_replace('begegnung', 'getSpielverlauf', $liveurl);
 
 	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
 
 	return $doc;
 }
 
-function getPregameInformation($url) {
-	$table = getElementForSelector($url, '#main');
+function getPregameInformation($pregameurl) {
+	$table = getElementForSelector($pregameurl, '#main');
 
 	$header = $table->find('.sb-spielbericht-head');
 	$hometeam_id = $header->find('.sb-heim a')['id'];
@@ -201,7 +208,7 @@ function createLineupArray($starting, $bench) {
 	return $lineup;
 }
 
-function getStartingEleven($url) {
+function getStartingEleven($liveurl) {
 	$client = Client::getInstance();
 
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -210,7 +217,7 @@ function getStartingEleven($url) {
 		$client->getEngine()->setPath('../bin/phantomjs');
 	}
 
-	$request = $client->getMessageFactory()->createRequest($url, 'GET');
+	$request = $client->getMessageFactory()->createRequest($liveurl, 'GET');
 	$response = $client->getMessageFactory()->createResponse();
 	$client->send($request, $response);
 
