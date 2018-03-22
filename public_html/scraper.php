@@ -1,7 +1,7 @@
 <?php
 
 //require_once 'node_modules/hquery.php/hquery.php';
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 use JonnyW\PhantomJs\Client;
 
 hQuery::$cache_path = "../cache";
