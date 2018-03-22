@@ -17,7 +17,9 @@ $testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
 
 $prematchurl = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/2991905';
 
-getPregameInformation($prematchurl);
+//getPregameInformation($prematchurl);
+
+getStartingEleven($testurl);
 
 function getTeamURLsForCompetition($url) {
 	$base_url = 'http://www.transfermarkt.co.uk';
@@ -71,8 +73,6 @@ function getTeamInformation($url) {
 	$ranking = trim(str_replace('no. ', '', strip_tags($teamtable[7])));
 
 	$teaminformation = array('teamname' => (string) $teamname, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($url));
-
-	echo json_encode($teaminformation);
 
 	return $teaminformation;
 }
@@ -205,14 +205,19 @@ function createLineupArray($starting, $bench) {
 
 function getStartingEleven($url) {
 	$client = Client::getInstance();
-	//$client->getEngine()->setPath('/bin/phantomjs');
-	$client->getEngine()->setPath(dirname(__FILE__) . '/bin/phantomjs.exe');
+
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		$client->getEngine()->setPath(dirname(__FILE__) . '../bin/phantomjs.exe');
+	} else {
+		$client->getEngine()->setPath('../bin/phantomjs');
+	}
 
 	$request = $client->getMessageFactory()->createRequest($url, 'GET');
 	$response = $client->getMessageFactory()->createResponse();
 	$client->send($request, $response);
 
 	if ($response->getStatus() === 200) {
+
 		$doc = hQuery::fromHTML($response->getContent());
 
 		$lineup_box = $doc->find('.aufstellung-box');
@@ -236,6 +241,8 @@ function getStartingEleven($url) {
 
 		$lineup_home = createLineupArray($starting_home, $bench_home);
 		$lineup_away = createLineupArray($starting_away, $bench_away);
+
+		echo json_encode($lineup_home);
 	}
 }
 ?>
