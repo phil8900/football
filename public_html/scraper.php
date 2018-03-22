@@ -1,6 +1,4 @@
 <?php
-
-//require_once 'node_modules/hquery.php/hquery.php';
 require '../vendor/autoload.php';
 use JonnyW\PhantomJs\Client;
 
@@ -19,7 +17,7 @@ $prematchurl = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/
 
 //getPregameInformation($prematchurl);
 
-getStartingEleven($testurl);
+echo json_encode(getStartingEleven($testurl));
 
 function getTeamURLsForCompetition($url) {
 	$base_url = 'http://www.transfermarkt.co.uk';
@@ -217,14 +215,15 @@ function getStartingEleven($url) {
 	$client->send($request, $response);
 
 	if ($response->getStatus() === 200) {
+		$lineups = array();
 
 		$doc = hQuery::fromHTML($response->getContent());
 
 		$lineup_box = $doc->find('.aufstellung-box');
 		$squads = $doc->find('#lt-formation');
 		$clubs = $squads->find('.sb-vereinslink');
-		$club_home = $clubs[0];
-		$club_away = $clubs[1];
+		$club_home = $clubs[0]['id'];
+		$club_away = $clubs[1]['id'];
 		$bench = $squads->find('.ersatzbank');
 
 		//Backup version without lineup-box
@@ -242,7 +241,11 @@ function getStartingEleven($url) {
 		$lineup_home = createLineupArray($starting_home, $bench_home);
 		$lineup_away = createLineupArray($starting_away, $bench_away);
 
-		echo json_encode($lineup_home);
+		$lineups[$club_home] = $lineup_home;
+		$lineups[$club_away] = $lineup_away;
+
+		return $lineups;
 	}
+	return false;
 }
 ?>
