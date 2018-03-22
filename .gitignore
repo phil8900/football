@@ -1,7 +1,6 @@
-# Cache Folder #
+# Cache, bin and composer Folder #
 cache/
-
-# Composer Folder #
+bin/
 vendor/
 
 # INI/Config files #
