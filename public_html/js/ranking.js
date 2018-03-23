@@ -38,15 +38,30 @@ teamRef.on('value', function(snapshot) {
 	});
 	array.sort(function(a, b){return b.points-a.points});
 	teamRanking = array;
+	teamRanking.forEach(function(entry){
+		createRankingElement(getTeamNameForId(entry.teamid) + " " + entry.points, 'teamranking');
+	});
 });
 
 function setTeamRanking(userRanking){
 	var ranking = 0;
 	userRanking.forEach(function(entry) {
+	createRankingElement(entry.name + " " + entry.points, 'userranking');
     ranking += entry.points;
 });
 	firebase.database().ref('rankings/teams/' + ownteam).set({
     points: ranking,
     teamid:ownteam
   });
+}
+
+function createRankingElement(string, id){
+	var node = document.createElement("LI");
+	var textnode = document.createTextNode(string);
+	node.appendChild(textnode);
+	document.getElementById(id).appendChild(node);
+}
+
+function getTeamNameForId(id){
+	return 'Test team';
 }
