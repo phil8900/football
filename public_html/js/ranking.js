@@ -11,7 +11,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		uid = user.uid;
 	} else {
-		uid = 'AwTsR03Y7LRpsRiz5RaCojUwhqy2';
+		uid = 'AwTsR03Y7LRpsRiz5RaCojUwhqy2'; //Test UID without logging in
 	}
 });
 
@@ -38,6 +38,8 @@ teamRef.on('value', function(snapshot) {
 	});
 	array.sort(function(a, b){return b.points-a.points});
 	teamRanking = array;
+
+	document.getElementById('teamranking').innerHTML = '';
 	teamRanking.forEach(function(entry){
 		createRankingElement(getTeamNameForId(entry.teamid) + " " + entry.points, 'teamranking');
 	});
@@ -45,6 +47,8 @@ teamRef.on('value', function(snapshot) {
 
 function setTeamRanking(userRanking){
 	var ranking = 0;
+
+	document.getElementById('userranking').innerHTML = '';
 	userRanking.forEach(function(entry) {
 	createRankingElement(entry.name + " " + entry.points, 'userranking');
     ranking += entry.points;
