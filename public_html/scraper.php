@@ -15,17 +15,17 @@ $testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
 
 $prematchurl = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/2991905';
 
-getStartingEleven($testurl);
+echo scrapeTeams(getTeamURLsForCompetition($competition_url));
+//getTeamURLsForCompetition($competition_url);
 
 function getTeamURLsForCompetition($competition_url) {
-	$base_url = 'http://www.transfermarkt.co.uk';
 	$table = getElementForSelector($competition_url, '#yw1');
 	$teams = array();
 
 	$teamrows = $table->find('.hauptlink a');
 
 	foreach ($teamrows as $key => $value) {
-		$teamurl = $base_url . $value['href'];
+		$teamurl = $value['href'];
 		$team_id = $value['id'];
 		$teams[$team_id] = $teamurl;
 	}
@@ -125,7 +125,12 @@ function getPlayerDetails($table) {
 		$position = $row->find('.inline-table td')[2];
 		$status = 'FIT';
 		$club = $row->find('.vereinprofil_tooltip img')['alt'];
-		$market_value = applyRegExp('/£.*?m|.*?k/', strip_tags($row->find('.rechts.hauptlink')[1]))[0];
+		$market_tmp = applyRegExp('/£.*?m|.*?k/', strip_tags($row->find('.rechts.hauptlink')[1]));
+		if (count($market_tmp) == 0) {
+			$market_value = 'N/A';
+		} else {
+			$market_value = $market_tmp[0];
+		}
 
 		$player_row = $row->find('.hide-for-small a');
 		$player_id = $player_row['id'];
