@@ -2,6 +2,7 @@
 cache/
 bin/
 vendor/
+functions/node_modules/
 
 # INI/Config files #
 *.ini
