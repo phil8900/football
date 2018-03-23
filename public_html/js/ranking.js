@@ -1,7 +1,14 @@
 var database = firebase.database();
 
-var ref = database.ref().child('/users/').orderByChild('points').once('value').then(function(snapshot) {
-	snapshot.forEach(function(child) {
-	console.log(child.val()) // NOW THE CHILDREN PRINT IN ORDER
+getRanking('rankings/users/');
+getRanking('rankings/teams/');
+
+function getRanking(childstring){
+	var array = new Array();
+	var teams = database.ref().child(childstring).orderByChild('points').once('value').then(function(snapshot) {
+		snapshot.forEach(function(child) {
+		array.push(child.val());
+		});
 	});
-});
+	return array;
+}

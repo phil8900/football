@@ -12,7 +12,7 @@ admin.initializeApp(functions.config().firebase);
   	var points = 5;
   	var name = 'Football Fan';
 
-  admin.database().ref('users/' + uid).set({
+  admin.database().ref('rankings/users/' + uid).set({
     team: team,
     points: points,
     name : name
@@ -22,6 +22,6 @@ admin.initializeApp(functions.config().firebase);
  exports.deleteUserFromRanking = functions.auth.user().onDelete((event) => {
   var uid = event.data.uid;
 
-  admin.database().ref('users/' + uid).remove();
+  admin.database().ref('rankings/users/' + uid).remove();
 
 });
