@@ -6,6 +6,9 @@ var ownteam = 0;
 var uid;
 var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 var teamRef = firebase.database().ref('rankings/teams/').orderByChild('points');
+var fixturesRef = firebase.database().ref('fixtures/');
+
+reactToEvent('401859415', 2);
 
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
@@ -68,4 +71,27 @@ function createRankingElement(string, id){
 
 function getTeamNameForId(id){
 	return 'Test team';
+}
+
+function reactToEvent(event_id, reaction){
+		firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
+
+		snapshot.forEach(function(child) {
+			firebase.database().ref('/fixtures/' + child.key + '/events/events/' + event_id).once('value').then(function(snapshot) {
+				if(snapshot.val() != null){
+					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/events/' + event_id + '/reactions');
+					if(reaction == 1){
+					reactionRef.child('positive').transaction(function(positive) {
+						return positive + 1;
+					});
+					}
+					else{
+						reactionRef.child('negative').transaction(function(negative) {
+							return negative + 1;
+					});
+					}
+				}
+			});
+		});
+	});
 }

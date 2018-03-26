@@ -1,14 +1,15 @@
 <?php
 
-require __DIR__ . '../vendor/autoload.php';
-require_once 'livescore.php';
+require '../vendor/autoload.php';
+//require_once 'livescore.php';
+require 'scraper.php';
 
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
 
 // This assumes that you have placed the Firebase credentials in the same directory
 // as this PHP file.
-$serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '../google-service-account.json');
+$serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '/../google-service-account.json');
 
 $firebase = (new Factory)
 	->withServiceAccount($serviceAccount)
@@ -20,7 +21,11 @@ $firebase = (new Factory)
 
 $database = $firebase->getDatabase();
 
-$newPost = $database->getReference('games/fixtures')->set($upcoming_games);
-$newPost = $database->getReference('games/current')->set($current_games);
+$database->getReference('teams')->set($competitionteams);
+
+echo json_encode($competitionfixtures);
+
+$database->getReference('fixtures')->set($competitionfixtures);
+//$newPost = $database->getReference('games/current')->set($current_games);
 
 ?>
