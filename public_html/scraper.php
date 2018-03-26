@@ -1,12 +1,22 @@
 <?php
 require '../vendor/autoload.php';
 use JonnyW\PhantomJs\Client;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
+
+$serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '/../google-service-account.json');
+
+$firebase = (new Factory)
+	->withServiceAccount($serviceAccount)
+	->withDatabaseUri('https://football-362b6.firebaseio.com')
+	->create();
+
+$database = $firebase->getDatabase();
 
 hQuery::$cache_path = "../cache";
 //hQuery::$cache_expires = 3600;
 
 $url = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/3377';
-//$url = 'https://www.transfermarkt.co.uk/tottenham-hotspur/startseite/verein/148';
 $competition_url = 'https://www.transfermarkt.co.uk/premier-league/startseite/pokalwettbewerb/WM18';
 
 $gameurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/3018417';
@@ -15,7 +25,16 @@ $testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
 
 $prematchurl = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/2991905';
 
-echo scrapeTeams(getTeamURLsForCompetition($competition_url));
+$prematch_base = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/';
+$live_base = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/';
+$team_base = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/';
+
+setGameEvents('2843952');
+
+//$competitionteams = scrapeTeams(getTeamURLsForCompetition($competition_url));
+
+//$gameevents = getGameEvents('http://46.101.238.193/test/two_event.json');
+
 //getTeamURLsForCompetition($competition_url);
 
 function getTeamURLsForCompetition($competition_url) {
@@ -37,7 +56,7 @@ function scrapeTeams($teamurls) {
 	foreach ($teamurls as $key => $value) {
 		$teams[$key] = scrapeTeamURL($value);
 	}
-	return json_encode($teams);
+	return $teams;
 }
 
 function scrapeTeamURL($teamurl) {
@@ -64,8 +83,8 @@ function getTeamInformation($teamurl) {
 	$teamtable = $table->find('.profilheader tr td');
 	$average_age = trim($teamtable[2]);
 	$average_marketvalue = trim($teamtable[4]);
-	$international_titles = trim(strip_tags($teamtable[5]));
-	$continental_titles = trim(strip_tags($teamtable[6]));
+	$international_titles = str_replace('&nbsp;', ' ', trim(strip_tags($teamtable[5])));
+	$continental_titles = str_replace('&nbsp;', ' ', trim(strip_tags($teamtable[6])));
 	$ranking = trim(str_replace('no. ', '', strip_tags($teamtable[7])));
 
 	$coachtable = getElementForSelector($teamurl, '.mitarbeiterVereinSlider .container-inhalt');
@@ -87,7 +106,11 @@ function getTeamFixtures($teamurl) {
 	$table = getElementForSelector($teamurl, '#begegnungenVereinSlider');
 
 	foreach ($table->find('li') as $key => $value) {
-		array_push($fixtures, applyRegExp("/\/(\d+)$/", $value['data-src'])[1]);
+		$game_id = applyRegExp("/\/(\d+)$/", $value['data-src'])[1];
+		array_push($fixtures, $game_id);
+
+		global $database;
+		$database->getReference('fixtures/' . $game_id)->set(getPregameInformation($game_id));
 	}
 
 	return $fixtures;
@@ -150,15 +173,28 @@ function getPlayerDetails($table) {
 	return $squad;
 }
 
-function getGameEvents($liveurl) {
-	$url = str_replace('begegnung', 'getSpielverlauf', $liveurl);
+function getGameEvents($game_id) {
+	global $live_base;
+	$url = str_replace('begegnung', 'getSpielverlauf', $live_base) . $game_id;
+
+	$url = 'http://46.101.238.193/test/two_event.json';
 
 	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
 
-	return $doc;
+	$events = array('events' => json_decode($doc), 'gameid' => $game_id);
+
+	return $events;
 }
 
-function getPregameInformation($pregameurl) {
+function setGameEvents($game_id) {
+	global $database;
+	$database->getReference('fixtures/' . $game_id)->set(getGameEvents($game_id));
+}
+
+function getPregameInformation($game_id) {
+	global $prematch_base;
+	$pregameurl = $prematch_base . $game_id;
+
 	$table = getElementForSelector($pregameurl, '#main');
 
 	$header = $table->find('.sb-spielbericht-head');
@@ -166,19 +202,15 @@ function getPregameInformation($pregameurl) {
 	$awayteam_id = $header->find('.sb-gast a')['id'];
 	$game_infos = $header->find('.sb-spieldaten');
 	$timearray = explode('|', $header->find('.sb-datum')[0]);
-	$date = $timearray[1];
-	$time = $timearray[2];
-	$location = $header->find('.sb-zusatzinfos a');
+	$date = str_replace('&nbsp;', '', trim(strip_tags($timearray[1])));
+	$time = str_replace('&nbsp;', '', trim($timearray[2]));
+	$location = $header->find('.sb-zusatzinfos a')[0];
 
-	$factstable = $table->find('.zentriert');
-	$previous_games = array();
+	$timestamp = DateTime::createFromFormat('  D, M d, Y g:i A', $date . ' ' . $time)->getTimeStamp();
 
-	for ($i = 1; $i <= count($factstable); $i++) {
-		echo $factstable[$i];
-		echo '<br>';
-		echo $i;
-		echo '<br>';
-	}
+	$pregameinfo = array('gameid' => (string) $game_id, 'hometeamid' => (string) $hometeam_id, 'awayteamid' => (string) $awayteam_id, 'date' => (string) $date, 'time' => (string) $time, 'location' => (string) $location, 'timestamp' => (string) $timestamp);
+
+	return $pregameinfo;
 }
 
 function fillPlayerArray($players) {
