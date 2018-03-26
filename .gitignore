@@ -3,7 +3,7 @@ cache/
 bin/
 vendor/
 functions/node_modules/
-test/
+public_html/test/
 
 # INI/Config files #
 *.ini
