@@ -77,9 +77,9 @@ function reactToEvent(event_id, reaction){
 		firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
 
 		snapshot.forEach(function(child) {
-			firebase.database().ref('/fixtures/' + child.key + '/events/events/' + event_id).once('value').then(function(snapshot) {
+			firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id).once('value').then(function(snapshot) {
 				if(snapshot.val() != null){
-					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/events/' + event_id + '/reactions');
+					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions');
 					if(reaction == 1){
 					reactionRef.child('positive').transaction(function(positive) {
 						return positive + 1;

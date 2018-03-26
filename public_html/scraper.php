@@ -180,15 +180,24 @@ function getGameEvents($game_id) {
 	$url = 'http://46.101.238.193/test/two_event.json';
 
 	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
-
-	$events = array('events' => json_decode($doc), 'gameid' => $game_id);
+	$events = (array) json_decode($doc);
+	$events['gameid'] = $game_id;
 
 	return $events;
 }
 
 function setGameEvents($game_id) {
 	global $database;
-	$database->getReference('fixtures/' . $game_id)->set(getGameEvents($game_id));
+	$gameevents = getGameEvents($game_id)['events'];
+
+	foreach ($gameevents as $key => $value) {
+		$reference = $database->getReference('fixtures/' . $game_id . '/events/' . $key);
+		$snapshot = $reference->getValue();
+
+		if (!isset($snapshot)) {
+			$reference->set($value);
+		}
+	}
 }
 
 function getPregameInformation($game_id) {
