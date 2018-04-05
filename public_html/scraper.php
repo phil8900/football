@@ -29,7 +29,7 @@ $prematch_base = 'https://www.transfermarkt.co.uk/spielbericht/index/spielberich
 $live_base = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/';
 $team_base = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/';
 
-setGameEvents('2843952');
+setGameEvents('2959076');
 
 //$competitionteams = scrapeTeams(getTeamURLsForCompetition($competition_url));
 
@@ -193,6 +193,10 @@ function setGameEvents($game_id) {
 	foreach ($gameevents as $key => $value) {
 		$reference = $database->getReference('fixtures/' . $game_id . '/events/' . $key);
 		$snapshot = $reference->getValue();
+
+		$value = (array)$value;
+		$value['reactions']['positive'] = 0;
+		$value['reactions']['negative'] = 0;
 
 		if (!isset($snapshot)) {
 			$reference->set($value);

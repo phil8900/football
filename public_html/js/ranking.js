@@ -1,25 +1,11 @@
 var userRanking;
 var teamRanking;
-var ownteam = 0;
-var uid;
 var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 var teamRef = firebase.database().ref('rankings/teams/').orderByChild('points');
-
-
-firebase.auth().onAuthStateChanged(function(user) {
-	if (user) {
-		uid = user.uid;
-	} else {
-		uid = 'AwTsR03Y7LRpsRiz5RaCojUwhqy2'; //Test UID without logging in
-	}
-});
 
 userRef.on('value', function(snapshot) {
 	var array = new Array();
 	snapshot.forEach(function(child) {
-		if(child.val().uid == uid){
-			ownteam = child.val().team;
-		}
 		if(child.val().team == ownteam){
 			array.push(child.val());
 		}

@@ -5,3 +5,4 @@
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-messaging.js"></script>
 <script src="js/firebase.js"></script>
+<script src="js/general.js"></script>
