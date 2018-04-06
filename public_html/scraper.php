@@ -14,28 +14,11 @@ $firebase = (new Factory)
 $database = $firebase->getDatabase();
 
 hQuery::$cache_path = "../cache";
-//hQuery::$cache_expires = 3600;
-
-$url = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/3377';
-$competition_url = 'https://www.transfermarkt.co.uk/premier-league/startseite/pokalwettbewerb/WM18';
-
-$gameurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/3018417';
-
-$testurl = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/2871933';
-
-$prematchurl = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/2991905';
+hQuery::$cache_expires = 3600;
 
 $prematch_base = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/';
 $live_base = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/';
 $team_base = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/';
-
-setGameEvents('2959076');
-
-//$competitionteams = scrapeTeams(getTeamURLsForCompetition($competition_url));
-
-//$gameevents = getGameEvents('http://46.101.238.193/test/two_event.json');
-
-//getTeamURLsForCompetition($competition_url);
 
 function getTeamURLsForCompetition($competition_url) {
 	$table = getElementForSelector($competition_url, '#yw1');
@@ -53,8 +36,31 @@ function getTeamURLsForCompetition($competition_url) {
 
 function scrapeTeams($teamurls) {
 	$teams = array();
+	global $database;
 	foreach ($teamurls as $key => $value) {
 		$teams[$key] = scrapeTeamURL($value);
+
+		$updates = [
+    		'teams/' . $key . '/information/averageage' => $teams[$key]['information']['averageage'],
+    		'teams/' . $key . '/information/averagemarketvalue' => $teams[$key]['information']['averagemarketvalue'],
+    		'teams/' . $key . '/information/coach' => $teams[$key]['information']['coach'],
+    		'teams/' . $key . '/information/contintentaltitles' => $teams[$key]['information']['contintentaltitles'],
+    		'teams/' . $key . '/information/internationaltitles' => $teams[$key]['information']['internationaltitles'],
+    		'teams/' . $key . '/information/ranking' => $teams[$key]['information']['ranking'],
+    		'teams/' . $key . '/information/teamname' => $teams[$key]['information']['teamname'],
+    		'teams/' . $key . '/squad' => $teams[$key]['squad'],
+		];
+
+		$database->getReference()->update($updates);
+
+		foreach ($teams[$key]['information']['fixtures'] as $keyinner => $value) {
+			$reference = $database->getReference('teams/' . $key . '/information/fixtures/' . $keyinner);
+			$snapshot = $reference->getValue();
+
+			if (!isset($snapshot)) {
+				$reference->set($value);
+			}
+		}
 	}
 	return $teams;
 }
@@ -107,10 +113,22 @@ function getTeamFixtures($teamurl) {
 
 	foreach ($table->find('li') as $key => $value) {
 		$game_id = applyRegExp("/\/(\d+)$/", $value['data-src'])[1];
-		array_push($fixtures, $game_id);
+		$fixtures[$game_id] = $game_id;
 
 		global $database;
-		$database->getReference('fixtures/' . $game_id)->set(getPregameInformation($game_id));
+		$info = getPregameInformation($game_id);
+
+		$updates = [
+    		'fixtures/' . $game_id . '/awayteamid' => $info['awayteamid'],
+    		'fixtures/' . $game_id . '/date' => $info['date'],
+    		'fixtures/' . $game_id . '/gameid' => $info['gameid'],
+    		'fixtures/' . $game_id . '/hometeamid' => $info['hometeamid'],
+    		'fixtures/' . $game_id . '/location' => $info['location'],
+    		'fixtures/' . $game_id . '/time' => $info['time'],
+    		'fixtures/' . $game_id . '/timestamp' => $info['timestamp'],
+		];
+
+		$database->getReference()->update($updates);
 	}
 
 	return $fixtures;
@@ -157,7 +175,7 @@ function getPlayerDetails($table) {
 
 		$player_row = $row->find('.hide-for-small a');
 		$player_id = $player_row['id'];
-		$playerlink = $base_url . $player_row['href'];
+		$playerlink = $player_row['href'];
 		$birthday = $row->find('.zentriert')[1];
 
 		if ($row->find('.verletzt-table') != '') {
@@ -202,6 +220,21 @@ function setGameEvents($game_id) {
 			$reference->set($value);
 		}
 	}
+}
+
+function getLiveGames(){
+	global $database;
+	$reference = $database->getReference('fixtures/');
+	$snapshot = $reference->getValue();
+	$date = time();
+	$livegames = array();
+
+	foreach ($snapshot as $key => $value) {
+		if(($value['timestamp'] > $date-9000) && ($value['timestamp'] < $date+5400)){
+			array_push($livegames, $value['gameid']);
+		}
+	}
+	return $livegames;
 }
 
 function getPregameInformation($game_id) {
