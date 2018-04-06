@@ -26,7 +26,7 @@ teamRef.on('value', function(snapshot) {
 
 	document.getElementById('teamranking').innerHTML = '';
 	teamRanking.forEach(function(entry){
-		createRankingElement(getTeamNameForId(entry.teamid) + " " + entry.points, 'teamranking');
+		showTeamRanking(entry);
 	});
 });
 
@@ -51,6 +51,8 @@ function createRankingElement(string, id){
 	document.getElementById(id).appendChild(node);
 }
 
-function getTeamNameForId(id){
-	return 'Test team';
+function showTeamRanking(entry){
+	firebase.database().ref('/teams/' + entry.teamid + '/information/teamname').on('value', function(snapshot) {
+		createRankingElement(snapshot.val() + " " + entry.points, 'teamranking');
+	});
 }
