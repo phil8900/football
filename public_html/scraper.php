@@ -49,6 +49,7 @@ function scrapeTeams($teamurls) {
     		'teams/' . $key . '/information/ranking' => $teams[$key]['information']['ranking'],
     		'teams/' . $key . '/information/teamname' => $teams[$key]['information']['teamname'],
     		'teams/' . $key . '/squad' => $teams[$key]['squad'],
+    		'teams/' . $key . '/information/news/' => $teams[$key]['information']['news'],
 		];
 
 		$database->getReference()->update($updates);
@@ -128,7 +129,7 @@ function getTeamInformation($teamurl) {
 
 	}
 
-	$teaminformation = array('teamname' => (string) $teamname, 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl));
+	$teaminformation = array('teamname' => (string) $teamname, 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl), 'news' => getTeamNews($teamurl));
 
 	return $teaminformation;
 }
@@ -347,5 +348,20 @@ function getStartingEleven($liveurl) {
 		return $lineups;
 	}
 	return false;
+}
+
+function getTeamNews($teamurl){
+	$table = getElementForSelector($teamurl, '.relevante-news-auflistung ul li');
+	$teamnews = array();
+	
+	foreach ($table as $key => $value) {
+		$date = (string) $value->find('span');
+		$timestamp = DateTime::createFromFormat('M d, Y, h:i a', $date)->getTimeStamp();
+
+		$newsitem = array('date' => $date, 'timestamp' => $timestamp, 'title' => (string) $value->find('a'), 'url' => (string) $value->find('a')['href']);
+		array_push($teamnews, $newsitem);
+	}
+
+	return $teamnews;	
 }
 ?>

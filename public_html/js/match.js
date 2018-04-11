@@ -45,6 +45,13 @@ function getLiveGameEvents(){
 			});
 		});
 	}
+	else{
+		showTeamNews();
+	}
+}
+
+function showTeamNews(){
+	alert('No live game');
 }
 
 function getEventReaction(event_id){

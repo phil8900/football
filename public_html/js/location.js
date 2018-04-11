@@ -51,8 +51,6 @@
 
       function addListener(button, result){
         button.addEventListener("click", function(){
-          console.log(result.place_id);
-
           var checkinRef = firebase.database().ref('checkins/' + result.place_id + '/' + uid);
 
           var newPostKey = checkinRef.push().key;
@@ -61,7 +59,6 @@
             placeid: result.place_id,
             placename:result.name,
             uid: uid,
-
           };
 
           var updates = {};
