@@ -36,10 +36,10 @@ function getFixturesForOwnTeam(fixtureids){
 	var array = [];
 	var fixturesRef = firebase.database().ref('fixtures/');
 
-		fixturesRef.once('value').then(function(snapshot) {
-			fixtureids.forEach(function(id) {
-			array.push(snapshot.child(id).val());
-		});
+	fixturesRef.once('value').then(function(snapshot) {
+		for(var propt in fixtureids){
+			array.push(snapshot.child(fixtureids[propt]).val());
+		}
 		saveFixtures(array);
 	});
 }
