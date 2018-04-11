@@ -130,8 +130,6 @@ function getTeamInformation($teamurl) {
 
 	$teaminformation = array('teamname' => (string) $teamname, 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl));
 
-	echo json_encode($teaminformation);
-
 	return $teaminformation;
 }
 
