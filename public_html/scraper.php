@@ -87,22 +87,50 @@ function getTeamInformation($teamurl) {
 	$teamname = trim(strip_tags($table->find('.spielername-profil')));
 
 	$teamtable = $table->find('.profilheader tr td');
-	$average_age = trim($teamtable[2]);
-	$average_marketvalue = trim($teamtable[4]);
-	$international_titles = str_replace('&nbsp;', ' ', trim(strip_tags($teamtable[5])));
-	$continental_titles = str_replace('&nbsp;', ' ', trim(strip_tags($teamtable[6])));
-	$ranking = trim(str_replace('no. ', '', strip_tags($teamtable[7])));
+	$teamtableheaders = $table->find('.profilheader tr th');
+
+	$counter = 0;
+	$international_titles = '';
+	$continental_titles = '';
+
+	foreach ($teamtableheaders as $key => $value) {
+		if($value == 'Average age:'){
+			$average_age = trim($teamtable[$counter]);
+		}
+		else if(strpos($value, 'Market value') !== false) {
+			$average_marketvalue = trim($teamtable[$counter]);
+		}
+		else if($value == 'FIFA world ranking:'){
+			$ranking = trim(str_replace('no. ', '', strip_tags($teamtable[$counter])));
+		}
+		else if($value == 'Intercontinental title:'){
+			$international_titles = str_replace('&nbsp;', ' ', trim(strip_tags($teamtable[$counter])));
+		}
+		else if($value == 'Continental title:'){
+			$continental_titles = str_replace('&nbsp;', ' ', trim(strip_tags($teamtable[$counter])));
+		}
+		$counter++;
+	}
 
 	$coachtable = getElementForSelector($teamurl, '.mitarbeiterVereinSlider .container-inhalt');
-	$coach_name = $coachtable->find('.container-hauptinfo a')['title'];
-	$coach_additionalinfos = $coachtable->find('.container-zusatzinfo')[0];
-	$coach_age = applyRegExp('/(\d+)( Years)/', $coach_additionalinfos[0])[1];
-	$coach_nationality = $coach_additionalinfos->find('.flaggenrahmen')['title'];
-	$coach_since = applyRegExp('/(\w{3}\s{1}\d+,\s{1}\d{4})/', $coach_additionalinfos[0])[1];
 
-	$coach = array('coachname' => (string) $coach_name, 'coachage' => (string) $coach_age, 'coachnationality' => $coach_nationality, 'coachsince' => $coach_since);
+	if($coachtable != null){
+		$coach_name = $coachtable->find('.container-hauptinfo a')['title'];
+		$coach_additionalinfos = $coachtable->find('.container-zusatzinfo')[0];
+		$coach_age = applyRegExp('/(\d+)( Years)/', $coach_additionalinfos[0])[1];
+		$coach_nationality = $coach_additionalinfos->find('.flaggenrahmen')['title'];
+		$coach_since = applyRegExp('/(\w{3}\s{1}\d+,\s{1}\d{4})/', $coach_additionalinfos[0])[1];
+
+		$coach = array('coachname' => (string) $coach_name, 'coachage' => (string) $coach_age, 'coachnationality' => $coach_nationality, 'coachsince' => $coach_since);
+	}
+	else{
+		$coach = array('coachname' => 'No coach', 'coachage' => '', 'coachnationality' => '', 'coachsince' => '');
+
+	}
 
 	$teaminformation = array('teamname' => (string) $teamname, 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl));
+
+	echo json_encode($teaminformation);
 
 	return $teaminformation;
 }
