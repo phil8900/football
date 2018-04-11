@@ -5,7 +5,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE0NXJejZApujcdK8c9S7i-G7yblT2kFg&libraries=places&callback=initMap" async defer></script>
 </head>
 
-<body>
+<body onload="setOwnTeam()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 <h1>AU Football</h1>

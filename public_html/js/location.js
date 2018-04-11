@@ -1,6 +1,7 @@
       var map;
       var infowindow;
 
+
       function initMap() {
         var pos = {lat: 56.132427, lng: 10.1528922};
 
@@ -20,7 +21,6 @@
             service.nearbySearch({
               location: pos,
               radius: 500,
-              type: ['store']
             }, callback);
 
             map.setCenter(pos);
@@ -38,7 +38,37 @@
           for (var i = 0; i < results.length; i++) {
             var e = document.createElement('div');
             e.innerHTML = results[i].name;
+            var button = document.createElement('button');
+            var buttontext = document.createTextNode("Checkin");
+            button.appendChild(buttontext);
+            e.appendChild(button);
             document.getElementById("results").appendChild(e);
+            addListener(button, results[i]);
+
           }
         }
+      }
+
+      function addListener(button, result){
+        button.addEventListener("click", function(){
+          console.log(result.place_id);
+
+          var checkinRef = firebase.database().ref('checkins/' + result.place_id + '/' + uid);
+
+          var newPostKey = checkinRef.push().key;
+          var postData = {
+            timestamp: Math.floor(Date.now() / 1000),
+            placeid: result.place_id,
+            placename:result.name,
+            uid: uid,
+
+          };
+
+          var updates = {};
+          updates['checkins/' + result.place_id + '/' + uid + '/' + newPostKey] = postData;
+
+          firebase.database().ref().update(updates);
+
+          button.disabled = true;
+        }); 
       }
