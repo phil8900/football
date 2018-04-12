@@ -50,6 +50,7 @@ function scrapeTeams($teamurls) {
     		'teams/' . $key . '/information/teamname' => $teams[$key]['information']['teamname'],
     		'teams/' . $key . '/squad' => $teams[$key]['squad'],
     		'teams/' . $key . '/information/news/' => $teams[$key]['information']['news'],
+    		'teams/' . $key . '/information/teamlogo' => $teams[$key]['information']['teamlogo'],
 		];
 
 		$database->getReference()->update($updates);
@@ -129,7 +130,7 @@ function getTeamInformation($teamurl) {
 
 	}
 
-	$teaminformation = array('teamname' => (string) $teamname, 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl), 'news' => getTeamNews($teamurl));
+	$teaminformation = array('teamname' => (string) $teamname, 'teamlogo' => getWikiImage($teamname), 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl), 'news' => getTeamNews($teamurl));
 
 	return $teaminformation;
 }
@@ -211,7 +212,7 @@ function getPlayerDetails($table) {
 
 		$player = array();
 
-		$player = array('playerid' => (string) $player_id, 'playerlink' => (string) $playerlink, 'jerseynumber' => (string) $jersey_number, 'fullname' => (string) $full_name, 'shortname' => (string) $short_name, 'position' => (string) $position, 'club' => (string) $club, 'status' => (string) $status, 'marketvalue' => (string) $market_value, 'birthday' => (string) $birthday);
+		$player = array('playerid' => (string) $player_id, 'playerlink' => (string) $playerlink, 'jerseynumber' => (string) $jersey_number, 'fullname' => (string) $full_name, 'shortname' => (string) $short_name, 'picture' => getWikiImage($full_name), 'position' => (string) $position, 'club' => (string) $club, 'status' => (string) $status, 'marketvalue' => (string) $market_value, 'birthday' => (string) $birthday);
 
 		$squad[$player_id] = $player;
 	}
@@ -363,5 +364,18 @@ function getTeamNews($teamurl){
 	}
 
 	return $teamnews;	
+}
+
+function getWikiImage($title){
+	$url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&generator=prefixsearch&formatversion=2&piprop=thumbnail&pithumbsize=250&pilimit=20&gpslimit=1&gpssearch=' . str_replace(' ', '%20', $title);
+
+	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
+
+	$doc = (array) json_decode($doc);
+	$doc = (array) $doc['query'];
+	$doc = (array) $doc['pages'][0];
+	$doc = (array) $doc['thumbnail'];
+
+	return $doc['source'];
 }
 ?>

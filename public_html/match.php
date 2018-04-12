@@ -4,7 +4,7 @@
 <script src="js/match.js"></script>
 </head>
 
-<body>
+<body onload="getLiveGameEvents()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 <h1>AU Football</h1>

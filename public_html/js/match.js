@@ -2,10 +2,9 @@ var database = firebase.database();
 var fixturesRef = firebase.database().ref('fixtures/');
 
 var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
+var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
 
 var nextgame;
-
-getLiveGameEvents();
 
 function getFutureGames(){
 	var date = Math.floor(Date.now() / 1000);
@@ -51,7 +50,25 @@ function getLiveGameEvents(){
 }
 
 function showTeamNews(){
-	alert('No live game');
+	var wrapper = document.getElementById('events');
+
+			firebase.database().ref('/teams/' + ownteam + '/information/news').on('value', function(snapshot) {
+			snapshot.forEach(function(child) {
+				var li = document.createElement('li');
+				var div = document.createElement('div');
+				var p = document.createElement('p');
+				var newlink = document.createElement('a');
+				newlink.setAttribute('href', child.val()['url']);
+				newlink.setAttribute('target', '_blank')
+				newlink.innerHTML = 'Read more...';
+				p.appendChild(document.createTextNode(child.val()['date'] + ': ' + child.val()['title'] + ' '));
+				p.appendChild(newlink);
+				div.appendChild(p);
+
+				li.appendChild(div);
+				wrapper.appendChild(li);
+			});
+});
 }
 
 function getEventReaction(event_id){
