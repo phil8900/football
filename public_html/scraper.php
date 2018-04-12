@@ -374,8 +374,11 @@ function getWikiImage($title){
 	$doc = (array) json_decode($doc);
 	$doc = (array) $doc['query'];
 	$doc = (array) $doc['pages'][0];
-	$doc = (array) $doc['thumbnail'];
 
-	return $doc['source'];
+	if(isset($doc['thumbnail'])){
+		$doc = (array) $doc['thumbnail'];
+		return $doc['source'];
+	}
+	return '';
 }
 ?>
