@@ -1,7 +1,6 @@
 <html>
 <head>
 <?php include 'header.php';?>
-<script src="../node_modules/push.js/bin/push.js"></script>
 <script src="js/messaging.js"></script>
 </head>
 

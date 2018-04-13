@@ -1,3 +1,7 @@
+function initRanking(){
+	document.getElementById('rankingbutton').src = 'img/ranking_select.svg';
+}
+
 var userRanking;
 var teamRanking;
 var userRef = firebase.database().ref('rankings/users/').orderByChild('points');

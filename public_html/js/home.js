@@ -1,3 +1,8 @@
+function initHome(){
+	getNews();
+	document.getElementById('homebutton').src = 'img/home_select.svg';
+}
+
 function getNews(){
 	var wrapper = document.getElementById('news');
 	var teamsRef = firebase.database().ref('/teams/');

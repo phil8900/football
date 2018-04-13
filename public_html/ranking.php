@@ -5,7 +5,7 @@
 <title>LoudStand - Rankings</title>
 </head>
 
-<body>
+<body onload="initRanking()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 
