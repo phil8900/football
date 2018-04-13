@@ -12,7 +12,7 @@ function redirect(){
           firebase.database().ref('rankings/users/' + user.uid + '/terms').set({
             terms: 'true'
           });
-          window.location = "home.php";
+          window.location = "teamselect.php";
         });
 
         var declinebutton = document.createElement('button');
@@ -28,7 +28,12 @@ function redirect(){
         document.getElementById('buttons').appendChild(e);
       }
 			else{
+        if(ownteam > -1){
         window.location = "home.php";
+        }
+        else{
+          window.location = "teamselect.php";
+        }
       }
     });
 	});

@@ -21,5 +21,6 @@ initTeamSelector();
      button.addEventListener("click", function(){
       ownteam = team.key;
       teamRef.set(ownteam);
+      location.href = "home.php";
      });
   }
