@@ -1,0 +1,7 @@
+button{
+	background-size:contain !important;
+	background-repeat:no-repeat !important;
+	background-position:center center !important;
+	width:12.5% !important;
+	height:150px !important;
+}

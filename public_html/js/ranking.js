@@ -25,18 +25,24 @@ teamRef.on('value', function(snapshot) {
 	teamRanking = array;
 
 	document.getElementById('teamranking').innerHTML = '';
+	var rank = 1;
 	teamRanking.forEach(function(entry){
+		entry['rank'] = rank;
 		showTeamRanking(entry);
+		rank++;
 	});
 });
 
 function setTeamRanking(userRanking){
 	var ranking = 0;
+	var rank = 1;
 
 	document.getElementById('userranking').innerHTML = '';
 	userRanking.forEach(function(entry) {
-	createRankingElement(entry.name + " " + entry.points, 'userranking');
+	entry['rank'] = rank;
+	createUserRankingElement(entry, 'userranking');
     ranking += entry.points;
+    rank++;
 });
 	firebase.database().ref('rankings/teams/' + ownteam).set({
     points: ranking,
@@ -44,15 +50,82 @@ function setTeamRanking(userRanking){
   });
 }
 
-function createRankingElement(string, id){
-	var node = document.createElement("LI");
-	var textnode = document.createTextNode(string);
-	node.appendChild(textnode);
-	document.getElementById(id).appendChild(node);
+function createUserRankingElement(entry, id){
+	var div = document.createElement('div');
+	div.classList.add('userelement');
+	var firstlinediv = document.createElement('div');
+	firstlinediv.classList.add('firstlinediv');
+	var namespan = document.createElement('span');
+	namespan.appendChild(document.createTextNode(entry.name));
+	namespan.classList.add('userrankingname');
+
+	firstlinediv.appendChild(namespan);
+
+	var rankspan = document.createElement('span');
+	rankspan.appendChild(document.createTextNode(entry.rank));
+	rankspan.classList.add('userranking');
+
+	firstlinediv.appendChild(rankspan);
+	div.appendChild(firstlinediv);
+
+	var pointsdiv = document.createElement('div');
+	pointsdiv.appendChild(document.createTextNode(entry.points));
+	pointsdiv.classList.add('userrankingpoints');
+
+	div.appendChild(pointsdiv);
+
+	document.getElementById(id).appendChild(div);
+}
+
+function createTeamRankingElement(snapshotvalue, entry, id){
+	var div = document.createElement('div');
+	div.classList.add('userelement');
+	var firstlinediv = document.createElement('div');
+	firstlinediv.classList.add('firstlinediv');
+
+	var imagewrapper = document.createElement('span');
+	imagewrapper.classList.add('rankinglogowrapper');
+	firstlinediv.appendChild(imagewrapper);
+
+	var image = document.createElement('img');
+	image.src = snapshotvalue['teamlogo'];
+	image.classList.add('rankinglogo');
+	imagewrapper.appendChild(image);
+
+	var namespan = document.createElement('span');
+	namespan.appendChild(document.createTextNode(snapshotvalue['teamname']));
+	namespan.classList.add('userrankingname');
+
+	firstlinediv.appendChild(namespan);
+
+	var rankspan = document.createElement('span');
+	rankspan.appendChild(document.createTextNode(entry.rank));
+	rankspan.classList.add('userranking');
+
+	firstlinediv.appendChild(rankspan);
+	div.appendChild(firstlinediv);
+
+	var pointsdiv = document.createElement('div');
+	pointsdiv.appendChild(document.createTextNode(entry.points));
+	pointsdiv.classList.add('userrankingpoints');
+
+	div.appendChild(pointsdiv);
+
+	document.getElementById(id).appendChild(div);
 }
 
 function showTeamRanking(entry){
-	firebase.database().ref('/teams/' + entry.teamid + '/information/teamname').on('value', function(snapshot) {
-		createRankingElement(snapshot.val() + " " + entry.points, 'teamranking');
+	firebase.database().ref('/teams/' + entry.teamid + '/information').on('value', function(snapshot) {
+		createTeamRankingElement(snapshot.val(), entry, 'teamranking');
 	});
+}
+
+function displayUserRanking(){
+	document.getElementById('userranking').style.display = 'block';
+	document.getElementById('teamranking').style.display = 'none';
+}
+
+function displayTeamRanking(){
+	document.getElementById('userranking').style.display = 'none';
+	document.getElementById('teamranking').style.display = 'block';
 }

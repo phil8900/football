@@ -44,6 +44,18 @@ function getFixturesForOwnTeam(fixtureids){
 	});
 }
 
+function getLiveGame(){
+	var date = Math.floor(Date.now() / 1000);
+	var livegame = false;
+
+	fixtures.forEach(function(game) {
+		if((game.timestamp > date-9000) && (game.timestamp < date+5400)){
+			livegame = game;
+		}
+	});
+	return livegame;
+}
+
 function saveFixtures(fixturearray){
 	localStorage.setItem("loudstand_ownteam", ownteam);
 	localStorage.setItem("loudstand_fixtures", JSON.stringify(fixturearray));

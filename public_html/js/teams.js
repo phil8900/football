@@ -3,11 +3,10 @@ initTeamSelector();
   function initTeamSelector(){
     var fixturesRef = firebase.database().ref('teams/');
     fixturesRef.on('value', function(snapshot) {
+      var e = document.createElement('div');
       snapshot.forEach(function(child) {
-        var e = document.createElement('div');
         var button = document.createElement('button');
-        var buttontext = document.createTextNode(child.val()['information']['teamname']);
-        button.appendChild(buttontext);
+        button.style.background = 'url(' + child.val()['information']['teamlogo'] + ')';
 
         addListener(button, child);
 

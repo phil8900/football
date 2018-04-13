@@ -354,15 +354,16 @@ function getStartingEleven($liveurl) {
 function getTeamNews($teamurl){
 	$table = getElementForSelector($teamurl, '.relevante-news-auflistung ul li');
 	$teamnews = array();
-	
-	foreach ($table as $key => $value) {
-		$date = (string) $value->find('span');
-		$timestamp = DateTime::createFromFormat('M d, Y, h:i a', $date)->getTimeStamp();
 
-		$newsitem = array('date' => $date, 'timestamp' => $timestamp, 'title' => (string) $value->find('a'), 'url' => (string) $value->find('a')['href']);
-		array_push($teamnews, $newsitem);
+	if(isset($table)){		
+		foreach ($table as $key => $value) {
+			$date = (string) $value->find('span');
+			$timestamp = DateTime::createFromFormat('M d, Y, h:i a', $date)->getTimeStamp();
+
+			$newsitem = array('date' => $date, 'timestamp' => $timestamp, 'title' => (string) $value->find('a'), 'url' => (string) $value->find('a')['href']);
+			array_push($teamnews, $newsitem);
+		}
 	}
-
 	return $teamnews;	
 }
 
@@ -372,6 +373,10 @@ function getWikiImage($title){
 	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
 
 	$doc = (array) json_decode($doc);
+	if(!isset($doc['query'])){
+		return '';
+	}
+
 	$doc = (array) $doc['query'];
 	$doc = (array) $doc['pages'][0];
 

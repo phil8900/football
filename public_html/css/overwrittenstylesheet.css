@@ -1,0 +1,252 @@
+body {
+    font: 20px Raleway, sans-serif;
+ /*   line-height: 1.8; */
+    color: #f5f6f7;
+    background-color: #0F281D;
+}
+
+p {font-size: 16px;}
+.margin {margin-bottom: 45px;}
+.bg-1 {
+    background-color: darkgreen;
+    color: black;
+}
+.bg-2 {
+    background-color: #474e5d; /* Dark Blue */
+    color: #ffffff;
+}
+.bg-3 {
+    background-color: #ffffff; /* White */
+    color: #555555;
+}
+.bg-4 {
+    background-color: #2f2f2f; /* Black Gray */
+    color: #fff;
+}
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+    background-image: url("https://www.sportsfieldmanagementmagazine.com/wp-content/uploads/2014/10/iStock_26755943_MEDIUM.jpg");
+    color: white;
+    text-align: center;
+}
+
+.logo{
+    color: white;
+    text-align: center;
+}
+
+.content{
+    text-align: left;
+}
+
+.navbar .navbar-nav {
+    display: inline;
+    float: none;
+    vertical-align: top;
+}
+
+.navbar .navbar-nav span{
+
+    padding: 0 40px 0 40px;
+    color: white;
+}
+
+.navbar .navbar-nav span:hover{
+    color: #1abc9c !important;
+}
+
+@media (max-width: 576px) {
+
+    .navbar .navbar-nav .glyphicon {
+        font-size: 120px;
+    }
+}
+
+#userphoto img{
+    height: 120px;
+    width: 120px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: white;
+    border-width: thick;
+}
+
+#userflag img{
+    height: 24px;
+    width: 40px;
+}
+
+.bg-1{
+    padding-top: 100px;
+}
+
+#footer{
+    background-color: #0F281D;
+
+}
+
+.navbar-fixed-bottom{
+    background-color: #0F281D;
+}
+
+
+#bottomNav {
+    background-color: #D8D8D8;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 -5px 10px -5px #333;
+
+}
+
+#bottomNav a {
+    font-size:8pt;
+    color: #0F281D;
+    text-decoration:none;
+    background-color: #D8D8D8;
+
+}
+
+#bottomNav a svg:hover {
+    fill: blue;
+}
+
+
+#bottomNav img {
+    height: 26px;
+    width: auto;
+}
+
+/* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #0F281D; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 12px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+
+.menu-icon{
+    padding-left: 16px;
+
+
+}
+
+.menu-title{
+    font-family: Raleway;
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align: center;
+    padding-right: 16px;
+    line-height: 1.8;
+}
+
+.navbar-inverse{
+    background-color: #0F281D;
+}
+
+#imageDiv{
+    padding-top: 96px;
+}
+
+
+#topNav{
+    padding-top: 12px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.firstsubtopnav{
+    display: flex;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: #0F281D;
+    padding-left: 12px;
+}
+
+.secondsubtopnav{
+    font-family: Raleway;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.left{
+    font-family: Raleway;
+    width: 50%;
+    text-align: center;
+    background-color: #2c7656;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+
+.right{
+    font-family: Raleway;
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #0F281D;
+}
+
+/* --------------------------- */
+

@@ -18,18 +18,6 @@ function getFutureGames(){
 	return futuregames;
 }
 
-function getLiveGame(){
-	var date = Math.floor(Date.now() / 1000);
-	var livegame = false;
-
-	fixtures.forEach(function(game) {
-		if((game.timestamp > date-9000) && (game.timestamp < date+5400)){
-			livegame = game;
-		}
-	});
-	return livegame;
-}
-
 function getLiveGameEvents(){
 	var livegame = getLiveGame();
 	if(livegame){

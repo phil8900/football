@@ -1,15 +1,16 @@
 <html>
 <head>
 <?php include 'header.php';?>
-<script src="js/teams.js"></script>
-<link rel="stylesheet" type="text/css" href="css/teamselect.css">
+<script src="../node_modules/push.js/bin/push.js"></script>
+<script src="js/messaging.js"></script>
 </head>
 
 <body>
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 <h1>AU Football</h1>
-<h2>Team selector</h2>
+<h2>Terms and conditions</h2>
+<p>Read carefully, because Philip wants all your data.</p>
 <div id="buttons"></div>
 </body>
 </html>
