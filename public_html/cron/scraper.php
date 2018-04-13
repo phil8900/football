@@ -1,10 +1,10 @@
 <?php
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 use JonnyW\PhantomJs\Client;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
 
-$serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '/../google-service-account.json');
+$serviceAccount = ServiceAccount::fromJsonFile(__DIR__ . '/../../google-service-account.json');
 
 $firebase = (new Factory)
 	->withServiceAccount($serviceAccount)
@@ -307,9 +307,9 @@ function getStartingEleven($liveurl) {
 	$client = Client::getInstance();
 
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-		$client->getEngine()->setPath(dirname(__FILE__) . '/../bin/phantomjs.exe');
+		$client->getEngine()->setPath(dirname(__FILE__) . '/../../bin/phantomjs.exe');
 	} else {
-		$client->getEngine()->setPath('../bin/phantomjs');
+		$client->getEngine()->setPath('../../bin/phantomjs');
 	}
 
 	$request = $client->getMessageFactory()->createRequest($liveurl, 'GET');

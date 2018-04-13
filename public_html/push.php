@@ -1,6 +1,6 @@
 <html>
 <head>
-<?php include 'header.php';?>
+<?php include 'includes/header.php';?>
 <script src="js/messaging.js"></script>
 </head>
 

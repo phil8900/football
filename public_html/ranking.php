@@ -1,6 +1,6 @@
 <html>
 <head>
-<?php include 'header.php';?>
+<?php include 'includes/header.php';?>
 <script src="js/ranking.js"></script>
 <title>LoudStand - Rankings</title>
 </head>
@@ -27,6 +27,6 @@
 	<div id="teamranking"></div>
 </div>
 
-<?php include 'footer.php';?>
+<?php include 'includes/footer.php';?>
 </body>
 </html>

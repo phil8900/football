@@ -1,6 +1,6 @@
 <html>
 <head>
-<?php include 'header.php';?>
+<?php include 'includes/header.php';?>
 <script src="js/profiles.js"></script>
 <title>LoudStand - Profiles</title>
 </head>
@@ -22,6 +22,6 @@
 <h2>Team ranking</h2>
 <ol id="teamranking"></ol>
 
-<?php include 'footer.php';?>
+<?php include 'includes/footer.php';?>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <html>
 <head>
-<?php include 'header.php';?>
+<?php include 'includes/header.php';?>
 <script src="js/home.js"></script>
 <title>LoudStand</title>
 </head>
@@ -11,7 +11,7 @@
 <h1>Home</h1>
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
-	<?php include 'sidenav.php';?>
+	<?php include 'includes/sidenav.php';?>
 	<div class="firstsubtopnav">
 		<div class="menu-title">HOME</div>
 	</div>
@@ -19,7 +19,7 @@
 
 <div id="news"></div>
 
-<?php include 'footer.php';?>
+<?php include 'includes/footer.php';?>
 
 </body>
 </html>

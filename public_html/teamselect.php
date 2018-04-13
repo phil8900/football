@@ -1,6 +1,6 @@
 <html>
 <head>
-<?php include 'header.php';?>
+<?php include 'includes/header.php';?>
 <script src="js/teams.js"></script>
 <link rel="stylesheet" type="text/css" href="css/teamselect.css">
 </head>
