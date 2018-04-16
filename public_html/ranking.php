@@ -10,7 +10,7 @@
      Your app may use that space for branding, controls and other customizations.-->
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
-<?php include 'sidenav.php';?>
+<?php include 'includes/sidenav.php';?>
     <div class="firstsubtopnav">
         <div class="menu-title">RANKINGS</div>
     </div>
@@ -22,10 +22,15 @@
     </div>
 </div>
 
-<div id = "rankings">
-	<div id="userranking"></div>
-	<div id="teamranking"></div>
-</div>
+<div class="overlay"></div>
+	<div id = "rankings">
+		<div id="userranking"></div>
+		<div id="ownteamranking"></div>
+		<div id='team'>
+			<h2>WORLDWIDE</h2>
+			<div id="teamranking"></div>
+		</div>
+	</div>
 
 <?php include 'includes/footer.php';?>
 </body>

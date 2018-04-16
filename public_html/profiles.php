@@ -11,16 +11,25 @@
 <h1>AU Football</h1>
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
-	<?php include 'sidenav.php';?>
+	<?php include 'includes/sidenav.php';?>
 	<div class="firstsubtopnav">
 		<div class="menu-title">PROFILES</div>
 	</div>
+    <div class="secondsubtopnav">
+
+        <div class="left" onclick="displayUserRanking()">USER</div>
+
+        <div class="right"onclick="displayTeamRanking()">TEAM</div>
+    </div>
 </div>
 
-<h2>User ranking</h2>
-<ol id="userranking"></ol>
-<h2>Team ranking</h2>
-<ol id="teamranking"></ol>
+<div class="overlay"></div>
+<div id="userprofile">
+<div id='ownprofile'></div>
+<div id="activity">
+	<h2>Last Activity</h2>
+</div>
+</div>
 
 <?php include 'includes/footer.php';?>
 </body>

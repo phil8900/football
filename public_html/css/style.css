@@ -29,14 +29,13 @@ h2{
 	margin:auto;
 }
 
-#teamranking{
+#team, #ownteamranking{
 	display:none;
 }
 
-#rankings{
+#rankings, #ownprofile{
 	margin-top:100px;
-    	background-color: rgba(0, 0, 0, 0.6);
-	height:100%;
+	padding-bottom: 5%;
 }
 
 #userranking, #teamranking{
@@ -71,4 +70,95 @@ h2{
 	height: 10%;
 	margin-right:2%;
 	width:10%;
+}
+
+#team h2{
+	text-align:center;
+}
+
+#ownteamranking .rankinglogo, #ownprofile .rankinglogo{
+	margin: auto;
+	display: flex;
+}
+
+#fanbase{
+	text-align:center;
+}
+
+#ownteamname{
+	display:flex;
+}
+
+#ownteamname p{
+	margin:10px auto auto auto;
+	font-size:3em;
+}
+
+#fanbase p{
+	font-size:1.3em;
+}
+
+#rankdiv{
+	text-align: center;
+}
+
+/* Three column layout */
+.side {
+    float: left;
+    width: 15%;
+    margin-top:10px;
+}
+
+.middle {
+    margin-top:10px;
+    float: left;
+    width: 70%;
+}
+
+/* The bar container */
+.bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+    border-radius:15px;
+}
+
+/* Individual bars */
+#fanbasebar {
+	width: 60%;
+	height: 40px;
+	background-color: #4CAF50;
+	border-top-left-radius: 15px;
+    	border-bottom-left-radius: 15px;
+}
+
+.overlay{
+	background-color: rgba(0, 0, 0, 0.6);
+	height:100%;
+	width:100%;
+	position:fixed;
+	z-index:-10;
+}
+
+#phraseparagraph, #userprofile h2{
+	text-align:center;
+}
+
+.acitivitybox{
+	width:25%;
+	background-color:white;
+	border-radius:15px;
+	height:40%;
+	margin-bottom:5%;
+	margin-left:5%;
+	border:3px solid lightgray;
+	text-align:center;
+	color:gray;
+	float: left;
+}
+
+.activityicon{
+	font-size:8em;
+	margin-top:2%;
 }
