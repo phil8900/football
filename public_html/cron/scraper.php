@@ -374,7 +374,7 @@ function getWikiImage($title){
 
 	$doc = (array) json_decode($doc);
 	if(!isset($doc['query'])){
-		return '';
+		return 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Nelson_Neves_picuture.gif';
 	}
 
 	$doc = (array) $doc['query'];
@@ -384,6 +384,6 @@ function getWikiImage($title){
 		$doc = (array) $doc['thumbnail'];
 		return $doc['source'];
 	}
-	return '';
+	return 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Nelson_Neves_picuture.gif';
 }
 ?>

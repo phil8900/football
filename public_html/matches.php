@@ -1,6 +1,7 @@
 <html>
 <head>
 <?php include 'includes/header.php';?>
+<script src="js/ranking.js"></script>
 <script src="js/matches.js"></script>
 <title>LoudStand - Profiles</title>
 </head>
@@ -11,16 +12,20 @@
 <h1>AU Football</h1>
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
-	<?php include 'sidenav.php';?>
+	<?php include 'includes/sidenav.php';?>
 	<div class="firstsubtopnav">
 		<div class="menu-title">MATCHES</div>
 	</div>
 </div>
 
-<h2>User ranking</h2>
-<ol id="userranking"></ol>
-<h2>Team ranking</h2>
-<ol id="teamranking"></ol>
+<div class="overlay"></div>
+<div id="teamprofile" class="matches">
+	<div id='ownteamranking'></div>
+	<div id='matches'>
+		<h2>My Matches</h2>
+		<div id='upcoming'></div>
+	</div>
+</div>
 
 <?php include 'includes/footer.php';?>
 </body>

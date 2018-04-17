@@ -1,6 +1,7 @@
 <html>
 <head>
 <?php include 'includes/header.php';?>
+<script src="js/ranking.js"></script>
 <script src="js/profiles.js"></script>
 <title>LoudStand - Profiles</title>
 </head>
@@ -17,18 +18,27 @@
 	</div>
     <div class="secondsubtopnav">
 
-        <div class="left" onclick="displayUserRanking()">USER</div>
+        <div class="left" onclick="displayUserProfile()">USER</div>
 
-        <div class="right"onclick="displayTeamRanking()">TEAM</div>
+        <div class="right"onclick="displayTeamProfile()">TEAM</div>
     </div>
 </div>
 
 <div class="overlay"></div>
 <div id="userprofile">
-<div id='ownprofile'></div>
-<div id="activity">
-	<h2>Last Activity</h2>
+	<div id='ownprofile'></div>
+	<div id="activity">
+		<h2>Last Activity</h2>
+	</div>
 </div>
+<div id="teamprofile">
+	<div id='ownteamranking'></div>
+	<div id='squad'>
+		<div id='keeper'></div>
+		<div id='defender'></div>
+		<div id='midfielder'></div>
+		<div id='striker'></div>
+	</div>
 </div>
 
 <?php include 'includes/footer.php';?>

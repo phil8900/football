@@ -23,10 +23,10 @@ userRef.on('value', function(snapshot) {
 	setTeamRanking(userRanking);
 });
 
-updateTeamRanking();
+updateTeamRanking(false);
 }
 
-function updateTeamRanking(){
+function updateTeamRanking(profile){
 	teamRef.on('value', function(snapshot) {
 	var array = new Array();
 	snapshot.forEach(function(child) {
@@ -35,7 +35,9 @@ function updateTeamRanking(){
 	array.sort(function(a, b){return b.points-a.points});
 	teamRanking = array;
 
-	document.getElementById('teamranking').innerHTML = '';
+	if(!profile){
+		document.getElementById('teamranking').innerHTML = '';
+	}
 	var rank = 1;
 	teamRanking.forEach(function(entry){
 
@@ -65,7 +67,7 @@ function updateTeamRanking(){
 				}
 			}
   		}
-		showTeamRanking(entry);
+		showTeamRanking(entry, profile);
 		rank++;
 	});
 });
@@ -207,12 +209,14 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 	document.getElementById(id).appendChild(div);
 }
 
-function showTeamRanking(entry){
+function showTeamRanking(entry, profile){
 	firebase.database().ref('/teams/' + entry.teamid + '/information').on('value', function(snapshot) {
 		if(ownteam == entry.teamid){
 			showOwnTeam(snapshot.val(), entry);
 		}
-		createTeamRankingElement(snapshot.val(), entry, 'teamranking');
+		if(!profile){
+			createTeamRankingElement(snapshot.val(), entry, 'teamranking');
+		}
 	});
 }
 

@@ -1,5 +1,6 @@
 var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 var userRanking;
+var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
 
 function initProfiles(){
 	document.getElementById('profilebutton').src = 'img/user_select.svg';
@@ -18,10 +19,11 @@ function initProfiles(){
 	setUserProfile(userRanking);
 });
 	getLastActivities();
+	updateTeamRanking(true);
+	showSquad();
 }
 
 function showOwnProfile(snapshotvalue, entry){
-	console.log(entry);
 	document.getElementById('ownprofile').innerHTML = '';
 	var div = document.createElement('div');
 	var imagewrapper = document.createElement('div');
@@ -157,18 +159,6 @@ function setUserProfile(userRanking){
 }
 
 function showActivityBox(activity){
-	var activitytext;
-
-	if(activity == 'checkin'){
-		activitytext = 'Checked in at';
-	}
-	else if(activity == 'reaction'){
-		activitytext = 'Reacted to';
-	}
-	else if(activity == 'starting'){
-		activitytext = 'Suggested starting 11';
-	}
-
 	var wrapper = document.getElementById('activity');
 	var div = document.createElement('div');
 	div.classList.add('acitivitybox');
@@ -177,38 +167,125 @@ function showActivityBox(activity){
 	var symbol = document.createElement('i');
 	symbol.classList.add('fas');
 	symbol.classList.add('activityicon');
-	getActivityIcon(symbol, activity);
 	paragraph.appendChild(symbol);
 	div.appendChild(paragraph);
 	var description = document.createElement('p');
-	description.appendChild(document.createTextNode(activitytext));
-
+	getActivityIcon(symbol, activity, description);
+	
 	div.appendChild(description);
-
-
 	wrapper.appendChild(div);
 }
 
-function getActivityIcon(activitysymbol, activity){
+function displayUserProfile(){
+	document.getElementById('userprofile').style.display = 'block';
+	document.getElementById('teamprofile').style.display = 'none';
+	document.getElementById('ownteamranking').style.display = 'block';
+}
+
+function displayTeamProfile(){
+	document.getElementById('userprofile').style.display = 'none';
+	document.getElementById('teamprofile').style.display = 'block';
+	document.getElementById('ownteamranking').style.display = 'block';
+}
+
+function getActivityIcon(activitysymbol, activity, description){
 	var symbol;
 	var color = 'gray';
+	var activitytext;
 
 	if(activity == 'checkin'){
 		symbol = 'fa-compass';
+		activitytext = 'Checked in at';
 	}
 	else if(activity == 'reaction'){
 		symbol = 'fa-comments';
+		activitytext = 'Reacted to';
 	}
 	else if(activity == 'starting'){
 		symbol = 'fa-futbol';
+		activitytext = 'Suggested starting 11';
+	}
+	else if(activity == 'bestplayer'){
+		symbol = 'fa-trophy';
+		activitytext = 'Voted for MVP';
 	}
 
 	activitysymbol.classList.add(symbol);
 	activitysymbol.style.color = color;
+	description.appendChild(document.createTextNode(activitytext));
 }
 
 function getLastActivities(){
 	showActivityBox('checkin');
 	showActivityBox('reaction');
 	showActivityBox('starting');
+	showActivityBox('bestplayer');
+}
+
+function showSquad(){
+	var teamRef = firebase.database().ref('teams/' + ownteam + '/squad');
+
+	teamRef.once('value', function(snapshot){
+		snapshot.forEach(function(child){
+			var player = child.val();
+
+	var div;
+	if(document.getElementById(player['playerid']) == null){
+		div = document.createElement('div');
+		div.id = player['playerid'];
+	}
+	else{
+		div = document.getElementById(player['playerid']);
+		div.innerHTML = '';
+	}
+
+	div.classList.add('userelement');
+	var firstlinediv = document.createElement('div');
+	firstlinediv.classList.add('firstlinediv');
+
+	var imagewrapper = document.createElement('div');
+	imagewrapper.classList.add('playerimagewrapper');
+	imagewrapper.style.backgroundImage="url('" + player['picture'] + "')";
+	firstlinediv.appendChild(imagewrapper);
+
+	var namespan = document.createElement('span');
+	namespan.appendChild(document.createTextNode(player['fullname']));
+	namespan.classList.add('userrankingname');
+
+	firstlinediv.appendChild(namespan);
+
+	var rankspan = document.createElement('span');
+	rankspan.appendChild(document.createTextNode(player['status']));
+
+	div.appendChild(firstlinediv);
+
+	var pointsdiv = document.createElement('div');
+	pointsdiv.appendChild(document.createTextNode(player['jerseynumber']));
+	pointsdiv.classList.add('userrankingpoints');
+
+	div.appendChild(pointsdiv);
+
+	document.getElementById(getGeneralPosition(player['position'])).appendChild(div);
+			});
+	});
+}
+
+function getGeneralPosition(position){
+	var general = 'keeper';
+
+	var defenders = ["Left-Back", "Centre-Back", "Right-Back"];
+	var midfielders = ["Attacking Midfield", "Central Midfield", "Defensive Midfield", "Left Midfield", "Right Midfield"];
+	var strikers = ["Centre-Forward", "Left Wing", "Right Wing", "Secondary Striker"];
+
+	if(defenders.includes(position)){
+		general = 'defender';
+	}
+	else if(midfielders.includes(position)){
+		general = 'midfielder';
+	}
+	else if(strikers.includes(position)){
+		general = 'striker';
+	}
+
+	return general;
 }
