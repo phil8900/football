@@ -34,16 +34,18 @@ function showMatches(){
 			homediv.classList.add('homediv');
 
 			firebase.database().ref('/teams/' + hometeam + '/information').once('value', function(snapshot) {
-				var logo = document.createElement('img');
-				logo.src = snapshot.val().teamlogo;
-				logo.classList.add('matchlogo');
+				if(snapshot.val() != null){
+					var logo = document.createElement('img');
+					logo.src = snapshot.val().teamlogo;
+					logo.classList.add('matchlogo');
 
-				var home = document.createElement('div');
-				home.appendChild(document.createTextNode(snapshot.val().teamname));
-				home.classList.add('matchhometeam');
+					var home = document.createElement('div');
+					home.appendChild(document.createTextNode(snapshot.val().teamname));
+					home.classList.add('matchhometeam');
 
-				homediv.appendChild(logo);
-				homediv.appendChild(home);
+					homediv.appendChild(logo);
+					homediv.appendChild(home);
+				}
 			});
 			div.appendChild(homediv);
 
@@ -64,16 +66,18 @@ function showMatches(){
 			awaydiv.classList.add('awaydiv');
 
 			firebase.database().ref('/teams/' + awayteam + '/information').once('value', function(snapshot) {
-				var logo = document.createElement('img');
-				logo.src = snapshot.val().teamlogo;
-				logo.classList.add('matchlogo');
+				if(snapshot.val() != null){
+					var logo = document.createElement('img');
+					logo.src = snapshot.val().teamlogo;
+					logo.classList.add('matchlogo');
 
-				var away = document.createElement('div');
-				away.appendChild(document.createTextNode(snapshot.val().teamname));
-				away.classList.add('matchawayteam');
+					var away = document.createElement('div');
+					away.appendChild(document.createTextNode(snapshot.val().teamname));
+					away.classList.add('matchawayteam');
 
-				awaydiv.appendChild(away);
-				awaydiv.appendChild(logo);
+					awaydiv.appendChild(away);
+					awaydiv.appendChild(logo);
+				}
 			});
 			div.appendChild(awaydiv);
 			wrapper.appendChild(div);

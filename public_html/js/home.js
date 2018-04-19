@@ -1,9 +1,11 @@
+var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
+
 function initHome(){
-	getNews();
+	getNews(false);
 	document.getElementById('homebutton').src = 'img/home_select.svg';
 }
 
-function getNews(){
+function getNews(ownnews){
 	var wrapper = document.getElementById('news');
 	var teamsRef = firebase.database().ref('/teams/');
 	var news = [];
@@ -14,6 +16,7 @@ function getNews(){
 			if(teamnews != null){
 				teamnews.forEach(function(newsitem) {
 					newsitem['team'] = child.val()['information']['teamname'];
+					newsitem['teamid'] = child.key;
 					news.push(newsitem);
 				});
 			}
@@ -21,13 +24,23 @@ function getNews(){
 		news.sort(function(a, b) {
   			return b.timestamp - a.timestamp;
 		});
-		showNews(news, 20);
+		showNews(news, 20, ownnews);
 	});
 }
 
-function showNews(news, limit){
+function showNews(news, limit, ownnews){
 	var wrapper = document.getElementById('news');
-	news.slice(0, limit).forEach(function(child) {
+
+	if(!ownnews){
+		news = news.slice(0, limit);
+	}
+
+	news.forEach(function(child) {
+		if(ownnews){
+			if(child['teamid'] != ownteam){
+				return;
+			}
+		}
 				var div = document.createElement('div');
 
 				var date = document.createElement('p');

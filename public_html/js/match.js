@@ -33,30 +33,8 @@ function getLiveGameEvents(){
 		});
 	}
 	else{
-		showTeamNews();
+		getNews(true);
 	}
-}
-
-function showTeamNews(){
-	var wrapper = document.getElementById('events');
-
-			firebase.database().ref('/teams/' + ownteam + '/information/news').on('value', function(snapshot) {
-			snapshot.forEach(function(child) {
-				var li = document.createElement('li');
-				var div = document.createElement('div');
-				var p = document.createElement('p');
-				var newlink = document.createElement('a');
-				newlink.setAttribute('href', child.val()['url']);
-				newlink.setAttribute('target', '_blank')
-				newlink.innerHTML = 'Read more...';
-				p.appendChild(document.createTextNode(child.val()['date'] + ': ' + child.val()['title'] + ' '));
-				p.appendChild(newlink);
-				div.appendChild(p);
-
-				li.appendChild(div);
-				wrapper.appendChild(li);
-			});
-});
 }
 
 function getEventReaction(event_id){
@@ -79,48 +57,46 @@ function getEventReaction(event_id){
 
 function showEvents(event, gameid){
 	var eventwrapper = document.getElementById(event.eventId);
+	eventwrapper.classList.add('acitivitybox');
 
 	var score = document.createElement('div');
 	var text = document.createTextNode(event.tore_h + ' : ' + event.tore_g);
 	score.appendChild(text);
 	score.classList.add('score');
-	eventwrapper.appendChild(score);
+	eventwrapper.insertBefore(score, eventwrapper.getElementsByClassName('gamereaction')[0]);
 
-
-	var eventlist = document.createElement("ul");
-	var eventid = document.createTextNode(event.eventId);
-	eventlist.appendChild(eventid);
-
-	var typespan = document.createElement("div");
-	var type = document.createTextNode(event.type);
-	typespan.appendChild(type);
-	typespan.classList.add(event.type);
-	eventlist.appendChild(typespan);
-
-	if(event.type == 'karte'){
-	var cardspan = document.createElement("div");
-	var card = document.createTextNode(event.subtype);
-	cardspan.appendChild(card);
-	cardspan.classList.add(event.type);
-	cardspan.classList.add(event.subtype);
-	eventlist.appendChild(cardspan);
-	}
+	var eventlist = document.createElement("div");
+	eventlist.classList.add('eventlist');
 
 	var minutespan = document.createElement("div");
-	var minute = document.createTextNode(event.minute);
+	var clock = document.createElement('i');
+	clock.classList.add('fas');
+	clock.classList.add('fa-stopwatch');
+	minutespan.appendChild(clock);
+	var minute = document.createTextNode(' ' + event.minute);
 	minutespan.appendChild(minute);
 	minutespan.classList.add('minute');
 	eventlist.appendChild(minutespan);
 
+	var typespan = document.createElement("div");
+	var icon = getIconForEventType(event.type, event.subtype);
+	typespan.appendChild(icon);
 
+	eventlist.appendChild(typespan);
 
 	firebase.database().ref('/teams/' + event.verein_id + '/information').once('value', function(snapshot) {
 		var teamname = event.verein_id;
+		var teamlogo = '';
 		if(snapshot.val() != null){
 			teamname = snapshot.val().teamname;
+			teamlogo = snapshot.val().teamlogo;
 		}
 		var vereinspan = document.createElement("div");
-		var verein = document.createTextNode(teamname);
+		var logo = document.createElement('img');
+		logo.classList.add('eventteamlogo');
+		logo.src = teamlogo;
+		vereinspan.appendChild(logo);
+		var verein = document.createTextNode(' ' + teamname);
 		vereinspan.appendChild(verein);
 		vereinspan.classList.add('verein');
 		eventlist.appendChild(vereinspan);
@@ -132,10 +108,39 @@ function showEvents(event, gameid){
 			getPlayerInfo(event.spieler_id_2, event, eventlist);
 		}
 
-	
-	eventwrapper.appendChild(eventlist);
+	eventwrapper.insertBefore(eventlist, eventwrapper.getElementsByClassName('gamereaction')[0]);
 	getEventReaction(event.eventId);
 
+}
+
+function getIconForEventType(type, subtype){
+	var icon = document.createElement('i');
+	icon.classList.add('fas');
+
+	if(type == 'tor'){
+		icon.classList.add('fa-futbol');
+	}
+	else if(type == 'karte'){
+		icon.classList.add('fa-square');
+		if(subtype == 'gelb'){
+			icon.style.color = 'yellow';
+		}
+		else{
+			icon.style.color = 'red';
+		}
+	}
+	else if(type == 'wechsel'){
+		icon.classList.add('fa-exchange-alt');
+	}
+	else if(type == 'auswechsel'){
+		icon.classList.add('fa-arrow-left');
+		icon.style.color = 'red';
+	}
+	else if(type == 'einwechsel'){
+		icon.classList.add('fa-arrow-right');		
+		icon.style.color = 'green';
+	}
+	return icon;
 }
 
 function getPlayerInfo(playerid, event, eventlist){
@@ -145,12 +150,24 @@ function getPlayerInfo(playerid, event, eventlist){
 	firebase.database().ref('/teams/' + event.verein_id + '/squad/' + playerid).once('value', function(snapshot) {
 		if(snapshot.val() != null){
 			playername = snapshot.val().shortname;
+			eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
 		}
 		var playerspan = document.createElement("div");
-		var player = document.createTextNode(playername);
+
+		if(event.type == 'wechsel'){
+			if(playerid == event.spieler_id_1){
+				playerspan.appendChild(getIconForEventType('auswechsel', null));
+			}
+			else{
+				playerspan.appendChild(getIconForEventType('einwechsel', null));
+			}
+		}
+
+		var player = document.createTextNode(' ' + playername);
 		playerspan.appendChild(player);
 		playerspan.classList.add('player');
 		eventlist.appendChild(playerspan);
+		
 		});
 }
 
@@ -191,9 +208,59 @@ function getTeamInfo(gameid){
 function showEventReaction(game_id, event_id, reaction){
 	var wrapper = document.getElementById(game_id);
 	var eventwrapper = document.getElementById(event_id);
+	var bar = eventwrapper.getElementsByClassName('reactionbar')[0];
 
-	eventwrapper.getElementsByClassName('positive')[0].innerHTML = 'Positive ' + reaction.positive;
-	eventwrapper.getElementsByClassName('negative')[0].innerHTML = 'Negative ' + reaction.negative;
+
+
+	if(bar == null){
+		var row = document.createElement('div');
+		row.classList.add('row');
+		var side = document.createElement('div');
+		side.classList.add('side');
+		row.appendChild(side);
+		var middle = document.createElement('div');
+		middle.classList.add('middle');
+		row.appendChild(middle);
+
+		var container = document.createElement('div');
+		container.classList.add('bar-container');
+		bar = document.createElement('div');
+		bar.classList.add('reactionbar');
+		container.appendChild(bar);
+
+		middle.appendChild(container);
+
+		eventwrapper.getElementsByClassName('positive')[0].appendChild(row);
+	}
+	showReactionBarValue(bar, reaction);
+}
+
+function showReactionBarValue(reactionbar, reaction){
+	var percentage;
+	var positive = reaction.positive;
+	var negative = reaction.negative;
+
+	if((negative == 0) && (positive == 0)){
+		percentage = 50;
+	}
+	else if(negative == 0){
+		percentage = 100;
+	}
+	else{
+		percentage = positive/negative;
+	}
+
+	console.log(percentage);
+
+	reactionbar.style.width = percentage + '%';
+	if(percentage == 100){
+		reactionbar.style.borderTopRightRadius = '15px';
+		reactionbar.style.borderBottomRightRadius = '15px';
+	}
+	else{
+		reactionbar.style.borderTopRightRadius = '0px';
+		reactionbar.style.borderBottomRightRadius = '0px';
+	}
 }
 
 function createWrappers(game_id, event_id){
@@ -209,19 +276,26 @@ function createWrappers(game_id, event_id){
 	if(eventwrapper == null){
 		eventwrapper = document.createElement("div");
 		eventwrapper.id = event_id;
+		eventwrapper.classList.add('eventbox');
+
+		var reactiondiv = document.createElement('div');
+		reactiondiv.classList.add('gamereaction');
 
 		var positive = document.createElement('div');
 		positive.classList.add('positive');
 		var negative = document.createElement('div');
 		negative.classList.add('negative');
 
-		eventwrapper.appendChild(positive);
-		eventwrapper.appendChild(negative);
+		reactiondiv.appendChild(positive);
+		reactiondiv.appendChild(negative);
 		wrapper.appendChild(eventwrapper);
 
 		var upbutton = document.createElement("button");
-		var uptext = document.createTextNode("Upvote");
-		upbutton.appendChild(uptext);
+		var upsymbol = document.createElement('i');
+		upsymbol.classList.add('fas');
+		upsymbol.classList.add('fa-thumbs-up');
+		upbutton.classList.add('upbutton');
+		upbutton.appendChild(upsymbol);
 
 		upbutton.addEventListener("click", function(){
     		reactToEvent(event_id, 1);
@@ -230,8 +304,11 @@ function createWrappers(game_id, event_id){
 		}); 
 
 		var downbutton = document.createElement("button");
-		var downtext = document.createTextNode("Downvote");
-		downbutton.appendChild(downtext);
+		var downsymbol = document.createElement('i');
+		downsymbol.classList.add('fas');
+		downsymbol.classList.add('fa-thumbs-down');
+		downbutton.appendChild(downsymbol);
+		downbutton.classList.add('downbutton');
 
 		downbutton.addEventListener("click", function(){
     		reactToEvent(event_id, -1);
@@ -239,8 +316,9 @@ function createWrappers(game_id, event_id){
     		upbutton.disabled = true;
 		}); 
 
-		eventwrapper.appendChild(upbutton);
-		eventwrapper.appendChild(downbutton);
+		reactiondiv.appendChild(upbutton);
+		reactiondiv.appendChild(downbutton);
+		eventwrapper.appendChild(reactiondiv);
 	}
 }
 
@@ -251,16 +329,32 @@ function reactToEvent(event_id, reaction){
 			firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id).once('value').then(function(snapshot) {
 				if(snapshot.val() != null){
 					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions');
-					if(reaction == 1){
-					reactionRef.child('positive').transaction(function(positive) {
-						return positive + 1;
-					});
+					var userReactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid);
+
+					userReactionRef.once('value').then(function(snapshot) {
+
+					if(snapshot.val() == null){
+						if(reaction == 1){
+							reactionRef.child('positive').transaction(function(positive) {
+							var updates = {};
+  							updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid] = 'positive';
+
+  							firebase.database().ref().update(updates);
+
+							return positive + 1;
+							});
+						}
+						else{
+							reactionRef.child('negative').transaction(function(negative) {
+								var updates = {};
+  								updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid] = 'negative';
+
+  								firebase.database().ref().update(updates);
+								return negative + 1;
+							});
+						}
 					}
-					else{
-						reactionRef.child('negative').transaction(function(negative) {
-							return negative + 1;
-					});
-					}
+				});
 				}
 			});
 		});

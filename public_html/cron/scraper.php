@@ -224,6 +224,7 @@ function getGameEvents($game_id) {
 	$url = str_replace('begegnung', 'getSpielverlauf', $live_base) . $game_id;
 
 	$url = 'http://46.101.238.193/test/two_event.json';
+	$url = 'https://www.transfermarkt.co.uk/ticker/getSpielverlauf/live/2994526';
 
 	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
 	$events = (array) json_decode($doc);
@@ -368,7 +369,7 @@ function getTeamNews($teamurl){
 }
 
 function getWikiImage($title){
-	$url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&generator=prefixsearch&formatversion=2&piprop=thumbnail&pithumbsize=250&pilimit=20&gpslimit=1&gpssearch=' . str_replace(' ', '%20', $title);
+	$url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&generator=prefixsearch&formatversion=2&piprop=thumbnail&pithumbsize=450&pilimit=20&gpslimit=1&gpssearch=' . str_replace(' ', '%20', $title);
 
 	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
 

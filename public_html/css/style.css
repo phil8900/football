@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "ds-digitalnormal";
+    src: url(../includes/DS-DIGI.TTF) format("truetype");
+}
+
 body{
 	background-image:url("../img/grass.jpg");
 	color:white;
@@ -125,7 +130,7 @@ h2{
 }
 
 /* Individual bars */
-#fanbasebar {
+#fanbasebar{
 	width: 60%;
 	height: 40px;
 	background-color: #4CAF50;
@@ -191,6 +196,7 @@ h2{
 
 #teamprofile{
 	display:none;
+	clear:both;
 }
 
 #teamprofile.matches, #teamprofile.matches #ownteamranking{
@@ -277,4 +283,69 @@ h2{
 	height: 72%;
 	margin-bottom: 5%;
 	margin-top: 5%;
+}
+
+#teamprofile.matches #fanbase{
+	display:none;
+}
+
+.fa-thumbs-down, .fa-thumbs-up{
+	color:#b06401;
+	font-size:1.8em;
+}
+
+button{
+	border-radius:10px;
+	border-style: solid;
+	height:50px;
+	width:50px;
+	margin: 0px 10px 0px 0px;
+}
+
+.downbutton{
+	border-color: #f47126;
+}
+
+.upbutton{
+	border-color: #610fde;
+}
+
+.eventbox{
+	background-size:cover;
+}
+
+.score{
+	font-family: ds-digitalnormal;
+	font-size:2em;
+	width: 25%;
+	margin: auto;
+	background-color: black;
+	border-radius: 3px;
+	color: white;
+}
+
+.fa-square{
+	-ms-transform: scale(2, 3);
+	-webkit-transform: scale(2, 3);
+	transform: scale(1, 1.4);
+}
+
+.eventteamlogo{
+	width:5%;
+}
+
+.eventlist{
+	margin-top:15%;
+	background-color: rgba(0,0,0,0.5);
+	color:white;
+	line-height:1.5em;
+}
+
+.reactionbar {
+	width: 60%;
+	height: 15px;
+	background-color: #4CAF50;
+	border-top-left-radius: 15px;
+    	border-bottom-left-radius: 15px;
+	margin-bottom:5px;
 }

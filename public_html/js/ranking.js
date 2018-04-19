@@ -254,7 +254,6 @@ function showOwnTeam(snapshotvalue, entry){
 	var ranktext = document.createElement('p');
 	ranktext.appendChild(document.createTextNode('current place'));
 
-
 	rankdiv.appendChild(rankparagraph);
 	rankdiv.appendChild(ranktext);
 
