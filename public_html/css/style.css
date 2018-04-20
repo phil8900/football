@@ -380,3 +380,14 @@ button{
 	width:10%;
 	color:gray;
 }
+
+.userelement .checkinbutton{
+	margin-top: -3%;
+	font-family: ds-digitalnormal;
+	font-size:2em;
+	color:green;
+}
+.startinglist .player{
+	font-size:16px;
+	line-height:1.3em;
+}

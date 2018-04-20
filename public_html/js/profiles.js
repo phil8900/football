@@ -1,6 +1,7 @@
 var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 var userRanking;
 var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
+var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
 
 function initProfiles(){
 	document.getElementById('profilebutton').src = 'img/user_select.svg';
@@ -203,7 +204,7 @@ function getTimestampForActivity(activity, event, reaction){
 		timestamp = reaction[uid].timestamp;
 	}
 	else if(activity == 'starting'){
-
+		timestamp = event.timestamp;
 	}
 	else if(activity == 'bestplayer'){
 
@@ -241,6 +242,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
 	else if(activity == 'starting'){
 		symbol = 'fa-futbol';
 		activitytext = 'Suggested starting 11';
+		getStartingElevenDetails(description, event, activitytext, gameid);
 	}
 	else if(activity == 'bestplayer'){
 		symbol = 'fa-trophy';
@@ -272,14 +274,44 @@ function getLastActivities(){
 		snapshot.forEach(function(child) {
 			if(child.val()[uid] != null){
 				var key = Object.keys(child.val()[uid]);
-				console.log(child.val()[uid][key]);
 				showActivityBox('checkin', child.val()[uid][key], null, null);
 			}
 		});
 	});
 
-//	showActivityBox('starting');
+	firebase.database().ref('/startingeleven/users/' + uid).once('value', function(snapshot) {
+		snapshot.forEach(function(child) {
+			if(child.val().timestamp != null){
+				showActivityBox('starting', child.val(), child.key, null);
+			}
+		});
+	});
+
 //	showActivityBox('bestplayer');
+}
+
+function getStartingElevenDetails(description, event, activitytext, gameid){
+	setActivityText(description, activitytext);
+	var eventwrapper = document.createElement('div');
+	eventwrapper.classList.add('activitybox');
+	eventwrapper.classList.add('activityreaction');
+	var eventlist = document.createElement("div");
+	eventlist.classList.add('eventlist');
+	eventlist.classList.add('startinglist');
+
+	var starting = document.createElement('div');
+
+	Object.keys(event).forEach(function(child){
+		if(child != 'timestamp'){
+		var tmpevent = [];
+		tmpevent['verein_id'] = ownteam;
+		getPlayerInfo(event[child].playerid, tmpevent, eventlist);
+		}
+	});
+
+	eventlist.appendChild(starting);
+	eventwrapper.appendChild(eventlist);
+	description.appendChild(eventwrapper);
 }
 
 function getCheckinDetails(description, activitytext, event){
@@ -378,6 +410,16 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
 
 function showSquad(){
 	var teamRef = firebase.database().ref('teams/' + ownteam + '/squad');
+	var nextgame = '';
+	var currenttime = Math.floor(Date.now() / 1000);
+
+	fixtures.forEach(function(child) {
+		if(child.timestamp > currenttime){
+			if(nextgame == ''){
+				nextgame = child;
+			}
+		}
+	});
 
 	teamRef.once('value', function(snapshot){
 		snapshot.forEach(function(child){
@@ -419,9 +461,71 @@ function showSquad(){
 
 	div.appendChild(pointsdiv);
 
+	var button = document.createElement('button');
+	button.appendChild(document.createTextNode('11'));
+    button.classList.add('checkinbutton');
+    button.addEventListener("click", function(){
+    	manageStartingEleven(button.parentElement.id, nextgame, button);
+    });
+
+    div.appendChild(button);
+
 	document.getElementById(getGeneralPosition(player['position'])).appendChild(div);
 			});
+	setupButtons(nextgame);
 	});
+}
+
+function setupButtons(nextgame){
+	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame.gameid);
+
+    startingRef.on('value', function(snapshot){
+    	var counter = 0;
+    	snapshot.forEach(function(child) {
+    		if(child.val().playerid != null){
+    		var div = document.getElementById(child.val().playerid);
+    		var button = div.getElementsByClassName('checkinbutton')[0];
+    		button.style.color = 'red';
+    		counter++;
+    		}
+    		});
+    	
+    		var all = document.getElementsByClassName('checkinbutton');
+			for (var i = 0; i < all.length; i++) {
+				if(counter == 11){
+ 				 if(all[i].style.color != 'red'){
+ 				 	all[i].disabled = true;
+ 				 	all[i].style.color = 'lightgray';
+
+ 				 	var updates = {};
+  					updates['startingeleven/users/' + uid + '/' + nextgame.gameid + '/timestamp'] = Math.floor(Date.now() / 1000);
+  					firebase.database().ref().update(updates);
+ 				 	}
+			}
+			else if(all[i].style.color != 'red'){
+				 	all[i].disabled = false;
+ 				 	all[i].style.color = 'green';
+			}
+    	}
+    	});
+}
+
+function manageStartingEleven(playerid, nextgame, button){
+	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame.gameid + '/' + playerid);
+
+	startingRef.once('value', function(snapshot){
+		if(snapshot.val() == null){
+			startingRef.set({
+    			playerid: playerid
+  			});
+  			button.style.color = 'red';
+		}
+		else{
+			firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame.gameid + '/' + playerid).remove();
+			firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame.gameid + '/' + 'timestamp').remove();
+			button.style.color = 'green';
+		}
+	})
 }
 
 function getGeneralPosition(position){
