@@ -37,11 +37,20 @@
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
             var e = document.createElement('div');
-            e.innerHTML = results[i].name;
+            e.classList.add('userelement');
+            var p = document.createElement('p');
+            p.classList.add('userrankingname');
+            p.innerHTML = results[i].name;
             var button = document.createElement('button');
-            var buttontext = document.createTextNode("Checkin");
-            button.appendChild(buttontext);
-            e.appendChild(button);
+            var symbol = document.createElement('i');
+            symbol.classList.add('fas');
+            symbol.classList.add('fa-compass');
+            button.classList.add('upbutton');
+            button.appendChild(symbol);
+
+            button.classList.add('checkinbutton');
+            p.appendChild(button);
+            e.appendChild(p);
             document.getElementById("results").appendChild(e);
             addListener(button, results[i]);
 

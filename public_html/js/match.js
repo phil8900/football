@@ -57,7 +57,7 @@ function getEventReaction(event_id){
 
 function showEvents(event, gameid){
 	var eventwrapper = document.getElementById(event.eventId);
-	eventwrapper.classList.add('acitivitybox');
+	eventwrapper.classList.add('activitybox');
 
 	var score = document.createElement('div');
 	var text = document.createTextNode(event.tore_h + ' : ' + event.tore_g);
@@ -150,7 +150,9 @@ function getPlayerInfo(playerid, event, eventlist){
 	firebase.database().ref('/teams/' + event.verein_id + '/squad/' + playerid).once('value', function(snapshot) {
 		if(snapshot.val() != null){
 			playername = snapshot.val().shortname;
-			eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+			if(eventwrapper != null){
+				eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+			}
 		}
 		var playerspan = document.createElement("div");
 
@@ -171,9 +173,10 @@ function getPlayerInfo(playerid, event, eventlist){
 		});
 }
 
-function getTeamInfo(gameid){
-
-	var wrapper = document.getElementById(gameid);
+function getTeamInfo(gameid, wrapper){
+	if(wrapper == null){
+		var wrapper = document.getElementById(gameid);
+	}
 	var gameheader = document.createElement("div");
 	gameheader.id = 'gameheader';
 	var homespan = document.createElement("span");
@@ -271,7 +274,7 @@ function createWrappers(game_id, event_id){
 		wrapper = document.createElement("div");
 		wrapper.id = game_id;
 		document.getElementById('events').appendChild(wrapper);
-		getTeamInfo(game_id);
+		getTeamInfo(game_id, null);
 	}
 	if(eventwrapper == null){
 		eventwrapper = document.createElement("div");
@@ -334,10 +337,13 @@ function reactToEvent(event_id, reaction){
 					userReactionRef.once('value').then(function(snapshot) {
 
 					if(snapshot.val() == null){
+						var currenttime = Math.floor(Date.now() / 1000);
 						if(reaction == 1){
 							reactionRef.child('positive').transaction(function(positive) {
 							var updates = {};
-  							updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid] = 'positive';
+  							updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/reaction'] = 'positive';
+  							updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
+
 
   							firebase.database().ref().update(updates);
 
@@ -347,7 +353,8 @@ function reactToEvent(event_id, reaction){
 						else{
 							reactionRef.child('negative').transaction(function(negative) {
 								var updates = {};
-  								updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid] = 'negative';
+  								updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/reaction'] = 'negative';
+  								updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
 
   								firebase.database().ref().update(updates);
 								return negative + 1;

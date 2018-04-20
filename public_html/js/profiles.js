@@ -158,10 +158,13 @@ function setUserProfile(userRanking){
 	});
 }
 
-function showActivityBox(activity){
+function showActivityBox(activity, event, gameid, reaction){
 	var wrapper = document.getElementById('activity');
+	var timestamp = getTimestampForActivity(activity, event, reaction);
 	var div = document.createElement('div');
-	div.classList.add('acitivitybox');
+	div.classList.add('activitybox');
+	div.classList.add('reactionboxwrapper');
+	div.id = timestamp;
 
 	var paragraph = document.createElement('p');
 	var symbol = document.createElement('i');
@@ -169,11 +172,43 @@ function showActivityBox(activity){
 	symbol.classList.add('activityicon');
 	paragraph.appendChild(symbol);
 	div.appendChild(paragraph);
-	var description = document.createElement('p');
-	getActivityIcon(symbol, activity, description);
+	var description = document.createElement('div');
+	getActivityIcon(symbol, activity, description, event, gameid, reaction);
 	
 	div.appendChild(description);
-	wrapper.appendChild(div);
+
+	var activityarray = wrapper.getElementsByClassName('reactionboxwrapper');
+
+	if(activityarray.length == 0){
+		wrapper.appendChild(div);
+	}
+	else{
+		[].forEach.call(activityarray, function (el) {
+			if(timestamp < el.id){
+				wrapper.appendChild(div);
+			}
+			else{
+				wrapper.insertBefore(div, el);
+			}
+		});
+	}
+}
+
+function getTimestampForActivity(activity, event, reaction){
+	var timestamp = '';
+	if(activity == 'checkin'){
+		timestamp = event.timestamp;
+	}
+	else if(activity == 'reaction'){
+		timestamp = reaction[uid].timestamp;
+	}
+	else if(activity == 'starting'){
+
+	}
+	else if(activity == 'bestplayer'){
+
+	}
+	return timestamp;
 }
 
 function displayUserProfile(){
@@ -188,7 +223,7 @@ function displayTeamProfile(){
 	document.getElementById('ownteamranking').style.display = 'block';
 }
 
-function getActivityIcon(activitysymbol, activity, description){
+function getActivityIcon(activitysymbol, activity, description, event, gameid, reaction){
 	var symbol;
 	var color = 'gray';
 	var activitytext;
@@ -196,10 +231,12 @@ function getActivityIcon(activitysymbol, activity, description){
 	if(activity == 'checkin'){
 		symbol = 'fa-compass';
 		activitytext = 'Checked in at';
+		getCheckinDetails(description, activitytext, event);
 	}
 	else if(activity == 'reaction'){
 		symbol = 'fa-comments';
 		activitytext = 'Reacted to';
+		getReactionDetails(description, event, activitytext, gameid, reaction);
 	}
 	else if(activity == 'starting'){
 		symbol = 'fa-futbol';
@@ -212,14 +249,131 @@ function getActivityIcon(activitysymbol, activity, description){
 
 	activitysymbol.classList.add(symbol);
 	activitysymbol.style.color = color;
-	description.appendChild(document.createTextNode(activitytext));
 }
 
 function getLastActivities(){
-	showActivityBox('checkin');
-	showActivityBox('reaction');
-	showActivityBox('starting');
-	showActivityBox('bestplayer');
+	firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
+		snapshot.forEach(function(child) {
+			var gameid = child.val().gameid;
+			firebase.database().ref('/fixtures/' + gameid + '/events/').once('value', function(snapshot) {
+				snapshot.forEach(function(child) {
+					firebase.database().ref('/fixtures/' + gameid + '/events/' + child.val().eventId + '/reactions/users').on('value', function(snapshot) {
+						var event = child.val();
+						if((snapshot.val() != null) && (Object.keys(snapshot.val())[0] == uid)){
+							showActivityBox('reaction', event, gameid, snapshot.val());
+						}
+					});
+				});
+			});
+		});
+	});
+
+	firebase.database().ref('/checkins/').on('value', function(snapshot) {
+		snapshot.forEach(function(child) {
+			if(child.val()[uid] != null){
+				var key = Object.keys(child.val()[uid]);
+				console.log(child.val()[uid][key]);
+				showActivityBox('checkin', child.val()[uid][key], null, null);
+			}
+		});
+	});
+
+//	showActivityBox('starting');
+//	showActivityBox('bestplayer');
+}
+
+function getCheckinDetails(description, activitytext, event){
+	setActivityText(description, activitytext);
+	var eventwrapper = document.createElement('div');
+	eventwrapper.classList.add('activitybox');
+	eventwrapper.classList.add('activityreaction');
+	var eventlist = document.createElement("div");
+	eventlist.classList.add('eventlist');
+
+	var placename = document.createElement('p');
+	placename.appendChild(document.createTextNode(event.placename));
+
+	eventlist.appendChild(placename);
+	eventwrapper.appendChild(eventlist);
+	description.appendChild(eventwrapper);
+}
+
+function setActivityText(description, activitytext){
+	var paragraph = document.createElement('p');
+	paragraph.appendChild(document.createTextNode(activitytext));
+	paragraph.classList.add('activitytext');
+	description.appendChild(paragraph);
+}
+
+function getReactionDetails(description, event, activitytext, gameid, reaction){
+	setActivityText(description, activitytext);
+	var eventwrapper = document.createElement('div');
+	eventwrapper.classList.add('activitybox');
+	eventwrapper.classList.add('activityreaction');
+	eventwrapper.id = event.eventId;
+
+	getTeamInfo(gameid, eventwrapper);
+
+	var score = document.createElement('div');
+	var text = document.createTextNode(event.tore_h + ' : ' + event.tore_g);
+	score.appendChild(text);
+	score.classList.add('score');
+	eventwrapper.appendChild(score);
+
+	var eventlist = document.createElement("div");
+	eventlist.classList.add('eventlist');
+
+	var minutespan = document.createElement("div");
+	var clock = document.createElement('i');
+	clock.classList.add('fas');
+	clock.classList.add('fa-stopwatch');
+	minutespan.appendChild(clock);
+	var minute = document.createTextNode(' ' + event.minute);
+	minutespan.appendChild(minute);
+	minutespan.classList.add('minute');
+	eventlist.appendChild(minutespan);
+
+	var typespan = document.createElement("div");
+	var icon = getIconForEventType(event.type, event.subtype);
+	typespan.appendChild(icon);
+
+	eventlist.appendChild(typespan);
+
+	firebase.database().ref('/teams/' + event.verein_id + '/information').once('value', function(snapshot) {
+		var teamname = event.verein_id;
+		var teamlogo = '';
+		if(snapshot.val() != null){
+			teamname = snapshot.val().teamname;
+			teamlogo = snapshot.val().teamlogo;
+		}
+		var vereinspan = document.createElement("div");
+		var logo = document.createElement('img');
+		logo.classList.add('eventteamlogo');
+		logo.src = teamlogo;
+		vereinspan.appendChild(logo);
+		var verein = document.createTextNode(' ' + teamname);
+		vereinspan.appendChild(verein);
+		vereinspan.classList.add('verein');
+		eventlist.appendChild(vereinspan);
+		});
+
+		getPlayerInfo(event.spieler_id_1, event, eventlist);
+
+		if(event.type == 'wechsel'){
+			getPlayerInfo(event.spieler_id_2, event, eventlist);
+		}
+
+	eventwrapper.appendChild(eventlist);
+	var reactionsymbol = document.createElement('i');
+	reactionsymbol.classList.add('fas');
+	if(reaction[uid].reaction == 'positive'){
+		reactionsymbol.classList.add('fa-thumbs-up');
+	}
+	else{
+		reactionsymbol.classList.add('fa-thumbs-down');
+	}
+	eventwrapper.appendChild(reactionsymbol);
+	description.appendChild(eventwrapper);
 }
 
 function showSquad(){

@@ -150,7 +150,7 @@ h2{
 	text-align:center;
 }
 
-.acitivitybox{
+.activitybox{
 	width:25%;
 	background-color:white;
 	border-radius:15px;
@@ -164,7 +164,7 @@ h2{
 }
 
 .activityicon{
-	font-size:8em;
+	font-size:5em;
 	margin-top:2%;
 }
 
@@ -276,7 +276,7 @@ h2{
 	margin-left:20%;
 }
 
-#upcoming .acitivitybox.matchbox{
+#upcoming .activitybox.matchbox{
 	float:none;
 	width:50%;
 	margin:auto;
@@ -348,4 +348,35 @@ button{
 	border-top-left-radius: 15px;
     	border-bottom-left-radius: 15px;
 	margin-bottom:5px;
+}
+
+.activityreaction{
+	width:80%;
+	margin-left:10%;
+	margin-right:10%;
+	border:none;
+}
+
+.activityreaction .eventlist{
+	margin-top:5px;
+	border-radius:15px;
+}
+
+#userprofile .activitybox{
+	height:45%;
+}
+
+#userprofile .fa-thumbs-up, #userprofile .fa-thumbs-down {
+    margin-top: 5px;
+}
+
+#results{
+	margin-top:100px;
+	margin-bottom:50px;
+}
+
+.checkinbutton{
+	float:right;
+	width:10%;
+	color:gray;
 }

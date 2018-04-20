@@ -3,6 +3,7 @@
 <?php include 'includes/header.php';?>
 <script src="js/ranking.js"></script>
 <script src="js/profiles.js"></script>
+<script src="js/match.js"></script>
 <title>LoudStand - Profiles</title>
 </head>
 
