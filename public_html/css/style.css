@@ -49,6 +49,16 @@ h2{
 	padding-top: 50px;
 }
 
+#userranking a, #teamranking a{
+	text-decoration: none;
+	color: white;
+}
+
+#userranking a:hover, #teamranking a:hover{
+	text-decoration: none;
+	color: white;
+}
+
 .userrankingname{
 	font-size:2em;
 }

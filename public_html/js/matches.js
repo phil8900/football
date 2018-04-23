@@ -27,7 +27,7 @@ function showMatches(){
 
 			}
 			var div = document.createElement('div');
-			div.classList.add('acitivitybox');
+			div.classList.add('activitybox');
 			div.classList.add('matchbox');
 
 			var homediv = document.createElement('div');

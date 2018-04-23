@@ -119,7 +119,8 @@ function getPointsForTeams(){
 }
 
 function createUserRankingElement(entry, id){
-	
+	var link = document.createElement('a');
+	link.href = 'profiles.php?id=' + entry['uid'];
 	var div;
 	if(document.getElementById(entry['uid']) == null){
 		div = document.createElement('div');
@@ -155,8 +156,9 @@ function createUserRankingElement(entry, id){
 	pointsdiv.classList.add('userrankingpoints');
 
 	div.appendChild(pointsdiv);
+	link.appendChild(div);
 
-	document.getElementById(id).appendChild(div);
+	document.getElementById(id).appendChild(link);
 }
 
 function createTeamRankingElement(snapshotvalue, entry, id){
