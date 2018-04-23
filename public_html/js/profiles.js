@@ -2,8 +2,16 @@ var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 var userRanking;
 var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
 var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
+var ownprofile = true;
 
 function initProfiles(){
+	var passeduid = getQueryVariable("id");
+
+	if(passeduid){
+		uid = passeduid;
+		ownprofile = false;
+	}
+
 	document.getElementById('profilebutton').src = 'img/user_select.svg';
 
 	userRef.on('value', function(snapshot) {
@@ -21,7 +29,11 @@ function initProfiles(){
 });
 	getLastActivities();
 	updateTeamRanking(true);
-	showSquad();
+
+	firebase.database().ref('rankings/users/' + uid + '/team').on('value', function(snapshot){
+		ownteam = snapshot.val();
+		showSquad();
+	});
 }
 
 function showOwnProfile(snapshotvalue, entry){
@@ -410,6 +422,7 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
 
 function showSquad(){
 	var teamRef = firebase.database().ref('teams/' + ownteam + '/squad');
+
 	var nextgame = '';
 	var currenttime = Math.floor(Date.now() / 1000);
 
@@ -461,6 +474,7 @@ function showSquad(){
 
 	div.appendChild(pointsdiv);
 
+	if(ownprofile){
 	var button = document.createElement('button');
 	button.appendChild(document.createTextNode('11'));
     button.classList.add('checkinbutton');
@@ -469,6 +483,7 @@ function showSquad(){
     });
 
     div.appendChild(button);
+    }
 
 	document.getElementById(getGeneralPosition(player['position'])).appendChild(div);
 			});

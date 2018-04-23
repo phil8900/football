@@ -5,6 +5,7 @@ var uid;
 setOwnTeam();
 
 function setOwnTeam(){
+
 var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
@@ -12,15 +13,14 @@ firebase.auth().onAuthStateChanged(function(user) {
 	} else {
 		uid = 'AwTsR03Y7LRpsRiz5RaCojUwhqy2'; //Test UID without logging in
 	}
-});
-
-userRef.on('value', function(snapshot) {
+	userRef.on('value', function(snapshot) {
 	snapshot.forEach(function(child) {
 		if(child.val().uid == uid){
 			ownteam = child.val().team;
 			getFixtureIdsForOwnTeam();
 		}
 	});
+});
 });
 }
 
@@ -59,4 +59,15 @@ function getLiveGame(){
 function saveFixtures(fixturearray){
 	localStorage.setItem("loudstand_ownteam", ownteam);
 	localStorage.setItem("loudstand_fixtures", JSON.stringify(fixturearray));
+}
+
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
 }
