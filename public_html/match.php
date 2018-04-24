@@ -4,10 +4,11 @@
 <script src="js/match.js"></script>
 <script src="js/ranking.js"></script>
 <script src="js/home.js"></script>
+<script src="js/profiles.js"></script>
 <script src="js/matches.js"></script>
 </head>
 
-<body onload="getLiveGameEvents();initMatches();">
+<body onload="initMatch();initMatches();">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 
@@ -28,7 +29,32 @@
 	<div id='ownteamranking'></div>
 	<div id='matches'>
 		<h2>My Matches</h2>
-		<div id='upcoming'></div>
+		<div id='upcoming'>
+			<div id='homesquad'>
+				<div class='starting'>
+					<h2>Starting 11</h2>
+					<div class='keeper'></div>
+					<div class='defender'></div>
+					<div class='midfielder'></div>
+					<div class='striker'></div>
+				</div>
+				<div class="bench">
+					<h2>Bench</h2>
+				</div>
+			</div>
+			<div id='awaysquad'>
+				<div class='starting'>
+					<h2>Starting 11</h2>
+					<div class='keeper'></div>
+					<div class='defender'></div>
+					<div class='midfielder'></div>
+					<div class='striker'></div>
+				</div>
+				<div class="bench">
+					<h2>Bench</h2>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 

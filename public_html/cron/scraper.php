@@ -223,9 +223,6 @@ function getGameEvents($game_id) {
 	global $live_base;
 	$url = str_replace('begegnung', 'getSpielverlauf', $live_base) . $game_id;
 
-	$url = 'http://46.101.238.193/test/two_event.json';
-	$url = 'https://www.transfermarkt.co.uk/ticker/getSpielverlauf/live/2994526';
-
 	$doc = hQuery::fromUrl($url, array('Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'));
 	$events = (array) json_decode($doc);
 	$events['gameid'] = $game_id;
@@ -350,6 +347,17 @@ function getStartingEleven($liveurl) {
 		return $lineups;
 	}
 	return false;
+}
+
+function setStartingEleven($gameid){
+	global $live_base;
+	$liveurl = $live_base . $gameid;
+
+	global $database;
+	$reference = $database->getReference('fixtures/' . $gameid . '/startingeleven');
+	$snapshot = $reference->getValue();
+
+	$reference->set(getStartingEleven($liveurl));
 }
 
 function getTeamNews($teamurl){

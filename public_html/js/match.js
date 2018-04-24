@@ -3,8 +3,17 @@ var fixturesRef = firebase.database().ref('fixtures/');
 
 var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
 var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
-
+var ownprofile = true;
 var nextgame;
+
+function initMatch(){
+	var passeduid = getQueryVariable("id");
+	if(passeduid){
+		uid = passeduid;
+		ownprofile = false;
+	}
+	getLiveGameEvents();
+}
 
 function getFutureGames(){
 	var date = Math.floor(Date.now() / 1000);
@@ -31,6 +40,7 @@ function getLiveGameEvents(){
 				}
 			});
 		});
+		getStartingEleven(livegame);
 	}
 	else{
 		getNews(true);
@@ -143,6 +153,144 @@ function getIconForEventType(type, subtype){
 	return icon;
 }
 
+function getStartingEleven(livegame){
+	firebase.database().ref('/fixtures/' + livegame.gameid + '/startingeleven').on('value', function(snapshot){
+		displayPlayers('home', livegame.hometeamid, snapshot.val()[livegame.hometeamid], livegame.gameid);
+		displayPlayers('away', livegame.awayteamid, snapshot.val()[livegame.awayteamid], livegame.gameid);
+	});
+}
+
+function displayPlayers(elementid, teamid, starters, gameid){
+	var bench = starters['bench'];
+	var starting = starters['starting'];
+	showStartingEleven(elementid, teamid, starting, true, gameid);
+	showStartingEleven(elementid, teamid, bench, false, gameid);
+}
+
+function showStartingEleven(elementid, teamid, playerarray, startingeleven, gameid){
+	var teamRef = firebase.database().ref('teams/' + teamid + '/squad');
+
+	teamRef.once('value', function(snapshot){
+		playerarray.forEach(function(child){
+			var player = snapshot.val()[child];
+
+	var div;
+	if(document.getElementById(player['playerid']) == null){
+		div = document.createElement('div');
+		div.id = player['playerid'];
+	}
+	else{
+		div = document.getElementById(player['playerid']);
+		div.innerHTML = '';
+	}
+
+	div.classList.add('userelement');
+	var firstlinediv = document.createElement('div');
+	firstlinediv.classList.add('firstlinediv');
+
+	var imagewrapper = document.createElement('div');
+	imagewrapper.classList.add('playerimagewrapper');
+	imagewrapper.style.backgroundImage="url('" + player['picture'] + "')";
+	firstlinediv.appendChild(imagewrapper);
+
+	var namespan = document.createElement('span');
+	namespan.appendChild(document.createTextNode(player['fullname']));
+	namespan.classList.add('userrankingname');
+
+	firstlinediv.appendChild(namespan);
+
+	var rankspan = document.createElement('span');
+	rankspan.appendChild(document.createTextNode(player['status']));
+
+	div.appendChild(firstlinediv);
+
+	var pointsdiv = document.createElement('div');
+	pointsdiv.appendChild(document.createTextNode(player['jerseynumber']));
+	pointsdiv.classList.add('userrankingpoints');
+
+	div.appendChild(pointsdiv);
+
+	if(ownprofile){
+		if(teamid == ownteam){
+			var button = document.createElement('button');
+    		button.classList.add('checkinbutton');
+    		button.addEventListener("click", function(){
+    			manageMvp(button.parentElement.id, gameid, button);
+    		});
+    		var symbol = document.createElement('i');
+    		symbol.classList.add('fas');
+    		symbol.classList.add('fa-trophy');
+    		button.appendChild(symbol);
+
+    		div.appendChild(button);
+    	}
+    }
+
+    var insertid = 'bench';
+    if(startingeleven){
+    	insertid = getGeneralPosition(player['position']);
+    }
+
+    var squaddiv = document.getElementById('homesquad');
+
+    if(elementid == 'away'){
+    	squaddiv = document.getElementById('awaysquad');
+    }
+
+	squaddiv.getElementsByClassName(insertid)[0].appendChild(div);
+			});
+	setupMvpButtons(gameid);
+	});
+}
+
+function setupMvpButtons(gameid){
+	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp');
+    startingRef.on('value', function(snapshot){
+   	var mvpset = false;
+
+    if(snapshot.val() != null){
+    	var div = document.getElementById(snapshot.val().playerid);
+    	var button = div.getElementsByClassName('checkinbutton')[0];
+    	button.style.color = 'red';
+    	mvpset = true;
+    }
+
+    		var all = document.getElementsByClassName('checkinbutton');
+			for (var i = 0; i < all.length; i++) {
+				if(mvpset){
+ 				 if(all[i].style.color != 'red'){
+ 				 	all[i].disabled = true;
+ 				 	all[i].style.color = 'lightgray';
+ 				 	}
+ 				 }
+			else{
+				 	all[i].disabled = false;
+ 				 	all[i].style.color = 'green';
+			}
+    	}
+    	});
+}
+
+function manageMvp(playerid, gameid, button){
+	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp');
+
+	startingRef.once('value', function(snapshot){
+		if(snapshot.val() == null){
+			var updates = {};
+  			updates['startingeleven/users/' + uid + '/' + gameid + '/mvp/playerid'] = playerid;
+  			updates['startingeleven/users/' + uid + '/' + gameid + '/mvp/timestamp'] = Math.floor(Date.now() / 1000);
+
+  			firebase.database().ref().update(updates);
+
+  			button.style.color = 'red';
+		}
+		else{
+			firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp').remove();
+			button.style.color = 'green';
+		}
+	})
+}
+
 function getPlayerInfo(playerid, event, eventlist){
 	var eventwrapper = document.getElementById(event.eventId);
 	var playername = playerid;
@@ -252,8 +400,6 @@ function showReactionBarValue(reactionbar, reaction){
 	else{
 		percentage = positive/negative;
 	}
-
-	console.log(percentage);
 
 	reactionbar.style.width = percentage + '%';
 	if(percentage == 100){

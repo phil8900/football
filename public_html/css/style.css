@@ -200,7 +200,7 @@ h2{
     border-radius:25px;
 }
 
-#squad .userelement {
+#squad .userelement, #homesquad .userelement, #awaysquad .userelement {
     padding-bottom: 1.3%;
 }
 
