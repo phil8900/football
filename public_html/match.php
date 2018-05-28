@@ -1,11 +1,11 @@
 <html>
 <head>
-<?php include 'includes/header.php';?>
-<script src="js/match.js"></script>
-<script src="js/ranking.js"></script>
-<script src="js/home.js"></script>
-<script src="js/profiles.js"></script>
-<script src="js/matches.js"></script>
+	<?php include 'includes/header.php';?>
+	<script src="js/match.js"></script>
+	<script src="js/ranking.js"></script>
+	<script src="js/home.js"></script>
+	<script src="js/profiles.js"></script>
+	<script src="js/matches.js"></script>
 </head>
 
 <body onload="initMatch();initMatches();">
@@ -14,21 +14,60 @@
 
 <h1>AU Football</h1>
 
+
+
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
-	<?php include 'includes/sidenav.php';?>
 	<div class="firstsubtopnav">
-		<div class="menu-title">MATCHES</div>
+		<div class="menu-title">DIGITAL STADIUM</div>
 	</div>
 </div>
 
+<!--
+
 <div class="overlay"></div>
 <div id="news"></div>
-<div id="events">
-</div>
 <div id="teamprofile" class="matches">
 	<div id='ownteamranking'></div>
 	<div id='matches'>
 		<h2>My Matches</h2>
+
+		-->
+
+<div id="score">
+	<span id="currentscore">0:0</span>
+	<span id="location"></span>
+	<br>
+	<span id="time"></span>
+</div>
+
+
+<!-- Slider main container -->
+<div class="swiper-container" style="height: 3000px">
+	<!-- Additional required wrapper -->
+	<div class="swiper-wrapper">
+		<!-- Slides -->
+		<div class="swiper-slide">
+			<div id="statistics">DISPLAY WHATEVER STATS HERE</div>
+		</div>
+
+		<div class="swiper-slide">
+			<div id="latestgameevent" class="maininteraction activitybox"></div>
+			<br>
+
+			<div class="interaction1">INTERACTION 1 (UPVOTE/DOWNVOTE?)</div>
+			<div class="interaction2" onclick="on()">CALL TO ACTION (VOUCHER FOR BEER?/INVITE A FRIEND?</div>
+		</div>
+
+		<div class="swiper-slide">
+			<div id="eventshistory">
+				<div id="events"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--
+
 		<div id='upcoming'>
 			<div id='homesquad'>
 				<div class='starting'>
@@ -55,9 +94,47 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+
+-->
 
 <?php include 'includes/footer.php';?>
+
+<!-- CLEAN LATER -->
+
+<script>
+
+	$(document).ready(function() {
+
+		swiper.on('slideChange', function () {
+
+			if (swiper.activeIndex == 0) {
+				$(".menu-title").text("STATS");
+			}
+
+			if (swiper.activeIndex == 1) {
+				$(".menu-title").text("DIGITAL STADIUM");
+			}
+
+			if (swiper.activeIndex == 2) {
+				$(".menu-title").text("MATCH EVENTS");
+			}
+
+		})
+	}); // end ready
+
+
+</script>
+
+<script>
+	var voucher = new Swiper('.voucherswiper-container', {
+	});
+
+	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 1
+	});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+
 </body>
 </html>

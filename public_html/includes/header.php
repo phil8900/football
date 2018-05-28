@@ -13,78 +13,55 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117378298-1"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'UA-117378298-1');
-  gtag('set', {'user_id': uid}); // Legen Sie die User ID mithilfe des Parameters "user_id" des angemeldeten Nutzers fest.
+    gtag('config', 'UA-117378298-1');
+    gtag('set', {'user_id': uid}); // Legen Sie die User ID mithilfe des Parameters "user_id" des angemeldeten Nutzers fest.
 </script>
 
 
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#0F281D">
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#0F281D">
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="fan%20teste%203-02.png"/>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="internallinks.js"></script>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
-    <script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<!-- Chrome, Firefox OS and Opera -->
+<meta name="theme-color" content="#0F281D">
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#0F281D">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="fan%20teste%203-02.png"/>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="internallinks.js"></script>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
 
-        /* Set the width of the side navigation to 250px */
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "160px";
-        }
+<!-- Swiper API -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/css/swiper.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/css/swiper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/js/swiper.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/js/swiper.min.js"></script>
 
-        /* Set the width of the side navigation to 0 */
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-        }
-    </script>
-
-    <script type="text/javascript">
-        $('#imageDiv').click(function(){
-            $('#picture').attr('src', 'teamprofas.png');
+<script>
+    $(function () {
+        $(".left").click(function () {
+            $(".right").css('background-color', '#0F281D');
+            $(".left").css('background-color', '#2c7656');
         });
-    </script>
+    });
 
-    <script>
-        $(function () {
-            $(".left").click(function () {
-                $(".right").css('background-color', '#0F281D');
-                $(".left").css('background-color', '#2c7656');
-            });
+    $(function () {
+        $(".right").click(function () {
+            $(".left").css('background-color', '#0F281D');
+            $(".right").css('background-color', '#2c7656');
+
         });
+    });
+</script>
 
-        $(function () {
-            $(".right").click(function () {
-                $(".left").css('background-color', '#0F281D');
-                $(".right").css('background-color', '#2c7656');
-
-            });
-        });
-    </script>
-
-
-    <script>
-
-        $(document).ready(function(){
-            $('#imageDiv').css({
-                'padding-top': '56px'
-            });
-        });
-
-    </script>
-
-    <link rel="stylesheet" type="text/css" href="css/overwrittenstylesheet.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/overwrittenstylesheet.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">

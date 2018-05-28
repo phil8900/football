@@ -7,6 +7,14 @@ var ownprofile = true;
 var nextgame;
 
 function initMatch(){
+
+	var voucher = new Swiper('.voucherswiper-container', {
+	});
+
+	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 1
+	});
+
 	var passeduid = getQueryVariable("id");
 	if(passeduid){
 		uid = passeduid;
@@ -66,8 +74,14 @@ function getEventReaction(event_id){
 }
 
 function showEvents(event, gameid){
+	var latestgameevent = document.getElementById("latestgameevent");
+
+
 	var eventwrapper = document.getElementById(event.eventId);
 	eventwrapper.classList.add('activitybox');
+
+	var currentscore = document.getElementById("currentscore");
+	currentscore.innerHTML = event.tore_h + ' : ' + event.tore_g;
 
 	var score = document.createElement('div');
 	var text = document.createTextNode(event.tore_h + ' : ' + event.tore_g);
@@ -121,6 +135,7 @@ function showEvents(event, gameid){
 	eventwrapper.insertBefore(eventlist, eventwrapper.getElementsByClassName('gamereaction')[0]);
 	getEventReaction(event.eventId);
 
+	latestgameevent.innerHTML = eventwrapper.innerHTML;
 }
 
 function getIconForEventType(type, subtype){
@@ -293,13 +308,15 @@ function manageMvp(playerid, gameid, button){
 
 function getPlayerInfo(playerid, event, eventlist){
 	var eventwrapper = document.getElementById(event.eventId);
-	var playername = playerid;
+	var latestgameevent = document.getElementById("latestgameevent");
+    var playername = playerid;
 
 	firebase.database().ref('/teams/' + event.verein_id + '/squad/' + playerid).once('value', function(snapshot) {
 		if(snapshot.val() != null){
 			playername = snapshot.val().shortname;
 			if(eventwrapper != null){
 				eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+				latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
 			}
 		}
 		var playerspan = document.createElement("div");
@@ -317,6 +334,10 @@ function getPlayerInfo(playerid, event, eventlist){
 		playerspan.appendChild(player);
 		playerspan.classList.add('player');
 		eventlist.appendChild(playerspan);
+		//latestgameevent.getElementsByClassName("eventlist")[0].innerHTML = playerspan.innerHTML;
+		//latestgameevent.appendChild(playerspan);
+
+		latestgameevent.innerHTML = eventwrapper.innerHTML;
 		
 		});
 }
@@ -325,6 +346,12 @@ function getTeamInfo(gameid, wrapper){
 	if(wrapper == null){
 		var wrapper = document.getElementById(gameid);
 	}
+
+	var score = document.getElementById("score");
+	var location = document.getElementById("location");
+	var time = document.getElementById("time");
+
+
 	var gameheader = document.createElement("div");
 	gameheader.id = 'gameheader';
 	var homespan = document.createElement("span");
@@ -336,13 +363,22 @@ function getTeamInfo(gameid, wrapper){
 	var awayspan = document.createElement("span");
 	awayspan.classList.add('awayteam');
 	gameheader.appendChild(awayspan);
-	wrapper.appendChild(gameheader);
+
+	score.appendChild(location);
+	score.appendChild(gameheader);
+	score.appendChild(time);
 
 	var ref = firebase.database().ref('/fixtures/' + gameid).once('value', function(snapshot) {
 		var hometeam = snapshot.val().hometeamid;
 		homespan.id = hometeam;
 		var awayteam = snapshot.val().awayteamid;
 		awayspan.id = awayteam;
+		var locationname = document.createTextNode(snapshot.val().location);
+		location.appendChild(locationname);
+		var matchtime = document.createTextNode(snapshot.val().time);
+		time.appendChild(matchtime);
+
+
 		var homename;
 		var awayname;
 		firebase.database().ref('/teams/' + hometeam + '/information').once('value', function(snapshot) {
