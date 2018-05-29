@@ -20,10 +20,13 @@
             var service = new google.maps.places.PlacesService(map);
             service.nearbySearch({
               location: pos,
-              radius: 500,
+              radius: 500
             }, callback);
 
             map.setCenter(pos);
+            initAutocomplete(map);
+            console.log(map.getBounds());
+
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -31,30 +34,36 @@
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
       }
-    }
+
+      }
 
       function callback(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            var e = document.createElement('div');
-            e.classList.add('userelement');
-            var p = document.createElement('p');
-            p.classList.add('userrankingname');
-            p.innerHTML = results[i].name;
-            var button = document.createElement('button');
-            var symbol = document.createElement('i');
-            symbol.classList.add('fas');
-            symbol.classList.add('fa-compass');
-            button.classList.add('upbutton');
-            button.appendChild(symbol);
-
-            button.classList.add('checkinbutton');
-            p.appendChild(button);
-            e.appendChild(p);
-            document.getElementById("results").appendChild(e);
-            addListener(button, results[i]);
-
+          showResults(results);
           }
+        }
+
+
+      function showResults(results){
+        for (var i = 0; i < results.length; i++) {
+          var e = document.createElement('div');
+          e.classList.add('userelement');
+          var p = document.createElement('p');
+          p.classList.add('userrankingname');
+          p.innerHTML = results[i].name;
+          var button = document.createElement('button');
+          var symbol = document.createElement('i');
+          symbol.classList.add('fas');
+          symbol.classList.add('fa-compass');
+          button.classList.add('upbutton');
+          button.appendChild(symbol);
+
+          button.classList.add('checkinbutton');
+          p.appendChild(button);
+          e.appendChild(p);
+          document.getElementById("results").appendChild(e);
+          addListener(button, results[i]);
+
         }
       }
 
@@ -76,5 +85,47 @@
           firebase.database().ref().update(updates);
 
           button.disabled = true;
-        }); 
+        });
+
+      }
+
+      function initAutocomplete(map) {
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+
+        var displaySuggestions = function(predictions, status) {
+          if (status != google.maps.places.PlacesServiceStatus.OK) {
+            alert(status);
+            return;
+          }
+          var div = document.getElementById("placesresult");
+            div.innerHTML = "";
+
+
+          predictions.forEach(function(prediction) {
+            var li = document.createElement('div');
+            li.classList.add("userelement");
+            li.appendChild(document.createTextNode(prediction.description));
+            div.appendChild(li);
+          });
+        };
+
+        var service = new google.maps.places.AutocompleteService();
+        //var defaultBounds = map.getBounds();
+        console.log(map.center);
+
+        input.addEventListener("keyup", function(){
+          if(input.value == ''){
+            document.getElementById("placesresult").style.display = "none";
+            document.getElementById("results").style.display = "block";
+          }
+          else{
+          service.getPlacePredictions({ input: input.value, location: map.center, radius:500 }, displaySuggestions);
+          document.getElementById("placesresult").style.display = "block";
+          document.getElementById("results").style.display = "none";
+          }
+
+        });
+
       }

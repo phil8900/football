@@ -4,6 +4,19 @@ function initMatches(){
 	document.getElementById('matchesbutton').src = 'img/calendar_select.svg';
 	updateTeamRanking(true);
 	showMatches();
+	var swiper = new Swiper('.swiper-container', {
+		effect: 'coverflow',
+		grabCursor: true,
+		centeredSlides: true,
+		slidesPerView: 'auto',
+		coverflowEffect: {
+			rotate: 50,
+			stretch: 0,
+			depth: 100,
+			modifier: 1,
+			slideShadows : true,
+		}
+	});
 }
 
 function showMatches(){
@@ -18,17 +31,21 @@ function showMatches(){
 			var date = child['date'];
 			var time = child['time'];
 
-			if(nextgame){
+		/*	if(nextgame){
 				var wrapper = document.getElementById('upcoming');
 				nextgame = false;
 			}
-			else{
+			else{ */
 				var wrapper = document.getElementById('matches');
+				wrapper = $('#matches .swiper-wrapper').get(0);
 
-			}
+		//	}
 			var div = document.createElement('div');
 			div.classList.add('activitybox');
 			div.classList.add('matchbox');
+			div.classList.add('swiper-slide');
+
+
 
 			var homediv = document.createElement('div');
 			homediv.classList.add('homediv');

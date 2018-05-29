@@ -12,9 +12,6 @@
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 
-<h1>AU Football</h1>
-
-
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
 	<div class="firstsubtopnav">
@@ -42,7 +39,7 @@
 
 
 <!-- Slider main container -->
-<div class="swiper-container" style="height: 3000px">
+<div class="swiper-container" style="height: 7000px">
 	<!-- Additional required wrapper -->
 	<div class="swiper-wrapper">
 		<!-- Slides -->
