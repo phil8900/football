@@ -8,8 +8,7 @@ var nextgame;
 
 function initMatch(){
 
-	var voucher = new Swiper('.voucherswiper-container', {
-	});
+	var gameid = getQueryVariable("gameid");
 
 	var swiper = new Swiper('.swiper-container', {
 		initialSlide: 1
@@ -20,7 +19,8 @@ function initMatch(){
 		uid = passeduid;
 		ownprofile = false;
 	}
-	getLiveGameEvents();
+	getLiveGameEvents(gameid);
+	displayVouchers();
 }
 
 function getFutureGames(){
@@ -35,24 +35,22 @@ function getFutureGames(){
 	return futuregames;
 }
 
-function getLiveGameEvents(){
+function getLiveGameEvents(gameid){
 	var livegame = getLiveGame();
-	if(livegame){
-		firebase.database().ref('/fixtures/' + livegame.gameid + '/events/').on('value', function(snapshot) {
-			snapshot.forEach(function(child) {
-				var wrapper = document.getElementById(livegame.gameid);
-				var eventwrapper = document.getElementById(child.val().eventId);
-				if((wrapper == null) || (eventwrapper == null)){
-					createWrappers(livegame.gameid, child.val().eventId);
-					showEvents(child.val(), livegame.gameid);
-				}
-			});
-		});
+	if(livegame && !gameid){
+		gameid = livegame.gameid;
 		getStartingEleven(livegame);
 	}
-	else{
-		getNews(true);
-	}
+	firebase.database().ref('/fixtures/' + gameid + '/events/').on('value', function(snapshot) {
+		snapshot.forEach(function(child) {
+			var wrapper = document.getElementById(gameid);
+			var eventwrapper = document.getElementById(child.val().eventId);
+			if((wrapper == null) || (eventwrapper == null)){
+				createWrappers(gameid, child.val().eventId);
+				showEvents(child.val(), gameid);
+			}
+		});
+	});
 }
 
 function getEventReaction(event_id){
@@ -544,6 +542,33 @@ function reactToEvent(event_id, reaction){
 						}
 					}
 				});
+				}
+			});
+		});
+	});
+}
+
+function displayVouchers(){
+	firebase.database().ref('/partnerbars/placeids/').once('value').then(function(snapshot) {
+
+		snapshot.forEach(function(child) {
+			firebase.database().ref('/checkins/' + child.val() + '/' + uid).once('value').then(function(snapshot) {
+				if (snapshot.val() != null) {
+					console.log(snapshot.val());
+					var voucher = document.createElement('div');
+					voucher.id = 'voucher';
+					voucher.innerHTML = 'VOUCHERS GO HERE';
+
+					var opinion = document.createElement('div');
+					opinion.id = '';
+					opinion.innerHTML = 'OPINIONS GO HERE';
+
+
+					var interactions = document.getElementById('interactions');
+					interactions.appendChild(opinion);
+					interactions.appendChild(voucher);
+
+
 				}
 			});
 		});

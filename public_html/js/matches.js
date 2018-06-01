@@ -4,8 +4,11 @@ function initMatches(){
 	document.getElementById('matchesbutton').src = 'img/calendar_select.svg';
 	updateTeamRanking(true);
 	showMatches();
+
 	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 1,
 		effect: 'coverflow',
+		direction: 'vertical',
 		grabCursor: true,
 		centeredSlides: true,
 		slidesPerView: 'auto',
@@ -14,7 +17,7 @@ function initMatches(){
 			stretch: 0,
 			depth: 100,
 			modifier: 1,
-			slideShadows : true,
+			slideShadows : true
 		}
 	});
 }
@@ -30,6 +33,7 @@ function showMatches(){
 			var awayteam = child['awayteamid'];
 			var date = child['date'];
 			var time = child['time'];
+			var gameid = child['gameid'];
 
 		/*	if(nextgame){
 				var wrapper = document.getElementById('upcoming');
@@ -44,6 +48,9 @@ function showMatches(){
 			div.classList.add('activitybox');
 			div.classList.add('matchbox');
 			div.classList.add('swiper-slide');
+			div.classList.add('matchescalendar')
+			div.id = gameid;
+			div.addEventListener('click', function(){ overlayOn(gameid);});
 
 
 
@@ -101,4 +108,22 @@ function showMatches(){
 		}
 	});
 }
+
+function overlayOn(gameid) {
+	document.getElementById('overlay').style.display = 'block';
+
+	var locations = document.getElementsByClassName('location');
+
+	Array.prototype.forEach.call(locations, function(location) {
+		location.addEventListener("click", function(){
+
+			window.location = "match.php?gameid=" + gameid;
+		});
+	});
+}
+
+function overlayOff() {
+	document.getElementById('overlay').style.display = 'none';
+}
+
 

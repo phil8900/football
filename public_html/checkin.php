@@ -16,11 +16,13 @@
 	</div>
 </div>
 
-<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<input id="pac-input" class="controls" type="text" placeholder="Search location...">
 
+<div class="overlay">
 <div id="map"></div>
 <div id="results"></div>
 <div id="placesresult" style="display:none;"></div>
+	</div>
 <?php include 'includes/footer.php';?>
 </body>
 </html>

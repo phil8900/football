@@ -48,21 +48,18 @@
         for (var i = 0; i < results.length; i++) {
           var e = document.createElement('div');
           e.classList.add('userelement');
+          e.classList.add("location");
+
           var p = document.createElement('p');
           p.classList.add('userrankingname');
           p.innerHTML = results[i].name;
-          var button = document.createElement('button');
-          var symbol = document.createElement('i');
-          symbol.classList.add('fas');
-          symbol.classList.add('fa-compass');
-          button.classList.add('upbutton');
-          button.appendChild(symbol);
 
-          button.classList.add('checkinbutton');
-          p.appendChild(button);
           e.appendChild(p);
+
           document.getElementById("results").appendChild(e);
-          addListener(button, results[i]);
+          addListener(e, results[i]);
+
+
 
         }
       }
@@ -83,8 +80,6 @@
           updates['checkins/' + result.place_id + '/' + uid + '/' + newPostKey] = postData;
 
           firebase.database().ref().update(updates);
-
-          button.disabled = true;
         });
 
       }
@@ -101,13 +96,33 @@
           }
           var div = document.getElementById("placesresult");
             div.innerHTML = "";
+          var service = new google.maps.places.PlacesService(map);
 
 
           predictions.forEach(function(prediction) {
+            service.getDetails({
+              placeId: prediction.place_id
+            }, function(place, status) {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+
+
             var li = document.createElement('div');
             li.classList.add("userelement");
-            li.appendChild(document.createTextNode(prediction.description));
-            div.appendChild(li);
+                li.classList.add("location");
+
+                li.appendChild(document.createTextNode(place.name));
+
+
+                var p = document.createElement('p');
+            p.classList.add('userrankingname');
+            p.appendChild(li);
+            div.appendChild(p);
+                addListener(li, place);
+
+              }
+            });
+
+            //console.log(prediction);
           });
         };
 
@@ -121,7 +136,7 @@
             document.getElementById("results").style.display = "block";
           }
           else{
-          service.getPlacePredictions({ input: input.value, location: map.center, radius:500 }, displaySuggestions);
+          service.getPlacePredictions({ input: input.value, location: map.center, radius: 500 }, displaySuggestions);
           document.getElementById("placesresult").style.display = "block";
           document.getElementById("results").style.display = "none";
           }
@@ -129,3 +144,4 @@
         });
 
       }
+

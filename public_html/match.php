@@ -51,8 +51,7 @@
 			<div id="latestgameevent" class="maininteraction activitybox"></div>
 			<br>
 
-			<div class="interaction1">INTERACTION 1 (UPVOTE/DOWNVOTE?)</div>
-			<div class="interaction2" onclick="on()">CALL TO ACTION (VOUCHER FOR BEER?/INVITE A FRIEND?</div>
+			<div id="interactions"></div>
 		</div>
 
 		<div class="swiper-slide">
@@ -123,9 +122,6 @@
 </script>
 
 <script>
-	var voucher = new Swiper('.voucherswiper-container', {
-	});
-
 	var swiper = new Swiper('.swiper-container', {
 		initialSlide: 1
 	});

@@ -10,6 +10,25 @@ var teamRef = firebase.database().ref('rankings/teams/').orderByChild('points');
 
 
 function initReferences(){
+
+	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 0
+	});
+
+	swiper.on('slideChange', function () {
+		if (swiper.activeIndex == 0) {
+			$(".right").css('background-color', '#0F281D');
+			$(".left").css('background-color', '#2c7656');
+
+		}
+
+		if (swiper.activeIndex == 1) {
+			$(".left").css('background-color', '#0F281D');
+			$(".right").css('background-color', '#2c7656');
+		}
+
+	});
+
 userRef.on('value', function(snapshot) {
 	var array = new Array();
 	snapshot.forEach(function(child) {
@@ -213,7 +232,7 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 
 function showTeamRanking(entry, profile){
 	firebase.database().ref('/teams/' + entry.teamid + '/information').on('value', function(snapshot) {
-		if(ownteam == entry.teamid){
+		if(ownteam == entry.teamid && profile){
 			showOwnTeam(snapshot.val(), entry);
 		}
 		if(!profile){
@@ -223,25 +242,52 @@ function showTeamRanking(entry, profile){
 }
 
 function displayUserRanking(){
-	document.getElementById('userranking').style.display = 'block';
-	document.getElementById('team').style.display = 'none';
-	document.getElementById('ownteamranking').style.display = 'none';
+	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 1
+	});
+
+	$(".right").css('background-color', '#0F281D');
+	$(".left").css('background-color', '#2c7656');
+
+	swiper.slidePrev();
 }
 
 function displayTeamRanking(){
-	document.getElementById('userranking').style.display = 'none';
-	document.getElementById('team').style.display = 'block';
-	document.getElementById('ownteamranking').style.display = 'block';
+	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 0
+	});
+
+	$(".left").css('background-color', '#0F281D');
+	$(".right").css('background-color', '#2c7656');
+
+	swiper.slideNext();
 }
 
 function showOwnTeam(snapshotvalue, entry){
 	document.getElementById('ownteamranking').innerHTML = '';
-	var div = document.createElement('div');
+	var bootstrapcontainer = document.createElement('div');
+	bootstrapcontainer.classList.add('container');
+	var wrapper = document.createElement('div');
+	wrapper.classList.add('row');
+
 	var imagewrapper = document.createElement('div');
 	imagewrapper.classList.add('rankinglogowrapper');
+	imagewrapper.classList.add('teamteamlogo');
+	imagewrapper.classList.add('col-xs-4');
+
+	var confederation = document.createElement('div');
+	confederation.id = 'confederation';
+	confederation.classList.add('col-xs-4');
+	confederation.innerHTML = 'confederation photo goes here';
+
+	bootstrapcontainer.appendChild(wrapper);
+
+
 
 	var rankdiv = document.createElement('div');
 	rankdiv.id = 'rankdiv';
+	rankdiv.classList.add('col-xs-4');
+
 	var rankparagraph = document.createElement('p');
 
 	var ranksymbol = document.createElement('i');
@@ -254,19 +300,20 @@ function showOwnTeam(snapshotvalue, entry){
 	rankparagraph.id = 'ownteamrank';
 
 	var ranktext = document.createElement('p');
-	ranktext.appendChild(document.createTextNode('current place'));
+	ranktext.appendChild(document.createTextNode('team ranking'));
 
 	rankdiv.appendChild(rankparagraph);
 	rankdiv.appendChild(ranktext);
 
-	div.appendChild(rankdiv);
 
 	var image = document.createElement('img');
 	image.src = snapshotvalue['teamlogo'];
-	image.classList.add('rankinglogo');
 	imagewrapper.appendChild(image);
 
-	div.appendChild(imagewrapper);
+	wrapper.appendChild(rankdiv);
+	wrapper.appendChild(imagewrapper);
+	wrapper.appendChild(confederation);
+
 
 	var teamdiv = document.createElement('div');
 	var teamparagraph = document.createElement('p');
@@ -274,11 +321,11 @@ function showOwnTeam(snapshotvalue, entry){
 	teamdiv.id = 'ownteamname';
 	teamdiv.appendChild(teamparagraph);
 
-	div.appendChild(teamdiv);
+	bootstrapcontainer.appendChild(teamdiv);
 
 	var fanbasediv = document.createElement('div');
 	var fanbaseparagraph = document.createElement('p');
-	fanbaseparagraph.appendChild(document.createTextNode('Fanbase Level'));
+	fanbaseparagraph.appendChild(document.createTextNode('FANBASE LEVEL'));
 	fanbasediv.appendChild(fanbaseparagraph);
 	fanbasediv.id = 'fanbase';
 
@@ -300,9 +347,9 @@ function showOwnTeam(snapshotvalue, entry){
 	middle.appendChild(container);
 	fanbasediv.appendChild(row);
 
-	div.appendChild(fanbasediv);
+	bootstrapcontainer.appendChild(fanbasediv);
 
-	document.getElementById('ownteamranking').appendChild(div);
+	document.getElementById('ownteamranking').appendChild(bootstrapcontainer);
 	getBarValue();
 }
 

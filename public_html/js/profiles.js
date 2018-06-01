@@ -5,6 +5,26 @@ var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
 var ownprofile = true;
 
 function initProfiles(){
+	console.log(uid);
+
+	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 0
+	});
+
+	swiper.on('slideChange', function () {
+		if (swiper.activeIndex == 0) {
+			$(".right").css('background-color', '#0F281D');
+			$(".left").css('background-color', '#2c7656');
+
+		}
+
+		if (swiper.activeIndex == 1) {
+			$(".left").css('background-color', '#0F281D');
+			$(".right").css('background-color', '#2c7656');
+		}
+
+	});
+
 	var passeduid = getQueryVariable("id");
 
 	if(passeduid){
@@ -39,11 +59,27 @@ function initProfiles(){
 function showOwnProfile(snapshotvalue, entry){
 	document.getElementById('ownprofile').innerHTML = '';
 	var div = document.createElement('div');
+	div.classList.add('container');
+
+
+	var subcontainer = document.createElement('div');
+	subcontainer.classList.add('row');
+	div.appendChild(subcontainer);
+
 	var imagewrapper = document.createElement('div');
 	imagewrapper.classList.add('rankinglogowrapper');
+	imagewrapper.classList.add('userteamlogo');
+	imagewrapper.classList.add('col-xs-4');
+
+	var userprofile = document.createElement('div');
+	userprofile.id = 'userprofilephoto';
+	userprofile.classList.add('userprofile');
+	userprofile.classList.add('col-xs-4');
+	userprofile.innerHTML = "user photo goes here";
 
 	var rankdiv = document.createElement('div');
 	rankdiv.id = 'rankdiv';
+	rankdiv.classList.add('col-xs-4');
 	var rankparagraph = document.createElement('p');
 
 	var ranksymbol = document.createElement('i');
@@ -62,30 +98,30 @@ function showOwnProfile(snapshotvalue, entry){
 	rankdiv.appendChild(rankparagraph);
 	rankdiv.appendChild(ranktext);
 
-	div.appendChild(rankdiv);
+
+	subcontainer.appendChild(rankdiv);
+	subcontainer.appendChild(userprofile);
+	subcontainer.appendChild(imagewrapper);
+	div.appendChild(subcontainer);
 
 	var image = document.createElement('img');
 	image.src = snapshotvalue['teamlogo'];
 	image.classList.add('rankinglogo');
 	imagewrapper.appendChild(image);
 
-	div.appendChild(imagewrapper);
 
 	var teamdiv = document.createElement('div');
 	var teamparagraph = document.createElement('p');
 	teamparagraph.appendChild(document.createTextNode(entry.name));
-	var phraseparagraph = document.createElement('p');
-	phraseparagraph.appendChild(document.createTextNode('This is a test of Loudstand'));
-	phraseparagraph.id = 'phraseparagraph';
+
 	teamdiv.id = 'ownteamname';
 	teamdiv.appendChild(teamparagraph);
 
 	div.appendChild(teamdiv);
-	div.appendChild(phraseparagraph);
 
 	var fanbasediv = document.createElement('div');
 	var fanbaseparagraph = document.createElement('p');
-	fanbaseparagraph.appendChild(document.createTextNode('Fandom Level'));
+	fanbaseparagraph.appendChild(document.createTextNode('FANDOM LEVEL'));
 	fanbasediv.appendChild(fanbaseparagraph);
 	fanbasediv.id = 'fanbase';
 
@@ -175,14 +211,14 @@ function showActivityBox(activity, event, gameid, reaction){
 	var wrapper = document.getElementById('activity');
 	var timestamp = getTimestampForActivity(activity, event, reaction);
 	var div = document.createElement('div');
-	div.classList.add('activitybox');
+	div.classList.add('activityboxmini');
 	div.classList.add('reactionboxwrapper');
 	div.id = timestamp;
 
 	var paragraph = document.createElement('p');
 	var symbol = document.createElement('i');
 	symbol.classList.add('fas');
-	symbol.classList.add('activityicon');
+	symbol.classList.add('activityiconmini');
 	paragraph.appendChild(symbol);
 	div.appendChild(paragraph);
 	var description = document.createElement('div');
@@ -225,20 +261,31 @@ function getTimestampForActivity(activity, event, reaction){
 }
 
 function displayUserProfile(){
-	document.getElementById('userprofile').style.display = 'block';
-	document.getElementById('teamprofile').style.display = 'none';
-	document.getElementById('ownteamranking').style.display = 'block';
+
+	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 1
+	});
+
+	$(".right").css('background-color', '#0F281D');
+	$(".left").css('background-color', '#2c7656');
+
+	swiper.slidePrev();
+
 }
 
 function displayTeamProfile(){
-	document.getElementById('userprofile').style.display = 'none';
-	document.getElementById('teamprofile').style.display = 'block';
-	document.getElementById('ownteamranking').style.display = 'block';
+	var swiper = new Swiper('.swiper-container', {
+		initialSlide: 0
+	});
+
+	$(".left").css('background-color', '#0F281D');
+	$(".right").css('background-color', '#2c7656');
+
+	swiper.slideNext();
 }
 
 function getActivityIcon(activitysymbol, activity, description, event, gameid, reaction){
 	var symbol;
-	var color = 'gray';
 	var activitytext;
 
 	if(activity == 'checkin'){
@@ -262,7 +309,6 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
 	}
 
 	activitysymbol.classList.add(symbol);
-	activitysymbol.style.color = color;
 }
 
 function getLastActivities(){
@@ -329,10 +375,9 @@ function getStartingElevenDetails(description, event, activitytext, gameid){
 function getCheckinDetails(description, activitytext, event){
 	setActivityText(description, activitytext);
 	var eventwrapper = document.createElement('div');
-	eventwrapper.classList.add('activitybox');
-	eventwrapper.classList.add('activityreaction');
+	eventwrapper.classList.add('activityreactionmini');
 	var eventlist = document.createElement("div");
-	eventlist.classList.add('eventlist');
+	eventlist.classList.add('eventlistmini');
 
 	var placename = document.createElement('p');
 	placename.appendChild(document.createTextNode(event.placename));
@@ -345,7 +390,7 @@ function getCheckinDetails(description, activitytext, event){
 function setActivityText(description, activitytext){
 	var paragraph = document.createElement('p');
 	paragraph.appendChild(document.createTextNode(activitytext));
-	paragraph.classList.add('activitytext');
+	paragraph.classList.add('activitytextmini');
 	description.appendChild(paragraph);
 }
 
