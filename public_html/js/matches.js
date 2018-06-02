@@ -79,8 +79,6 @@ function showMatches(){
 			});
 			div.appendChild(homediv);
 
-
-
 			var timediv = document.createElement('div');
 			timediv.classList.add('timediv');
 			var paragraph = document.createElement('p');

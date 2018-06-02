@@ -28,6 +28,7 @@ function initMatch(){
 	getLiveGameEvents(gameid);
 	displayVouchers();
 	hideFooter();
+	displayPostMatchEvents();
 }
 
 function getFutureGames(){
@@ -519,6 +520,7 @@ function reactToEvent(event_id, reaction){
 		snapshot.forEach(function(child) {
 			firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id).once('value').then(function(snapshot) {
 				if(snapshot.val() != null){
+					console.log(snapshot.val());
 					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions');
 					var userReactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid);
 
@@ -554,6 +556,113 @@ function reactToEvent(event_id, reaction){
 			});
 		});
 	});
+}
+
+function displayPostMatchEvents (){
+	var interactions = document.getElementById('interactions');
+	var postmatchcontainer = document.createElement('div');
+	postmatchcontainer.id = 'postmatchcontainer';
+	postmatchcontainer.classList.add('activitybox');
+
+	var postmatchcontainertitle = document.createElement('div');
+	postmatchcontainertitle.id = 'postmatchcontainertitle';
+	postmatchcontainertitle.innerHTML = "<p>Match is over, but your opinion still counts:</p>";
+
+	var MVP = document.createElement('div');
+	MVP.classList.add('MVP');
+	MVP.classList.add('col-xs-4');
+	MVP.innerHTML = "MVP";
+	MVP.addEventListener("click", function(){ displayMVP();});
+
+	var submitmvp = document.createElement('button');
+	submitmvp.classList.add('submitbutton');
+	submitmvp.innerHTML = 'Submit!';
+
+	var voteformvpcontent = document.createElement('div');
+	voteformvpcontent.classList.add('postmatchvotecontent');
+	voteformvpcontent.innerHTML = 'VOTE FOR MVP HERE';
+
+	var voteformvp = document.createElement('div');
+	voteformvp.classList.add('postmatchvote');
+	voteformvp.id = 'mvp';
+	voteformvp.appendChild(voteformvpcontent);
+	voteformvp.appendChild(submitmvp);
+
+	var finalreview = document.createElement('div');
+	finalreview.classList.add('finalreview');
+	finalreview.innerHTML = "Final Review";
+	finalreview.classList.add('col-xs-4');
+	finalreview.addEventListener("click", function(){ displayFinalReview();});
+
+	var submitfinalreview = document.createElement('button');
+	submitfinalreview.classList.add('submitbutton');
+	submitfinalreview.innerHTML = 'Submit!';
+
+	var voteforfinalreviewcontent = document.createElement('div');
+	voteforfinalreviewcontent.classList.add('postmatchvotecontent');
+	voteforfinalreviewcontent.innerHTML = 'VOTE FOR FINAL REVIEW HERE';
+
+	var voteforfinalreview = document.createElement('div');
+	voteforfinalreview.classList.add('postmatchvote');
+	voteforfinalreview.id = 'finalreview';
+	voteforfinalreview.appendChild(voteforfinalreviewcontent);
+	voteforfinalreview.appendChild(submitfinalreview);
+
+	var finalcomment = document.createElement('div');
+	finalcomment.classList.add('finalcomment');
+	finalcomment.innerHTML = "Final Comment";
+	finalcomment.classList.add('col-xs-4');
+	finalcomment.addEventListener("click", function(){ displayFinalComment();});
+
+	var submitfinalcomment = document.createElement('button');
+	submitfinalcomment.classList.add('submitbutton');
+	submitfinalcomment.innerHTML = 'Submit!';
+
+	var commentareacontent = document.createElement('input');
+	commentareacontent.classList.add('postmatchvotecontent');
+	commentareacontent.innerHTML = 'YOUR OPINION GOES HERE...';
+
+	var commentarea = document.createElement('div');
+	commentarea.classList.add('postmatchvote');
+	commentarea.id = 'finalcomment';
+	commentarea.appendChild(commentareacontent);
+	commentarea.appendChild(submitfinalcomment);
+
+
+	var innercontainer = document.createElement('div');
+	innercontainer.classList.add('innercontainer');
+
+	innercontainer.appendChild(voteformvp);
+	innercontainer.appendChild(voteforfinalreview);
+	innercontainer.appendChild(commentarea);
+
+
+	interactions.appendChild(postmatchcontainer);
+	postmatchcontainer.appendChild(postmatchcontainertitle);
+	postmatchcontainer.appendChild(MVP);
+	postmatchcontainer.appendChild(finalreview);
+	postmatchcontainer.appendChild(finalcomment);
+	postmatchcontainer.appendChild(innercontainer);
+
+}
+
+function displayMVP(){
+	document.getElementById('mvp').style.display = 'block';
+	document.getElementById('finalreview').style.display = 'none';
+	document.getElementById('finalcomment').style.display = 'none';
+	document.getElementsByClassName('MVP').style.backgroundColor = blue;
+}
+
+function displayFinalReview(){
+	document.getElementById('mvp').style.display = 'none';
+	document.getElementById('finalreview').style.display = 'block';
+	document.getElementById('finalcomment').style.display = 'none';
+}
+
+function displayFinalComment(){
+	document.getElementById('mvp').style.display = 'none';
+	document.getElementById('finalreview').style.display = 'none';
+	document.getElementById('finalcomment').style.display = 'block';
 }
 
 function displayVouchers(){

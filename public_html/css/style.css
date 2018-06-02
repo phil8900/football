@@ -814,6 +814,63 @@ h2{
 	color: black;
 }
 
+#postmatchcontainer{
+ 	height: 400px;
+}
+
+#postmatchcontainertitle{
+
+}
+
+.MVP{
+
+}
+
+.finalreview{
+
+}
+
+.finalcomment{
+
+}
+
+.postmatchvote{
+	text-align: center;
+	padding: 6px;
+	margin-top: 10px;
+	border: none;
+	font-size: 17px;
+	border-radius: 5px;
+	width: 95%;
+	background-color: lightgrey;
+	height: 100%;
+	display: none;
+	margin-bottom: 10px;
+}
+
+.postmatchvotecontent{
+	margin-top: 10px;
+	height: 170px;
+	margin-bottom: 20px;
+	width: 90%;
+	border: none;
+	font-size: 17px;
+	border-radius: 5px;
+}
+
+.innercontainer{
+	margin-top: 70px;
+	height: 280px;
+	/background-color: red;
+	text-align: center;
+	margin-left: 5%;
+}
+
+.submitbutton{
+	height: 60px;
+	width: 90%;
+	margin: 0;
+}
 
 /* ------ Media Queries ---- */
 

@@ -74,7 +74,7 @@
 			</div>
 			<br>
 
-			<div id="interactions" onclick="showVoucherOverlay();">
+			<div id="interactions">
 			</div>
 
 		</div>
