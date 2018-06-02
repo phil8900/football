@@ -34,7 +34,7 @@ function showMatches(){
 			var date = child['date'];
 			var time = child['time'];
 			var gameid = child['gameid'];
-			var stadium = child['location']
+			var stadium = child['location'];
 
 		/*	if(nextgame){
 				var wrapper = document.getElementById('upcoming');

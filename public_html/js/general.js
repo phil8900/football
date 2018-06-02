@@ -71,3 +71,17 @@ function getQueryVariable(variable)
        }
        return(false);
 }
+
+function getPointsTable (interactiontype){
+	firebase.database().ref('pointstable/').once('value', function(snapshot){
+			var interactionpoints = snapshot.val()[interactiontype];
+
+			var reactionRef = firebase.database().ref('/rankings/users/' + uid);
+		reactionRef.child('points').transaction(function(points) {
+			var updates = {};
+
+			return points + interactionpoints;
+		});
+
+	});
+}
