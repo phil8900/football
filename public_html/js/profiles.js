@@ -2,9 +2,14 @@ var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 var userRanking;
 var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
 var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
+
 var ownprofile = true;
 
 function initProfiles(){
+	if(uid == undefined){
+		setTimeout(function(){initProfiles();}, 3000);
+		}
+	else{
 	console.log(uid);
 
 	var swiper = new Swiper('.swiper-container', {
@@ -54,6 +59,7 @@ function initProfiles(){
 		ownteam = snapshot.val();
 		showSquad('');
 	});
+	}
 }
 
 function showOwnProfile(snapshotvalue, entry){

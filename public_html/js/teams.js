@@ -22,5 +22,6 @@ initTeamSelector();
       ownteam = team.key;
       teamRef.set(ownteam);
       location.href = "home.php";
+      setOwnTeam();
      });
   }
