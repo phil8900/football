@@ -29,7 +29,7 @@ function initReferences(){
 
 	});
 
-userRef.on('value', function(snapshot) {
+userRef.once('value', function(snapshot) {
 	var array = new Array();
 	snapshot.forEach(function(child) {
 		if(child.val().team == ownteam){
@@ -46,7 +46,7 @@ updateTeamRanking(false);
 }
 
 function updateTeamRanking(profile){
-	teamRef.on('value', function(snapshot) {
+	teamRef.once('value', function(snapshot) {
 	var array = new Array();
 	snapshot.forEach(function(child) {
 			array.push(child.val());
@@ -231,7 +231,7 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 }
 
 function showTeamRanking(entry, profile){
-	firebase.database().ref('/teams/' + entry.teamid + '/information').on('value', function(snapshot) {
+	firebase.database().ref('/teams/' + entry.teamid + '/information').once('value', function(snapshot) {
 		if(ownteam == entry.teamid && profile){
 			showOwnTeam(snapshot.val(), entry);
 		}
