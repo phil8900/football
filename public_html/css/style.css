@@ -489,7 +489,6 @@ button{
 .checkinbutton{
 	float:right;
 	color:gray;
-	display: none;
 }
 
 .userelement .checkinbutton {

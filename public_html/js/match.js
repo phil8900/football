@@ -10,6 +10,12 @@ function initMatch(){
 
 	var gameid = getQueryVariable("gameid");
 
+	if(!gameid){
+		gameid = '';
+	}
+
+	showSquad(gameid);
+
 	var swiper = new Swiper('.swiper-container', {
 		initialSlide: 1
 	});

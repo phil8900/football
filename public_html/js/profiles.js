@@ -52,7 +52,7 @@ function initProfiles(){
 
 	firebase.database().ref('rankings/users/' + uid + '/team').on('value', function(snapshot){
 		ownteam = snapshot.val();
-		showSquad();
+		showSquad('');
 	});
 }
 
@@ -465,16 +465,17 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
 	description.appendChild(eventwrapper);
 }
 
-function showSquad(){
-	var teamRef = firebase.database().ref('teams/' + ownteam + '/squad');
+function showSquad(nextgame){
 
-	var nextgame = '';
+	var teamRef = firebase.database().ref('teams/' + ownteam + '/squad');
+	ownprofile = true;
+
 	var currenttime = Math.floor(Date.now() / 1000);
 
 	fixtures.forEach(function(child) {
 		if(child.timestamp > currenttime){
 			if(nextgame == ''){
-				nextgame = child;
+				nextgame = child.gameid;
 			}
 		}
 	});
@@ -540,7 +541,7 @@ function showSquad(){
 }
 
 function setupButtons(nextgame){
-	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame.gameid);
+	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame);
 
     startingRef.on('value', function(snapshot){
     	var counter = 0;
@@ -561,7 +562,7 @@ function setupButtons(nextgame){
  				 	all[i].style.color = 'lightgray';
 
  				 	var updates = {};
-  					updates['startingeleven/users/' + uid + '/' + nextgame.gameid + '/timestamp'] = Math.floor(Date.now() / 1000);
+  					updates['startingeleven/users/' + uid + '/' + nextgame + '/timestamp'] = Math.floor(Date.now() / 1000);
   					firebase.database().ref().update(updates);
  				 	}
 			}
@@ -574,7 +575,7 @@ function setupButtons(nextgame){
 }
 
 function manageStartingEleven(playerid, nextgame, button){
-	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame.gameid + '/' + playerid);
+	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + playerid);
 
 	startingRef.once('value', function(snapshot){
 		if(snapshot.val() == null){
@@ -584,8 +585,8 @@ function manageStartingEleven(playerid, nextgame, button){
   			button.style.color = 'red';
 		}
 		else{
-			firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame.gameid + '/' + playerid).remove();
-			firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame.gameid + '/' + 'timestamp').remove();
+			firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + playerid).remove();
+			firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + 'timestamp').remove();
 			button.style.color = 'green';
 		}
 	})

@@ -264,6 +264,8 @@ function displayTeamRanking(){
 }
 
 function showOwnTeam(snapshotvalue, entry){
+	var ownteamranking = document.getElementById('ownteamranking');
+	if(ownteamranking != null){
 	document.getElementById('ownteamranking').innerHTML = '';
 	var bootstrapcontainer = document.createElement('div');
 	bootstrapcontainer.classList.add('container');
@@ -353,6 +355,7 @@ function showOwnTeam(snapshotvalue, entry){
 
 	document.getElementById('ownteamranking').appendChild(bootstrapcontainer);
 	getBarValue();
+	}
 }
 
 function showBarValue(percentage){

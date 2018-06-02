@@ -62,6 +62,16 @@
 
 		<div class="swiper-slide">
 			<div id="latestgameevent" class="maininteraction activitybox"></div>
+			<div id="teamprofile">
+				<div id='ownteamranking' style="display: none;"></div>
+				<div id='squad'>
+					<h2>SQUAD</h2>
+					<div id='keeper'></div>
+					<div id='defender'></div>
+					<div id='midfielder'></div>
+					<div id='striker'></div>
+				</div>
+			</div>
 			<br>
 
 			<div id="interactions" onclick="showVoucherOverlay();">
