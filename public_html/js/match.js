@@ -622,7 +622,17 @@ function voucherDescription (){
 	console.log(seenvoucher);
 	if(seenvoucher == null){
 		localStorage.setItem("seenvoucher", true);
-		document.getElementById('voucherdescription').innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
+		var voucherdescription = document.getElementById('voucherdescription');
+		voucherdescription.innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
+
+		var button = document.createElement('button');
+		button.innerHTML = 'Use voucher';
+		button.disabled = false;
+   		button.addEventListener("click", function(){
+   			getPointsTable('checkinbar');
+   			hideVoucherOverlay();
+    	});
+    	voucherdescription.appendChild(button);
 	}
 	else {
 
