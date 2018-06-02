@@ -79,6 +79,7 @@ function getEventReaction(event_id){
 }
 
 function showEvents(event, gameid){
+
 	var latestgameevent = document.getElementById("latestgameevent");
 
 
