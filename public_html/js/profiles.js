@@ -582,6 +582,8 @@ function setupButtons(nextgame){
 
 function manageStartingEleven(playerid, nextgame, button){
 	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + playerid);
+	var startingRootRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame);
+
 
 	startingRef.once('value', function(snapshot){
 		if(snapshot.val() == null){
@@ -589,11 +591,21 @@ function manageStartingEleven(playerid, nextgame, button){
     			playerid: playerid
   			});
   			button.style.color = 'red';
+  	startingRootRef.once('value', function(snapshot){
+  		if(snapshot.numChildren() == 12){
+  			getPointsTable('suggest11');
+  		}
+  	});
 		}
 		else{
 			firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + playerid).remove();
 			firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + 'timestamp').remove();
 			button.style.color = 'green';
+  	startingRootRef.once('value', function(snapshot){
+  		if(snapshot.numChildren() == 10){
+  			getPointsTable('remove11');
+  		}
+  	});
 		}
 	})
 }
