@@ -496,6 +496,9 @@ function showSquad(){
 	div.classList.add('userelement');
 	var firstlinediv = document.createElement('div');
 	firstlinediv.classList.add('firstlinediv');
+	div.addEventListener("click", function(){
+    	showReactionOverview(player['playerid'], 'all');
+    });
 
 	var imagewrapper = document.createElement('div');
 	imagewrapper.classList.add('playerimagewrapper');
@@ -607,3 +610,66 @@ function getGeneralPosition(position){
 
 	return general;
 }
+
+function showReactionOverview(playerid, filter){
+	firebase.database().ref('/teams/' + ownteam + '/information/fixtures').once('value').then(function(snapshot) {
+		snapshot.forEach(function(child) {
+			firebase.database().ref('/fixtures/' + child.val() + '/events/').once('value').then(function(snapshot) {
+				var gameid = child.val();
+				var ratingacc = 0;
+				var playerevents = 0;
+				snapshot.forEach(function(child) {
+					var event = child.val();
+					var gamerating;
+						if(playerid == event['spieler_id_1'] || playerid == event['spieler_id_2']){
+							if(event.type == filter || filter == 'all'){
+							playerevents++;
+							var negative = event['reactions']['negative'];
+							var positive = event['reactions']['positive'];
+							var percentage = 0;
+							
+							if(negative == 0){
+								percentage = 100;
+							}
+							else if(negative > 0 && positive > 0){
+								percentage = (positive/(negative+positive)) * 100;
+							}
+
+							ratingacc += percentage;
+						}
+					}
+				});
+				if(playerevents>0){
+					var gamerating = { 
+						"rating":ratingacc/playerevents,
+						"gameid":gameid,
+						"playerid":playerid,
+					};
+					createOverviewElement(gamerating);
+					}
+
+			});
+		});
+	});
+}
+
+function createOverviewElement(gamerating){
+	var content = document.getElementById('voucheroverlayinnercontent');
+	var p = document.createElement('p');
+	p.appendChild(document.createTextNode('Rating for game ' + gamerating['gameid'] + ': ' + gamerating['rating'] + 'for player ' + gamerating['playerid']));
+	content.appendChild(p);
+	showGameOverlay();
+}
+
+function showGameOverlay(){
+	document.getElementById('voucheroverlay').style.display = 'block';
+	document.getElementById('voucheroverlaycontent').style.display = 'block';
+	document.getElementById('voucheroverlaycontentborder').style.display = 'block';
+}
+
+function hideGameOverlay(){
+	document.getElementById('voucheroverlay').style.display = 'none';
+	document.getElementById('voucheroverlaycontent').style.display = 'none';
+	document.getElementById('voucheroverlaycontentborder').style.display = 'none';
+}
+

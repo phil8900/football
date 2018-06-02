@@ -23,6 +23,16 @@
     </div>
 </div>
 
+<div id="voucheroverlay" class="animated fadeIn" onclick="hideVoucherOverlay();"></div>
+<div id="voucheroverlaycontentborder" class="animated fadeIn"></div>
+<div id="voucheroverlaycontent" class="animated fadeIn">
+	<div class="vouchertitle"><h1>DISCOUNT</h1></div>
+	<div id="voucheroverlayinnercontent">
+	<div id="voucherdescription">
+	</div>
+</div>
+	</div>
+
 <!-- Slider main container -->
 <div class="swiper-container" style="height: 2340px;">
 	<!-- Additional required wrapper -->
