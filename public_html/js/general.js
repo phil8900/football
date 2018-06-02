@@ -10,6 +10,7 @@ var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		uid = user.uid;
+		localStorage.setItem("loudstand_uid", user.uid);
 	} else {
 		uid = 'AwTsR03Y7LRpsRiz5RaCojUwhqy2'; //Test UID without logging in
 	}
