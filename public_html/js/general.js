@@ -73,7 +73,7 @@ function getQueryVariable(variable)
        return(false);
 }
 
-function getPointsTable (interactiontype){
+function getPointsTable(interactiontype){
 	firebase.database().ref('pointstable/').once('value', function(snapshot){
 			var interactionpoints = snapshot.val()[interactiontype];
 

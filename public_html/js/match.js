@@ -524,6 +524,8 @@ function reactToEvent(event_id, reaction){
 					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions');
 					var userReactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid);
 
+					getPointsTable(snapshot.val()['type']);
+
 					userReactionRef.once('value').then(function(snapshot) {
 
 					if(snapshot.val() == null){
@@ -730,7 +732,17 @@ function voucherDescription (){
 	console.log(seenvoucher);
 	if(seenvoucher == null){
 		localStorage.setItem("seenvoucher", true);
-		document.getElementById('voucherdescription').innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
+		var voucherdescription = document.getElementById('voucherdescription');
+		voucherdescription.innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
+
+		var button = document.createElement('button');
+		button.innerHTML = 'Use voucher';
+		button.disabled = false;
+   		button.addEventListener("click", function(){
+   			getPointsTable('checkinbar');
+   			hideVoucherOverlay();
+    	});
+    	voucherdescription.appendChild(button);
 	}
 	else {
 

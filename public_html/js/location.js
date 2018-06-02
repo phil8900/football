@@ -66,7 +66,18 @@
 
       function addListener(button, result){
         button.addEventListener("click", function(){
+          var interaction = 'checkinelse';
           var checkinRef = firebase.database().ref('checkins/' + result.place_id + '/' + uid);
+          var partnerRef = firebase.database().ref('partnerbars/placeids/');
+
+          partnerRef.once('value', function(snapshot) {
+            snapshot.forEach(function(child) {
+            if(child.val() == result.place_id){
+              interaction = 'checkinbar';
+            }
+            });
+            getPointsTable(interaction);
+          });
 
           var newPostKey = checkinRef.push().key;
           var postData = {
@@ -121,8 +132,6 @@
 
               }
             });
-
-            //console.log(prediction);
           });
         };
 
