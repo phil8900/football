@@ -521,6 +521,8 @@ function reactToEvent(event_id, reaction){
 					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions');
 					var userReactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid);
 
+					getPointsTable(snapshot.val()['type']);
+
 					userReactionRef.once('value').then(function(snapshot) {
 
 					if(snapshot.val() == null){
