@@ -21,6 +21,7 @@ function initMatch(){
 	}
 	getLiveGameEvents(gameid);
 	displayVouchers();
+	hideFooter();
 }
 
 function getFutureGames(){
@@ -555,22 +556,70 @@ function displayVouchers(){
 			firebase.database().ref('/checkins/' + child.val() + '/' + uid).once('value').then(function(snapshot) {
 				if (snapshot.val() != null) {
 					console.log(snapshot.val());
-					var voucher = document.createElement('div');
-					voucher.id = 'voucher';
-					voucher.innerHTML = 'VOUCHERS GO HERE';
 
-					var opinion = document.createElement('div');
-					opinion.id = '';
-					opinion.innerHTML = 'OPINIONS GO HERE';
+					var voucherscontainer = document.createElement('div');
+					voucherscontainer.classList.add('vouchercontainer');
+					voucherscontainer.id = 'vouchercontainer';
+
+					var vouchercontainertitle = document.createElement('div');
+					vouchercontainertitle.id = 'vouchercontainertitle';
+					vouchercontainertitle.innerHTML = "<p>LOUDSTAND PARTNER</p>";
+
+
+					var voucher1 = document.createElement('div');
+					voucher1.classList.add('voucher');
+					voucher1.innerHTML = "Discount #1";
+
+					var voucher2 = document.createElement('div');
+					voucher2.classList.add('voucher');
+					voucher2.innerHTML = "Discount #2";
 
 
 					var interactions = document.getElementById('interactions');
-					interactions.appendChild(opinion);
-					interactions.appendChild(voucher);
+
+					voucherscontainer.appendChild(vouchercontainertitle);
+					voucherscontainer.appendChild(voucher1);
+					voucherscontainer.appendChild(voucher2);
+					interactions.appendChild(voucherscontainer);
 
 
 				}
 			});
 		});
 	});
+}
+
+function hideFooter(){
+	document.getElementById('footer').style.display = 'none';
+}
+
+function showVoucherOverlay(){
+	document.getElementById('voucheroverlay').style.display = 'block';
+	document.getElementById('voucheroverlaycontent').style.display = 'block';
+	document.getElementById('voucheroverlaycontentborder').style.display = 'block';
+	voucherDescription();
+
+
+}
+
+function hideVoucherOverlay(){
+	document.getElementById('voucheroverlay').style.display = 'none';
+	document.getElementById('voucheroverlaycontent').style.display = 'none';
+	document.getElementById('voucheroverlaycontentborder').style.display = 'none';
+}
+
+function voucherDescription (){
+	var seenvoucher = JSON.parse(localStorage.getItem("seenvoucher"));
+
+	console.log(seenvoucher);
+	if(seenvoucher == null){
+		localStorage.setItem("seenvoucher", true);
+		document.getElementById('voucherdescription').innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
+	}
+	else {
+
+		document.getElementById('voucherdescription').innerHTML = "LoudStand offers you discounts on " +
+			"drinks in this bar during this match! Go to the bar and ask the bartender to swipe the voucher." +
+			" The bartender should do it, not you. If you do it, you lose your right to your discount.";
+	}
 }

@@ -275,18 +275,16 @@ function showOwnTeam(snapshotvalue, entry){
 	imagewrapper.classList.add('teamteamlogo');
 	imagewrapper.classList.add('col-xs-4');
 
-	var confederation = document.createElement('div');
-	confederation.id = 'confederation';
-	confederation.classList.add('col-xs-4');
-	confederation.innerHTML = 'confederation photo goes here';
-
-	bootstrapcontainer.appendChild(wrapper);
-
-
-
 	var rankdiv = document.createElement('div');
 	rankdiv.id = 'rankdiv';
 	rankdiv.classList.add('col-xs-4');
+
+	var confederation = document.createElement('div');
+	confederation.id = 'confederation';
+	confederation.classList.add('col-xs-4');
+	confederation.classList.add('teamteamlogo');
+
+	bootstrapcontainer.appendChild(wrapper);
 
 	var rankparagraph = document.createElement('p');
 
@@ -309,6 +307,10 @@ function showOwnTeam(snapshotvalue, entry){
 	var image = document.createElement('img');
 	image.src = snapshotvalue['teamlogo'];
 	imagewrapper.appendChild(image);
+
+	var confederationimage = document.createElement('img');
+	confederationimage.src = snapshotvalue['confederation'];
+	confederation.appendChild(confederationimage);
 
 	wrapper.appendChild(rankdiv);
 	wrapper.appendChild(imagewrapper);

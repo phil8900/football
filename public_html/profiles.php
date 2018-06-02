@@ -7,7 +7,6 @@
 <title>LoudStand - Profiles</title>
 </head>
 
-
 <body onload="initProfiles()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->

@@ -1,6 +1,18 @@
+@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+	html {
+		transform: rotate(-90deg);
+		transform-origin: left top;
+		width: 100vh;
+		overflow-x: hidden;
+		position: absolute;
+		top: 100%;
+		left: 0;
+	}
+}
+
 @font-face {
-    font-family: "ds-digitalnormal";
-    src: url(../includes/DS-DIGI.TTF) format("truetype");
+	font-family: "ds-digitalnormal";
+	src: url(../includes/DS-DIGI.TTF) format("truetype");
 }
 
 body:before {
@@ -117,7 +129,7 @@ body {
 	padding-right: 5%;
 	padding-bottom:10px;
 	padding-top: 10px;
-	/background-color: rgba(0,0,0,0.5);
+/background-color: rgba(0,0,0,0.5);
 }
 
 .rankinglogo{
@@ -166,24 +178,24 @@ body {
 
 /* Three column layout */
 .side {
-    float: left;
-    width: 15%;
-    margin-top:10px;
+	float: left;
+	width: 15%;
+	margin-top:10px;
 }
 
 .middle {
-    margin-top:10px;
-    float: left;
-    width: 70%;
+	margin-top:10px;
+	float: left;
+	width: 70%;
 }
 
 /* The bar container */
 .bar-container {
-    width: 100%;
-    background-color: #f1f1f1;
-    text-align: center;
-    color: white;
-    border-radius:15px;
+	width: 100%;
+	background-color: #f1f1f1;
+	text-align: center;
+	color: white;
+	border-radius:15px;
 	margin-top: 10px;
 	margin-bottom: 10px;
 
@@ -195,7 +207,7 @@ body {
 	height: 40px;
 	background-color: #4CAF50;
 	border-top-left-radius: 15px;
-    	border-bottom-left-radius: 15px;
+	border-bottom-left-radius: 15px;
 }
 
 #overlay{
@@ -220,11 +232,12 @@ body {
 }
 
 .activitybox{
-	width: 95%;
+	width: 90%;
 	background-color:white;
 	border-radius: 10px;
 	height: auto;
 	margin-bottom: 5%;
+	margin-left: 5%;
 	padding: 10px 0px 10px 0px;
 	border: 3px solid lightgray;
 	text-align:center;
@@ -243,26 +256,26 @@ body {
 }
 
 .playerimage{
-	 height: auto;
-	 width: 10%;
+	height: auto;
+	width: 10%;
 }
 
 .playerimagewrapper{
-    position: relative;
-    float: left;
-    width: 50px;
-    height: 50px;
-    background-position: 50% 5%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin-right: 2%;
-    border-radius: 50%;
+	position: relative;
+	float: left;
+	width: 50px;
+	height: 50px;
+	background-position: 50% 5%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin-right: 2%;
+	border-radius: 50%;
 	border: 1px solid lightgray;
 	margin-top: -5px;
 }
 
 #squad .userelement, #homesquad .userelement, #awaysquad .userelement {
-    padding-bottom: 1.3%;
+	padding-bottom: 1.3%;
 }
 
 #teamprofile{
@@ -282,14 +295,14 @@ body {
 }
 
 .timediv{
-	width: 50%;
-	height: 25%;
-	-webkit-transform: skew(-50deg);
-	-moz-transform: skew(-50deg);
-	-o-transform: skew(-50deg);
+	width: 70%;
+	height: 40%;
+	-webkit-transform: skew(-30deg);
+	-moz-transform: skew(-30deg);
+	-o-transform: skew(-30deg);
 	background: #164065;
 	margin:auto;
-	margin-top:30%;
+	margin-top: 24%;
 	text-align: center;
 	border: 1px solid #164065;
 	padding: 10px;
@@ -297,20 +310,27 @@ body {
 }
 
 .timediv p{
-	-webkit-transform: skew(50deg);
-	-moz-transform: skew(50deg);
-	-o-transform: skew(50deg);
+	-webkit-transform: skew(30deg);
+	-moz-transform: skew(30deg);
+	-o-transform: skew(30deg);
 	color: white;
 	font-size: 16px;
-
 }
 
 .matchdate{
+	padding-left: 8%;
+
+}
+
+.stadium{
 }
 
 .time{
-	padding-right:30%;
-	font-size:1.5em;
+	font-size: 3em;
+}
+
+time p{
+	font-size: 22px;
 }
 
 .homediv .matchlogo{
@@ -321,7 +341,7 @@ body {
 
 .homediv{
 	float: left;
-	margin-top: 10%;
+	margin-top: 4%;
 	width: 70%;
 	text-transform: uppercase;
 	color:black;
@@ -331,7 +351,7 @@ body {
 
 .awaydiv{
 	float: right;
-	margin-top: 8%;
+	margin-top: 6%;
 	width: 70%;
 	text-transform: uppercase;
 	color:black;
@@ -346,12 +366,23 @@ body {
 }
 
 .matchhometeam{
-	float:left;
+	text-align: left;
+}
+
+.matchhomefans{
+	font-size: 14px;
+	color: #164065;
+	text-align: left;
 }
 
 .matchawayteam{
-	float:left;
-	margin-left:20%;
+	text-align: right;
+}
+
+.matchawayfans{
+	font-size: 14px;
+	color: #164065;
+	text-align: right;
 }
 
 #upcoming .activitybox.matchbox{
@@ -426,7 +457,7 @@ button{
 	height: 15px;
 	background-color: #4CAF50;
 	border-top-left-radius: 15px;
-    	border-bottom-left-radius: 15px;
+	border-bottom-left-radius: 15px;
 	margin-bottom:5px;
 }
 
@@ -447,7 +478,7 @@ button{
 }
 
 #userprofile .fa-thumbs-up, #userprofile .fa-thumbs-down {
-    margin-top: 5px;
+	margin-top: 5px;
 }
 
 #results{
@@ -509,6 +540,11 @@ button{
 	padding-top: 10px;
 }
 
+.location:active{
+	background-color: black;
+	opacity: 0.7;
+}
+
 .location .userrankingname{
 	width: 100%;
 	text-align: left;
@@ -568,7 +604,6 @@ button{
 	float: left;
 	margin-left: 5%;
 	background: linear-gradient(to bottom, #a9cce7 0%, #a9cce7 50%, #f6f6f6 50%, #f6f6f6 100%);
-
 }
 
 .activityiconmini{
@@ -615,4 +650,191 @@ h2{
 	font-size: 17px;
 	border-radius: 5px;
 	width: 80%;
+}
+
+.menu-icon{
+	height: 24px;
+}
+
+.menu-icon img{
+	padding-bottom: 6px;
+	height: 100%;
+}
+
+.menu-title{
+	font-family: Raleway;
+	font-size: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	text-align: center;
+	padding-right: 16px;
+	line-height: 1.8;
+}
+
+.firstsubtopnavmatchinteraction{
+	display: flex;
+	align-items: center;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	background-color: #0F281D;
+	padding-left: 12px;
+	padding-right: 24px;
+}
+
+.vouchercontainer{
+	display: inline-block;
+	width: 90%;
+	border-radius: 10px;
+	height: 250px;
+	margin-bottom: 5%;
+	text-align:center;
+	color: #164065;
+	float: left;
+	margin-left: 5%;
+	background-color: #f6f6f6;
+}
+
+#vouchercontainertitle{
+	width: 100%;
+	background-color: #a9cce7;
+	padding: 7% 5% 5% 5%;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+#vouchercontainertitle p{
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.vouchercontainer p{
+	font-size: 24px;
+}
+
+.voucher{
+	width: 42%;
+	border-radius: 10px;
+	height: 120px;
+	margin-top: 20px;
+	margin-left: 5%;
+	padding-top: 44px;
+	text-align:center;
+	color: #f6f6f6;
+	float: left;
+	background-color: #164065;
+}
+
+
+#voucheroverlay{
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	z-index: 2;
+	opacity: 0.6;
+}
+
+#voucheroverlaycontent{
+	text-align: center;
+	position: fixed;
+	display: none;
+	width: 90%;
+	height: 76%;
+	top: 16%;
+	left: 5%;
+	right: 0;
+	bottom: 0;
+	background-color: #a9cce7;
+	z-index: 2;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 5%;
+	padding-bottom: 12%;
+}
+
+#voucheroverlayinnercontent{
+	background-color: white;
+	height: 82%;
+	border-radius: 50px;
+	border: 3px solid #164065;
+	padding: 5% 5% 5% 5%;
+}
+
+#voucheroverlaycontentborder{
+	border-top: 20px dotted black;
+	border-bottom: 20px dotted black;
+	text-align: center;
+	position: fixed;
+	display: none;
+	width: 90%;
+	height: 78.6%;
+	top: 14.8%;
+	left: 5%;
+	right: 0;
+	bottom: 0;
+	background-color: transparent;
+	z-index: 3;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+
+.vouchertitle{
+	color: #164065;
+	padding-bottom: 5%;
+}
+
+.vouchertitle h1{
+	font-weight: bold;
+	font-size: 2.2em;
+}
+
+#voucherdescription{
+	color: #164065;
+}
+
+#voucheroverlayinnercontentcookie{
+	background-color: red;
+	height: 82%;
+	border-radius: 50px;
+	border: 3px solid #164065;
+	padding: 5% 5% 5% 5%;
+}
+
+.firstvoucher{
+	font-size: 40px;
+	height: 100%;
+	padding-top: 14%;
+	color: black;
+}
+
+
+/* ------ Media Queries ---- */
+
+@media only screen and (min-width: 361px) {
+	.timediv p{
+		font-size: 19px;
+	}
+	.stadium{
+		 padding-top: 2.5%;
+	 }
+
+	.matchhomefans{
+		font-size: 18px;
+		color: #164065;
+		text-align: left;
+	}
+
+	.matchawayfans{
+		font-size: 18px;
+		color: #164065;
+		text-align: right;
+	}
 }

@@ -34,6 +34,7 @@ function showMatches(){
 			var date = child['date'];
 			var time = child['time'];
 			var gameid = child['gameid'];
+			var stadium = child['location']
 
 		/*	if(nextgame){
 				var wrapper = document.getElementById('upcoming');
@@ -48,9 +49,9 @@ function showMatches(){
 			div.classList.add('activitybox');
 			div.classList.add('matchbox');
 			div.classList.add('swiper-slide');
-			div.classList.add('matchescalendar')
+			div.classList.add('matchescalendar');
 			div.id = gameid;
-			div.addEventListener('click', function(){ overlayOn(gameid);});
+			div.addEventListener('click', function(){ overlayOn(gameid); topBarBlack();});
 
 
 
@@ -67,8 +68,13 @@ function showMatches(){
 					home.appendChild(document.createTextNode(snapshot.val().teamname));
 					home.classList.add('matchhometeam');
 
+					var homefans = document.createElement('div');
+					homefans.appendChild(document.createTextNode("Fans online: " + snapshot.val().averageage)); //CHANGE THIS TO TOTAL NUMBER OF FANS ONLINE
+					homefans.classList.add('matchhomefans');
+
 					homediv.appendChild(logo);
 					homediv.appendChild(home);
+					homediv.appendChild(homefans);
 				}
 			});
 			div.appendChild(homediv);
@@ -81,7 +87,11 @@ function showMatches(){
 			var dateparagraph = document.createElement('p');
 			dateparagraph.appendChild(document.createTextNode(date));
 			dateparagraph.classList.add('matchdate');
-	
+			var location = document.createElement('p');
+			location.appendChild(document.createTextNode(stadium));
+			location.classList.add('stadium');
+
+			timediv.appendChild(location);
 			timediv.appendChild(paragraph);
 			timediv.appendChild(dateparagraph);
 			div.appendChild(timediv);
@@ -99,8 +109,13 @@ function showMatches(){
 					away.appendChild(document.createTextNode(snapshot.val().teamname));
 					away.classList.add('matchawayteam');
 
-					awaydiv.appendChild(away);
+					var awayfans = document.createElement('div');
+					awayfans.appendChild(document.createTextNode("Fans online: " + snapshot.val().averageage)); //CHANGE THIS TO TOTAL NUMBER OF FANS ONLINE
+					awayfans.classList.add('matchawayfans');
+
 					awaydiv.appendChild(logo);
+					awaydiv.appendChild(away);
+					awaydiv.appendChild(awayfans);
 				}
 			});
 			div.appendChild(awaydiv);
@@ -124,6 +139,11 @@ function overlayOn(gameid) {
 
 function overlayOff() {
 	document.getElementById('overlay').style.display = 'none';
+}
+
+function topBarBlack (){
+	document.getElementById('topNav').style.backgroundColor = 'black';
+
 }
 
 

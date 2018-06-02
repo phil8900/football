@@ -14,7 +14,10 @@
 
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
-	<div class="firstsubtopnav">
+	<div class="firstsubtopnavmatchinteraction">
+		<div class="menu-icon">
+			<a href="matches.php"><img src="img/back.png"></a>
+		</div>
 		<div class="menu-title">DIGITAL STADIUM</div>
 	</div>
 </div>
@@ -37,6 +40,16 @@
 	<span id="time"></span>
 </div>
 
+<div id="voucheroverlay" class="animated fadeIn" onclick="hideVoucherOverlay();"></div>
+<div id="voucheroverlaycontentborder" class="animated fadeIn"></div>
+<div id="voucheroverlaycontent" class="animated fadeIn">
+	<div class="vouchertitle"><h1>DISCOUNT</h1></div>
+	<div id="voucheroverlayinnercontent">
+	<div id="voucherdescription">
+	</div>
+</div>
+	</div>
+
 
 <!-- Slider main container -->
 <div class="swiper-container" style="height: 7000px">
@@ -51,7 +64,9 @@
 			<div id="latestgameevent" class="maininteraction activitybox"></div>
 			<br>
 
-			<div id="interactions"></div>
+			<div id="interactions" onclick="showVoucherOverlay();">
+			</div>
+
 		</div>
 
 		<div class="swiper-slide">
