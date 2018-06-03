@@ -687,13 +687,16 @@ function displayVouchers(){
 					var voucher1 = document.createElement('div');
 					voucher1.classList.add('voucher');
 					voucher1.innerHTML = "Discount #1";
+					voucher1.addEventListener("click", function(){showVoucherOverlay();	});
 
 					var voucher2 = document.createElement('div');
 					voucher2.classList.add('voucher');
 					voucher2.innerHTML = "Discount #2";
+					voucher2.addEventListener("click", function(){showVoucherOverlay();	});
 
 
-					var interactions = document.getElementById('interactions');
+
+						var interactions = document.getElementById('interactions');
 
 					voucherscontainer.appendChild(vouchercontainertitle);
 					voucherscontainer.appendChild(voucher1);
@@ -735,19 +738,23 @@ function voucherDescription (){
 		var voucherdescription = document.getElementById('voucherdescription');
 		voucherdescription.innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
 
-		var button = document.createElement('button');
-		button.innerHTML = 'Use voucher';
-		button.disabled = false;
-   		button.addEventListener("click", function(){
-   			getPointsTable('checkinbar');
-   			hideVoucherOverlay();
-    	});
-    	voucherdescription.appendChild(button);
 	}
 	else {
 
-		document.getElementById('voucherdescription').innerHTML = "LoudStand offers you discounts on " +
+		var voucherdescription = document.getElementById('voucherdescription');
+		voucherdescription.innerHTML = "LoudStand offers you discounts on " +
 			"drinks in this bar during this match! Go to the bar and ask the bartender to swipe the voucher." +
 			" The bartender should do it, not you. If you do it, you lose your right to your discount.";
+
+		var button = document.createElement('button');
+		button.classList.add('voucherconfirmation');
+		button.innerHTML = 'USE VOUCHER';
+		button.disabled = false;
+		button.addEventListener("click", function(){
+			getPointsTable('checkinbar');
+			hideVoucherOverlay();
+		});
+		voucherdescription.appendChild(button);
+
 	}
 }

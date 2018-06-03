@@ -50,7 +50,19 @@
 			<div id="teamprofile">
 				<div id='ownteamranking'></div>
 				<div id='squad'>
-					<h2>SQUAD</h2>
+					<h2>TEAM STATISTICS (based on fans)</h2>
+					<div class="dropdown">
+						<button id='dropdown' class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose statistics
+							<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#">Man of the Match</a></li>
+							<li><a href="#">Goals</a></li>
+							<li><a href="#">Best 11</a></li>
+							<li><a href="#">Best coming from the bench</a></li>
+							<li><a href="#">Best player coming out</a></li>
+							<li><a href="#">Team overall performance</a></li>
+						</ul>
+					</div>
 					<div id='keeper'></div>
 					<div id='defender'></div>
 					<div id='midfielder'></div>
