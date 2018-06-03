@@ -64,8 +64,8 @@
 			<div id="latestgameevent" class="maininteraction activitybox"></div>
 			<div id="teamprofile">
 				<div id='ownteamranking' style="display: none;"></div>
-				<div id='squad'>
-					<h2>SQUAD</h2>
+				<div id='squad' class="starting11 activitybox">
+					<h2>MAKE YOUR OWN STARTING 11</h2>
 					<div id='keeper'></div>
 					<div id='defender'></div>
 					<div id='midfielder'></div>

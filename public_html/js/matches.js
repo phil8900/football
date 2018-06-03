@@ -53,6 +53,11 @@ function showMatches(){
 			div.id = gameid;
 			div.addEventListener('click', function(){ overlayOn(gameid); topBarBlack();});
 
+			var livenow = document.createElement('div');
+			livenow.classList.add('livenow');
+			div.appendChild(livenow);
+			livenow.innerHTML = '• LIVE';
+
 
 
 			var homediv = document.createElement('div');

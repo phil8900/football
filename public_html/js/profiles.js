@@ -6,6 +6,7 @@ var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
 var ownprofile = true;
 
 function initProfiles(){
+
 	if(uid == undefined){
 		setTimeout(function(){initProfiles();}, 3000);
 		}
@@ -60,6 +61,7 @@ function initProfiles(){
 		showSquad('');
 	});
 	}
+	hideCheckinButtons();
 }
 
 function showOwnProfile(snapshotvalue, entry){
@@ -142,11 +144,13 @@ function showOwnProfile(snapshotvalue, entry){
 
 	var container = document.createElement('div');
 	container.classList.add('bar-container');
+
+
 	var bar = document.createElement('div');
 	bar.id = 'fanbasebar';
 	container.appendChild(bar);
-
 	middle.appendChild(container);
+
 	fanbasediv.appendChild(row);
 
 	div.appendChild(fanbasediv);
@@ -158,7 +162,9 @@ function showOwnProfile(snapshotvalue, entry){
 function showBarValue(percentage){
 	var bar = document.getElementById('fanbasebar');
 	bar.style.width = percentage + '%';
-	
+	bar.innerHTML = percentage + '%';
+
+
 	var fanbasediv = document.getElementById('fanbase');
 	var rating = document.createElement('p');
 	rating.appendChild(document.createTextNode(percentage/2/10 + '/5'));
@@ -166,7 +172,7 @@ function showBarValue(percentage){
 }
 
 function getBarValue(){
-	showBarValue(94);
+	showBarValue(80);
 }
 
 function getTrend(entry, ranksymbol){
@@ -690,5 +696,9 @@ function hideGameOverlay(){
 	document.getElementById('voucheroverlay').style.display = 'none';
 	document.getElementById('voucheroverlaycontent').style.display = 'none';
 	document.getElementById('voucheroverlaycontentborder').style.display = 'none';
+}
+
+function hideCheckinButtons(){
+	$('.checkinbutton'.hide());
 }
 

@@ -203,11 +203,12 @@ body {
 
 /* Individual bars */
 #fanbasebar{
-	width: 60%;
 	height: 40px;
 	background-color: #4CAF50;
 	border-top-left-radius: 15px;
 	border-bottom-left-radius: 15px;
+	padding-top: 7px;
+	color: #0b2e13;
 }
 
 #overlay{
@@ -495,7 +496,6 @@ button{
 	margin-top: -51px;
 	font-family: ds-digitalnormal;
 	color: green;
-	position: absolute;
 	float: right;
 	right: 5%;
 }
@@ -589,6 +589,7 @@ button{
 
 #squad h2{
 	font-size: 22px;
+	margin-bottom: 40px;
 }
 
 .activityboxmini{
@@ -778,7 +779,7 @@ h2{
 	right: 0;
 	bottom: 0;
 	background-color: transparent;
-	z-index: 3;
+	z-index: 2;
 	padding-left: 5%;
 	padding-right: 5%;
 	padding-top: 5%;
@@ -872,9 +873,92 @@ h2{
 	margin: 0;
 }
 
+#dropdown{
+	width: 90%;
+	margin-left: 5%;
+	background-color: #f6f6f6;
+	border-color: #f6f6f6;
+	color: #7a7a7a;
+
+}
+.dropdown-menu {
+	position: absolute;
+	top: 100%;
+	z-index: 1000;
+	display: none;
+	float: left;
+	min-width: 160px;
+	padding: 5px 0;
+	margin: 2px 0 0;
+	font-size: 14px;
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0,0,0,.15);
+	border-radius: 4px;
+	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	width: 90%;
+	left: 5%;
+}
+
+#keeper{
+	margin-top: 40px;
+}
+
+.starting11{
+	height: 400px;
+	overflow: scroll;
+	text-align: left;
+}
+
+.voucherconfirmation{
+	width: 80%;
+	margin-top: 20px;
+	z-index: 1000;
+}
+
+.livenow {
+	/background-color: black;
+	width: 40%;
+	margin-left: 30%;
+	height: 40px;
+	position: absolute;
+	bottom: 100%;
+	/* left: 90; */
+	color: red;
+	font-family: "Raleway";
+	font-weight: bold;
+	font-size: 30px;
+	padding-top: 3px;
+	z-index: 1000;
+	-webkit-animation: flickerAnimation 1s infinite;
+	-moz-animation: flickerAnimation 1s infinite;
+	-o-animation: flickerAnimation 1s infinite;
+	animation: flickerAnimation 1s infinite;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+
+}
+
+#authentication{
+	display:none;
+}
+
+#getstarted{
+	height: 50px;
+	width: 100%;
+	background-color: green;
+	opacity:0.5;
+}
+
+
 /* ------ Media Queries ---- */
 
-@media only screen and (min-width: 361px) {
+@media only screen and (min-width: 400px) {
 	.timediv p{
 		font-size: 19px;
 	}
@@ -893,4 +977,27 @@ h2{
 		color: #164065;
 		text-align: right;
 	}
+}
+
+/* ------ Animations ---- */
+
+@keyframes flickerAnimation {
+	0%   { opacity:1; }
+	50%  { opacity:0; }
+	100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+	0%   { opacity:1; }
+	50%  { opacity:0; }
+	100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+	0%   { opacity:1; }
+	50%  { opacity:0; }
+	100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+	0%   { opacity:1; }
+	50%  { opacity:0; }
+	100% { opacity:1; }
 }
