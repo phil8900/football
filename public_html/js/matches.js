@@ -59,7 +59,6 @@ function showMatches(){
 			livenow.innerHTML = '• LIVE';
 
 
-
 			var homediv = document.createElement('div');
 			homediv.classList.add('homediv');
 

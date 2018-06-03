@@ -944,15 +944,103 @@ h2{
 
 }
 
+
+
+#welcome{
+	text-align: center;
+	padding-top: 40%;
+}
+
+#welcometitle{
+	animation-delay: 1s;
+}
+
+#welcometitle h1{
+	font-size: 50px;
+	font-weight: bold;
+}
+
+#welcometitle h2{
+	font-size: 20px;
+	font-weight: 200;
+}
+
 #authentication{
 	display:none;
+	text-align: center;
+}
+
+#authentication h1{
+	font-size: 50px;
+	font-weight: bold;
+}
+
+#authentication h2{
+	font-size: 20px;
+	font-weight: 200;
+	margin-bottom: 80px;
 }
 
 #getstarted{
-	height: 50px;
+	height: 80px;
 	width: 100%;
-	background-color: green;
-	opacity:0.5;
+	background-color: rgba(0, 128, 0, 0.5);
+	position: fixed;
+	bottom: 0;
+	animation-delay: 2s;
+}
+
+#getstarted p{
+	color: white;
+	font-size: 20px;
+	margin-top: 28px;
+
+}
+
+#teamselect{
+	text-align: center;
+	padding: 10px 10px 10px 10px;
+}
+
+#teamselect button{
+	background-size: 100% 100% !important;
+	background-repeat:no-repeat !important;
+	background-position:center center !important;
+	width: 18% !important;
+	height: 50px !important;
+	border-style: none;
+	border-radius: 0;
+	margin: 10px 10px 10px 10px;
+}
+
+#teamselect h1{
+	font-size: 50px;
+	font-weight: bold;
+}
+
+#teamselect h2{
+	font-size: 20px;
+	font-weight: 200;
+	margin-bottom: 80px;
+}
+
+#statsmvp{
+	display:none;
+}
+#statsgoals{
+	display: none;
+}
+#statsbest11{
+	display:none;
+}
+#statssubin{
+	display:none;
+}
+#statssubout{
+	display:none;
+}
+#statsoverall{
+	display:none;
 }
 
 

@@ -702,3 +702,58 @@ function hideCheckinButtons(){
 	$('.checkinbutton'.hide());
 }
 
+function displayStatsMVP(){
+	document.getElementById('statsmvp').style.display = 'block';
+	document.getElementById('statsgoals').style.display = 'none';
+	document.getElementById('statsbest11').style.display = 'none';
+	document.getElementById('statssubin').style.display = 'none';
+	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statsoverall').style.display = 'none';
+}
+
+function displayStatsGoals(){
+	document.getElementById('statsmvp').style.display = 'none';
+	document.getElementById('statsgoals').style.display = 'block';
+	document.getElementById('statsbest11').style.display = 'none';
+	document.getElementById('statssubin').style.display = 'none';
+	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statsoverall').style.display = 'none';
+}
+
+function displayStatsBest11(){
+	document.getElementById('statsmvp').style.display = 'none';
+	document.getElementById('statsgoals').style.display = 'none';
+	document.getElementById('statsbest11').style.display = 'block';
+	document.getElementById('statssubin').style.display = 'none';
+	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statsoverall').style.display = 'none';
+}
+
+function displayStatsBestSubIn(){
+	document.getElementById('statsmvp').style.display = 'none';
+	document.getElementById('statsgoals').style.display = 'none';
+	document.getElementById('statsbest11').style.display = 'none';
+	document.getElementById('statssubin').style.display = 'block';
+	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statsoverall').style.display = 'none';
+}
+
+function displayStatsBestSubOut (){
+	document.getElementById('statsmvp').style.display = 'none';
+	document.getElementById('statsgoals').style.display = 'none';
+	document.getElementById('statsbest11').style.display = 'none';
+	document.getElementById('statssubin').style.display = 'none';
+	document.getElementById('statssubout').style.display = 'block';
+	document.getElementById('statsoverall').style.display = 'none';
+}
+
+function displayStatsOverall(){
+	document.getElementById('statsmvp').style.display = 'none';
+	document.getElementById('statsgoals').style.display = 'none';
+	document.getElementById('statsbest11').style.display = 'none';
+	document.getElementById('statssubin').style.display = 'none';
+	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statsoverall').style.display = 'block';
+}
+
+
