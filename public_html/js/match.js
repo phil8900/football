@@ -784,7 +784,8 @@ function reactToEvent(event_id, reaction){
 
 function displayPostMatchEvents (gameid){
 	var interactions = document.getElementById('interactions');
-	postmatchcontainer = document.getElementById('postmatchcontainer');
+	var postmatchcontainer = document.getElementById('postmatchcontainer');
+
 
 	var postmatchcontainertitle = document.createElement('div');
 	postmatchcontainertitle.id = 'postmatchcontainertitle';
@@ -869,12 +870,14 @@ function displayPostMatchEvents (gameid){
 	innercontainer.appendChild(commentarea);
 
 
-	interactions.appendChild(postmatchcontainer);
 	postmatchcontainer.appendChild(postmatchcontainertitle);
 	postmatchcontainer.appendChild(MVP);
 	postmatchcontainer.appendChild(finalreview);
 	postmatchcontainer.appendChild(finalcomment);
 	postmatchcontainer.appendChild(innercontainer);
+
+	interactions.appendChild(postmatchcontainer);
+
 
 }
 

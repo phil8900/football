@@ -75,7 +75,7 @@
 			<br>
 
 			<div id="interactions">
-				<div id="postmatchcontainer">
+				<div id="postmatchcontainer" class="activitybox">
 					<div class="innercontainer">
 						<div id="mvp">
 							<div id='upcoming'>
