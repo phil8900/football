@@ -541,7 +541,7 @@ function showSquad(nextgame){
 	var countspan = document.createElement('span');
 	countspan.classList.add('mvpcountspan');
 	countspan.innerHTML = 0;
-	countspan.style.display = 'none';
+//	countspan.style.display = 'none';
 	div.appendChild(countspan);
 
 	var startingcountspan = document.createElement('span');
@@ -553,7 +553,7 @@ function showSquad(nextgame){
 	var goalcountspan = document.createElement('span');
 	goalcountspan.classList.add('goalcountspan');
 	goalcountspan.innerHTML = 0;
-	goalcountspan.style.display = 'none';
+//	goalcountspan.style.display = 'none';
 	div.appendChild(goalcountspan);
 
 	countVotes();

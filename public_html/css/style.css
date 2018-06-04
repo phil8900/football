@@ -828,7 +828,8 @@ h2{
  	height: 400px;
 }
 
-#postmatchcontainertitle{
+#postmatchcontainertitle p{
+	font-size: 22px;
 
 }
 
@@ -922,6 +923,7 @@ h2{
 	height: 400px;
 	overflow: scroll;
 	text-align: left;
+	float: none;
 }
 
 .voucherconfirmation{
