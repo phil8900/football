@@ -703,7 +703,7 @@ function reactToEvent(event_id, reaction){
 
 function displayPostMatchEvents (gameid){
 	var interactions = document.getElementById('interactions');
-	postmatchcontainer.classList.add('activitybox');
+	postmatchcontainer = document.getElementById('postmatchcontainer');
 
 	var postmatchcontainertitle = document.createElement('div');
 	postmatchcontainertitle.id = 'postmatchcontainertitle';
