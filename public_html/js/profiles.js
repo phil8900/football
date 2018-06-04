@@ -964,7 +964,7 @@ function displayStatsBest11(){
 
     $("#statsbest11").html(orderedDivs);
 
-    $('.userelement:gt(2)').hide();
+    $('.userelement:gt(10)').hide();
 }
 
 function displayStatsCoach(){
