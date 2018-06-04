@@ -764,8 +764,6 @@ function countReactions(playerid){
 								var starrating = (5*five + 4*four + 3*three + 2*two + one)/(five+four+three+two+one);
 							}
 
-							console.log(starrating);
-
 						if(goalrating[playerid] == null){
 							goalrating[playerid] = starrating/counter;
 						}
@@ -844,6 +842,9 @@ function displayStatsMVP(){
 	document.getElementById('statssubout').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
 
+	$('.userelement:gt(2)').show();
+
+
 	var players = $("#squad .userelement");
 
 	players.each(function( index ) {
@@ -851,7 +852,7 @@ function displayStatsMVP(){
 	});
 
 	var orderedDivs = players.sort(function (a, b) {
-        return $(a).find('.mvpcountspan').html() < $(b).find('.mvpcountspan').html();
+        return ($(a).find('.mvpcountspan').html() > $(b).find('.mvpcountspan').html()) ? -1 : ($(a).find('.mvpcountspan').html() < $(b).find('.mvpcountspan').html()) ? 1 : 0;
     });
 
     $("#statsmvp").html(orderedDivs);
@@ -868,6 +869,8 @@ function displayStatsGoals(){
 	document.getElementById('statssubout').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
 
+	$('.userelement:gt(2)').show();
+
 	var players = $("#squad .userelement");
 
 	players.each(function( index ) {
@@ -875,7 +878,7 @@ function displayStatsGoals(){
 	});
 
 	var orderedDivs = players.sort(function (a, b) {
-        return $(a).find('.goalcountspan').html() < $(b).find('.goalcountspan').html();
+        return ($(a).find('.goalcountspan').html() > $(b).find('.goalcountspan').html()) ? -1 : ($(a).find('.goalcountspan').html() < $(b).find('.goalcountspan').html()) ? 1 : 0;
     });
 
     $("#statsgoals").html(orderedDivs);
@@ -891,6 +894,8 @@ function displayStatsBest11(){
 	document.getElementById('statssubout').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
 
+	$('.userelement:gt(2)').show();
+
 	var players = $("#squad .userelement");
 
 	players.each(function( index ) {
@@ -898,7 +903,7 @@ function displayStatsBest11(){
 	});
 
 	var orderedDivs = players.sort(function (a, b) {
-        return $(a).find('.startingcountspan').html() < $(b).find('.startingcountspan').html();
+        return ($(a).find('.startingcountspan').html() > $(b).find('.startingcountspan').html()) ? -1 : ($(a).find('.startingcountspan').html() < $(b).find('.startingcountspan').html()) ? 1 : 0;
     });
 
     $("#statsbest11").html(orderedDivs);

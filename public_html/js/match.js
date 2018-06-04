@@ -385,9 +385,11 @@ function getTeamInfo(gameid, wrapper){
 	awayspan.classList.add('awayteam');
 	gameheader.appendChild(awayspan);
 
+	if(score != null){
 	score.appendChild(location);
 	score.appendChild(gameheader);
 	score.appendChild(time);
+	}
 
 	var ref = firebase.database().ref('/fixtures/' + gameid).once('value', function(snapshot) {
 		var hometeam = snapshot.val().hometeamid;
