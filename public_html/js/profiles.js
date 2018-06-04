@@ -61,6 +61,8 @@ function initProfiles(){
 		showSquad('');
 	});
 	}
+	showCoachInformation();
+
 }
 
 function showOwnProfile(snapshotvalue, entry){
@@ -735,6 +737,27 @@ function countVotes(type){
 				countStarting(playerid);
 				countReactions(playerid);
 		});
+	});
+}
+
+function showCoachInformation(){
+	firebase.database().ref('teams/' + ownteam + '/information/coach').once('value', function(snapshot){
+		var coach = document.getElementById('statscoach');
+		var name = document.createElement('p');
+		name.innerHTML = snapshot.val()['coachname'];
+		coach.appendChild(name);
+
+		var nationality = document.createElement('p');
+		nationality.innerHTML = snapshot.val()['coachnationality'];
+		coach.appendChild(nationality);
+
+		var age = document.createElement('p');
+		age.innerHTML = snapshot.val()['coachage'];
+		coach.appendChild(age);
+
+		var since = document.createElement('p');
+		since.innerHTML = snapshot.val()['coachsince'];
+		coach.appendChild(since);
 	});
 }
 
