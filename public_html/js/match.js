@@ -62,6 +62,11 @@ function getLiveGameEvents(gameid){
 }
 
 function displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton){
+	onebutton.disabled = true;
+	twobutton.disabled = true;
+	threebutton.disabled = true;
+	fourbutton.disabled = true;
+	fivebutton.disabled = true;
 	firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
 		snapshot.forEach(function(child) {
 			firebase.database().ref('/fixtures/' + child.val().gameid + '/events/' + event_id + '/stars').on('value', function(snapshot) {

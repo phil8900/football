@@ -727,6 +727,7 @@ function hideCheckinButtons(){
 }
 
 function countVotes(type){
+	getCoachStats();
 	var teamRef = firebase.database().ref('teams/' + ownteam + '/squad').once('value', function(snapshot){
 		snapshot.forEach(function(child){
 			var playerid = child.val()['playerid'];
@@ -735,6 +736,36 @@ function countVotes(type){
 				countReactions(playerid);
 		});
 	});
+}
+
+function getCoachStats(){
+	firebase.database().ref('teams/' + ownteam + '/information/fixtures').once('value', function(snapshot){
+		var positive = 0;
+		var negative = 0;
+		var coachrating = 0;
+		snapshot.forEach(function(child){
+			firebase.database().ref('fixtures/' + child.val() + '/events').once('value', function(snapshot){
+				if(snapshot.val() != null){
+					snapshot.forEach(function(child){
+						if(child.val()['type'] == 'wechsel'){
+							var reactions = child.val()['reactions'];
+
+							positive = positive + reactions['positive'];
+							negative = negative + reactions['negative'];
+
+							if((positive+negative)>0){
+								coachrating = (positive/(negative+positive))*100;
+							}
+
+							var coachdiv = document.getElementById('statscoach');
+							var coachcount = coachdiv.getElementsByClassName('coachcount')[0];
+							coachcount.innerHTML = coachrating + '%';
+						}
+					});
+					}
+				});
+			});
+});
 }
 
 function countReactions(playerid){
@@ -838,9 +869,9 @@ function displayStatsMVP(){
 	document.getElementById('statsmvp').style.display = 'block';
 	document.getElementById('statsgoals').style.display = 'none';
 	document.getElementById('statsbest11').style.display = 'none';
-	document.getElementById('statssubin').style.display = 'none';
-	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statscoach').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
+	document.getElementById('dropdown').innerHTML = 'Man of the Match';
 
 	$('.userelement:gt(2)').show();
 
@@ -865,9 +896,10 @@ function displayStatsGoals(){
 	document.getElementById('statsmvp').style.display = 'none';
 	document.getElementById('statsgoals').style.display = 'block';
 	document.getElementById('statsbest11').style.display = 'none';
-	document.getElementById('statssubin').style.display = 'none';
-	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statscoach').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
+	document.getElementById('dropdown').innerHTML = 'Goals';
+
 
 	$('.userelement:gt(2)').show();
 
@@ -890,9 +922,10 @@ function displayStatsBest11(){
 	document.getElementById('statsmvp').style.display = 'none';
 	document.getElementById('statsgoals').style.display = 'none';
 	document.getElementById('statsbest11').style.display = 'block';
-	document.getElementById('statssubin').style.display = 'none';
-	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statscoach').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
+	document.getElementById('dropdown').innerHTML = 'Best 11';
+
 
 	$('.userelement:gt(2)').show();
 
@@ -911,29 +944,21 @@ function displayStatsBest11(){
     $('.userelement:gt(2)').hide();
 }
 
-function displayStatsBestSubIn(){
+function displayStatsCoach(){
 	document.getElementById('statsmvp').style.display = 'none';
 	document.getElementById('statsgoals').style.display = 'none';
 	document.getElementById('statsbest11').style.display = 'none';
-	document.getElementById('statssubin').style.display = 'block';
-	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statscoach').style.display = 'block';
 	document.getElementById('statsoverall').style.display = 'none';
-}
+	document.getElementById('dropdown').innerHTML = 'Coach overall performance';
 
-function displayStatsBestSubOut (){
-	document.getElementById('statsmvp').style.display = 'none';
-	document.getElementById('statsgoals').style.display = 'none';
-	document.getElementById('statsbest11').style.display = 'none';
-	document.getElementById('statssubin').style.display = 'none';
-	document.getElementById('statssubout').style.display = 'block';
-	document.getElementById('statsoverall').style.display = 'none';
 }
 
 function displayStatsOverall(){
 	document.getElementById('statsmvp').style.display = 'none';
 	document.getElementById('statsgoals').style.display = 'none';
 	document.getElementById('statsbest11').style.display = 'none';
-	document.getElementById('statssubin').style.display = 'none';
-	document.getElementById('statssubout').style.display = 'none';
+	document.getElementById('statscoach').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'block';
+	document.getElementById('dropdown').innerHTML = 'Team overall performance';
 }
