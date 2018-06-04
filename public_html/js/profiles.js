@@ -550,6 +550,12 @@ function showSquad(nextgame){
 	startingcountspan.style.display = 'none';
 	div.appendChild(startingcountspan);
 
+	var goalcountspan = document.createElement('span');
+	goalcountspan.classList.add('goalcountspan');
+	goalcountspan.innerHTML = 0;
+	goalcountspan.style.display = 'none';
+	div.appendChild(goalcountspan);
+
 	countVotes();
 
 	if(ownprofile){
@@ -726,6 +732,57 @@ function countVotes(type){
 			var playerid = child.val()['playerid'];
 				countMvpvotes(playerid);
 				countStarting(playerid);
+				countReactions(playerid);
+		});
+	});
+}
+
+function countReactions(playerid){
+	firebase.database().ref('teams/' + ownteam + '/information/fixtures').once('value', function(snapshot){
+		var counter = 0;
+		var goalrating = [];
+		snapshot.forEach(function(child){
+			firebase.database().ref('fixtures/' + child.val() + '/events').once('value', function(snapshot){
+				if(snapshot.val() != null){
+					snapshot.forEach(function(child){
+					if(child.val()['spieler_id_1'] == playerid || child.val()['spieler_id_2'] == playerid){
+						if(child.val()['type'] == 'tor'){
+							var rating = child.val()['stars'];
+							if(rating != null){
+							counter++;
+
+							var five = rating['five'];
+							var four = rating['four'];
+							var three = rating['three'];
+							var two = rating['two'];
+							var one = rating['one'];
+
+							var starrating = 0;
+
+							var agg = five+four+three+two+one;
+							if(agg > 0){
+								var starrating = (5*five + 4*four + 3*three + 2*two + one)/(five+four+three+two+one);
+							}
+
+							console.log(starrating);
+
+						if(goalrating[playerid] == null){
+							goalrating[playerid] = starrating/counter;
+						}
+						else{
+							goalrating[playerid] = (goalrating[playerid] + starrating)/counter;
+						}
+						
+						var playerdiv = document.getElementById(playerid);
+						var countspan = playerdiv.getElementsByClassName('goalcountspan')[0];
+						countspan.innerHTML = goalrating[playerid];
+
+						}
+					}
+					}
+				});
+				}
+			});
 		});
 	});
 }
@@ -810,6 +867,20 @@ function displayStatsGoals(){
 	document.getElementById('statssubin').style.display = 'none';
 	document.getElementById('statssubout').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
+
+	var players = $("#squad .userelement");
+
+	players.each(function( index ) {
+  		var value = parseFloat($(this).find('.goalcountspan').html());
+	});
+
+	var orderedDivs = players.sort(function (a, b) {
+        return $(a).find('.goalcountspan').html() < $(b).find('.goalcountspan').html();
+    });
+
+    $("#statsgoals").html(orderedDivs);
+
+    $('.userelement:gt(2)').hide();
 }
 
 function displayStatsBest11(){

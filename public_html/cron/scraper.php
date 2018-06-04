@@ -226,6 +226,11 @@ function setGameEvents($game_id) {
 		$value = (array) $value;
 		$value['reactions']['positive'] = 0;
 		$value['reactions']['negative'] = 0;
+		$value['stars']['one'] = 0;
+		$value['stars']['two'] = 0;
+		$value['stars']['three'] = 0;
+		$value['stars']['four'] = 0;
+		$value['stars']['five'] = 0;
 
 		if (!isset($snapshot)) {
 			$reference->set($value);
