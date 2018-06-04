@@ -122,6 +122,10 @@ body {
 	color:lightgray;
 }
 
+.checkedstar{
+	color:orange;
+}
+
 .userelement{
 	border-bottom: 1px solid lightgray;
 	padding-left: 5%;

@@ -61,6 +61,67 @@ function getLiveGameEvents(gameid){
 	});
 }
 
+function displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton){
+	firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
+		snapshot.forEach(function(child) {
+			firebase.database().ref('/fixtures/' + child.val().gameid + '/events/' + event_id + '/stars').on('value', function(snapshot) {
+				if((snapshot.val() !== null)){
+					var one = snapshot.val()['one'];
+					var two = snapshot.val()['two'];
+					var three = snapshot.val()['three'];
+					var four = snapshot.val()['four'];
+					var five = snapshot.val()['five'];
+					var starrating = 0;
+
+					var agg = one+two+three+four+five;
+
+					if(agg > 0){
+						starrating = (5*five + 4*four + 3*three + 2*two + one)/(five+four+three+two+one);
+					}
+					if(starrating >= 1){
+						onebutton.classList.add('checkedstar');
+					}
+					if(starrating >= 2){
+						twobutton.classList.add('checkedstar');
+					}
+					if(starrating >= 3){
+						threebutton.classList.add('checkedstar');
+					}
+					if(starrating >= 4){
+						fourbutton.classList.add('checkedstar');
+					}
+					if(starrating >= 5){
+						fivebutton.classList.add('checkedstar');
+					}
+				}
+			});
+		});
+	});
+}
+
+function displayButtonPercentages(event_id, upbutton, downbutton){
+	firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
+		snapshot.forEach(function(child) {
+			firebase.database().ref('/fixtures/' + child.val().gameid + '/events/' + event_id + '/reactions').on('value', function(snapshot) {
+				if((snapshot.val() !== null)){
+					var positive = 0;
+					var negative = 0;
+					var percentage = 0;
+					if((snapshot.val().positive !== undefined) &&(snapshot.val().negative !== undefined)){
+						positive = snapshot.val().positive;
+						negative = snapshot.val().negative;
+					}
+					if((negative+positive) > 0){
+						percentage = (positive/(positive+negative))*100;
+					}
+					upbutton.innerHTML = percentage + '%';
+					downbutton.innerHTML = 100-percentage + '%';
+				}
+			});
+		});
+	});
+}
+
 function getEventReaction(event_id){
 	firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
 		snapshot.forEach(function(child) {
@@ -522,7 +583,7 @@ function createWrappers(game_id, event_id, event_type){
 					reactToEvent(event_id, 1);
 					upbutton.disabled = true;
 					downbutton.disabled = true;
-
+					displayButtonPercentages(event_id, upbutton, downbutton);
 				});
 
 
@@ -530,10 +591,19 @@ function createWrappers(game_id, event_id, event_type){
 					reactToEvent(event_id, -1);
 					downbutton.disabled = true;
 					upbutton.disabled = true;
+					displayButtonPercentages(event_id, upbutton, downbutton);
 				});
 
 				reactiondiv.appendChild(upbutton);
 				reactiondiv.appendChild(downbutton);
+
+				firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/reactions/users/' + uid).once('value').then(function(snapshot) {
+					if(snapshot.val() != null){
+						upbutton.disabled = true;
+						downbutton.disabled = true;
+						displayButtonPercentages(event_id, upbutton, downbutton);
+					}
+				});
 				}
 				else{
 				var onesymbol = document.createElement('i');
@@ -578,18 +648,24 @@ function createWrappers(game_id, event_id, event_type){
 
 				onebutton.addEventListener("click", function () {
 					rateStars(event_id, 'one');
+					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+
 				});
 				twobutton.addEventListener("click", function () {
 					rateStars(event_id, 'two');
+					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
 				});
 				threebutton.addEventListener("click", function () {
 					rateStars(event_id, 'three');
+					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
 				});
 				fourbutton.addEventListener("click", function () {
 					rateStars(event_id, 'four');
+					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
 				});
 				fivebutton.addEventListener("click", function () {
 					rateStars(event_id, 'five');
+					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
 				});
 
 				reactiondiv.appendChild(onebutton);
@@ -597,6 +673,17 @@ function createWrappers(game_id, event_id, event_type){
 				reactiondiv.appendChild(threebutton);
 				reactiondiv.appendChild(fourbutton);
 				reactiondiv.appendChild(fivebutton);
+
+				firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/stars/users/' + uid).once('value').then(function(snapshot) {
+					if(snapshot.val() != null){
+						onebutton.disabled = true;
+						twobutton.disabled = true;
+						threebutton.disabled = true;
+						fourbutton.disabled = true;
+						fivebutton.disabled = true;
+						displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+					}
+				});
 
 				}
 				eventwrapper.appendChild(reactiondiv);
@@ -682,17 +769,6 @@ function reactToEvent(event_id, reaction){
 									return negative + 1;
 								});
 							}
-						}
-						else{
-							var eventdiv = document.getElementById(event_id);
-							var gamereaction = eventdiv.getElementsByClassName("gamereaction")[0];
-							var upbutton = gamereaction.getElementsByClassName("upbutton")[0];
-							var downbutton = gamereaction.getElementsByClassName("downbutton")[0];
-							upbutton.disabled = true;
-							downbutton.disabled = true;
-
-							console.log(downbutton.disabled);
-							console.log(upbutton.disabled);
 						}
 					});
 				}
