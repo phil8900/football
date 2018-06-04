@@ -61,7 +61,6 @@ function initProfiles(){
 		showSquad('');
 	});
 	}
-	hideCheckinButtons();
 }
 
 function showOwnProfile(snapshotvalue, entry){
@@ -257,17 +256,19 @@ function showActivityBox(activity, event, gameid, reaction){
 
 function getTimestampForActivity(activity, event, reaction){
 	var timestamp = '';
-	if(activity == 'checkin'){
-		timestamp = event.timestamp;
-	}
-	else if(activity == 'reaction'){
-		timestamp = reaction[uid].timestamp;
-	}
-	else if(activity == 'starting'){
-		timestamp = event.timestamp;
-	}
-	else if(activity == 'bestplayer'){
+	if(event != undefined){
+		if(activity == 'checkin'){
+			timestamp = event.timestamp;
+		}
+		else if(activity == 'reaction'){
+			timestamp = reaction[uid].timestamp;
+		}
+		else if(activity == 'starting'){
+			timestamp = event.timestamp;
+		}
+		else if(activity == 'bestplayer'){
 
+		}
 	}
 	return timestamp;
 }
@@ -392,7 +393,9 @@ function getCheckinDetails(description, activitytext, event){
 	eventlist.classList.add('eventlistmini');
 
 	var placename = document.createElement('p');
-	placename.appendChild(document.createTextNode(event.placename));
+	if(event != undefined){
+		placename.appendChild(document.createTextNode(event.placename));
+	}
 
 	eventlist.appendChild(placename);
 	eventwrapper.appendChild(eventlist);
@@ -536,10 +539,18 @@ function showSquad(nextgame){
 	div.appendChild(pointsdiv);
 
 	var countspan = document.createElement('span');
-	countspan.classList.add('countspan');
+	countspan.classList.add('mvpcountspan');
 	countspan.innerHTML = 0;
 	countspan.style.display = 'none';
 	div.appendChild(countspan);
+
+	var startingcountspan = document.createElement('span');
+	startingcountspan.classList.add('startingcountspan');
+	startingcountspan.innerHTML = 0;
+	startingcountspan.style.display = 'none';
+	div.appendChild(startingcountspan);
+
+	countVotes();
 
 	if(ownprofile){
 	var button = document.createElement('button');
@@ -556,6 +567,7 @@ function showSquad(nextgame){
 			});
 	setupButtons(nextgame);
 	});
+	hideCheckinButtons();
 }
 
 function setupButtons(nextgame){
@@ -705,17 +717,28 @@ function hideGameOverlay(){
 }
 
 function hideCheckinButtons(){
-	$('.checkinbutton'.hide());
+	$('.checkinbutton').hide();
 }
 
-function countMvps(){
+function countVotes(type){
+	var teamRef = firebase.database().ref('teams/' + ownteam + '/squad').once('value', function(snapshot){
+		snapshot.forEach(function(child){
+			var playerid = child.val()['playerid'];
+				countMvpvotes(playerid);
+				countStarting(playerid);
+		});
+	});
+}
+
+function countMvpvotes(playerid){
 	firebase.database().ref('startingeleven/users/').once('value', function(snapshot){
 		var mvpcount = [];
 		snapshot.forEach(function(child) {
 			firebase.database().ref('startingeleven/users/' + child.key).once('value', function(snapshot){
 				snapshot.forEach(function(child) {
 					if(child.val()['mvp'] != undefined){
-						var playerid = child.val()['mvp']['playerid'];
+						if(playerid == child.val()['mvp']['playerid']){
+
 						if(mvpcount[playerid] == null){
 							mvpcount[playerid] = 1;
 						}
@@ -723,9 +746,32 @@ function countMvps(){
 							mvpcount[playerid]++;
 						}
 						var playerdiv = document.getElementById(playerid);
-						var countspan = playerdiv.getElementsByClassName('countspan')[0];
+						var countspan = playerdiv.getElementsByClassName('mvpcountspan')[0];
 						countspan.innerHTML = mvpcount[playerid];
-						playerdiv.appendChild(countspan);
+					}
+					}
+				});
+			});
+		});
+	});
+}
+
+function countStarting(playerid){
+	firebase.database().ref('startingeleven/users/').once('value', function(snapshot){
+		var startingcount = [];
+		snapshot.forEach(function(child) {
+			firebase.database().ref('startingeleven/users/' + child.key).once('value', function(snapshot){
+				snapshot.forEach(function(child) {
+					if(child.val()[playerid] != undefined){
+						if(startingcount[playerid] == null){
+							startingcount[playerid] = 1;
+						}
+						else{
+							startingcount[playerid]++;
+						}
+						var playerdiv = document.getElementById(playerid);
+						var countspan = playerdiv.getElementsByClassName('startingcountspan')[0];
+						countspan.innerHTML = startingcount[playerid];
 					}
 				});
 			});
@@ -740,6 +786,21 @@ function displayStatsMVP(){
 	document.getElementById('statssubin').style.display = 'none';
 	document.getElementById('statssubout').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
+
+	var players = $("#squad .userelement");
+
+	players.each(function( index ) {
+  		var value = parseFloat($(this).find('.mvpcountspan').html());
+	});
+
+	var orderedDivs = players.sort(function (a, b) {
+        return $(a).find('.mvpcountspan').html() < $(b).find('.mvpcountspan').html();
+    });
+
+    $("#statsmvp").html(orderedDivs);
+
+    $('.userelement:gt(2)').hide();
+
 }
 
 function displayStatsGoals(){
@@ -758,6 +819,20 @@ function displayStatsBest11(){
 	document.getElementById('statssubin').style.display = 'none';
 	document.getElementById('statssubout').style.display = 'none';
 	document.getElementById('statsoverall').style.display = 'none';
+
+	var players = $("#squad .userelement");
+
+	players.each(function( index ) {
+  		var value = parseFloat($(this).find('.startingcountspan').html());
+	});
+
+	var orderedDivs = players.sort(function (a, b) {
+        return $(a).find('.startingcountspan').html() < $(b).find('.startingcountspan').html();
+    });
+
+    $("#statsbest11").html(orderedDivs);
+
+    $('.userelement:gt(2)').hide();
 }
 
 function displayStatsBestSubIn(){
