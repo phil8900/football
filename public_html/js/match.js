@@ -54,7 +54,7 @@ function getLiveGameEvents(gameid){
 			var wrapper = document.getElementById(gameid);
 			var eventwrapper = document.getElementById(child.val().eventId);
 			if((wrapper == null) || (eventwrapper == null)){
-				createWrappers(gameid, child.val().eventId);
+				createWrappers(gameid, child.val().eventId, child.val().type);
 				showEvents(child.val(), gameid);
 			}
 		});
@@ -472,7 +472,7 @@ function showReactionBarValue(reactionbar, reaction){
 	}
 }
 
-function createWrappers(game_id, event_id){
+function createWrappers(game_id, event_id, event_type){
 
 	var wrapper = document.getElementById(game_id);
 	var eventwrapper = document.getElementById(event_id);
@@ -502,6 +502,7 @@ function createWrappers(game_id, event_id){
 				reactiondiv.appendChild(negative);
 				wrapper.appendChild(eventwrapper);
 
+				if(event_type != 'tor'){
 				var upbutton = document.createElement("button");
 				var upsymbol = document.createElement('i');
 				upsymbol.classList.add('fas');
@@ -533,6 +534,71 @@ function createWrappers(game_id, event_id){
 
 				reactiondiv.appendChild(upbutton);
 				reactiondiv.appendChild(downbutton);
+				}
+				else{
+				var onesymbol = document.createElement('i');
+				onesymbol.classList.add('fas');
+				onesymbol.classList.add('fa-star');
+
+				var twosymbol = document.createElement('i');
+				twosymbol.classList.add('fas');
+				twosymbol.classList.add('fa-star');
+
+				var threesymbol = document.createElement('i');
+				threesymbol.classList.add('fas');
+				threesymbol.classList.add('fa-star');
+
+				var foursymbol = document.createElement('i');
+				foursymbol.classList.add('fas');
+				foursymbol.classList.add('fa-star');
+
+				var fivesymbol = document.createElement('i');
+				fivesymbol.classList.add('fas');
+				fivesymbol.classList.add('fa-star');
+
+				var onebutton = document.createElement("button");
+				onebutton.classList.add('onebutton');
+				onebutton.appendChild(onesymbol);
+
+				var twobutton = document.createElement("button");
+				twobutton.appendChild(twosymbol);
+				twobutton.classList.add('twobutton');
+
+				var threebutton = document.createElement("button");
+				threebutton.appendChild(threesymbol);
+				threebutton.classList.add('threebutton');
+
+				var fourbutton = document.createElement("button");
+				fourbutton.appendChild(foursymbol);
+				fourbutton.classList.add('fourbutton');
+
+				var fivebutton = document.createElement("button");
+				fivebutton.appendChild(fivesymbol);
+				fivebutton.classList.add('fivebutton');
+
+				onebutton.addEventListener("click", function () {
+					rateStars(event_id, 'one');
+				});
+				twobutton.addEventListener("click", function () {
+					rateStars(event_id, 'two');
+				});
+				threebutton.addEventListener("click", function () {
+					rateStars(event_id, 'three');
+				});
+				fourbutton.addEventListener("click", function () {
+					rateStars(event_id, 'four');
+				});
+				fivebutton.addEventListener("click", function () {
+					rateStars(event_id, 'five');
+				});
+
+				reactiondiv.appendChild(onebutton);
+				reactiondiv.appendChild(twobutton);
+				reactiondiv.appendChild(threebutton);
+				reactiondiv.appendChild(fourbutton);
+				reactiondiv.appendChild(fivebutton);
+
+				}
 				eventwrapper.appendChild(reactiondiv);
 
 		firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/').on('value', function(snapshot) {
@@ -543,11 +609,40 @@ function createWrappers(game_id, event_id){
 
 			}
 
+}
+
+function rateStars(event_id, reaction){
+	firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
+
+		snapshot.forEach(function(child) {
+			firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id).once('value').then(function(snapshot) {
+				if(snapshot.val() != null){
+					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/stars');
+					var userReactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid);
+
+					getPointsTable(snapshot.val()['type']);
+
+					userReactionRef.once('value').then(function(snapshot) {
+
+						if(snapshot.val() == null){
+							var currenttime = Math.floor(Date.now() / 1000);
+
+								reactionRef.child(reaction).transaction(function(reaction) {
+									var updates = {};
+									updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = 'positive';
+									updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
 
 
+									firebase.database().ref().update(updates);
 
-
-
+									return reaction + 1;
+								});
+						}
+					});
+				}
+			});
+		});
+	});
 }
 
 function reactToEvent(event_id, reaction){
