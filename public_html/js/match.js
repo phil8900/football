@@ -1,5 +1,4 @@
 var database = firebase.database();
-var fixturesRef = firebase.database().ref('fixtures/');
 
 var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
 var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
@@ -28,7 +27,7 @@ function initMatch(){
 	getLiveGameEvents(gameid);
 	displayVouchers();
 	hideFooter();
-	displayPostMatchEvents();
+	displayPostMatchEvents(gameid);
 }
 
 function getFutureGames(){
@@ -117,6 +116,7 @@ function showEvents(event, gameid){
 
 	firebase.database().ref('/teams/' + event.verein_id + '/information').once('value', function(snapshot) {
 		var teamname = event.verein_id;
+
 		var teamlogo = '';
 		if(snapshot.val() != null){
 			teamname = snapshot.val().teamname;
@@ -131,18 +131,22 @@ function showEvents(event, gameid){
 		vereinspan.appendChild(verein);
 		vereinspan.classList.add('verein');
 		eventlist.appendChild(vereinspan);
-		});
 
-		getPlayerInfo(event.spieler_id_1, event, eventlist);
 
-		if(event.type == 'wechsel'){
-			getPlayerInfo(event.spieler_id_2, event, eventlist);
-		}
+	});
+
+	getPlayerInfo(event.spieler_id_1, event, eventlist);
+
+	if(event.type == 'wechsel'){
+		getPlayerInfo(event.spieler_id_2, event, eventlist);
+	}
 
 	eventwrapper.insertBefore(eventlist, eventwrapper.getElementsByClassName('gamereaction')[0]);
 	getEventReaction(event.eventId);
 
 	latestgameevent.innerHTML = eventwrapper.innerHTML;
+
+
 }
 
 function getIconForEventType(type, subtype){
@@ -169,17 +173,14 @@ function getIconForEventType(type, subtype){
 		icon.style.color = 'red';
 	}
 	else if(type == 'einwechsel'){
-		icon.classList.add('fa-arrow-right');		
+		icon.classList.add('fa-arrow-right');
 		icon.style.color = 'green';
 	}
 	return icon;
 }
 
 function getStartingEleven(livegame){
-	firebase.database().ref('/fixtures/' + livegame.gameid + '/startingeleven').on('value', function(snapshot){
-		displayPlayers('home', livegame.hometeamid, snapshot.val()[livegame.hometeamid], livegame.gameid);
-		displayPlayers('away', livegame.awayteamid, snapshot.val()[livegame.awayteamid], livegame.gameid);
-	});
+
 }
 
 function displayPlayers(elementid, teamid, starters, gameid){
@@ -196,102 +197,104 @@ function showStartingEleven(elementid, teamid, playerarray, startingeleven, game
 		playerarray.forEach(function(child){
 			var player = snapshot.val()[child];
 
-	var div;
-	if(document.getElementById(player['playerid']) == null){
-		div = document.createElement('div');
-		div.id = player['playerid'];
-	}
-	else{
-		div = document.getElementById(player['playerid']);
-		div.innerHTML = '';
-	}
+			var div;
+			if(document.getElementById(player['playerid']) == null){
+				div = document.createElement('div');
+				div.id = player['playerid'];
+			}
+			else{
+				div = document.getElementById(player['playerid']);
+				div.innerHTML = '';
+			}
 
-	div.classList.add('userelement');
-	var firstlinediv = document.createElement('div');
-	firstlinediv.classList.add('firstlinediv');
+			div.classList.add('userelement');
+			var firstlinediv = document.createElement('div');
+			firstlinediv.classList.add('firstlinediv');
 
-	var imagewrapper = document.createElement('div');
-	imagewrapper.classList.add('playerimagewrapper');
-	imagewrapper.style.backgroundImage="url('" + player['picture'] + "')";
-	firstlinediv.appendChild(imagewrapper);
+			var imagewrapper = document.createElement('div');
+			imagewrapper.classList.add('playerimagewrapper');
+			imagewrapper.style.backgroundImage="url('" + player['picture'] + "')";
+			firstlinediv.appendChild(imagewrapper);
 
-	var namespan = document.createElement('span');
-	namespan.appendChild(document.createTextNode(player['fullname']));
-	namespan.classList.add('userrankingname');
+			var namespan = document.createElement('span');
+			namespan.appendChild(document.createTextNode(player['fullname']));
+			namespan.classList.add('userrankingname');
 
-	firstlinediv.appendChild(namespan);
+			firstlinediv.appendChild(namespan);
 
-	var rankspan = document.createElement('span');
-	rankspan.appendChild(document.createTextNode(player['status']));
+			var rankspan = document.createElement('span');
+			rankspan.appendChild(document.createTextNode(player['status']));
 
-	div.appendChild(firstlinediv);
+			div.appendChild(firstlinediv);
 
-	var pointsdiv = document.createElement('div');
-	pointsdiv.appendChild(document.createTextNode(player['jerseynumber']));
-	pointsdiv.classList.add('userrankingpoints');
+			var pointsdiv = document.createElement('div');
+			pointsdiv.appendChild(document.createTextNode(player['jerseynumber']));
+			pointsdiv.classList.add('userrankingpoints');
 
-	div.appendChild(pointsdiv);
+			div.appendChild(pointsdiv);
 
-	if(ownprofile){
-		if(teamid == ownteam){
-			var button = document.createElement('button');
-    		button.classList.add('checkinbutton');
-    		button.addEventListener("click", function(){
-    			manageMvp(button.parentElement.id, gameid, button);
-    		});
-    		var symbol = document.createElement('i');
-    		symbol.classList.add('fas');
-    		symbol.classList.add('fa-trophy');
-    		button.appendChild(symbol);
 
-    		div.appendChild(button);
-    	}
-    }
+			if(ownprofile){
+				if(teamid == ownteam){
+					var button = document.createElement('button');
+					button.classList.add('checkinbutton');
+					button.addEventListener("click", function(){
+						manageMvp(button.parentElement.id, gameid, button);
+					});
+					var symbol = document.createElement('i');
+					symbol.classList.add('fas');
+					symbol.classList.add('fa-trophy');
+					button.appendChild(symbol);
 
-    var insertid = 'bench';
-    if(startingeleven){
-    	insertid = getGeneralPosition(player['position']);
-    }
+					div.appendChild(button);
 
-    var squaddiv = document.getElementById('homesquad');
+				}
+			}
 
-    if(elementid == 'away'){
-    	squaddiv = document.getElementById('awaysquad');
-    }
+			var insertid = 'bench';
+			if(startingeleven){
+				insertid = getGeneralPosition(player['position']);
+			}
 
-	squaddiv.getElementsByClassName(insertid)[0].appendChild(div);
-			});
-	setupMvpButtons(gameid);
+			var squaddiv = document.getElementById('homesquad');
+
+			if(elementid == 'away'){
+				squaddiv = document.getElementById('awaysquad');
+			}
+
+			squaddiv.getElementsByClassName(insertid)[0].appendChild(div);
+		});
+		setupMvpButtons(gameid);
 		displayPostMatchEvents(gameid);
 	});
 }
 
 function setupMvpButtons(gameid){
 	var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp');
-    startingRef.on('value', function(snapshot){
-   	var mvpset = false;
+	startingRef.on('value', function(snapshot){
+		var mvpset = false;
 
-    if(snapshot.val() != null){
-    	var div = document.getElementById(snapshot.val().playerid);
-    	var button = div.getElementsByClassName('checkinbutton')[0];
-    	button.style.color = 'red';
-    	mvpset = true;
-    }
+		if(snapshot.val() != null){
+			var div = document.getElementById(snapshot.val().playerid);
+			var button = div.getElementsByClassName('checkinbutton')[0];
+			button.style.color = 'red';
+			mvpset = true;
+		}
 
-    		var all = document.getElementsByClassName('checkinbutton');
-			for (var i = 0; i < all.length; i++) {
-				if(mvpset){
- 				 if(all[i].style.color != 'red'){
- 				 	all[i].disabled = true;
- 				 	all[i].style.color = 'lightgray';
- 				 	}
- 				 }
-			else{
-				 	all[i].disabled = false;
- 				 	all[i].style.color = 'green';
+		var all = document.getElementsByClassName('checkinbutton');
+		for (var i = 0; i < all.length; i++) {
+			if(mvpset){
+				if(all[i].style.color != 'red'){
+					all[i].disabled = true;
+					all[i].style.color = 'lightgray';
+				}
 			}
-    	}
-    	});
+			else{
+				all[i].disabled = false;
+				all[i].style.color = 'green';
+			}
+		}
+	});
 }
 
 function manageMvp(playerid, gameid, button){
@@ -300,12 +303,12 @@ function manageMvp(playerid, gameid, button){
 	startingRef.once('value', function(snapshot){
 		if(snapshot.val() == null){
 			var updates = {};
-  			updates['startingeleven/users/' + uid + '/' + gameid + '/mvp/playerid'] = playerid;
-  			updates['startingeleven/users/' + uid + '/' + gameid + '/mvp/timestamp'] = Math.floor(Date.now() / 1000);
+			updates['startingeleven/users/' + uid + '/' + gameid + '/mvp/playerid'] = playerid;
+			updates['startingeleven/users/' + uid + '/' + gameid + '/mvp/timestamp'] = Math.floor(Date.now() / 1000);
 
-  			firebase.database().ref().update(updates);
+			firebase.database().ref().update(updates);
 
-  			button.style.color = 'red';
+			button.style.color = 'red';
 		}
 		else{
 			firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp').remove();
@@ -317,7 +320,7 @@ function manageMvp(playerid, gameid, button){
 function getPlayerInfo(playerid, event, eventlist){
 	var eventwrapper = document.getElementById(event.eventId);
 	var latestgameevent = document.getElementById("latestgameevent");
-    var playername = playerid;
+	var playername = playerid;
 
 	firebase.database().ref('/teams/' + event.verein_id + '/squad/' + playerid).once('value', function(snapshot) {
 		if(snapshot.val() != null){
@@ -346,8 +349,8 @@ function getPlayerInfo(playerid, event, eventlist){
 		//latestgameevent.appendChild(playerspan);
 
 		latestgameevent.innerHTML = eventwrapper.innerHTML;
-		
-		});
+
+	});
 }
 
 function getTeamInfo(gameid, wrapper){
@@ -458,6 +461,7 @@ function showReactionBarValue(reactionbar, reaction){
 }
 
 function createWrappers(game_id, event_id){
+
 	var wrapper = document.getElementById(game_id);
 	var eventwrapper = document.getElementById(event_id);
 
@@ -467,62 +471,75 @@ function createWrappers(game_id, event_id){
 		document.getElementById('events').appendChild(wrapper);
 		getTeamInfo(game_id, null);
 	}
-	if(eventwrapper == null){
+	if(eventwrapper == null) {
 		eventwrapper = document.createElement("div");
 		eventwrapper.id = event_id;
 		eventwrapper.classList.add('eventbox');
 
-		var reactiondiv = document.createElement('div');
-		reactiondiv.classList.add('gamereaction');
+				var reactiondiv = document.createElement('div');
+				reactiondiv.classList.add('gamereaction');
 
-		var positive = document.createElement('div');
-		positive.classList.add('positive');
-		var negative = document.createElement('div');
-		negative.classList.add('negative');
-
-		reactiondiv.appendChild(positive);
-		reactiondiv.appendChild(negative);
-		wrapper.appendChild(eventwrapper);
-
-		var upbutton = document.createElement("button");
-		var upsymbol = document.createElement('i');
-		upsymbol.classList.add('fas');
-		upsymbol.classList.add('fa-thumbs-up');
-		upbutton.classList.add('upbutton');
-		upbutton.appendChild(upsymbol);
-
-		var downbutton = document.createElement("button");
-		var downsymbol = document.createElement('i');
-		downsymbol.classList.add('fas');
-		downsymbol.classList.add('fa-thumbs-down');
-		downbutton.appendChild(downsymbol);
-		downbutton.classList.add('downbutton');
+				var positive = document.createElement('div');
+				positive.classList.add('positive');
+				var negative = document.createElement('div');
+				negative.classList.add('negative');
 
 
-		upbutton.addEventListener("click", function() {
-			reactToEvent(event_id, 1);
-			upbutton.disabled = true;
-			downbutton.disabled = true;
 
+				reactiondiv.appendChild(positive);
+				reactiondiv.appendChild(negative);
+				wrapper.appendChild(eventwrapper);
+
+				var upbutton = document.createElement("button");
+				var upsymbol = document.createElement('i');
+				upsymbol.classList.add('fas');
+				upsymbol.classList.add('fa-thumbs-up');
+				upbutton.classList.add('upbutton');
+				upbutton.appendChild(upsymbol);
+
+				var downbutton = document.createElement("button");
+				var downsymbol = document.createElement('i');
+				downsymbol.classList.add('fas');
+				downsymbol.classList.add('fa-thumbs-down');
+				downbutton.appendChild(downsymbol);
+				downbutton.classList.add('downbutton');
+
+
+				upbutton.addEventListener("click", function () {
+					reactToEvent(event_id, 1);
+					upbutton.disabled = true;
+					downbutton.disabled = true;
+
+				});
+
+
+				downbutton.addEventListener("click", function () {
+					reactToEvent(event_id, -1);
+					downbutton.disabled = true;
+					upbutton.disabled = true;
+				});
+
+				reactiondiv.appendChild(upbutton);
+				reactiondiv.appendChild(downbutton);
+				eventwrapper.appendChild(reactiondiv);
+
+		firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/').on('value', function(snapshot) {
+			if(snapshot.val()['verein_id'] != ownteam){
+				reactiondiv.style.visibility = 'hidden';
+			}
 		});
 
+			}
 
 
 
-		downbutton.addEventListener("click", function(){
-    		reactToEvent(event_id, -1);
-    		downbutton.disabled = true;
-    		upbutton.disabled = true;
-		}); 
 
-		reactiondiv.appendChild(upbutton);
-		reactiondiv.appendChild(downbutton);
-		eventwrapper.appendChild(reactiondiv);
-	}
+
+
 }
 
 function reactToEvent(event_id, reaction){
-		firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
+	firebase.database().ref('/fixtures/').once('value').then(function(snapshot) {
 
 		snapshot.forEach(function(child) {
 			firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id).once('value').then(function(snapshot) {
@@ -534,43 +551,43 @@ function reactToEvent(event_id, reaction){
 
 					userReactionRef.once('value').then(function(snapshot) {
 
-					if(snapshot.val() == null){
-						var currenttime = Math.floor(Date.now() / 1000);
-						if(reaction == 1){
-							reactionRef.child('positive').transaction(function(positive) {
-							var updates = {};
-  							updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/reaction'] = 'positive';
-  							updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
+						if(snapshot.val() == null){
+							var currenttime = Math.floor(Date.now() / 1000);
+							if(reaction == 1){
+								reactionRef.child('positive').transaction(function(positive) {
+									var updates = {};
+									updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/reaction'] = 'positive';
+									updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
 
 
-  							firebase.database().ref().update(updates);
+									firebase.database().ref().update(updates);
 
-							return positive + 1;
-							});
+									return positive + 1;
+								});
+							}
+							else{
+								reactionRef.child('negative').transaction(function(negative) {
+									var updates = {};
+									updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/reaction'] = 'negative';
+									updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
+
+									firebase.database().ref().update(updates);
+									return negative + 1;
+								});
+							}
 						}
 						else{
-							reactionRef.child('negative').transaction(function(negative) {
-								var updates = {};
-  								updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/reaction'] = 'negative';
-  								updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
+							var eventdiv = document.getElementById(event_id);
+							var gamereaction = eventdiv.getElementsByClassName("gamereaction")[0];
+							var upbutton = gamereaction.getElementsByClassName("upbutton")[0];
+							var downbutton = gamereaction.getElementsByClassName("downbutton")[0];
+							upbutton.disabled = true;
+							downbutton.disabled = true;
 
-  								firebase.database().ref().update(updates);
-								return negative + 1;
-							});
+							console.log(downbutton.disabled);
+							console.log(upbutton.disabled);
 						}
-					}
-					else{
-						var eventdiv = document.getElementById(event_id);
-						var gamereaction = eventdiv.getElementsByClassName("gamereaction")[0];
-						var upbutton = gamereaction.getElementsByClassName("upbutton")[0];
-						var downbutton = gamereaction.getElementsByClassName("downbutton")[0];
-						upbutton.disabled = true;
-						downbutton.disabled = true;
-
-						console.log(downbutton.disabled);
-						console.log(upbutton.disabled);
-					}
-				});
+					});
 				}
 			});
 		});
@@ -635,19 +652,22 @@ function displayPostMatchEvents (gameid){
 
 	var commentareacontent = document.createElement('input');
 	commentareacontent.classList.add('postmatchvotecontent');
-	commentareacontent.value = 'YOUR OPINION GOES HERE...';
+	commentareacontent.placeholder = 'YOUR OPINION GOES HERE...';
 
 	var submitfinalcomment = document.createElement('button');
 	submitfinalcomment.classList.add('submitbutton');
 	submitfinalcomment.innerHTML = 'Submit!';
+
 	submitfinalcomment.addEventListener("click", function() {
 		var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment');
-		startingRef.on('value', function(snapshot) {
-			var setfinalcomment = false;
-			if (snapshot.val() != null) {
-				setfinalcomment.push(commentareacontent.value);
-			}
-			setfinalcomment = true;
+
+		startingRef.once('value', function (snapshot) {
+
+			startingRef.push({
+				finalcomment: commentareacontent.value
+
+			});
+
 		});
 	});
 
@@ -722,7 +742,7 @@ function displayVouchers(){
 
 
 
-						var interactions = document.getElementById('interactions');
+					var interactions = document.getElementById('interactions');
 
 					voucherscontainer.appendChild(vouchercontainertitle);
 					voucherscontainer.appendChild(voucher1);
@@ -783,4 +803,21 @@ function voucherDescription (){
 		voucherdescription.appendChild(button);
 
 	}
+}
+
+function hideReactionOtherTeam (event_id, gameid) {
+
+	firebase.database().ref('/fixtures/' + gameid + '/events/' + event_id + '/').on('value', function(snapshot) {
+		if(snapshot.val()['verein_id'] == ownteam){
+		}
+		});
+	/*
+
+			if (verein_id != ownteam) {
+
+				var reactiondiv = document.getElementsByClassName("gamereaction");
+
+				reactiondiv.style.display = 'none';
+			}
+*/
 }
