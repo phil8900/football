@@ -75,6 +75,27 @@
 			<br>
 
 			<div id="interactions">
+				<div id="postmatchcontainer">
+					<div class="innercontainer">
+						<div id="mvp">
+							<div id='upcoming'>
+								<div id='homesquad'>
+									<div class='starting'>
+										<h2>Starting 11</h2>
+										<div class='keeper'></div>
+										<div class='defender'></div>
+										<div class='midfielder'></div>
+										<div class='striker'></div>
+									</div>
+									<div class="bench">
+										<h2>Bench</h2>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
 			</div>
 
 		</div>
@@ -89,32 +110,7 @@
 
 <!--
 
-		<div id='upcoming'>
-			<div id='homesquad'>
-				<div class='starting'>
-					<h2>Starting 11</h2>
-					<div class='keeper'></div>
-					<div class='defender'></div>
-					<div class='midfielder'></div>
-					<div class='striker'></div>
-				</div>
-				<div class="bench">
-					<h2>Bench</h2>
-				</div>
-			</div>
-			<div id='awaysquad'>
-				<div class='starting'>
-					<h2>Starting 11</h2>
-					<div class='keeper'></div>
-					<div class='defender'></div>
-					<div class='midfielder'></div>
-					<div class='striker'></div>
-				</div>
-				<div class="bench">
-					<h2>Bench</h2>
-				</div>
-			</div>
-		</div>
+
 
 -->
 

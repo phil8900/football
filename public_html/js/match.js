@@ -4,10 +4,11 @@ var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
 var ownteam = JSON.parse(localStorage.getItem("loudstand_ownteam"));
 var ownprofile = true;
 var nextgame;
+var gameid;
 
 function initMatch(){
 
-	var gameid = getQueryVariable("gameid");
+	gameid = getQueryVariable("gameid");
 
 	if(!gameid){
 		gameid = '';
@@ -181,6 +182,15 @@ function getIconForEventType(type, subtype){
 
 function getStartingEleven(livegame){
 
+}
+
+function getMvpList(){
+	firebase.database().ref('/fixtures/' + gameid).once('value', function(snapshot){
+		livegame = snapshot.val();
+		firebase.database().ref('/fixtures/' + livegame.gameid + '/startingeleven').on('value', function(snapshot){
+			displayPlayers('home', ownteam, snapshot.val()[ownteam], livegame.gameid);
+		});
+	});
 }
 
 function displayPlayers(elementid, teamid, starters, gameid){
@@ -596,8 +606,6 @@ function reactToEvent(event_id, reaction){
 
 function displayPostMatchEvents (gameid){
 	var interactions = document.getElementById('interactions');
-	var postmatchcontainer = document.createElement('div');
-	postmatchcontainer.id = 'postmatchcontainer';
 	postmatchcontainer.classList.add('activitybox');
 
 	var postmatchcontainertitle = document.createElement('div');
@@ -618,9 +626,7 @@ function displayPostMatchEvents (gameid){
 	voteformvpcontent.classList.add('postmatchvotecontent');
 	voteformvpcontent.innerHTML = 'VOTE FOR MVP HERE';
 
-	var voteformvp = document.createElement('div');
-	voteformvp.classList.add('postmatchvote');
-	voteformvp.id = 'mvp';
+	var voteformvp = document.getElementById("mvp");
 	voteformvp.appendChild(voteformvpcontent);
 	voteformvp.appendChild(submitmvp);
 
@@ -678,8 +684,7 @@ function displayPostMatchEvents (gameid){
 	commentarea.appendChild(submitfinalcomment);
 
 
-	var innercontainer = document.createElement('div');
-	innercontainer.classList.add('innercontainer');
+	var innercontainer = postmatchcontainer.getElementsByClassName('innercontainer')[0];
 
 	innercontainer.appendChild(voteformvp);
 	innercontainer.appendChild(voteforfinalreview);
@@ -699,7 +704,7 @@ function displayMVP(){
 	document.getElementById('mvp').style.display = 'block';
 	document.getElementById('finalreview').style.display = 'none';
 	document.getElementById('finalcomment').style.display = 'none';
-	document.getElementsByClassName('MVP').style.backgroundColor = blue;
+	document.getElementsByClassName('MVP').style.backgroundColor = 'blue';
 }
 
 function displayFinalReview(){
