@@ -51,13 +51,14 @@ function showMatches(){
 			div.classList.add('swiper-slide');
 			div.classList.add('matchescalendar');
 			div.id = gameid;
-			div.addEventListener('click', function(){ overlayOn(gameid); topBarBlack();});
+			div.addEventListener('click', function(){
+				overlayOn(gameid); topBarBlack();
+			});
 
 			var livenow = document.createElement('div');
 			livenow.classList.add('livenow');
 			div.appendChild(livenow);
 			livenow.innerHTML = '• LIVE';
-
 
 
 			var homediv = document.createElement('div');

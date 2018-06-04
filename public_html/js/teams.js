@@ -6,12 +6,13 @@ initTeamSelector();
       var e = document.createElement('div');
       snapshot.forEach(function(child) {
         var button = document.createElement('button');
+          button.classList.add('teamselect');
         button.style.background = 'url(' + child.val()['information']['teamlogo'] + ')';
 
         addListener(button, child);
 
         e.appendChild(button);
-        document.getElementById('buttons').appendChild(e);
+        document.getElementById('teamselectbuttons').appendChild(e);
       });
     });
   }

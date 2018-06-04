@@ -272,6 +272,7 @@ function showStartingEleven(elementid, teamid, playerarray, startingeleven, game
 	squaddiv.getElementsByClassName(insertid)[0].appendChild(div);
 			});
 	setupMvpButtons(gameid);
+		displayPostMatchEvents(gameid);
 	});
 }
 
@@ -436,6 +437,7 @@ function showEventReaction(game_id, event_id, reaction){
 
 		eventwrapper.getElementsByClassName('positive')[0].appendChild(row);
 	}
+
 	showReactionBarValue(bar, reaction);
 }
 
@@ -451,7 +453,7 @@ function showReactionBarValue(reactionbar, reaction){
 		percentage = 100;
 	}
 	else{
-		percentage = positive/negative;
+		percentage = (positive/(positive + negative))*100;
 	}
 
 	reactionbar.style.width = percentage + '%';
@@ -499,18 +501,23 @@ function createWrappers(game_id, event_id){
 		upbutton.classList.add('upbutton');
 		upbutton.appendChild(upsymbol);
 
-		upbutton.addEventListener("click", function(){
-    		reactToEvent(event_id, 1);
-    		upbutton.disabled = true;
-    		downbutton.disabled = true;
-		}); 
-
 		var downbutton = document.createElement("button");
 		var downsymbol = document.createElement('i');
 		downsymbol.classList.add('fas');
 		downsymbol.classList.add('fa-thumbs-down');
 		downbutton.appendChild(downsymbol);
 		downbutton.classList.add('downbutton');
+
+
+		upbutton.addEventListener("click", function() {
+			reactToEvent(event_id, 1);
+			upbutton.disabled = true;
+			downbutton.disabled = true;
+
+		});
+
+
+
 
 		downbutton.addEventListener("click", function(){
     		reactToEvent(event_id, -1);
@@ -530,7 +537,6 @@ function reactToEvent(event_id, reaction){
 		snapshot.forEach(function(child) {
 			firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id).once('value').then(function(snapshot) {
 				if(snapshot.val() != null){
-					console.log(snapshot.val());
 					var reactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions');
 					var userReactionRef = firebase.database().ref('/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid);
 
@@ -563,6 +569,17 @@ function reactToEvent(event_id, reaction){
 							});
 						}
 					}
+					else{
+						var eventdiv = document.getElementById(event_id);
+						var gamereaction = eventdiv.getElementsByClassName("gamereaction")[0];
+						var upbutton = gamereaction.getElementsByClassName("upbutton")[0];
+						var downbutton = gamereaction.getElementsByClassName("downbutton")[0];
+						upbutton.disabled = true;
+						downbutton.disabled = true;
+
+						console.log(downbutton.disabled);
+						console.log(upbutton.disabled);
+					}
 				});
 				}
 			});
@@ -570,7 +587,7 @@ function reactToEvent(event_id, reaction){
 	});
 }
 
-function displayPostMatchEvents (){
+function displayPostMatchEvents (gameid){
 	var interactions = document.getElementById('interactions');
 	postmatchcontainer.classList.add('activitybox');
 
@@ -622,13 +639,23 @@ function displayPostMatchEvents (){
 	finalcomment.classList.add('col-xs-4');
 	finalcomment.addEventListener("click", function(){ displayFinalComment();});
 
+	var commentareacontent = document.createElement('input');
+	commentareacontent.classList.add('postmatchvotecontent');
+	commentareacontent.value = 'YOUR OPINION GOES HERE...';
+
 	var submitfinalcomment = document.createElement('button');
 	submitfinalcomment.classList.add('submitbutton');
 	submitfinalcomment.innerHTML = 'Submit!';
-
-	var commentareacontent = document.createElement('input');
-	commentareacontent.classList.add('postmatchvotecontent');
-	commentareacontent.innerHTML = 'YOUR OPINION GOES HERE...';
+	submitfinalcomment.addEventListener("click", function() {
+		var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment');
+		startingRef.on('value', function(snapshot) {
+			var setfinalcomment = false;
+			if (snapshot.val() != null) {
+				setfinalcomment.push(commentareacontent.value);
+			}
+			setfinalcomment = true;
+		});
+	});
 
 	var commentarea = document.createElement('div');
 	commentarea.classList.add('postmatchvote');
@@ -678,7 +705,6 @@ function displayVouchers(){
 		snapshot.forEach(function(child) {
 			firebase.database().ref('/checkins/' + child.val() + '/' + uid).once('value').then(function(snapshot) {
 				if (snapshot.val() != null) {
-					console.log(snapshot.val());
 
 					var voucherscontainer = document.createElement('div');
 					voucherscontainer.classList.add('vouchercontainer');

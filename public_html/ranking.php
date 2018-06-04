@@ -28,14 +28,14 @@
 		<!-- Slides -->
 		<div class="swiper-slide">
 			<div id = "rankings">
-				<h2>USERS WORLWIDE</h2>
+				<!-- <h2>USERS WORLWIDE</h2> -->
 				<div id="userranking"></div>
 				<div id="ownteamranking"></div>
 			</div>
 		</div>
 		<div class="swiper-slide">
 			<div id='team'>
-				<h2>TEAMS WORLDWIDE</h2>
+				<!--	<h2>TEAMS WORLDWIDE</h2> -->
 				<div id="teamranking"></div>
 			</div>
 		</div>

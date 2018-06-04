@@ -55,13 +55,22 @@
 						<button id='dropdown' class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose statistics
 							<span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><a href="#">Man of the Match</a></li>
-							<li><a href="#">Goals</a></li>
-							<li><a href="#">Best 11</a></li>
-							<li><a href="#">Best coming from the bench</a></li>
-							<li><a href="#">Best player coming out</a></li>
-							<li><a href="#">Team overall performance</a></li>
+							<li onclick="displayStatsMVP();"><a>Man of the Match</a></li>
+							<li onclick="displayStatsGoals();"><a>Goals</a></li>
+							<li onclick="displayStatsBest11();"><a>Best 11</a></li>
+							<li onclick="displayStatsBestSubIn();"><a>Best coming from the bench</a></li>
+							<li onclick="displayStatsBestSubOut();"><a>Best player coming out</a></li>
+							<li onclick="displayStatsOverall();"><a>Team overall performance</a></li>
 						</ul>
+					</div>
+
+					<div id="statsdisplay">
+						<div id="statsmvp">MVP</div>
+						<div id="statsgoals">Goal</div>
+						<div id="statsbest11">Best 11</div>
+						<div id="statssubin">Best Sub In</div>
+						<div id="statssubout">Best Sub Out</div>
+						<div id="statsoverall">Overall Performance</div>
 					</div>
 					<div id='keeper'></div>
 					<div id='defender'></div>
