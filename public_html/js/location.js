@@ -2,7 +2,9 @@
       var infowindow;
 
 
+
       function initMap() {
+
         var pos = {lat: 56.132427, lng: 10.1528922};
 
         // Try HTML5 geolocation.
@@ -91,6 +93,8 @@
           updates['checkins/' + result.place_id + '/' + uid + '/' + newPostKey] = postData;
 
           firebase.database().ref().update(updates);
+          console.log(postData);
+
         });
 
       }

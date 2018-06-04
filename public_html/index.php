@@ -22,7 +22,7 @@
 
 <div id="authentication">
     <h1>Sign-Up</h1>
-    <h2>Create a LoudStand account</h2>
+    <h2>CREATE A LOUDSTAND ACCOUNT</h2>
     <div id="loader">Loading...</div>
     <div id="firebaseui-auth-container"></div>
 </div>

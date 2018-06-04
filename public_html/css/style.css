@@ -84,7 +84,6 @@ body {
 #userranking, #teamranking{
 	margin: auto auto auto auto;
 	width: 100%;
-	padding-top: 50px;
 }
 
 #userranking a, #teamranking a{
@@ -574,10 +573,16 @@ button{
 	height: 100px;
 }
 
+.userteamlogo img{
+	width: 100%;
+	height: auto;
 
+}
 
 .teamteamlogo img{
-	height: 100%;
+	width: 100%;
+	height: auto;
+
 
 }
 
@@ -999,7 +1004,7 @@ h2{
 
 #teamselect{
 	text-align: center;
-	padding: 10px 10px 10px 10px;
+	padding: 0px 10px 10px 10px;
 }
 
 #teamselect button{
@@ -1021,7 +1026,7 @@ h2{
 #teamselect h2{
 	font-size: 20px;
 	font-weight: 200;
-	margin-bottom: 80px;
+	margin-bottom: 60px;
 }
 
 #statsmvp{
