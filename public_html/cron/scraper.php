@@ -20,8 +20,6 @@ $prematch_base = 'https://www.transfermarkt.co.uk/spielbericht/index/spielberich
 $live_base = 'https://www.transfermarkt.co.uk/ticker/begegnung/live/';
 $team_base = 'https://www.transfermarkt.co.uk/frankreich/startseite/verein/';
 
-setGameEvents('2988616');
-
 function getTeamURLsForCompetition($competition_url) {
 	$table = getElementForSelector($competition_url, '#yw1');
 	$teams = array();

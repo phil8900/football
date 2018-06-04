@@ -535,6 +535,12 @@ function showSquad(nextgame){
 
 	div.appendChild(pointsdiv);
 
+	var countspan = document.createElement('span');
+	countspan.classList.add('countspan');
+	countspan.innerHTML = 0;
+	countspan.style.display = 'none';
+	div.appendChild(countspan);
+
 	if(ownprofile){
 	var button = document.createElement('button');
 	button.appendChild(document.createTextNode('11'));
@@ -700,5 +706,30 @@ function hideGameOverlay(){
 
 function hideCheckinButtons(){
 	$('.checkinbutton'.hide());
+}
+
+function countMvps(){
+	firebase.database().ref('startingeleven/users/').once('value', function(snapshot){
+		var mvpcount = [];
+		snapshot.forEach(function(child) {
+			firebase.database().ref('startingeleven/users/' + child.key).once('value', function(snapshot){
+				snapshot.forEach(function(child) {
+					if(child.val()['mvp'] != undefined){
+						var playerid = child.val()['mvp']['playerid'];
+						if(mvpcount[playerid] == null){
+							mvpcount[playerid] = 1;
+						}
+						else{
+							mvpcount[playerid]++;
+						}
+						var playerdiv = document.getElementById(playerid);
+						var countspan = playerdiv.getElementsByClassName('countspan')[0];
+						countspan.innerHTML = mvpcount[playerid];
+						playerdiv.appendChild(countspan);
+					}
+				});
+			});
+		});
+	});
 }
 
