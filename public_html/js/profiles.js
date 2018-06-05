@@ -571,6 +571,7 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
 }
 
 function showSquad(nextgame){
+    $('.userelement').show();
 
     var teamRef = firebase.database().ref('teams/' + ownteam + '/squad');
     ownprofile = true;
@@ -672,7 +673,7 @@ function setupButtons(nextgame){
     startingRef.on('value', function(snapshot){
         var counter = 0;
         snapshot.forEach(function(child) {
-            if(child.val().playerid != null){
+            if(child.val().playerid != null && child.key != 'mvp'){
                 var div = document.getElementById(child.val().playerid);
                 var button = div.getElementsByClassName('checkinbutton')[0];
                 button.style.color = 'red';
@@ -701,6 +702,7 @@ function setupButtons(nextgame){
 }
 
 function manageStartingEleven(playerid, nextgame, button){
+    console.log('Here');
     var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + playerid);
     var startingRootRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame);
 
@@ -712,7 +714,14 @@ function manageStartingEleven(playerid, nextgame, button){
             });
             button.style.color = 'red';
             startingRootRef.once('value', function(snapshot){
-                if(snapshot.numChildren() == 12){
+                var counter = 0;
+                snapshot.forEach(function(child){
+                    if(child.key != 'timestamp' && child.key != 'finalcomment' && child.key != 'finalreview' && child.key != 'mvp'){
+                        counter++
+                    }
+                });
+                
+                if(counter == 11){
                     getPointsTable('suggest11');
                 }
             });
@@ -722,7 +731,13 @@ function manageStartingEleven(playerid, nextgame, button){
             firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + 'timestamp').remove();
             button.style.color = 'green';
             startingRootRef.once('value', function(snapshot){
-                if(snapshot.numChildren() == 10){
+                var counter = 0;
+                snapshot.forEach(function(child){
+                    if(child.key != 'timestamp' && child.key != 'finalcomment' && child.key != 'finalreview' && child.key != 'mvp'){
+                        counter++
+                    }
+                });
+                if(counter == 10){
                     getPointsTable('remove11');
                 }
             });

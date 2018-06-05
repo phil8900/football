@@ -352,6 +352,11 @@ function showStartingEleven(elementid, teamid, playerarray, startingeleven, game
 			pointsdiv.appendChild(document.createTextNode(player['jerseynumber']));
 			pointsdiv.classList.add('userrankingpoints');
 
+            var countspan = document.createElement('span');
+            countspan.classList.add('mvpcountspan');
+            countspan.innerHTML = 0;
+            div.appendChild(countspan);
+
 			div.appendChild(pointsdiv);
 
 
@@ -383,12 +388,17 @@ function showStartingEleven(elementid, teamid, playerarray, startingeleven, game
 				squaddiv = document.getElementById('awaysquad');
 			}
 
-			squaddiv.getElementsByClassName(insertid)[0].appendChild(div);
+			if(squaddiv.getElementsByClassName(insertid)[0] != null){
+				squaddiv.getElementsByClassName(insertid)[0].appendChild(div);
+			}
+			else{
+				squaddiv.appendChild(div);
+			}
+			countGameMvpvotes(player['playerid']);
 			}
 		});
 		setupMvpButtons(gameid);
 		displayPostMatchEvents(gameid);
-
 	});
 
 }
@@ -404,7 +414,6 @@ function setupMvpButtons(gameid){
 			button.style.color = 'red';
 			mvpset = true;
 			$('#mvp .checkinbutton').hide();
-
 		}
 
 		var all = document.getElementsByClassName('checkinbutton');
@@ -420,6 +429,24 @@ function setupMvpButtons(gameid){
 			}
 		}
 	});
+}
+
+function displayMvpRanking(){
+		var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp');
+			startingRef.on('value', function(snapshot){
+
+		if(snapshot.val() != null){
+	$('.userelement:gt(2)').show();
+    var players = $(".userelement");
+
+    var orderedDivs = players.sort(function (a, b) {
+        return ($(a).find('.mvpcountspan').html() > $(b).find('.mvpcountspan').html()) ? -1 : ($(a).find('.mvpcountspan').html() < $(b).find('.mvpcountspan').html()) ? 1 : 0;
+    });
+
+    $("#mvp #homesquad").html(orderedDivs);
+    $('#mvp #homesquad .userelement:gt(2)').hide();
+}
+});
 }
 
 function manageMvp(playerid, gameid, button){
@@ -1022,6 +1049,7 @@ function displayMVP(){
 	document.getElementById('finalcomment').style.display = 'none';
 	$(".submitbutton").hide();
 	getMvpList();
+	displayMvpRanking();
 }
 
 function displayFinalReview(){
@@ -1216,4 +1244,30 @@ function displayStats(gameid){
 		document.getElementById('awaycorners').innerHTML = snapshot.val()['away']['corners'];
 		document.getElementById('awayoffside').innerHTML = snapshot.val()['away']['offside'];
 	});
+}
+
+function countGameMvpvotes(playerid){
+    firebase.database().ref('startingeleven/users/').once('value', function(snapshot){
+        var mvpcount = [];
+        snapshot.forEach(function(child) {
+            firebase.database().ref('startingeleven/users/' + child.key).once('value', function(snapshot){
+                snapshot.forEach(function(child) {
+                    if(child.val()['mvp'] != undefined && child.key == gameid){
+                        if(playerid == child.val()['mvp']['playerid']){
+
+                            if(mvpcount[playerid] == null){
+                                mvpcount[playerid] = 1;
+                            }
+                            else{
+                                mvpcount[playerid]++;
+                            }
+                            var playerdiv = document.getElementById(playerid);
+                            var countspan = playerdiv.getElementsByClassName('mvpcountspan')[0];
+                            countspan.innerHTML = mvpcount[playerid];
+                        }
+                    }
+                });
+            });
+        });
+    });
 }
