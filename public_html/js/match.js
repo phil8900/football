@@ -37,7 +37,7 @@ function initMatch(){
 		console.log(child['timestamp'] < date);
 		if (livegame && gameid.timestamp < (date)){
 			{*/
-				displayVouchers();
+				displayVouchers(false);
 
 
 	displayPostMatchEvents(gameid);
@@ -861,6 +861,7 @@ function displayPostMatchEvents (gameid){
 				firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').push({
 						finalcomment: commentareacontent.value
 					});
+				getPointsTable('finalcomment');
 				}
 			});
 
@@ -913,16 +914,19 @@ function displayFinalComment(){
 	document.getElementById('finalcomment').style.display = 'block';
 }
 
-function displayVouchers(){
+function displayVouchers(unlimited){
 	firebase.database().ref('/partnerbars/placeids/').once('value').then(function(snapshot) {
 
 		snapshot.forEach(function(child) {
 			firebase.database().ref('/checkins/' + child.val() + '/' + uid).once('value').then(function(snapshot) {
 				if (snapshot.val() != null) {
 
-					var voucherscontainer = document.createElement('div');
-					voucherscontainer.classList.add('vouchercontainer');
-					voucherscontainer.id = 'vouchercontainer';
+					var voucherscontainer = document.getElementById('vouchercontainer');
+
+					if(voucherscontainer == null){
+						voucherscontainer = document.createElement('div');
+						voucherscontainer.classList.add('vouchercontainer');
+						voucherscontainer.id = 'vouchercontainer';
 
 					var vouchercontainertitle = document.createElement('div');
 					vouchercontainertitle.id = 'vouchercontainertitle';
@@ -938,18 +942,23 @@ function displayVouchers(){
 					voucher2.classList.add('voucher');
 					voucher2.innerHTML = "Discount #2";
 
+					if(unlimited){
+						voucher2.style.display = 'none';
+
+					}
+
 
 					var vouchersRef = firebase.database().ref('/vouchers/' + uid + '/' +  gameid);
 					vouchersRef.on('value', function (snapshot){
 						console.log(snapshot.numChildren());
 
 						voucher1.addEventListener("click", function () {
-							if(snapshot.numChildren() == 0) {
+							if(snapshot.numChildren() == 0 || unlimited) {
 								showVoucherOverlay();
 							}
 							});
 						voucher2.addEventListener("click", function () {
-							if(snapshot.numChildren() < 2) {
+							if(snapshot.numChildren() < 2 || unlimited) {
 								showVoucherOverlay();
 							}
 						});
@@ -991,7 +1000,7 @@ function displayVouchers(){
 					interactions.appendChild(voucherscontainer);
 
 
-
+					}
 
 
 				}

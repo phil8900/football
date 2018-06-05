@@ -29,67 +29,67 @@ function initReferences(){
 
 	});
 
-userRef.once('value', function(snapshot) {
-	var array = new Array();
-	snapshot.forEach(function(child) {
-		if(child.val().team == ownteam){
-			array.push(child.val());
-		}
+	userRef.once('value', function(snapshot) {
+		var array = new Array();
+		snapshot.forEach(function(child) {
+			if(child.val().team == ownteam){
+				array.push(child.val());
+			}
+		});
+
+		array.sort(function(a, b){return b.points-a.points});
+		userRanking = array;
+		setTeamRanking(userRanking);
 	});
 
-	array.sort(function(a, b){return b.points-a.points});
-	userRanking = array;
-	setTeamRanking(userRanking);
-});
-
-updateTeamRanking(false);
+	updateTeamRanking(false);
 }
 
 function updateTeamRanking(profile){
 	teamRef.once('value', function(snapshot) {
-	var array = new Array();
-	snapshot.forEach(function(child) {
+		var array = new Array();
+		snapshot.forEach(function(child) {
 			array.push(child.val());
-	});
-	array.sort(function(a, b){return b.points-a.points});
-	teamRanking = array;
-
-	if(!profile){
-		document.getElementById('teamranking').innerHTML = '';
-	}
-	var rank = 1;
-	teamRanking.forEach(function(entry){
-
-		if(entry['rank']['rank'] == null){
-  			entry['rank']['previous'] = -1;
-		}
-		else{
-			entry['rank']['previous'] = entry['rank']['rank'];
-		}
-		entry['rank']['rank'] = rank;
-
-		var storedrank;
-		var storedprevious;
-		var rankRef = firebase.database().ref('rankings/teams/' + entry.teamid + '/rank');
-		rankRef.once('value', function(snapshot){
-			storedrank = snapshot.val()['rank'];
-			storeprevious = snapshot.val()['previous'];
 		});
-		
-		if(entry['rank']['previous'] != rank){
-			if(entry.points != 0){
-				if((storedrank != rank) || (storeprevious != entry['rank']['previous'])){
-					rankRef.set({
-						rank: rank,
-						previous: entry['rank']['previous']
-					});
+		array.sort(function(a, b){return b.points-a.points});
+		teamRanking = array;
+
+		if(!profile){
+			document.getElementById('teamranking').innerHTML = '';
+		}
+		var rank = 1;
+		teamRanking.forEach(function(entry){
+
+			if(entry['rank']['rank'] == null){
+				entry['rank']['previous'] = -1;
+			}
+			else{
+				entry['rank']['previous'] = entry['rank']['rank'];
+			}
+			entry['rank']['rank'] = rank;
+
+			var storedrank;
+			var storedprevious;
+			var rankRef = firebase.database().ref('rankings/teams/' + entry.teamid + '/rank');
+			rankRef.once('value', function(snapshot){
+				storedrank = snapshot.val()['rank'];
+				storeprevious = snapshot.val()['previous'];
+			});
+
+			if(entry['rank']['previous'] != rank){
+				if(entry.points != 0){
+					if((storedrank != rank) || (storeprevious != entry['rank']['previous'])){
+						rankRef.set({
+							rank: rank,
+							previous: entry['rank']['previous']
+						});
+					}
 				}
 			}
-  		}
-		showTeamRanking(entry, profile);
-		rank++;
+			showTeamRanking(entry, profile);
+			rank++;
+		});
 	});
-});
 }
 
 function setTeamRanking(userRanking){
@@ -97,14 +97,14 @@ function setTeamRanking(userRanking){
 	document.getElementById('userranking').innerHTML = '';
 	userRanking.forEach(function(entry) {
 		if(entry['rank'] == null){
-  			entry['previous'] = -1;
+			entry['previous'] = -1;
 		}
 		else{
 			entry['previous'] = entry['rank']['rank'];
 		}
 		firebase.database().ref('rankings/users/' + entry.uid + '/rank').set({
-    		rank: rank
-  		});
+			rank: rank
+		});
 		entry['rank'] = rank;
 		createUserRankingElement(entry, 'userranking');
 		rank++;
@@ -117,7 +117,7 @@ function getPointsForTeams(){
 		snapshot.forEach(function(child) {
 			var teamid = child.val().teamid;
 			var points = 0;
-			
+
 			userRef.on('value', function(snapshot) {
 				snapshot.forEach(function(child) {
 					if(teamid == child.val().team){
@@ -127,11 +127,11 @@ function getPointsForTeams(){
 			});
 
 			if(child.val().points != points){
-			var updates = {};
+				var updates = {};
 
-			updates['rankings/teams/' + teamid + '/points'] = points;
-			updates['rankings/teams/' + teamid + '/teamid'] = teamid;
-			firebase.database().ref().update(updates);
+				updates['rankings/teams/' + teamid + '/points'] = points;
+				updates['rankings/teams/' + teamid + '/teamid'] = teamid;
+				firebase.database().ref().update(updates);
 			}
 		});
 	});
@@ -266,110 +266,125 @@ function displayTeamRanking(){
 function showOwnTeam(snapshotvalue, entry){
 	var ownteamranking = document.getElementById('ownteamranking');
 	if(ownteamranking != null){
-	document.getElementById('ownteamranking').innerHTML = '';
-	var bootstrapcontainer = document.createElement('div');
-	bootstrapcontainer.classList.add('container');
-	var wrapper = document.createElement('div');
-	wrapper.classList.add('row');
+		document.getElementById('ownteamranking').innerHTML = '';
+		var bootstrapcontainer = document.createElement('div');
+		bootstrapcontainer.classList.add('container');
+		var wrapper = document.createElement('div');
+		wrapper.classList.add('row');
 
-	var imagewrapper = document.createElement('div');
-	imagewrapper.classList.add('rankinglogowrapper');
-	imagewrapper.classList.add('teamteamlogo');
-	imagewrapper.classList.add('col-xs-4');
+		var imagewrapper = document.createElement('div');
+		imagewrapper.classList.add('rankinglogowrapper');
+		imagewrapper.classList.add('teamteamlogo');
+		imagewrapper.classList.add('col-xs-4');
 
-	var rankdiv = document.createElement('div');
-	rankdiv.id = 'rankdiv';
-	rankdiv.classList.add('col-xs-4');
+		var rankdiv = document.createElement('div');
+		rankdiv.id = 'rankdiv';
+		rankdiv.classList.add('col-xs-4');
 
-	var confederation = document.createElement('div');
-	confederation.id = 'confederation';
-	confederation.classList.add('col-xs-4');
-	confederation.classList.add('teamteamlogo');
+		var confederation = document.createElement('div');
+		confederation.id = 'confederation';
+		confederation.classList.add('col-xs-4');
+		confederation.classList.add('teamteamlogo');
 
-	bootstrapcontainer.appendChild(wrapper);
+		bootstrapcontainer.appendChild(wrapper);
 
-	var rankparagraph = document.createElement('p');
+		var rankparagraph = document.createElement('p');
 
-	var ranksymbol = document.createElement('i');
-	ranksymbol.classList.add('fas');
-	getTrend(entry, ranksymbol);
+		var ranksymbol = document.createElement('i');
+		ranksymbol.classList.add('fas');
+		getTrend(entry, ranksymbol);
 
-	rankparagraph.appendChild(ranksymbol);
+		rankparagraph.appendChild(ranksymbol);
 
-	rankparagraph.appendChild(document.createTextNode(' ' + entry.rank.rank));
-	rankparagraph.id = 'ownteamrank';
+		rankparagraph.appendChild(document.createTextNode(' ' + entry.rank.rank));
+		rankparagraph.id = 'ownteamrank';
 
-	var ranktext = document.createElement('p');
-	ranktext.appendChild(document.createTextNode('team ranking'));
+		var ranktext = document.createElement('p');
+		ranktext.appendChild(document.createTextNode('team ranking'));
 
-	rankdiv.appendChild(rankparagraph);
-	rankdiv.appendChild(ranktext);
-
-
-	var image = document.createElement('img');
-	image.src = snapshotvalue['teamlogo'];
-	imagewrapper.appendChild(image);
-
-	var confederationimage = document.createElement('img');
-	confederationimage.src = snapshotvalue['confederation'];
-	confederation.appendChild(confederationimage);
-
-	wrapper.appendChild(rankdiv);
-	wrapper.appendChild(imagewrapper);
-	wrapper.appendChild(confederation);
+		rankdiv.appendChild(rankparagraph);
+		rankdiv.appendChild(ranktext);
 
 
-	var teamdiv = document.createElement('div');
-	var teamparagraph = document.createElement('p');
-	teamparagraph.appendChild(document.createTextNode(snapshotvalue['teamname']));
-	teamdiv.id = 'ownteamname';
-	teamdiv.appendChild(teamparagraph);
+		var image = document.createElement('img');
+		image.src = snapshotvalue['teamlogo'];
+		imagewrapper.appendChild(image);
 
-	bootstrapcontainer.appendChild(teamdiv);
+		var confederationimage = document.createElement('img');
+		confederationimage.src = snapshotvalue['confederation'];
+		confederation.appendChild(confederationimage);
 
-	var fanbasediv = document.createElement('div');
-	var fanbaseparagraph = document.createElement('p');
-	fanbaseparagraph.appendChild(document.createTextNode('FANBASE LEVEL'));
-	fanbasediv.appendChild(fanbaseparagraph);
-	fanbasediv.id = 'fanbase';
+		wrapper.appendChild(rankdiv);
+		wrapper.appendChild(imagewrapper);
+		wrapper.appendChild(confederation);
 
-	var row = document.createElement('div');
-	row.classList.add('row');
-	var side = document.createElement('div');
-	side.classList.add('side');
-	row.appendChild(side);
-	var middle = document.createElement('div');
-	middle.classList.add('middle');
-	row.appendChild(middle);
 
-	var container = document.createElement('div');
-	container.classList.add('bar-container');
-	var bar = document.createElement('div');
-	bar.id = 'fanbasebar';
-	container.appendChild(bar);
+		var teamdiv = document.createElement('div');
+		var teamparagraph = document.createElement('p');
+		teamparagraph.appendChild(document.createTextNode(snapshotvalue['teamname']));
+		teamdiv.id = 'ownteamname';
+		teamdiv.appendChild(teamparagraph);
 
-	middle.appendChild(container);
-	fanbasediv.appendChild(row);
+		bootstrapcontainer.appendChild(teamdiv);
 
-	bootstrapcontainer.appendChild(fanbasediv);
+		var fanbasediv = document.createElement('div');
+		var fanbaseparagraph = document.createElement('p');
+		fanbaseparagraph.appendChild(document.createTextNode('FANBASE LEVEL'));
+		fanbasediv.appendChild(fanbaseparagraph);
+		fanbasediv.id = 'fanbaselevel';
 
-	document.getElementById('ownteamranking').appendChild(bootstrapcontainer);
-	getBarValue();
+		var row = document.createElement('div');
+		row.classList.add('row');
+		var side = document.createElement('div');
+		side.classList.add('side');
+		row.appendChild(side);
+		var middle = document.createElement('div');
+		middle.classList.add('middle');
+		row.appendChild(middle);
+
+		var container = document.createElement('div');
+		container.classList.add('bar-container');
+		var bar = document.createElement('div');
+		bar.id = 'fanbasebar';
+		container.appendChild(bar);
+
+		middle.appendChild(container);
+		fanbasediv.appendChild(row);
+
+		bootstrapcontainer.appendChild(fanbasediv);
+
+		document.getElementById('ownteamranking').appendChild(bootstrapcontainer);
+		getBarValueTeam();
 	}
 }
 
-function showBarValue(percentage){
+function showBarValueTeam(percentage){
 	var bar = document.getElementById('fanbasebar');
-	bar.style.width = percentage + '%';
-	
-	var fanbasediv = document.getElementById('fanbase');
+	bar.style.width = percentage/20 + '%';
+	bar.style.maxWidth = 100 + '%';
+	bar.innerHTML = percentage + 'pts';
+
+/*	if(bar.offsetWidth >= 100% + '%'){ 						IF YOU CAME HERE BECAUSE OF THE RADIUS OF THE BAR WHEN = 100%
+		bar.style.borderBottomRightRadius = 15 + 'px';
+		bar.style.borderTopRightRadius = 15 + 'px';
+	}
+	*/
+
+
+	var fanbasediv = document.getElementById('fanbaselevel');
 	var rating = document.createElement('p');
 	rating.appendChild(document.createTextNode(percentage/2/10 + '/5'));
 	fanbasediv.appendChild(rating);
 }
 
-function getBarValue(){
-	showBarValue(94);
+function getBarValueTeam(){
+
+
+			firebase.database().ref('/rankings/teams/' + ownteam + '/').once('value', function (snapshot){
+				var totalpoints = snapshot.val()['points'];
+				showBarValueTeam(totalpoints);
+			});
+
 }
 
 function getTrend(entry, ranksymbol){

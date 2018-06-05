@@ -41,6 +41,7 @@
 		<div class="swiper-slide">
 			<div id="userprofile">
 				<div id='ownprofile'></div>
+				<div id="interactions"></div>
 				<div id="activity">
 					<h2>LAST ACTIVITY</h2>
 				</div>

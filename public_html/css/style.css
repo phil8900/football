@@ -151,7 +151,14 @@ body {
 	display: flex;
 }
 
-#fanbase{
+#fandomlevel{
+	text-align:center;
+/	background-color: rgba(0,0,0,0.5);
+	margin-top: 30px;
+	padding: 15px 15px 15px 15px;
+}
+
+#fanbaselevel{
 	text-align:center;
 /	background-color: rgba(0,0,0,0.5);
 	margin-top: 30px;
@@ -205,6 +212,15 @@ body {
 }
 
 /* Individual bars */
+#fandombar{
+	height: 40px;
+	background-color: #4CAF50;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+	padding-top: 7px;
+	color: #0b2e13;
+}
+
 #fanbasebar{
 	height: 40px;
 	background-color: #4CAF50;
