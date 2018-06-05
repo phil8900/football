@@ -781,8 +781,10 @@ function getCoachStats(){
 							}
 
 							var coachdiv = document.getElementById('statscoach');
+							if(coachdiv != null){
 							var coachcount = coachdiv.getElementsByClassName('coachcount')[0];
 							coachcount.innerHTML = coachrating + '%';
+							}
 						}
 					});
 					}

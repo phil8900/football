@@ -40,6 +40,7 @@ function initMatch(){
 				displayVouchers();
 
 
+	displayStats(gameid);
 	displayPostMatchEvents(gameid);
 }
 
@@ -941,7 +942,6 @@ function displayVouchers(){
 
 					var vouchersRef = firebase.database().ref('/vouchers/' + uid + '/' +  gameid);
 					vouchersRef.on('value', function (snapshot){
-						console.log(snapshot.numChildren());
 
 						voucher1.addEventListener("click", function () {
 							if(snapshot.numChildren() == 0) {
@@ -1060,7 +1060,10 @@ function voucherDescription () {
 
 
 	}
+}
 
-
-
+function displayStats(gameid){
+	firebase.database().ref('/fixtures/' +  gameid + '/stats').once('value', function(snapshot){
+		console.log(snapshot.val());
+	});
 }
