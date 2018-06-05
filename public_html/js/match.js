@@ -1064,6 +1064,24 @@ function voucherDescription () {
 
 function displayStats(gameid){
 	firebase.database().ref('/fixtures/' +  gameid + '/stats').once('value', function(snapshot){
-		console.log(snapshot.val());
+		document.getElementById('homepossession').innerHTML = snapshot.val()['home']['possession'];
+		document.getElementById('homeshotsoverall').innerHTML = snapshot.val()['home']['totalshots'];
+		document.getElementById('homeshotstarget').innerHTML = snapshot.val()['home']['shotstarget'];
+		document.getElementById('homeshots').innerHTML = snapshot.val()['home']['shots'];
+		document.getElementById('homesaves').innerHTML = snapshot.val()['home']['saves'];
+		document.getElementById('homefouls').innerHTML = snapshot.val()['home']['fouls'];
+		document.getElementById('homefreekicks').innerHTML = snapshot.val()['home']['freekicks'];
+		document.getElementById('homecorners').innerHTML = snapshot.val()['home']['corners'];
+		document.getElementById('homeoffside').innerHTML = snapshot.val()['home']['offside'];
+
+		document.getElementById('awaypossession').innerHTML = snapshot.val()['away']['possession'];
+		document.getElementById('awayshotsoverall').innerHTML = snapshot.val()['away']['totalshots'];
+		document.getElementById('awayshotstarget').innerHTML = snapshot.val()['away']['shotstarget'];
+		document.getElementById('awayshots').innerHTML = snapshot.val()['away']['shots'];
+		document.getElementById('awaysaves').innerHTML = snapshot.val()['away']['saves'];
+		document.getElementById('awayfouls').innerHTML = snapshot.val()['away']['fouls'];
+		document.getElementById('awayfreekicks').innerHTML = snapshot.val()['away']['freekicks'];
+		document.getElementById('awaycorners').innerHTML = snapshot.val()['away']['corners'];
+		document.getElementById('awayoffside').innerHTML = snapshot.val()['away']['offside'];
 	});
 }
