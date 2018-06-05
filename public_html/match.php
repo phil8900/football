@@ -1,11 +1,11 @@
 <html>
 <head>
-	<?php include 'includes/header.php';?>
-	<script src="js/match.js"></script>
-	<script src="js/ranking.js"></script>
-	<script src="js/home.js"></script>
-	<script src="js/profiles.js"></script>
-	<script src="js/matches.js"></script>
+    <?php include 'includes/header.php';?>
+    <script src="js/match.js"></script>
+    <script src="js/ranking.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/profiles.js"></script>
+    <script src="js/matches.js"></script>
 </head>
 
 <body onload="initMatch();initMatches();">
@@ -14,12 +14,12 @@
 
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
-	<div class="firstsubtopnavmatchinteraction">
-		<div class="menu-icon">
-			<a href="matches.php"><img src="img/back.png"></a>
-		</div>
-		<div class="menu-title">DIGITAL STADIUM</div>
-	</div>
+    <div class="firstsubtopnavmatchinteraction">
+        <div class="menu-icon">
+            <a href="matches.php"><img src="img/back.png"></a>
+        </div>
+        <div class="menu-title">DIGITAL STADIUM</div>
+    </div>
 </div>
 
 <!--
@@ -34,110 +34,124 @@
 		-->
 
 <div id="score">
-	<span id="currentscore">0:0</span>
-	<span id="location"></span>
-	<br>
-	<span id="time"></span>
+    <span id="currentscore">0:0</span>
+    <span id="location"></span>
+    <br>
+    <span id="time"></span>
 </div>
 
 <div id="voucheroverlay" class="animated fadeIn" onclick="hideVoucherOverlay();"></div>
 <div id="voucheroverlaycontentborder" class="animated fadeIn"></div>
 <div id="voucheroverlaycontent" class="animated fadeIn">
-	<div class="vouchertitle"><h1>DISCOUNT</h1></div>
-	<div id="voucheroverlayinnercontent">
-	<div id="voucherdescription">
-	</div>
+    <div class="vouchertitle"><h1>DISCOUNT</h1></div>
+    <div id="voucheroverlayinnercontent">
+        <div id="voucherdescription">
+        </div>
+    </div>
 </div>
-	</div>
 
 
 <!-- Slider main container -->
 <div class="swiper-container" style="height: 7000px">
-	<!-- Additional required wrapper -->
-	<div class="swiper-wrapper">
-		<!-- Slides -->
-		<div class="swiper-slide">
-			<div id="statistics">DISPLAY WHATEVER STATS HERE
-					<div id="possession">
-						<div id="homepossession"></div>
-						<div id="awaypossession"></div>
-					</div>
-					<div id="shots">
-						<div id="homeshotsoverall"></div>
-						<div id="awayshotsoverall"></div>
-						<div id="homeshotstarget"></div>
-						<div id="awayshotstarget"></div>
-						<div id="homeshots"></div>
-						<div id="awayshots"></div>
-					</div>
-					<div id="saves">
-						<div id="homesaves"></div>
-						<div id="awaysaves"></div>
-					</div>
-					<div id="fouls">
-						<div id="homefouls"></div>
-						<div id="awayfouls"></div>
-						<div id="homefreekicks"></div>
-						<div id="awayfreekicks"></div>
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+            <div id="statistics" class="activitybox">
 
-					</div>
-						<div id="others">
-						<div id="homecorners"></div>
-						<div id="awaycorners"></div>
-						<div id="homeoffside"></div>
-						<div id="awayoffside"></div>
-					</div>
-			</div>
+                <div id="possession"><p>Ball possession</p>
+                    <div class ="statshome">
+                        <div id="homepossession" class="innerstatshome"></div>
+                    </div>
+                    <div class ="statsaway">
+                        <div  id="awaypossession" class="innerstatsaway"></div>
+                    </div>
+                </div>
+
+                <div id="shots"><p>Total shots</p>
+                    <div class="statshome">
+                        <div id="homeshotsoverall" class="innerstatshome"></div>
+                    </div>
+                    <div class="statsaway">
+                        <div id="awayshotsoverall" class="innerstatsaway"></div>
+                    </div>
+
+<p>Shots on goal</p>
 
 
-		</div>
+                    <div id="homeshotstarget"></div>
+                    <div id="awayshotstarget"></div>
+                    <div id="homeshots"></div>
+                    <div id="awayshots"></div>
+                </div>
+                <div id="saves">
+                    <div id="homesaves"></div>
+                    <div id="awaysaves"></div>
+                </div>
+                <div id="fouls">
+                    <div id="homefouls"></div>
+                    <div id="awayfouls"></div>
+                    <div id="homefreekicks"></div>
+                    <div id="awayfreekicks"></div>
 
-		<div class="swiper-slide">
-			<div id="latestgameevent" class="maininteraction activitybox"></div>
-			<div id="teamprofile">
-				<div id='ownteamranking' style="display: none;"></div>
-				<div id='squad' class="starting11 activitybox">
-					<h2>MAKE YOUR OWN STARTING 11</h2>
-					<div id='keeper'></div>
-					<div id='defender'></div>
-					<div id='midfielder'></div>
-					<div id='striker'></div>
-				</div>
-			</div>
-			<br>
+                </div>
+                <div id="others">
+                    <div id="homecorners"></div>
+                    <div id="awaycorners"></div>
+                    <div id="homeoffside"></div>
+                    <div id="awayoffside"></div>
+                </div>
+            </div>
 
-			<div id="interactions">
-				<div id="postmatchcontainer" class="activitybox">
-					<div class="innercontainer">
-						<div id="mvp">
-							<div id='upcoming'>
-								<div id='homesquad'>
-									<div class='starting'>
-										<h2>Starting 11</h2>
-										<div class='keeper'></div>
-										<div class='defender'></div>
-										<div class='midfielder'></div>
-										<div class='striker'></div>
-									</div>
-									<div class="bench">
-										<h2>Bench</h2>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 
-				</div>
-			</div>
+        </div>
 
-		</div>
+        <div class="swiper-slide">
+            <div id="latestgameevent" class="maininteraction activitybox"></div>
+            <div id="teamprofile">
+                <div id='ownteamranking' style="display: none;"></div>
+                <div id='squad' class="starting11 activitybox">
+                    <h2>MAKE YOUR OWN STARTING 11</h2>
+                    <div id='keeper'></div>
+                    <div id='defender'></div>
+                    <div id='midfielder'></div>
+                    <div id='striker'></div>
+                </div>
+            </div>
+            <br>
 
-		<div class="swiper-slide">
-			<div id="eventshistory">
-				<div id="events"></div>
-			</div>
-		</div>
-	</div>
+            <div id="interactions">
+                <div id="postmatchcontainer" class="activitybox">
+                    <div class="innercontainer">
+                        <div id="mvp">
+                            <div id='upcoming'>
+                                <div id='homesquad'>
+                                    <div class='starting'>
+                                        <h2>Starting 11</h2>
+                                        <div class='keeper'></div>
+                                        <div class='defender'></div>
+                                        <div class='midfielder'></div>
+                                        <div class='striker'></div>
+                                    </div>
+                                    <div class="bench">
+                                        <h2>Bench</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="swiper-slide">
+            <div id="eventshistory">
+                <div id="events"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--
@@ -152,32 +166,32 @@
 
 <script>
 
-	$(document).ready(function() {
+    $(document).ready(function() {
 
-		swiper.on('slideChange', function () {
+        swiper.on('slideChange', function () {
 
-			if (swiper.activeIndex == 0) {
-				$(".menu-title").text("STATS");
-			}
+            if (swiper.activeIndex == 0) {
+                $(".menu-title").text("STATS");
+            }
 
-			if (swiper.activeIndex == 1) {
-				$(".menu-title").text("DIGITAL STADIUM");
-			}
+            if (swiper.activeIndex == 1) {
+                $(".menu-title").text("DIGITAL STADIUM");
+            }
 
-			if (swiper.activeIndex == 2) {
-				$(".menu-title").text("MATCH EVENTS");
-			}
+            if (swiper.activeIndex == 2) {
+                $(".menu-title").text("MATCH EVENTS");
+            }
 
-		})
-	}); // end ready
+        })
+    }); // end ready
 
 
 </script>
 
 <script>
-	var swiper = new Swiper('.swiper-container', {
-		initialSlide: 1
-	});
+    var swiper = new Swiper('.swiper-container', {
+        initialSlide: 0
+    });
 </script>
 
 <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
