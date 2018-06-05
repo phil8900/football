@@ -842,6 +842,7 @@ h2{
 
 #postmatchcontainer{
  	height: 400px;
+	overflow: scroll;
 }
 
 #postmatchcontainertitle p{
