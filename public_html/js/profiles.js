@@ -983,12 +983,7 @@ function displayStatsMVP(){
 
     $('.userelement:gt(2)').show();
 
-
     var players = $("#squad .userelement");
-
-    players.each(function( index ) {
-        var value = parseFloat($(this).find('.mvpcountspan').html());
-    });
 
     var orderedDivs = players.sort(function (a, b) {
         return ($(a).find('.mvpcountspan').html() > $(b).find('.mvpcountspan').html()) ? -1 : ($(a).find('.mvpcountspan').html() < $(b).find('.mvpcountspan').html()) ? 1 : 0;
@@ -1013,10 +1008,6 @@ function displayStatsGoals(){
 
     var players = $("#squad .userelement");
 
-    players.each(function( index ) {
-        var value = parseFloat($(this).find('.goalcountspan').html());
-    });
-
     var orderedDivs = players.sort(function (a, b) {
         return ($(a).find('.goalcountspan').html() > $(b).find('.goalcountspan').html()) ? -1 : ($(a).find('.goalcountspan').html() < $(b).find('.goalcountspan').html()) ? 1 : 0;
     });
@@ -1038,10 +1029,6 @@ function displayStatsBest11(){
     $('.userelement:gt(2)').show();
 
     var players = $("#squad .userelement");
-
-    players.each(function( index ) {
-        var value = parseFloat($(this).find('.startingcountspan').html());
-    });
 
     var orderedDivs = players.sort(function (a, b) {
         return ($(a).find('.startingcountspan').html() > $(b).find('.startingcountspan').html()) ? -1 : ($(a).find('.startingcountspan').html() < $(b).find('.startingcountspan').html()) ? 1 : 0;
@@ -1069,4 +1056,25 @@ function displayStatsOverall(){
     document.getElementById('statscoach').style.display = 'none';
     document.getElementById('statsoverall').style.display = 'block';
     document.getElementById('dropdown').innerHTML = 'Team overall performance';
+    displayRatingStarsOverall();
+}
+
+function displayRatingStarsOverall(){
+    firebase.database().ref('startingeleven/users/').once('value', function (snapshot) {
+        var aggrating = 0;
+        var counter = 0;
+        snapshot.forEach(function(child){
+            fixtures.forEach(function(game){
+                if(child.val()[game.gameid] != undefined){
+                    if(child.val()[game.gameid]['finalreview'] != undefined){
+                        aggrating = aggrating + child.val()[game.gameid]['finalreview']['finalreview'];
+                        counter++;
+                    }
+
+                }
+            });
+        });
+            var rating = aggrating/counter;
+            document.getElementById('statsoverall').appendChild(document.createTextNode(rating));
+    });
 }

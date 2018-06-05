@@ -506,7 +506,9 @@ function getPlayerInfo(playerid, event, eventlist){
 		//latestgameevent.getElementsByClassName("eventlist")[0].innerHTML = playerspan.innerHTML;
 		//latestgameevent.appendChild(playerspan);
 
-		latestgameevent.innerHTML = eventwrapper.innerHTML;
+		if(eventwrapper != undefined){
+			latestgameevent.innerHTML = eventwrapper.innerHTML;
+		}
 
 	});
 }
@@ -545,10 +547,13 @@ function getTeamInfo(gameid, wrapper){
 		var awayteam = snapshot.val().awayteamid;
 		awayspan.id = awayteam;
 		var locationname = document.createTextNode(snapshot.val().location);
-		location.appendChild(locationname);
+		if(location != null){
+			location.appendChild(locationname);
+		}
 		var matchtime = document.createTextNode(snapshot.val().time);
-		time.appendChild(matchtime);
-
+		if(time != null){
+			time.appendChild(matchtime);
+		}
 
 		var homename;
 		var awayname;
