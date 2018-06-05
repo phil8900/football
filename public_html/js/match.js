@@ -17,7 +17,8 @@ function initMatch(){
 	showSquad(gameid);
 
 	var swiper = new Swiper('.swiper-container', {
-		initialSlide: 1
+		initialSlide: 0
+
 	});
 
 	var passeduid = getQueryVariable("id");
@@ -1074,7 +1075,14 @@ function voucherDescription () {
 function displayStats(gameid){
 	firebase.database().ref('/fixtures/' +  gameid + '/stats').once('value', function(snapshot){
 		document.getElementById('homepossession').innerHTML = snapshot.val()['home']['possession'];
+		var homeposessiondiv = document.getElementById('homepossession');
+		homeposessiondiv.style.width = homeposessiondiv.innerHTML;
+
 		document.getElementById('homeshotsoverall').innerHTML = snapshot.val()['home']['totalshots'];
+		var homeshotsoveralldiv = document.getElementById('homeshotsoverall');
+		homeshotsoveralldiv.style.width = homeshotsoveralldiv.innerHTML + '%';
+
+
 		document.getElementById('homeshotstarget').innerHTML = snapshot.val()['home']['shotstarget'];
 		document.getElementById('homeshots').innerHTML = snapshot.val()['home']['shots'];
 		document.getElementById('homesaves').innerHTML = snapshot.val()['home']['saves'];
@@ -1084,7 +1092,13 @@ function displayStats(gameid){
 		document.getElementById('homeoffside').innerHTML = snapshot.val()['home']['offside'];
 
 		document.getElementById('awaypossession').innerHTML = snapshot.val()['away']['possession'];
+		var awayposessiondiv = document.getElementById('awaypossession');
+		awayposessiondiv.style.width = awayposessiondiv.innerHTML;
+
 		document.getElementById('awayshotsoverall').innerHTML = snapshot.val()['away']['totalshots'];
+		var awayshotsoveralldiv = document.getElementById('awayshotsoverall');
+		awayshotsoveralldiv.style.width = awayshotsoveralldiv.innerHTML + '%';
+
 		document.getElementById('awayshotstarget').innerHTML = snapshot.val()['away']['shotstarget'];
 		document.getElementById('awayshots').innerHTML = snapshot.val()['away']['shots'];
 		document.getElementById('awaysaves').innerHTML = snapshot.val()['away']['saves'];
