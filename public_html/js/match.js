@@ -25,9 +25,21 @@ function initMatch(){
 		uid = passeduid;
 		ownprofile = false;
 	}
+
 	getLiveGameEvents(gameid);
-	displayVouchers();
 	hideFooter();
+
+
+	var date = Math.floor((Date.now() / 1000))+7200;
+	var livegame = getLiveGame();
+
+	/*fixtures.forEach(function(child) {
+		console.log(child['timestamp'] < date);
+		if (livegame && gameid.timestamp < (date)){
+			{*/
+				displayVouchers();
+
+
 	displayPostMatchEvents(gameid);
 }
 
@@ -452,9 +464,9 @@ function getTeamInfo(gameid, wrapper){
 	gameheader.appendChild(awayspan);
 
 	if(score != null){
-	score.appendChild(location);
-	score.appendChild(gameheader);
-	score.appendChild(time);
+		score.appendChild(location);
+		score.appendChild(gameheader);
+		score.appendChild(time);
 	}
 
 	var ref = firebase.database().ref('/fixtures/' + gameid).once('value', function(snapshot) {
@@ -554,144 +566,144 @@ function createWrappers(game_id, event_id, event_type){
 		eventwrapper.id = event_id;
 		eventwrapper.classList.add('eventbox');
 
-				var reactiondiv = document.createElement('div');
-				reactiondiv.classList.add('gamereaction');
+		var reactiondiv = document.createElement('div');
+		reactiondiv.classList.add('gamereaction');
 
-				var positive = document.createElement('div');
-				positive.classList.add('positive');
-				var negative = document.createElement('div');
-				negative.classList.add('negative');
-
-
-
-				reactiondiv.appendChild(positive);
-				reactiondiv.appendChild(negative);
-				wrapper.appendChild(eventwrapper);
-
-				if(event_type != 'tor'){
-				var upbutton = document.createElement("button");
-				var upsymbol = document.createElement('i');
-				upsymbol.classList.add('fas');
-				upsymbol.classList.add('fa-thumbs-up');
-				upbutton.classList.add('upbutton');
-				upbutton.appendChild(upsymbol);
-
-				var downbutton = document.createElement("button");
-				var downsymbol = document.createElement('i');
-				downsymbol.classList.add('fas');
-				downsymbol.classList.add('fa-thumbs-down');
-				downbutton.appendChild(downsymbol);
-				downbutton.classList.add('downbutton');
+		var positive = document.createElement('div');
+		positive.classList.add('positive');
+		var negative = document.createElement('div');
+		negative.classList.add('negative');
 
 
-				upbutton.addEventListener("click", function () {
-					reactToEvent(event_id, 1);
+
+		reactiondiv.appendChild(positive);
+		reactiondiv.appendChild(negative);
+		wrapper.appendChild(eventwrapper);
+
+		if(event_type != 'tor'){
+			var upbutton = document.createElement("button");
+			var upsymbol = document.createElement('i');
+			upsymbol.classList.add('fas');
+			upsymbol.classList.add('fa-thumbs-up');
+			upbutton.classList.add('upbutton');
+			upbutton.appendChild(upsymbol);
+
+			var downbutton = document.createElement("button");
+			var downsymbol = document.createElement('i');
+			downsymbol.classList.add('fas');
+			downsymbol.classList.add('fa-thumbs-down');
+			downbutton.appendChild(downsymbol);
+			downbutton.classList.add('downbutton');
+
+
+			upbutton.addEventListener("click", function () {
+				reactToEvent(event_id, 1);
+				upbutton.disabled = true;
+				downbutton.disabled = true;
+				displayButtonPercentages(event_id, upbutton, downbutton);
+			});
+
+
+			downbutton.addEventListener("click", function () {
+				reactToEvent(event_id, -1);
+				downbutton.disabled = true;
+				upbutton.disabled = true;
+				displayButtonPercentages(event_id, upbutton, downbutton);
+			});
+
+			reactiondiv.appendChild(upbutton);
+			reactiondiv.appendChild(downbutton);
+
+			firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/reactions/users/' + uid).once('value').then(function(snapshot) {
+				if(snapshot.val() != null){
 					upbutton.disabled = true;
 					downbutton.disabled = true;
 					displayButtonPercentages(event_id, upbutton, downbutton);
-				});
-
-
-				downbutton.addEventListener("click", function () {
-					reactToEvent(event_id, -1);
-					downbutton.disabled = true;
-					upbutton.disabled = true;
-					displayButtonPercentages(event_id, upbutton, downbutton);
-				});
-
-				reactiondiv.appendChild(upbutton);
-				reactiondiv.appendChild(downbutton);
-
-				firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/reactions/users/' + uid).once('value').then(function(snapshot) {
-					if(snapshot.val() != null){
-						upbutton.disabled = true;
-						downbutton.disabled = true;
-						displayButtonPercentages(event_id, upbutton, downbutton);
-					}
-				});
 				}
-				else{
-				var onesymbol = document.createElement('i');
-				onesymbol.classList.add('fas');
-				onesymbol.classList.add('fa-star');
+			});
+		}
+		else{
+			var onesymbol = document.createElement('i');
+			onesymbol.classList.add('fas');
+			onesymbol.classList.add('fa-star');
 
-				var twosymbol = document.createElement('i');
-				twosymbol.classList.add('fas');
-				twosymbol.classList.add('fa-star');
+			var twosymbol = document.createElement('i');
+			twosymbol.classList.add('fas');
+			twosymbol.classList.add('fa-star');
 
-				var threesymbol = document.createElement('i');
-				threesymbol.classList.add('fas');
-				threesymbol.classList.add('fa-star');
+			var threesymbol = document.createElement('i');
+			threesymbol.classList.add('fas');
+			threesymbol.classList.add('fa-star');
 
-				var foursymbol = document.createElement('i');
-				foursymbol.classList.add('fas');
-				foursymbol.classList.add('fa-star');
+			var foursymbol = document.createElement('i');
+			foursymbol.classList.add('fas');
+			foursymbol.classList.add('fa-star');
 
-				var fivesymbol = document.createElement('i');
-				fivesymbol.classList.add('fas');
-				fivesymbol.classList.add('fa-star');
+			var fivesymbol = document.createElement('i');
+			fivesymbol.classList.add('fas');
+			fivesymbol.classList.add('fa-star');
 
-				var onebutton = document.createElement("button");
-				onebutton.classList.add('onebutton');
-				onebutton.appendChild(onesymbol);
+			var onebutton = document.createElement("button");
+			onebutton.classList.add('onebutton');
+			onebutton.appendChild(onesymbol);
 
-				var twobutton = document.createElement("button");
-				twobutton.appendChild(twosymbol);
-				twobutton.classList.add('twobutton');
+			var twobutton = document.createElement("button");
+			twobutton.appendChild(twosymbol);
+			twobutton.classList.add('twobutton');
 
-				var threebutton = document.createElement("button");
-				threebutton.appendChild(threesymbol);
-				threebutton.classList.add('threebutton');
+			var threebutton = document.createElement("button");
+			threebutton.appendChild(threesymbol);
+			threebutton.classList.add('threebutton');
 
-				var fourbutton = document.createElement("button");
-				fourbutton.appendChild(foursymbol);
-				fourbutton.classList.add('fourbutton');
+			var fourbutton = document.createElement("button");
+			fourbutton.appendChild(foursymbol);
+			fourbutton.classList.add('fourbutton');
 
-				var fivebutton = document.createElement("button");
-				fivebutton.appendChild(fivesymbol);
-				fivebutton.classList.add('fivebutton');
+			var fivebutton = document.createElement("button");
+			fivebutton.appendChild(fivesymbol);
+			fivebutton.classList.add('fivebutton');
 
-				onebutton.addEventListener("click", function () {
-					rateStars(event_id, 'one');
+			onebutton.addEventListener("click", function () {
+				rateStars(event_id, 'one');
+				displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+
+			});
+			twobutton.addEventListener("click", function () {
+				rateStars(event_id, 'two');
+				displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+			});
+			threebutton.addEventListener("click", function () {
+				rateStars(event_id, 'three');
+				displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+			});
+			fourbutton.addEventListener("click", function () {
+				rateStars(event_id, 'four');
+				displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+			});
+			fivebutton.addEventListener("click", function () {
+				rateStars(event_id, 'five');
+				displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+			});
+
+			reactiondiv.appendChild(onebutton);
+			reactiondiv.appendChild(twobutton);
+			reactiondiv.appendChild(threebutton);
+			reactiondiv.appendChild(fourbutton);
+			reactiondiv.appendChild(fivebutton);
+
+			firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/stars/users/' + uid).once('value').then(function(snapshot) {
+				if(snapshot.val() != null){
+					onebutton.disabled = true;
+					twobutton.disabled = true;
+					threebutton.disabled = true;
+					fourbutton.disabled = true;
+					fivebutton.disabled = true;
 					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-
-				});
-				twobutton.addEventListener("click", function () {
-					rateStars(event_id, 'two');
-					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-				});
-				threebutton.addEventListener("click", function () {
-					rateStars(event_id, 'three');
-					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-				});
-				fourbutton.addEventListener("click", function () {
-					rateStars(event_id, 'four');
-					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-				});
-				fivebutton.addEventListener("click", function () {
-					rateStars(event_id, 'five');
-					displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-				});
-
-				reactiondiv.appendChild(onebutton);
-				reactiondiv.appendChild(twobutton);
-				reactiondiv.appendChild(threebutton);
-				reactiondiv.appendChild(fourbutton);
-				reactiondiv.appendChild(fivebutton);
-
-				firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/stars/users/' + uid).once('value').then(function(snapshot) {
-					if(snapshot.val() != null){
-						onebutton.disabled = true;
-						twobutton.disabled = true;
-						threebutton.disabled = true;
-						fourbutton.disabled = true;
-						fivebutton.disabled = true;
-						displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-					}
-				});
-
 				}
-				eventwrapper.appendChild(reactiondiv);
+			});
+
+		}
+		eventwrapper.appendChild(reactiondiv);
 
 		firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/').on('value', function(snapshot) {
 			if(snapshot.val()['verein_id'] != ownteam){
@@ -699,7 +711,7 @@ function createWrappers(game_id, event_id, event_type){
 			}
 		});
 
-			}
+	}
 
 }
 
@@ -719,16 +731,16 @@ function rateStars(event_id, reaction){
 						if(snapshot.val() == null){
 							var currenttime = Math.floor(Date.now() / 1000);
 
-								reactionRef.child(reaction).transaction(function(reaction) {
-									var updates = {};
-									updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = 'positive';
-									updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
+							reactionRef.child(reaction).transaction(function(reaction) {
+								var updates = {};
+								updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = 'positive';
+								updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
 
 
-									firebase.database().ref().update(updates);
+								firebase.database().ref().update(updates);
 
-									return reaction + 1;
-								});
+								return reaction + 1;
+							});
 						}
 					});
 				}
@@ -844,17 +856,18 @@ function displayPostMatchEvents (gameid){
 	submitfinalcomment.innerHTML = 'Submit!';
 
 	submitfinalcomment.addEventListener("click", function() {
-		var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment');
-
-		startingRef.once('value', function (snapshot) {
-
-			startingRef.push({
-				finalcomment: commentareacontent.value
-
+		firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
+			if (child.val() == null) {
+				firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').push({
+						finalcomment: commentareacontent.value
+					});
+				}
 			});
 
+
+
 		});
-	});
+
 
 	var commentarea = document.createElement('div');
 	commentarea.classList.add('postmatchvote');
@@ -915,18 +928,60 @@ function displayVouchers(){
 					vouchercontainertitle.id = 'vouchercontainertitle';
 					vouchercontainertitle.innerHTML = "<p>LOUDSTAND PARTNER</p>";
 
-
 					var voucher1 = document.createElement('div');
+					voucher1.id = 'voucher1';
 					voucher1.classList.add('voucher');
 					voucher1.innerHTML = "Discount #1";
-					voucher1.addEventListener("click", function(){showVoucherOverlay();	});
 
 					var voucher2 = document.createElement('div');
+					voucher2.id = 'voucher2';
 					voucher2.classList.add('voucher');
 					voucher2.innerHTML = "Discount #2";
-					voucher2.addEventListener("click", function(){showVoucherOverlay();	});
 
 
+					var vouchersRef = firebase.database().ref('/vouchers/' + uid + '/' +  gameid);
+					vouchersRef.on('value', function (snapshot){
+						console.log(snapshot.numChildren());
+
+						voucher1.addEventListener("click", function () {
+							if(snapshot.numChildren() == 0) {
+								showVoucherOverlay();
+							}
+							});
+						voucher2.addEventListener("click", function () {
+							if(snapshot.numChildren() < 2) {
+								showVoucherOverlay();
+							}
+						});
+
+						if(snapshot.numChildren() == 0) {
+							voucher1.style.backgroundColor = '#164065';
+							voucher1.style.color = '#f6f6f6';
+							voucher1.innerHTML = 'Discount #1';
+							voucher2.style.backgroundColor = '#164065';
+							voucher2.style.color = '#f6f6f6';
+							voucher2.innerHTML = 'Discount #2';
+
+						}
+
+						if(snapshot.numChildren() == 1){
+							voucher1.style.backgroundColor = 'black';
+							voucher1.style.color = 'white';
+							voucher1.innerHTML = 'Discount used.';
+							voucher2.addEventListener("click", function () {showVoucherOverlay();});
+						}
+
+						if (snapshot.numChildren() == 2){
+							voucher1.style.backgroundColor = 'black';
+							voucher1.style.color = 'white';
+							voucher1.innerHTML = 'Discount used.';
+							voucher2.style.backgroundColor = 'black';
+							voucher2.style.color = 'white';
+							voucher2.innerHTML = 'Discount used.';
+
+						}
+
+					});
 
 					var interactions = document.getElementById('interactions');
 
@@ -934,6 +989,9 @@ function displayVouchers(){
 					voucherscontainer.appendChild(voucher1);
 					voucherscontainer.appendChild(voucher2);
 					interactions.appendChild(voucherscontainer);
+
+
+
 
 
 				}
@@ -961,11 +1019,11 @@ function hideVoucherOverlay(){
 	document.getElementById('voucheroverlaycontentborder').style.display = 'none';
 }
 
-function voucherDescription (){
+function voucherDescription () {
 	var seenvoucher = JSON.parse(localStorage.getItem("seenvoucher"));
 
 	console.log(seenvoucher);
-	if(seenvoucher == null){
+	if (seenvoucher == null) {
 		localStorage.setItem("seenvoucher", true);
 		var voucherdescription = document.getElementById('voucherdescription');
 		voucherdescription.innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
@@ -980,30 +1038,29 @@ function voucherDescription (){
 
 		var button = document.createElement('button');
 		button.classList.add('voucherconfirmation');
+		button.id = 'voucherconfirmation';
 		button.innerHTML = 'USE VOUCHER';
 		button.disabled = false;
-		button.addEventListener("click", function(){
+		button.addEventListener("click", function () {
 			getPointsTable('checkinbar');
 			hideVoucherOverlay();
+
+			var vouchersRef = firebase.database().ref('/vouchers/' + uid + '/' +  gameid);
+			var randomvoucherNumber = Math.floor(Math.random() * Math.floor(10000000));
+			vouchersRef.push({
+
+				vouchernumber: randomvoucherNumber,
+				timestamp: Math.floor(Date.now() / 1000)
+
+
+			});
 		});
+
 		voucherdescription.appendChild(button);
 
+
 	}
-}
 
-function hideReactionOtherTeam (event_id, gameid) {
 
-	firebase.database().ref('/fixtures/' + gameid + '/events/' + event_id + '/').on('value', function(snapshot) {
-		if(snapshot.val()['verein_id'] == ownteam){
-		}
-		});
-	/*
 
-			if (verein_id != ownteam) {
-
-				var reactiondiv = document.getElementsByClassName("gamereaction");
-
-				reactiondiv.style.display = 'none';
-			}
-*/
 }

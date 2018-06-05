@@ -23,12 +23,14 @@ function initMatches(){
 }
 
 function showMatches(){
+	var worldCupStart = 1528848000; //June 13th 2018 00h00h00
+	var worldCupEnd = 1531699200; //July 16th 2018 00h00h00
 	var currenttime = Math.floor(Date.now() / 1000);
 	var nextgame = true;
 
 	fixtures.sort(function(a, b){return a.timestamp-b.timestamp});
 	fixtures.forEach(function(child) {
-		if(child['timestamp'] > currenttime-9000){
+		if((child['timestamp'] > worldCupStart-9000) && (child['timestamp'] < worldCupEnd)){
 			var hometeam = child['hometeamid'];
 			var awayteam = child['awayteamid'];
 			var date = child['date'];
@@ -55,10 +57,19 @@ function showMatches(){
 				overlayOn(gameid); topBarBlack();
 			});
 
-			var livenow = document.createElement('div');
-			livenow.classList.add('livenow');
-			div.appendChild(livenow);
-			livenow.innerHTML = '• LIVE';
+
+			var livegame = getLiveGame();
+			if (child['timestamp'] == livegame['timestamp']) {
+				var livenow = document.createElement('div');
+				livenow.classList.add('livenow');
+				livenow.innerHTML = '• LIVE';
+				div.appendChild(livenow);
+				livenow.innerHTML = '• LIVE';
+				}
+
+
+
+
 
 
 			var homediv = document.createElement('div');
