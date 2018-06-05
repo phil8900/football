@@ -416,4 +416,92 @@ function getGameEvents($game_id) {
 	}
 }
 
+function buildArray($posession, $totalshots, $shotstarget, $shots, $saves, $corners, $freekicks, $fouls, $offside) {
+	return array('posession' => (string) $posession, 'totalshots' => (string) $totalshots, 'shotstarget' => (string) $shotstarget, 'shots' => (string) $shots, 'saves' => (string) $saves, 'corners' => (string) $corners, 'freekicks' => (string) $freekicks, 'fouls' => (string) $fouls, 'offside' => (string) $offside);
+}
+
+function getGameStats($game_id) {
+	$url = 'https://www.transfermarkt.co.uk/ticker/statistik/live/' . $game_id;
+	$client = Client::getInstance();
+
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		$client->getEngine()->setPath(dirname(__FILE__) . '/../../bin/phantomjs.exe');
+	} else {
+		$client->getEngine()->setPath('../../bin/phantomjs');
+	}
+
+	$request = $client->getMessageFactory()->createRequest($url, 'GET');
+	$response = $client->getMessageFactory()->createResponse();
+	$client->send($request, $response);
+
+	if ($response->getStatus() === 200) {
+
+		$doc = hQuery::fromHTML($response->getContent());
+
+		$stats = $doc->find('#lt-statistik');
+
+		if ($stats == null) {
+			return getAlternativeStats($game_id);
+		} else {
+			$home = $stats->find('.sb-statistik-heim .sb-statistik-zahl');
+			$away = $stats->find('.sb-statistik-gast .sb-statistik-zahl');
+		}
+
+		$homearray = buildArray($home[0], $home[1], $home[2], $home[3], $home[4], $home[5], $home[6], $home[7], $home[8]);
+		$awayarray = buildArray($away[0], $away[1], $away[2], $away[3], $away[4], $away[5], $away[6], $away[7], $away[8]);
+
+		$gamestats = array('home' => $homearray, 'away' => $awayarray);
+
+		return $gamestats;
+
+	}
+}
+
+function getAlternativeStats($game_id) {
+	$url = 'https://www.transfermarkt.co.uk/spielbericht/statistik/spielbericht/' . $game_id;
+	$client = Client::getInstance();
+
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		$client->getEngine()->setPath(dirname(__FILE__) . '/../../bin/phantomjs.exe');
+	} else {
+		$client->getEngine()->setPath('../../bin/phantomjs');
+	}
+
+	$request = $client->getMessageFactory()->createRequest($url, 'GET');
+	$response = $client->getMessageFactory()->createResponse();
+	$client->send($request, $response);
+
+	if ($response->getStatus() === 200) {
+
+		$doc = hQuery::fromHTML($response->getContent());
+
+		$home = $doc->find('.sb-statistik-heim .sb-statistik-zahl');
+		$away = $doc->find('.sb-statistik-gast .sb-statistik-zahl');
+
+		$posession = $doc->find('.sb-st-ballbesitz tspan');
+
+		$awayposession = $posession[1];
+		$homeposession = $posession[2];
+
+		$homearray = buildArray($homeposession, $home[0], $home[1], $home[2], $home[3], $home[4], $home[5], $home[6], $home[7]);
+		$awayarray = buildArray($awayposession, $away[0], $away[1], $away[2], $away[3], $away[4], $away[5], $away[6], $away[7]);
+
+		$gamestats = array('home' => $homearray, 'away' => $awayarray);
+
+		return $gamestats;
+	}
+}
+
+function setGameStats($game_id) {
+	global $database;
+
+	$reference = $database->getReference('fixtures/' . $game_id . '/stats');
+	$snapshot = $reference->getValue();
+
+	$value = (array) $value;
+	$value = getGameStats($game_id);
+
+	$reference->set($value);
+}
+
 ?>
