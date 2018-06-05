@@ -57,7 +57,39 @@
 	<div class="swiper-wrapper">
 		<!-- Slides -->
 		<div class="swiper-slide">
-			<div id="statistics">DISPLAY WHATEVER STATS HERE</div>
+			<div id="statistics">DISPLAY WHATEVER STATS HERE
+					<div id="possession">
+						<div id="homepossession"></div>
+						<div id="awaypossession"></div>
+					</div>
+					<div id="shots">
+						<div id="homeshotsoverall"></div>
+						<div id="awayshotsoverall"></div>
+						<div id="homeshotstarget"></div>
+						<div id="awayshotstarget"></div>
+						<div id="homeshots"></div>
+						<div id="awayshots"></div>
+					</div>
+					<div id="saves">
+						<div id="homesaves"></div>
+						<div id="awaysaves"></div>
+					</div>
+					<div id="fouls">
+						<div id="homefouls"></div>
+						<div id="awayfouls"></div>
+						<div id="homefreekicks"></div>
+						<div id="awayfreekicks"></div>
+
+					</div>
+						<div id="others">
+						<div id="homecorners"></div>
+						<div id="awaycorners"></div>
+						<div id="homeoffside"></div>
+						<div id="awayoffside"></div>
+					</div>
+			</div>
+
+
 		</div>
 
 		<div class="swiper-slide">

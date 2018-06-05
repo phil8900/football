@@ -6,8 +6,6 @@
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-messaging.js"></script>
 <script src="js/firebase.js"></script>
 <script src="js/general.js"></script>
-<script src="../node_modules/push.js/bin/push.js"></script>
-<script src="../node_modules/push.js/bin/serviceWorker.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -37,7 +35,6 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="internallinks.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
 
 <!-- Swiper API -->

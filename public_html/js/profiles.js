@@ -830,33 +830,35 @@ function showCoachInformation(){
 }
 
 function getCoachStats(){
-    firebase.database().ref('teams/' + ownteam + '/information/fixtures').once('value', function(snapshot){
-        var positive = 0;
-        var negative = 0;
-        var coachrating = 0;
-        snapshot.forEach(function(child){
-            firebase.database().ref('fixtures/' + child.val() + '/events').once('value', function(snapshot){
-                if(snapshot.val() != null){
-                    snapshot.forEach(function(child){
-                        if(child.val()['type'] == 'wechsel'){
-                            var reactions = child.val()['reactions'];
+	firebase.database().ref('teams/' + ownteam + '/information/fixtures').once('value', function(snapshot){
+		var positive = 0;
+		var negative = 0;
+		var coachrating = 0;
+		snapshot.forEach(function(child){
+			firebase.database().ref('fixtures/' + child.val() + '/events').once('value', function(snapshot){
+				if(snapshot.val() != null){
+					snapshot.forEach(function(child){
+						if(child.val()['type'] == 'wechsel'){
+							var reactions = child.val()['reactions'];
 
-                            positive = positive + reactions['positive'];
-                            negative = negative + reactions['negative'];
+							positive = positive + reactions['positive'];
+							negative = negative + reactions['negative'];
 
-                            if((positive+negative)>0){
-                                coachrating = (positive/(negative+positive))*100;
-                            }
+							if((positive+negative)>0){
+								coachrating = (positive/(negative+positive))*100;
+							}
 
-                            var coachdiv = document.getElementById('statscoach');
-                            var coachcount = coachdiv.getElementsByClassName('coachcount')[0];
-                            coachcount.innerHTML = coachrating + '%';
-                        }
-                    });
-                }
-            });
-        });
-    });
+							var coachdiv = document.getElementById('statscoach');
+							if(coachdiv != null){
+							var coachcount = coachdiv.getElementsByClassName('coachcount')[0];
+							coachcount.innerHTML = coachrating + '%';
+							}
+						}
+					});
+					}
+				});
+			});
+});
 }
 
 function countReactions(playerid){

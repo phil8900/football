@@ -416,8 +416,8 @@ function getGameEvents($game_id) {
 	}
 }
 
-function buildArray($posession, $totalshots, $shotstarget, $shots, $saves, $corners, $freekicks, $fouls, $offside) {
-	return array('posession' => (string) $posession, 'totalshots' => (string) $totalshots, 'shotstarget' => (string) $shotstarget, 'shots' => (string) $shots, 'saves' => (string) $saves, 'corners' => (string) $corners, 'freekicks' => (string) $freekicks, 'fouls' => (string) $fouls, 'offside' => (string) $offside);
+function buildArray($possession, $totalshots, $shotstarget, $shots, $saves, $corners, $freekicks, $fouls, $offside) {
+	return array('possession' => (string) $possession, 'totalshots' => (string) $totalshots, 'shotstarget' => (string) $shotstarget, 'shots' => (string) $shots, 'saves' => (string) $saves, 'corners' => (string) $corners, 'freekicks' => (string) $freekicks, 'fouls' => (string) $fouls, 'offside' => (string) $offside);
 }
 
 function getGameStats($game_id) {
@@ -478,13 +478,13 @@ function getAlternativeStats($game_id) {
 		$home = $doc->find('.sb-statistik-heim .sb-statistik-zahl');
 		$away = $doc->find('.sb-statistik-gast .sb-statistik-zahl');
 
-		$posession = $doc->find('.sb-st-ballbesitz tspan');
+		$possession = $doc->find('.sb-st-ballbesitz tspan');
 
-		$awayposession = $posession[1];
-		$homeposession = $posession[2];
+		$awaypossession = $possession[1];
+		$homepossession = $possession[2];
 
-		$homearray = buildArray($homeposession, $home[0], $home[1], $home[2], $home[3], $home[4], $home[5], $home[6], $home[7]);
-		$awayarray = buildArray($awayposession, $away[0], $away[1], $away[2], $away[3], $away[4], $away[5], $away[6], $away[7]);
+		$homearray = buildArray($homepossession, $home[0], $home[1], $home[2], $home[3], $home[4], $home[5], $home[6], $home[7]);
+		$awayarray = buildArray($awaypossession, $away[0], $away[1], $away[2], $away[3], $away[4], $away[5], $away[6], $away[7]);
 
 		$gamestats = array('home' => $homearray, 'away' => $awayarray);
 
@@ -498,7 +498,6 @@ function setGameStats($game_id) {
 	$reference = $database->getReference('fixtures/' . $game_id . '/stats');
 	$snapshot = $reference->getValue();
 
-	$value = (array) $value;
 	$value = getGameStats($game_id);
 
 	$reference->set($value);
