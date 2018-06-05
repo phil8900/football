@@ -76,9 +76,16 @@ function getLiveGameEvents(gameid){
 }
 
 function displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton){
-	firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalreview').once('value', function (snapshot) {
-		if (snapshot.val() != null) {
-			var starrating = snapshot.val()['finalreview'];
+	firebase.database().ref('startingeleven/users/').once('value', function (snapshot) {
+		var aggrating = 0;
+		var counter = 0;
+		snapshot.forEach(function(child){
+			if(child.val()[gameid]['finalreview'] != null){
+				aggrating = aggrating + child.val()[gameid]['finalreview']['finalreview'];
+				counter++;
+			}
+		});
+		var starrating = Math.round(aggrating/counter);
 			onebutton.disabled = true;
 			twobutton.disabled = true;
 			threebutton.disabled = true;
@@ -100,7 +107,6 @@ function displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutto
 			if(starrating >= 5){
 				fivebutton.classList.add('checkedstar');
 			}
-		}
 	});
 }
 
