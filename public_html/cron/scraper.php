@@ -86,6 +86,10 @@ function getTeamInformation($teamurl) {
 	$sel = '#verein_head';
 	$table = getElementForSelector($teamurl, $sel);
 
+	if ($table == null) {
+		return getAlternativeTeamInformation($teamurl);
+	}
+
 	$teamname = trim(strip_tags($table->find('.spielername-profil')));
 
 	$teamtable = $table->find('.profilheader tr td');
@@ -124,6 +128,41 @@ function getTeamInformation($teamurl) {
 		$coach = array('coachname' => 'No coach', 'coachage' => '', 'coachnationality' => '', 'coachsince' => '');
 
 	}
+
+	$teaminformation = array('teamname' => (string) $teamname, 'teamlogo' => getWikiImage($teamname), 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl), 'news' => getTeamNews($teamurl));
+
+	return $teaminformation;
+}
+
+function getAlternativeTeamInformation($teamurl) {
+	$sel = '.dataHeader.dataExtended.nationalmannschaft.wm18';
+	$table = getElementForSelector($teamurl, $sel);
+
+	$teamname = trim($table->find('.dataMain .dataTop .dataName b'));
+
+	$coachtable = getElementForSelector($teamurl, '.mitarbeiterVereinSlider .container-inhalt');
+
+	if ($coachtable != null) {
+		$coach_name = $coachtable->find('.container-hauptinfo a')['title'];
+		$coach_additionalinfos = $coachtable->find('.container-zusatzinfo')[0];
+		$coach_age = applyRegExp('/(\d+)( Years)/', $coach_additionalinfos[0])[1];
+		$coach_nationality = $coach_additionalinfos->find('.flaggenrahmen')['title'];
+		$coach_since = applyRegExp('/(\w{3}\s{1}\d+,\s{1}\d{4})/', $coach_additionalinfos[0])[1];
+
+		$coach = array('coachname' => (string) $coach_name, 'coachage' => (string) $coach_age, 'coachnationality' => $coach_nationality, 'coachsince' => $coach_since);
+	} else {
+		$coach = array('coachname' => 'No coach', 'coachage' => '', 'coachnationality' => '', 'coachsince' => '');
+
+	}
+
+	$average_marketvalue = 'Not available';
+
+	$detailtable = $table->find('.dataContent .dataDaten .dataValue');
+
+	$average_age = $detailtable[1];
+	$ranking = trim(str_replace('Pos ', '', strip_tags($detailtable[4])));
+	$international_titles = 'Not available';
+	$continental_titles = 'Not available';
 
 	$teaminformation = array('teamname' => (string) $teamname, 'teamlogo' => getWikiImage($teamname), 'coach' => $coach, 'averageage' => (string) $average_age, 'averagemarketvalue' => (string) $average_marketvalue, 'internationaltitles' => (string) $international_titles, 'contintentaltitles' => (string) $continental_titles, 'ranking' => (string) $ranking, 'fixtures' => getTeamFixtures($teamurl), 'news' => getTeamNews($teamurl));
 
