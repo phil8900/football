@@ -47,7 +47,6 @@ function showMatches(){
 				wrapper = $('#matches .swiper-wrapper').get(0);
 
 		//	}
-		if(wrapper != undefined){
 			var div = document.createElement('div');
 			div.classList.add('activitybox');
 			div.classList.add('matchbox');
@@ -138,7 +137,6 @@ function showMatches(){
 			});
 			div.appendChild(awaydiv);
 			wrapper.appendChild(div);
-		}
 		}
 	});
 }
