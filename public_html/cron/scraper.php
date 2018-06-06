@@ -275,6 +275,36 @@ function setGameEvents($game_id) {
 			$reference->set($value);
 		}
 	}
+	$gamereference = $database->getReference('fixtures/' . $game_id+'/minute');
+	$gamesnapshot = $reference->getValue();
+
+	$gamereference->set(getCurrentMinute($game_id));
+}
+
+function getCurrentMinute($gameid) {
+	global $live_base;
+	$liveurl = $live_base . $gameid;
+	$client = Client::getInstance();
+
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		$client->getEngine()->setPath(dirname(__FILE__) . '/../../bin/phantomjs.exe');
+	} else {
+		$client->getEngine()->setPath('../../bin/phantomjs');
+	}
+
+	$request = $client->getMessageFactory()->createRequest($liveurl, 'GET');
+	$response = $client->getMessageFactory()->createResponse();
+	$client->send($request, $response);
+
+	if ($response->getStatus() === 200) {
+
+		$doc = hQuery::fromHTML($response->getContent());
+
+		if ($doc->find('.live-spielminute-header') != '') {
+			return str_replace('Minute ', '', $doc->find('.live-spielminute-header'));
+		}
+		return 'notlive';
+	}
 }
 
 function getLiveGames() {

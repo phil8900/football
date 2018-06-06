@@ -339,7 +339,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
         getGoalDetails(description, activitytext, event)
     }
 
-    else if(activity == 'mvap'){
+    else if(activity == 'mvp'){
         symbol = 'fa-trophy';
         activitytext = 'Voted for MVP';
         getMVPDetails(description, activitytext, event)
