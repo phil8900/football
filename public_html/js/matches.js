@@ -155,14 +155,16 @@ function showMatches(){
 }
 
 function overlayOn(gameid) {
-	firebase.database().ref('checkins').once('value', function(snapshot){
-		snapshot.forEach(function(child){
+	var livegame = getLiveGame();
+	if(gameid == livegame.gameid){
+		firebase.database().ref('checkins').once('value', function(snapshot){
+			snapshot.forEach(function(child){
 
-			for(var key in child.val()[uid]){
-				if(child.val()[uid][key]['gameid'] != undefined){
-					if(gameid == child.val()[uid][key]['gameid']){
-						window.location = "match.php?gameid=" + gameid;
-					}
+				for(var key in child.val()[uid]){
+					if(child.val()[uid][key]['gameid'] != undefined){
+						if(gameid == child.val()[uid][key]['gameid']){
+							window.location = "match.php?gameid=" + gameid;
+						}
 				}
 			}
 
@@ -170,7 +172,7 @@ function overlayOn(gameid) {
 	});
 	document.getElementById('overlay').style.display = 'block';
 	setLocationGameId(gameid);
-
+}
 }
 
 function overlayOff() {

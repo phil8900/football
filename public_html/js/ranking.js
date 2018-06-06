@@ -233,8 +233,10 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 	firstlinediv.appendChild(rankspan);
 	div.appendChild(firstlinediv);
 
+	var usercount = $('#userranking .userranking').length;
+
 	var pointsdiv = document.createElement('div');
-	pointsdiv.appendChild(document.createTextNode(Math.round(entry.points)));
+	pointsdiv.appendChild(document.createTextNode(Math.round(entry.points/usercount)));
 	pointsdiv.classList.add('userrankingpoints');
 
 	div.appendChild(pointsdiv);
@@ -373,7 +375,19 @@ function showOwnTeam(snapshotvalue, entry){
 function showBarValueTeam(percentage){
 	var bar = document.getElementById('fanbasebar');
 	bar.style.width = percentage/100 + '%';
-	bar.innerHTML = Math.round(percentage) + 'pts';
+
+	var usercount = 0;
+	firebase.database().ref('rankings/users/').once('value', function(snapshot){
+		snapshot.forEach(function(child){
+
+				if(child.val()['team'] == ownteam){
+			usercount++;
+		}
+		});
+	});
+			bar.innerHTML = Math.round(percentage/usercount) + 'pts';
+
+
 
 /*	if(bar.offsetWidth >= 100% + '%'){ 						IF YOU CAME HERE BECAUSE OF THE RADIUS OF THE BAR WHEN = 100%
 		bar.style.borderBottomRightRadius = 15 + 'px';
