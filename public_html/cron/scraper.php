@@ -309,6 +309,8 @@ function getPregameInformation($game_id) {
 
 	$timestamp = DateTime::createFromFormat('  D, M d, Y g:i A', $date . ' ' . $time)->getTimeStamp();
 
+	$timestamp = $timestamp + 3600;
+
 	$pregameinfo = array('gameid' => (string) $game_id, 'hometeamid' => (string) $hometeam_id, 'awayteamid' => (string) $awayteam_id, 'date' => (string) $date, 'time' => (string) $time, 'location' => (string) $location, 'timestamp' => (string) $timestamp);
 
 	return $pregameinfo;

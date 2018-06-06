@@ -555,7 +555,11 @@ function getTeamInfo(gameid, wrapper){
 		if(location != null){
 			location.appendChild(locationname);
 		}
-		var matchtime = document.createTextNode(snapshot.val().time);
+				
+		var calcdate = new Date(snapshot.val().timestamp * 1000 + new Date().getTimezoneOffset() + 60000);
+		var calctime = calcdate.toString("hh:mm tt");
+		var matchtime = document.createTextNode(calctime);
+
 		if(time != null){
 			time.appendChild(matchtime);
 		}
