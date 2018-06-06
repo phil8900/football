@@ -50,7 +50,7 @@ function getLiveGame(){
 	var livegame = false;
 
 	fixtures.forEach(function(game) {
-		if((game.timestamp < (date + 3600)) && (game.timestamp > (date - 9000))){
+		if((game.timestamp > (date-9000)) && (game.timestamp < (date+3600))){
 			livegame = game;
 		}
 	});

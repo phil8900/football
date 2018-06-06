@@ -1,7 +1,12 @@
       var map;
       var infowindow;
 
+      var gameid;
 
+      function setLocationGameId(game_id){
+        gameid = game_id;
+        console.log(gameid);
+      }
 
       function initMap() {
 
@@ -90,14 +95,21 @@
             placeid: result.place_id,
             placename:result.name,
             uid: uid,
-
+            gameid: gameid
           };
 
           var updates = {};
           updates['checkins/' + result.place_id + '/' + uid + '/' + newPostKey] = postData;
 
           firebase.database().ref().update(updates);
-        //  console.log(postData);
+
+
+          firebase.database().ref('/fixtures/' + gameid).child(ownteam).transaction(function(ownteam) {
+                return ownteam +1;
+              });
+
+          
+          setTimeout(function(){window.location = "match.php?gameid=" + gameid;}, 1000);
 
         });
 

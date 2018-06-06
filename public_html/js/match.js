@@ -78,9 +78,18 @@ function getLiveGameEvents(gameid){
 }
 
 function displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton){
-	firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalreview').once('value', function (snapshot) {
-		if (snapshot.val() != null) {
-			var starrating = snapshot.val()['finalreview'];
+	firebase.database().ref('startingeleven/users/').once('value', function (snapshot) {
+		var aggrating = 0;
+		var counter = 0;
+		snapshot.forEach(function(child){
+			if(child.val()[gameid] != undefined){
+			if(child.val()[gameid]['finalreview'] != null){
+				aggrating = aggrating + child.val()[gameid]['finalreview']['finalreview'];
+				counter++;
+			}
+			}
+		});
+		var starrating = Math.round(aggrating/counter);
 			onebutton.disabled = true;
 			twobutton.disabled = true;
 			threebutton.disabled = true;
@@ -102,7 +111,6 @@ function displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutto
 			if(starrating >= 5){
 				fivebutton.classList.add('checkedstar');
 			}
-		}
 	});
 }
 
@@ -354,7 +362,12 @@ function showStartingEleven(elementid, teamid, playerarray, startingeleven, game
 				pointsdiv.appendChild(document.createTextNode(player['jerseynumber']));
 				pointsdiv.classList.add('userrankingpoints');
 
-				div.appendChild(pointsdiv);
+            var countspan = document.createElement('span');
+            countspan.classList.add('mvpcountspan');
+            countspan.innerHTML = 0;
+            div.appendChild(countspan);
+
+			div.appendChild(pointsdiv);
 
 
 				if(ownprofile){
@@ -385,12 +398,18 @@ function showStartingEleven(elementid, teamid, playerarray, startingeleven, game
 					squaddiv = document.getElementById('awaysquad');
 				}
 
+
+			if(squaddiv.getElementsByClassName(insertid)[0] != null){
 				squaddiv.getElementsByClassName(insertid)[0].appendChild(div);
+			}
+			else{
+				squaddiv.appendChild(div);
+			}
+			countGameMvpvotes(player['playerid']);
 			}
 		});
 		setupMvpButtons(gameid);
 		displayPostMatchEvents(gameid);
-
 	});
 
 }
@@ -406,7 +425,6 @@ function setupMvpButtons(gameid){
 			button.style.color = 'red';
 			mvpset = true;
 			$('#mvp .checkinbutton').hide();
-
 		}
 
 		var all = document.getElementsByClassName('checkinbutton');
@@ -422,6 +440,24 @@ function setupMvpButtons(gameid){
 			}
 		}
 	});
+}
+
+function displayMvpRanking(){
+		var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp');
+			startingRef.on('value', function(snapshot){
+
+		if(snapshot.val() != null){
+	$('.userelement:gt(2)').show();
+    var players = $(".userelement");
+
+    var orderedDivs = players.sort(function (a, b) {
+        return ($(a).find('.mvpcountspan').html() > $(b).find('.mvpcountspan').html()) ? -1 : ($(a).find('.mvpcountspan').html() < $(b).find('.mvpcountspan').html()) ? 1 : 0;
+    });
+
+    $("#mvp #homesquad").html(orderedDivs);
+    $('#mvp #homesquad .userelement:gt(2)').hide();
+}
+});
 }
 
 function manageMvp(playerid, gameid, button){
@@ -474,7 +510,9 @@ function getPlayerInfo(playerid, event, eventlist){
 		//latestgameevent.getElementsByClassName("eventlist")[0].innerHTML = playerspan.innerHTML;
 		//latestgameevent.appendChild(playerspan);
 
-		latestgameevent.innerHTML = eventwrapper.innerHTML;
+		if(eventwrapper != undefined){
+			latestgameevent.innerHTML = eventwrapper.innerHTML;
+		}
 
 	});
 }
@@ -513,10 +551,13 @@ function getTeamInfo(gameid, wrapper){
 		var awayteam = snapshot.val().awayteamid;
 		awayspan.id = awayteam;
 		var locationname = document.createTextNode(snapshot.val().location);
-		location.appendChild(locationname);
+		if(location != null){
+			location.appendChild(locationname);
+		}
 		var matchtime = document.createTextNode(snapshot.val().time);
-		time.appendChild(matchtime);
-
+		if(time != null){
+			time.appendChild(matchtime);
+		}
 
 		var homename;
 		var awayname;
@@ -1023,6 +1064,7 @@ function displayMVP(){
 	document.getElementById('finalcomment').style.display = 'none';
 	$(".submitbutton").hide();
 	getMvpList();
+	displayMvpRanking();
 }
 
 function displayFinalReview(){
@@ -1278,6 +1320,7 @@ function waxxiesVoucherDescription () {
 
 function displayStats(gameid){
 	firebase.database().ref('/fixtures/' +  gameid + '/stats').once('value', function(snapshot){
+		if(snapshot.val() != null){
 		document.getElementById('homepossession').innerHTML = snapshot.val()['home']['possession'];
 		var homeposessiondiv = document.getElementById('homepossession');
 		homeposessiondiv.style.width = homeposessiondiv.innerHTML;
@@ -1347,7 +1390,37 @@ function displayStats(gameid){
 		awaycornersdiv.style.width = awaycornersdiv.innerHTML*4 + '%';
 
 		document.getElementById('awayoffside').innerHTML = snapshot.val()['away']['offside'];
+<<<<<<< HEAD
 		var awayoffsidediv = document.getElementById('awayoffside');
 		awayoffsidediv.style.width = awayoffsidediv.innerHTML*4 + '%';
+=======
+	}
+>>>>>>> 6e173a58635d156ce608656ed7edd8bd5d304a25
 	});
+}
+
+function countGameMvpvotes(playerid){
+    firebase.database().ref('startingeleven/users/').once('value', function(snapshot){
+        var mvpcount = [];
+        snapshot.forEach(function(child) {
+            firebase.database().ref('startingeleven/users/' + child.key).once('value', function(snapshot){
+                snapshot.forEach(function(child) {
+                    if(child.val()['mvp'] != undefined && child.key == gameid){
+                        if(playerid == child.val()['mvp']['playerid']){
+
+                            if(mvpcount[playerid] == null){
+                                mvpcount[playerid] = 1;
+                            }
+                            else{
+                                mvpcount[playerid]++;
+                            }
+                            var playerdiv = document.getElementById(playerid);
+                            var countspan = playerdiv.getElementsByClassName('mvpcountspan')[0];
+                            countspan.innerHTML = mvpcount[playerid];
+                        }
+                    }
+                });
+            });
+        });
+    });
 }

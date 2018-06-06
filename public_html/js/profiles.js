@@ -640,6 +640,7 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
 }
 
 function showSquad(nextgame){
+    $('.userelement').show();
 
     var teamRef = firebase.database().ref('teams/' + ownteam + '/squad');
     ownprofile = true;
@@ -741,7 +742,7 @@ function setupButtons(nextgame){
     startingRef.on('value', function(snapshot){
         var counter = 0;
         snapshot.forEach(function(child) {
-            if(child.val().playerid != null){
+            if(child.val().playerid != null && child.key != 'mvp'){
                 var div = document.getElementById(child.val().playerid);
                 var button = div.getElementsByClassName('checkinbutton')[0];
                 button.style.color = 'red';
@@ -770,6 +771,7 @@ function setupButtons(nextgame){
 }
 
 function manageStartingEleven(playerid, nextgame, button){
+    console.log('Here');
     var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + playerid);
     var startingRootRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame);
 
@@ -781,7 +783,14 @@ function manageStartingEleven(playerid, nextgame, button){
             });
             button.style.color = 'red';
             startingRootRef.once('value', function(snapshot){
-                if(snapshot.numChildren() == 12){
+                var counter = 0;
+                snapshot.forEach(function(child){
+                    if(child.key != 'timestamp' && child.key != 'finalcomment' && child.key != 'finalreview' && child.key != 'mvp'){
+                        counter++
+                    }
+                });
+                
+                if(counter == 11){
                     getPointsTable('suggest11');
                 }
             });
@@ -791,7 +800,13 @@ function manageStartingEleven(playerid, nextgame, button){
             firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + 'timestamp').remove();
             button.style.color = 'green';
             startingRootRef.once('value', function(snapshot){
-                if(snapshot.numChildren() == 10){
+                var counter = 0;
+                snapshot.forEach(function(child){
+                    if(child.key != 'timestamp' && child.key != 'finalcomment' && child.key != 'finalreview' && child.key != 'mvp'){
+                        counter++
+                    }
+                });
+                if(counter == 10){
                     getPointsTable('remove11');
                 }
             });
@@ -1037,12 +1052,7 @@ function displayStatsMVP(){
 
     $('.userelement:gt(2)').show();
 
-
     var players = $("#squad .userelement");
-
-    players.each(function( index ) {
-        var value = parseFloat($(this).find('.mvpcountspan').html());
-    });
 
     var orderedDivs = players.sort(function (a, b) {
         return ($(a).find('.mvpcountspan').html() > $(b).find('.mvpcountspan').html()) ? -1 : ($(a).find('.mvpcountspan').html() < $(b).find('.mvpcountspan').html()) ? 1 : 0;
@@ -1067,10 +1077,6 @@ function displayStatsGoals(){
 
     var players = $("#squad .userelement");
 
-    players.each(function( index ) {
-        var value = parseFloat($(this).find('.goalcountspan').html());
-    });
-
     var orderedDivs = players.sort(function (a, b) {
         return ($(a).find('.goalcountspan').html() > $(b).find('.goalcountspan').html()) ? -1 : ($(a).find('.goalcountspan').html() < $(b).find('.goalcountspan').html()) ? 1 : 0;
     });
@@ -1092,10 +1098,6 @@ function displayStatsBest11(){
     $('.userelement:gt(2)').show();
 
     var players = $("#squad .userelement");
-
-    players.each(function( index ) {
-        var value = parseFloat($(this).find('.startingcountspan').html());
-    });
 
     var orderedDivs = players.sort(function (a, b) {
         return ($(a).find('.startingcountspan').html() > $(b).find('.startingcountspan').html()) ? -1 : ($(a).find('.startingcountspan').html() < $(b).find('.startingcountspan').html()) ? 1 : 0;
@@ -1123,4 +1125,25 @@ function displayStatsOverall(){
     document.getElementById('statscoach').style.display = 'none';
     document.getElementById('statsoverall').style.display = 'block';
     document.getElementById('dropdown').innerHTML = 'Team overall performance';
+    displayRatingStarsOverall();
+}
+
+function displayRatingStarsOverall(){
+    firebase.database().ref('startingeleven/users/').once('value', function (snapshot) {
+        var aggrating = 0;
+        var counter = 0;
+        snapshot.forEach(function(child){
+            fixtures.forEach(function(game){
+                if(child.val()[game.gameid] != undefined){
+                    if(child.val()[game.gameid]['finalreview'] != undefined){
+                        aggrating = aggrating + child.val()[game.gameid]['finalreview']['finalreview'];
+                        counter++;
+                    }
+
+                }
+            });
+        });
+            var rating = aggrating/counter;
+            document.getElementById('statsoverall').appendChild(document.createTextNode(rating));
+    });
 }
