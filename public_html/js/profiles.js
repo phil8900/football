@@ -85,7 +85,9 @@ function showOwnProfile(snapshotvalue, entry){
     userprofile.id = 'userprofilephoto';
     userprofile.classList.add('userprofile');
     userprofile.classList.add('col-xs-4');
-    userprofile.innerHTML = "user photo goes here";
+    var profileimage = document.createElement('img');
+    profileimage.src = entry.photoURL;
+    userprofile.appendChild(profileimage);
 
     var rankdiv = document.createElement('div');
     rankdiv.id = 'rankdiv';

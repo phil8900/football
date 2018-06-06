@@ -1,6 +1,7 @@
 var ownteam = 0;
 var fixtures;
 var uid;
+var photoURL;
 
 setOwnTeam();
 
@@ -10,7 +11,18 @@ var userRef = firebase.database().ref('rankings/users/').orderByChild('points');
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		uid = user.uid;
+		photoURL = user.photoURL;
+
 		localStorage.setItem("loudstand_uid", user.uid);
+
+		var updates = {};
+		updates['rankings/users/' + uid + '/name'] = user.displayName;
+		updates['rankings/users/' + uid + '/photoURL'] = user.providerData[0].photoURL + '?type=large';
+
+		console.log(user.providerData);
+
+		firebase.database().ref().update(updates);
+
 	} else {
 		uid = 'AwTsR03Y7LRpsRiz5RaCojUwhqy2'; //Test UID without logging in
 	}
