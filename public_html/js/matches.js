@@ -173,6 +173,13 @@ function overlayOn(gameid) {
 	document.getElementById('overlay').style.display = 'block';
 	setLocationGameId(gameid);
 }
+else{
+	firebase.database().ref('fixtures/' + gameid).once('value', function(snapshot){
+		if(snapshot.val()['timestamp'] < Math.floor(Date.now() / 1000)){
+			window.location = "match.php?gameid=" + gameid;
+		}
+	});
+}
 }
 
 function overlayOff() {
