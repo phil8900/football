@@ -165,7 +165,7 @@ function showOwnProfile(snapshotvalue, entry){
 function showBarValueUser(percentage){
     var bar = document.getElementById('fandombar');
     bar.style.width = (percentage/20) + '%';
-    bar.innerHTML = percentage + 'pts';
+    bar.innerHTML = Math.round(percentage) + ' points';
 
 }
 
