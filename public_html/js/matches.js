@@ -86,7 +86,15 @@ function showMatches(){
 					home.classList.add('matchhometeam');
 
 					var homefans = document.createElement('div');
-					homefans.appendChild(document.createTextNode("Fans online: " + snapshot.val().averageage)); //CHANGE THIS TO TOTAL NUMBER OF FANS ONLINE
+
+					firebase.database().ref('fixtures/' + gameid + '/' + hometeam).once('value', function(snapshot){
+						var online = 0;
+						if(snapshot.val() != null){
+							online = snapshot.val();
+						}
+						homefans.appendChild(document.createTextNode("Fans online: " + online));
+					});
+
 					homefans.classList.add('matchhomefans');
 
 					homediv.appendChild(logo);
@@ -127,7 +135,15 @@ function showMatches(){
 					away.classList.add('matchawayteam');
 
 					var awayfans = document.createElement('div');
-					awayfans.appendChild(document.createTextNode("Fans online: " + snapshot.val().averageage)); //CHANGE THIS TO TOTAL NUMBER OF FANS ONLINE
+
+					firebase.database().ref('fixtures/' + gameid + '/' + awayteam).once('value', function(snapshot){
+						var online = 0;
+						if(snapshot.val() != null){
+							online = snapshot.val();
+						}
+						awayfans.appendChild(document.createTextNode("Fans online: " + online));
+					});
+
 					awayfans.classList.add('matchawayfans');
 
 					awaydiv.appendChild(logo);
@@ -143,15 +159,7 @@ function showMatches(){
 
 function overlayOn(gameid) {
 	document.getElementById('overlay').style.display = 'block';
-
-	var locations = document.getElementsByClassName('location');
-
-	Array.prototype.forEach.call(locations, function(location) {
-		location.addEventListener("click", function(){
-
-			window.location = "match.php?gameid=" + gameid;
-		});
-	});
+	setLocationGameId(gameid);
 }
 
 function overlayOff() {

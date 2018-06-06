@@ -81,9 +81,11 @@ function displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutto
 		var aggrating = 0;
 		var counter = 0;
 		snapshot.forEach(function(child){
+			if(child.val()[gameid] != undefined){
 			if(child.val()[gameid]['finalreview'] != null){
 				aggrating = aggrating + child.val()[gameid]['finalreview']['finalreview'];
 				counter++;
+			}
 			}
 		});
 		var starrating = Math.round(aggrating/counter);
@@ -1236,6 +1238,7 @@ function voucherDescription () {
 
 function displayStats(gameid){
 	firebase.database().ref('/fixtures/' +  gameid + '/stats').once('value', function(snapshot){
+		if(snapshot.val() != null){
 		document.getElementById('homepossession').innerHTML = snapshot.val()['home']['possession'];
 		var homeposessiondiv = document.getElementById('homepossession');
 		homeposessiondiv.style.width = homeposessiondiv.innerHTML;
@@ -1268,6 +1271,7 @@ function displayStats(gameid){
 		document.getElementById('awayfreekicks').innerHTML = snapshot.val()['away']['freekicks'];
 		document.getElementById('awaycorners').innerHTML = snapshot.val()['away']['corners'];
 		document.getElementById('awayoffside').innerHTML = snapshot.val()['away']['offside'];
+	}
 	});
 }
 
