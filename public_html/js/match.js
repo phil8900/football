@@ -556,7 +556,7 @@ function getTeamInfo(gameid, wrapper){
 			location.appendChild(locationname);
 		}
 
-		if(snapshot.val()['minute'] != undefined){
+		if(snapshot.val()['minute'] != undefined && score != null){
 			var minute = document.createElement('div');
 			minute.id = 'gameminute';
 			minute.appendChild(document.createTextNode(snapshot.val()['minute']));
@@ -833,12 +833,13 @@ function rateStars(event_id, reaction){
 
 						if(snapshot.val() == null){
 							var currenttime = Math.floor(Date.now() / 1000);
+							console.log(reaction);
+							var updates = {};
+							updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = reaction;
 
 							reactionRef.child(reaction).transaction(function(reaction) {
-								var updates = {};
-								updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = 'positive';
-								updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
-
+								
+								updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/timestamp'] = currenttime;
 
 								firebase.database().ref().update(updates);
 
@@ -1028,7 +1029,7 @@ function displayPostMatchEvents (gameid){
 		submitfinalcomment.addEventListener("click", function() {
 			firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
 				if (child.val() == null) {
-					firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').push({
+					firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').set({
 						finalcomment: commentareacontent.value,
 						timestamp: Math.floor(Date.now() / 1000)
 					});
