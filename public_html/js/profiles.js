@@ -257,7 +257,6 @@ function showActivityBox(activity, event, gameid, reaction){
         return ($(a).attr("id") > $(b).attr("id")) ? -1 : ($(a).attr("id") < $(b).attr("id")) ? 1 : 0;
     });
 
-    console.log(orderedDivs);
 
     $("#activity").html(orderedDivs);
 
@@ -394,14 +393,6 @@ function getLastActivities() {
         });
     });
 
-    firebase.database().ref('/startingeleven/users/' + uid).once('value', function(snapshot){
-        snapshot.forEach(function(child){
-            //console.log(child.val());
-        });
-    });
-
-
-
 
     firebase.database().ref('/vouchers/waxxies/' + uid ).on('value', function (snapshot) {
         snapshot.forEach(function(child){
@@ -417,27 +408,15 @@ function getLastActivities() {
         snapshot.forEach(function (child) {
             var gameid = child.val().gameid;
             firebase.database().ref('/startingeleven/users/' + uid + '/' + gameid).once('value', function (snapshot) {
-                snapshot.forEach(function (child) {
-                    var key = child.val();
-                    if (child.val().timestamp != null) {
-                        showActivityBox('starting', child.val(), child.key, null);
+                if(snapshot.val() != null){
+                    if (snapshot.val().timestamp != null) {
+                        showActivityBox('starting', snapshot.val(), snapshot.key, null);
                     }
-                    if(child.val()['finalcomment'] != null){
-                        showActivityBox('finalcomment', child.val(), child.key, null);
+                    if(snapshot.val()['finalcomment'] != null){
+                        showActivityBox('finalcomment', snapshot.val()['finalcomment'], snapshot.key, null);
                     }
-                });
+                }
             });
-        });
-    });
-
-
-
-
-    firebase.database().ref('/startingeleven/users/' + uid).once('value', function (snapshot) {
-        snapshot.forEach(function (child) {
-            if (child.val().timestamp != null) {
-                showActivityBox('starting', child.val(), child.key, null);
-            }
         });
     });
 }
@@ -790,7 +769,6 @@ function setupButtons(nextgame){
 }
 
 function manageStartingEleven(playerid, nextgame, button){
-    console.log('Here');
     var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + playerid);
     var startingRootRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame);
 
