@@ -99,6 +99,7 @@ body {
 #teamranking img{
 	width: 16%;
 	height: auto;
+	border-radius: 0;
 }
 
 .userrankingname{
@@ -136,9 +137,10 @@ body {
 }
 
 .rankinglogo{
-	height: 90%;
-	margin-right:2%;
-	width: auto;
+	height: 50px;
+	width: 50px;
+	margin-right: 2%;
+	border-radius: 50%;
 }
 
 #team h2{
@@ -600,6 +602,8 @@ button{
 .userteamlogo img{
 	width: 100%;
 	height: auto;
+	border-radius: 0;
+
 
 }
 

@@ -153,6 +153,18 @@ function createUserRankingElement(entry, id){
 	div.classList.add('userelement');
 	var firstlinediv = document.createElement('div');
 	firstlinediv.classList.add('firstlinediv');
+
+	var imagewrapper = document.createElement('span');
+	imagewrapper.classList.add('rankinglogowrapper');
+	firstlinediv.appendChild(imagewrapper);
+
+	var image = document.createElement('img');
+	image.src = entry.photoURL; //AQUI CARALHO
+	image.classList.add('rankinglogo');
+	imagewrapper.appendChild(image);
+
+
+
 	var namespan = document.createElement('span');
 	namespan.appendChild(document.createTextNode(entry.name));
 	namespan.classList.add('userrankingname');
@@ -171,7 +183,7 @@ function createUserRankingElement(entry, id){
 	div.appendChild(firstlinediv);
 
 	var pointsdiv = document.createElement('div');
-	pointsdiv.appendChild(document.createTextNode(entry.points));
+	pointsdiv.appendChild(document.createTextNode(Math.round(entry.points)));
 	pointsdiv.classList.add('userrankingpoints');
 
 	div.appendChild(pointsdiv);
@@ -222,7 +234,7 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 	div.appendChild(firstlinediv);
 
 	var pointsdiv = document.createElement('div');
-	pointsdiv.appendChild(document.createTextNode(entry.points));
+	pointsdiv.appendChild(document.createTextNode(Math.round(entry.points)));
 	pointsdiv.classList.add('userrankingpoints');
 
 	div.appendChild(pointsdiv);
@@ -361,7 +373,7 @@ function showOwnTeam(snapshotvalue, entry){
 function showBarValueTeam(percentage){
 	var bar = document.getElementById('fanbasebar');
 	bar.style.width = percentage/100 + '%';
-	bar.innerHTML = percentage + 'pts';
+	bar.innerHTML = Math.round(percentage) + 'pts';
 
 /*	if(bar.offsetWidth >= 100% + '%'){ 						IF YOU CAME HERE BECAUSE OF THE RADIUS OF THE BAR WHEN = 100%
 		bar.style.borderBottomRightRadius = 15 + 'px';

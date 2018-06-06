@@ -27,7 +27,8 @@
             var service = new google.maps.places.PlacesService(map);
             service.nearbySearch({
               location: pos,
-              radius: 500
+              radius: 500,
+                type: 'bar'
             }, callback);
 
             map.setCenter(pos);

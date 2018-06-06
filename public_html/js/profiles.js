@@ -167,7 +167,7 @@ function showOwnProfile(snapshotvalue, entry){
 function showBarValueUser(percentage){
     var bar = document.getElementById('fandombar');
     bar.style.width = (percentage/20) + '%';
-    bar.innerHTML = Math.round(percentage) + ' points';
+    bar.innerHTML = Math.round(percentage) + 'pts';
 
 }
 
@@ -735,7 +735,7 @@ function showSquad(nextgame){
         });
         setupButtons(nextgame);
     });
-    hideCheckinButtons();
+    
 }
 
 function setupButtons(nextgame){
@@ -814,6 +814,7 @@ function manageStartingEleven(playerid, nextgame, button){
             });
         }
     })
+
 }
 
 function getGeneralPosition(position){

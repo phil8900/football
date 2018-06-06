@@ -338,6 +338,7 @@ function showStartingEleven(elementid, teamid, playerarray, startingeleven, game
 					div.innerHTML = '';
 				}
 
+
 				div.classList.add('userelement');
 				var firstlinediv = document.createElement('div');
 				firstlinediv.classList.add('firstlinediv');
@@ -1420,4 +1421,22 @@ function countGameMvpvotes(playerid){
             });
         });
     });
+}
+
+function manageTimestamps () {
+	var game = getLiveGame();
+	var timestamp = game.timestamp;
+	var date = Math.floor(Date.now() / 1000);
+	console.log(timestamp);
+
+	if((date > timestamp-3600) && (date < timestamp)){
+		console.log('true dat');
+		document.getElementById('squad').style.display = 'none';
+	}
+
+
+
+
+	console.log(timestamp);
+
 }
