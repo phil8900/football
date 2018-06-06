@@ -275,7 +275,7 @@ function setGameEvents($game_id) {
 			$reference->set($value);
 		}
 	}
-	$gamereference = $database->getReference('fixtures/' . $game_id+'/minute');
+	$gamereference = $database->getReference('fixtures/' . $game_id . '/minute');
 	$gamesnapshot = $reference->getValue();
 
 	$gamereference->set(getCurrentMinute($game_id));
