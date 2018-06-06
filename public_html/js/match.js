@@ -1390,12 +1390,9 @@ function displayStats(gameid){
 		awaycornersdiv.style.width = awaycornersdiv.innerHTML*4 + '%';
 
 		document.getElementById('awayoffside').innerHTML = snapshot.val()['away']['offside'];
-<<<<<<< HEAD
 		var awayoffsidediv = document.getElementById('awayoffside');
 		awayoffsidediv.style.width = awayoffsidediv.innerHTML*4 + '%';
-=======
 	}
->>>>>>> 6e173a58635d156ce608656ed7edd8bd5d304a25
 	});
 }
 
