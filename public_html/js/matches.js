@@ -30,7 +30,7 @@ function showMatches(){
 
 	fixtures.sort(function(a, b){return a.timestamp-b.timestamp});
 	fixtures.forEach(function(child) {
-		if((child['timestamp'] > worldCupStart-9000) && (child['timestamp'] < worldCupEnd)){
+		if((child['timestamp'] < worldCupEnd)){
 			var hometeam = child['hometeamid'];
 			var awayteam = child['awayteamid'];
 			var date = child['date'];
@@ -66,9 +66,6 @@ function showMatches(){
 				div.appendChild(livenow);
 				livenow.innerHTML = '• LIVE';
 				}
-
-
-
 
 
 
@@ -156,10 +153,13 @@ function overlayOn(gameid) {
 
 function overlayOff() {
 	document.getElementById('overlay').style.display = 'none';
+	document.getElementById('topNav').style.backgroundColor = '#0F281D';
+	document.getElementById('firstsubtopnav').style.backgroundColor = '#0F281D';
 }
 
 function topBarBlack (){
 	document.getElementById('topNav').style.backgroundColor = 'black';
+	document.getElementById('firstsubtopnav').style.backgroundColor = 'black';
 
 }
 

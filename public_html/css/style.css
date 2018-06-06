@@ -219,6 +219,8 @@ body {
 	border-bottom-left-radius: 15px;
 	padding-top: 7px;
 	color: #0b2e13;
+	min-width: 10%;
+	max-width: 96%;
 }
 
 #fanbasebar{
@@ -228,6 +230,8 @@ body {
 	border-bottom-left-radius: 15px;
 	padding-top: 7px;
 	color: #0b2e13;
+	min-width: 10%;
+	max-width: 96%;
 }
 
 #overlay{
@@ -841,7 +845,7 @@ h2{
 }
 
 #postmatchcontainer{
- 	height: 400px;
+ 	height: 440px;
 	overflow: scroll;
 }
 
@@ -860,6 +864,10 @@ h2{
 
 .finalcomment{
 
+}
+
+.onebutton .twobutton .threebutton .fourbutton .fivebutton button{
+	margin: 0 5px 0 0;
 }
 
 .postmatchvote{
@@ -1071,6 +1079,11 @@ h2{
 /* ----- Match Statistics ----- */
 
 #statistics{
+	color: black;
+}
+
+#statistics p{
+	margin: 30px 0 10px 0;
 }
 
 #posession{
@@ -1091,22 +1104,23 @@ h2{
 
 .statshome{
 	width: 50%;
-	float: right;
-	background-color: yellow;
+	float: left;
+	margin-top: -10px;
 }
 
 .statsaway {
 	width: 50%;
-	float: left;
-	background-color: brown;
+	float: right;
+	margin-top: -10px;
 }
 
 .innerstatshome{
 	background-color: red;
+	float: right;
 }
 .innerstatsaway{
 	background-color: green;
-	float: right;
+	float: left;
 }
 
 

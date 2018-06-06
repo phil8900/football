@@ -164,20 +164,15 @@ function showOwnProfile(snapshotvalue, entry){
 
 function showBarValueUser(percentage){
     var bar = document.getElementById('fandombar');
-    bar.style.width = (percentage/10) + '%';
+    bar.style.width = (percentage/20) + '%';
     bar.innerHTML = percentage + 'pts';
 
-
-    var fanbasediv = document.getElementById('fandomlevel');
-    var rating = document.createElement('p');
-    rating.appendChild(document.createTextNode(percentage/2/10 + '/5'));
-    fanbasediv.appendChild(rating);
 }
 
 function getBarValue(){
 
     firebase.database().ref('/rankings/users/' + uid + '/').once('value', function (snapshot){
-       var totalpoints = snapshot.val()['points'];
+        var totalpoints = snapshot.val()['points'];
         showBarValueUser(totalpoints);
 
     });
@@ -342,6 +337,30 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
         getGoalDetails(description, activitytext, event)
     }
 
+    else if(activity == 'mvap'){
+        symbol = 'fa-trophy';
+        activitytext = 'Voted for MVP';
+        getMVPDetails(description, activitytext, event)
+    }
+
+    else if(activity == 'voucher'){
+        symbol = 'fa-ticket-alt';
+        activitytext = 'Used a LoudStand discount voucher at';
+        getVoucherDetails(description, activitytext, event)
+    }
+
+    else if(activity == 'finalreview'){
+        symbol = 'fa-star';
+        activitytext = 'Rated the team performance';
+        getFinalReviewlDetails(description, activitytext, event)
+    }
+
+    else if(activity == 'invitefriend'){
+        symbol = 'fa-user-friends';
+        activitytext = 'Invited to LoudStand';
+        getInviteFriendDetails(description, activitytext, event)
+    }
+
     activitysymbol.classList.add(symbol);
 }
 
@@ -370,6 +389,38 @@ function getLastActivities() {
             }
         });
     });
+
+
+
+
+
+    firebase.database().ref('/vouchers/waxxies/' + uid ).on('value', function (snapshot) {
+        snapshot.forEach(function(child){
+            if (child.val()[uid] != null) {
+                var key = Object.keys(child.val()[uid]);
+                showActivityBox('voucher', child.val()[uid][key], gameid, null);
+            }
+        });
+    });
+
+
+    firebase.database().ref('/fixtures/').once('value').then(function (snapshot) {
+        snapshot.forEach(function (child) {
+            var gameid = child.val().gameid;
+            firebase.database().ref('/startingeleven/users/' + uid + '/' + gameid).once('value', function (snapshot) {
+                snapshot.forEach(function (child) {
+                    var key = child.val();
+                    console.log(key);
+                    if (child.val().timestamp != null) {
+                        showActivityBox('starting', child.val(), child.key, null);
+                    }
+                });
+            });
+        });
+    });
+
+
+
 
     firebase.database().ref('/startingeleven/users/' + uid).once('value', function (snapshot) {
         snapshot.forEach(function (child) {
@@ -491,6 +542,24 @@ function getGoalDetails(description, activitytext, event){
     eventwrapper.appendChild(eventlist);
     description.appendChild(eventwrapper);
 }
+
+function getVoucherDetails(description, activitytext, event){
+    setActivityText(description, activitytext);
+    var eventwrapper = document.createElement('div');
+    eventwrapper.classList.add('activityreactionmini');
+    var eventlist = document.createElement("div");
+    eventlist.classList.add('eventlistmini');
+
+    var voucher = document.createElement('p');
+    //if(event != undefined){
+    voucher.appendChild(document.createTextNode(event));
+    //}
+
+    eventlist.appendChild(voucher);
+    eventwrapper.appendChild(eventlist);
+    description.appendChild(eventwrapper);
+}
+
 
 function setActivityText(description, activitytext){
     var paragraph = document.createElement('p');
@@ -830,35 +899,35 @@ function showCoachInformation(){
 }
 
 function getCoachStats(){
-	firebase.database().ref('teams/' + ownteam + '/information/fixtures').once('value', function(snapshot){
-		var positive = 0;
-		var negative = 0;
-		var coachrating = 0;
-		snapshot.forEach(function(child){
-			firebase.database().ref('fixtures/' + child.val() + '/events').once('value', function(snapshot){
-				if(snapshot.val() != null){
-					snapshot.forEach(function(child){
-						if(child.val()['type'] == 'wechsel'){
-							var reactions = child.val()['reactions'];
+    firebase.database().ref('teams/' + ownteam + '/information/fixtures').once('value', function(snapshot){
+        var positive = 0;
+        var negative = 0;
+        var coachrating = 0;
+        snapshot.forEach(function(child){
+            firebase.database().ref('fixtures/' + child.val() + '/events').once('value', function(snapshot){
+                if(snapshot.val() != null){
+                    snapshot.forEach(function(child){
+                        if(child.val()['type'] == 'wechsel'){
+                            var reactions = child.val()['reactions'];
 
-							positive = positive + reactions['positive'];
-							negative = negative + reactions['negative'];
+                            positive = positive + reactions['positive'];
+                            negative = negative + reactions['negative'];
 
-							if((positive+negative)>0){
-								coachrating = (positive/(negative+positive))*100;
-							}
+                            if((positive+negative)>0){
+                                coachrating = (positive/(negative+positive))*100;
+                            }
 
-							var coachdiv = document.getElementById('statscoach');
-							if(coachdiv != null){
-							var coachcount = coachdiv.getElementsByClassName('coachcount')[0];
-							coachcount.innerHTML = coachrating + '%';
-							}
-						}
-					});
-					}
-				});
-			});
-});
+                            var coachdiv = document.getElementById('statscoach');
+                            if(coachdiv != null){
+                                var coachcount = coachdiv.getElementsByClassName('coachcount')[0];
+                                coachcount.innerHTML = coachrating + '%';
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    });
 }
 
 function countReactions(playerid){

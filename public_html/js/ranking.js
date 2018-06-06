@@ -360,8 +360,7 @@ function showOwnTeam(snapshotvalue, entry){
 
 function showBarValueTeam(percentage){
 	var bar = document.getElementById('fanbasebar');
-	bar.style.width = percentage/20 + '%';
-	bar.style.maxWidth = 100 + '%';
+	bar.style.width = percentage/100 + '%';
 	bar.innerHTML = percentage + 'pts';
 
 /*	if(bar.offsetWidth >= 100% + '%'){ 						IF YOU CAME HERE BECAUSE OF THE RADIUS OF THE BAR WHEN = 100%
@@ -369,12 +368,6 @@ function showBarValueTeam(percentage){
 		bar.style.borderTopRightRadius = 15 + 'px';
 	}
 	*/
-
-
-	var fanbasediv = document.getElementById('fanbaselevel');
-	var rating = document.createElement('p');
-	rating.appendChild(document.createTextNode(percentage/2/10 + '/5'));
-	fanbasediv.appendChild(rating);
 }
 
 function getBarValueTeam(){
