@@ -160,7 +160,9 @@ function overlayOn(gameid) {
 
 			for(var key in child.val()[uid]){
 				if(child.val()[uid][key]['gameid'] != undefined){
-					window.location = "match.php?gameid=" + gameid;
+					if(gameid == child.val()[uid][key]['gameid']){
+						window.location = "match.php?gameid=" + gameid;
+					}
 				}
 			}
 
