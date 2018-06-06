@@ -555,6 +555,13 @@ function getTeamInfo(gameid, wrapper){
 		if(location != null){
 			location.appendChild(locationname);
 		}
+
+		if(snapshot.val()['minute'] != undefined){
+			var minute = document.createElement('div');
+			minute.id = 'gameminute';
+			minute.appendChild(document.createTextNode(snapshot.val()['minute']));
+			score.appendChild(minute);
+		}
 				
 		var calcdate = new Date(snapshot.val().timestamp * 1000 + new Date().getTimezoneOffset() + 60000);
 		var calctime = calcdate.toString("hh:mm tt");
