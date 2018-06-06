@@ -19,8 +19,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 		updates['rankings/users/' + uid + '/name'] = user.displayName;
 		updates['rankings/users/' + uid + '/photoURL'] = user.providerData[0].photoURL + '?type=large';
 
-		console.log(user.providerData);
-
 		firebase.database().ref().update(updates);
 
 	} else {

@@ -34,7 +34,9 @@ function showMatches(){
 			var hometeam = child['hometeamid'];
 			var awayteam = child['awayteamid'];
 			var date = child['date'];
-			var time = child['time'];
+			var calcdate = new Date(child.timestamp * 1000 + new Date().getTimezoneOffset() + 60000);
+			var time = calcdate.toString("hh:mm tt");
+
 			var gameid = child['gameid'];
 			var stadium = child['location'];
 

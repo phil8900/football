@@ -4,6 +4,7 @@
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-messaging.js"></script>
+<script type="text/javascript" src="http://www.datejs.com/build/date.js"></script>
 <script src="js/firebase.js"></script>
 <script src="js/general.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
