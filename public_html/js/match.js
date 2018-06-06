@@ -1022,7 +1022,8 @@ function displayPostMatchEvents (gameid){
 			firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
 				if (child.val() == null) {
 					firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').push({
-						finalcomment: commentareacontent.value
+						finalcomment: commentareacontent.value,
+						timestamp: Math.floor(Date.now() / 1000)
 					});
 					getPointsTable('finalcomment');
 				}
@@ -1443,4 +1444,10 @@ function manageTimestamps () {
 
 	console.log(timestamp);
 
+}
+
+
+function startingElevenToPostMatch() {
+	var postmatchtitle = document.getElementById('postmatchcontainertitle');
+	postmatchtitle.innerHTML = 'Starting Eleven for Today'
 }
