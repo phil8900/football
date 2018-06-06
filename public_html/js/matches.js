@@ -67,11 +67,6 @@ function showMatches(){
 				livenow.innerHTML = '• LIVE';
 				}
 
-
-
-
-
-
 			var homediv = document.createElement('div');
 			homediv.classList.add('homediv');
 
@@ -158,8 +153,20 @@ function showMatches(){
 }
 
 function overlayOn(gameid) {
+	firebase.database().ref('checkins').once('value', function(snapshot){
+		snapshot.forEach(function(child){
+
+			for(var key in child.val()[uid]){
+				if(child.val()[uid][key]['gameid'] != undefined){
+					window.location = "match.php?gameid=" + gameid;
+				}
+			}
+
+		});
+	});
 	document.getElementById('overlay').style.display = 'block';
 	setLocationGameId(gameid);
+
 }
 
 function overlayOff() {

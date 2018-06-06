@@ -92,6 +92,7 @@
             placeid: result.place_id,
             placename:result.name,
             uid: uid,
+            gameid: gameid
           };
 
           var updates = {};
