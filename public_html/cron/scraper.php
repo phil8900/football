@@ -301,7 +301,13 @@ function getCurrentMinute($gameid) {
 		$doc = hQuery::fromHTML($response->getContent());
 
 		if ($doc->find('.live-spielminute-header') != '') {
-			return strip_tags(str_replace('Minute ', '', trim($doc->find('.live-spielminute-header'))));
+			$minute = strip_tags(trim(str_replace('Minute', '', $doc->find('.live-spielminute-header'))));
+			if($minute == ''){
+				return 'notlive';
+			}
+			else{
+				return $minute;
+			}
 		}
 		return 'notlive';
 	}
