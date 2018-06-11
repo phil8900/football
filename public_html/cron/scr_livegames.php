@@ -1,7 +1,7 @@
 <?php
 require 'scraper.php';
 
-echo 'Startet Livescraper';
+echo 'Started Livescraper';
 
 $livegames = getLiveGames();
 
