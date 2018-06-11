@@ -289,7 +289,6 @@ function getCurrentMinute($gameid) {
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 		$client->getEngine()->setPath(dirname(__FILE__) . '/../../bin/phantomjs.exe');
 	} else {
-		$client->setBinDir('../../bin/');
 		$client->getEngine()->setPath('../../bin/phantomjs');
 	}
 
