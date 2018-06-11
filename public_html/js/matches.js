@@ -149,7 +149,10 @@ function showMatches(){
 				}
 			});
 			div.appendChild(awaydiv);
-			wrapper.appendChild(div);
+			
+			if(wrapper != undefined){
+				wrapper.appendChild(div);
+			}
 		}
 	});
 }
