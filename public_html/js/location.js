@@ -60,7 +60,7 @@ function showResults(results){
 
     var p = document.createElement('p');
     p.classList.add('userrankingname');
-    p.innerHTML = results[i];
+    p.innerHTML = results[i].name;
 
     e.appendChild(p);
 

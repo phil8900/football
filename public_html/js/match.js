@@ -838,14 +838,15 @@ function rateStars(event_id, reaction){
 
                     userReactionRef.once('value').then(function(snapshot) {
 
-                        if(snapshot.val() == null){
-                            var currenttime = Math.floor(Date.now() / 1000);
+						if(snapshot.val() == null){
+							var currenttime = Math.floor(Date.now() / 1000);
+							console.log(reaction);
+							var updates = {};
+							updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = reaction;
 
-                            reactionRef.child(reaction).transaction(function(reaction) {
-                                var updates = {};
-                                updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = 'positive';
-                                updates['/fixtures/' + child.key + '/events/' + event_id + '/reactions/users/' + uid + '/timestamp'] = currenttime;
-
+							reactionRef.child(reaction).transaction(function(reaction) {
+								
+								updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/timestamp'] = currenttime;
 
                                 firebase.database().ref().update(updates);
 
@@ -1114,6 +1115,178 @@ function displayPostMatchEvents (gameid){
         interactions.appendChild(postmatchcontainer);
 
     }
+	var interactions = document.getElementById('interactions');
+	var postmatchcontainer = document.getElementById('postmatchcontainer');
+
+	var postmatchcontainertitle = document.getElementById('postmatchcontainertitle');
+
+	if(postmatchcontainertitle == null){
+
+		var MVP = document.createElement('div');
+		MVP.classList.add('MVP');
+		MVP.classList.add('col-xs-4');
+		MVP.innerHTML = "MVP";
+		MVP.addEventListener("click", function(){ displayMVP();});
+
+		var submitmvp = document.createElement('button');
+		submitmvp.classList.add('submitbutton');
+		submitmvp.innerHTML = 'Submit!';
+
+		var voteformvpcontent = document.createElement('div');
+		voteformvpcontent.classList.add('postmatchvotecontent');
+		voteformvpcontent.innerHTML = 'VOTE FOR MVP HERE';
+
+		var voteformvp = document.getElementById("mvp");
+		voteformvp.appendChild(voteformvpcontent);
+		voteformvp.appendChild(submitmvp);
+
+		var finalreview = document.createElement('div');
+		finalreview.classList.add('finalreview');
+		finalreview.innerHTML = "Final Review";
+		finalreview.classList.add('col-xs-4');
+		finalreview.addEventListener("click", function(){ displayFinalReview();});
+
+		var submitfinalreview = document.createElement('button');
+		submitfinalreview.classList.add('submitbutton');
+		submitfinalreview.innerHTML = 'Submit!';
+
+		var voteforfinalreviewcontent = document.createElement('div');
+		voteforfinalreviewcontent.classList.add('postmatchvotecontent');
+
+		var voteforfinalreview = document.createElement('div');
+		voteforfinalreview.classList.add('postmatchvote');
+		voteforfinalreview.id = 'finalreview';
+		voteforfinalreview.appendChild(voteforfinalreviewcontent);
+		voteforfinalreview.appendChild(submitfinalreview);
+
+		var onesymbol = document.createElement('i');
+		onesymbol.classList.add('fas');
+		onesymbol.classList.add('fa-star');
+
+		var twosymbol = document.createElement('i');
+		twosymbol.classList.add('fas');
+		twosymbol.classList.add('fa-star');
+
+		var threesymbol = document.createElement('i');
+		threesymbol.classList.add('fas');
+		threesymbol.classList.add('fa-star');
+
+		var foursymbol = document.createElement('i');
+		foursymbol.classList.add('fas');
+		foursymbol.classList.add('fa-star');
+
+		var fivesymbol = document.createElement('i');
+		fivesymbol.classList.add('fas');
+		fivesymbol.classList.add('fa-star');
+
+		var onebutton = document.createElement("button");
+		onebutton.classList.add('onebutton');
+		onebutton.appendChild(onesymbol);
+
+		var twobutton = document.createElement("button");
+		twobutton.appendChild(twosymbol);
+		twobutton.classList.add('twobutton');
+
+		var threebutton = document.createElement("button");
+		threebutton.appendChild(threesymbol);
+		threebutton.classList.add('threebutton');
+
+		var fourbutton = document.createElement("button");
+		fourbutton.appendChild(foursymbol);
+		fourbutton.classList.add('fourbutton');
+
+		var fivebutton = document.createElement("button");
+		fivebutton.appendChild(fivesymbol);
+		fivebutton.classList.add('fivebutton');
+
+		displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+
+		onebutton.addEventListener("click", function () {
+			finalRateStars(gameid, 1);
+			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+		});
+		twobutton.addEventListener("click", function () {
+			finalRateStars(gameid, 2);
+			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+		});
+		threebutton.addEventListener("click", function () {
+			finalRateStars(gameid, 3);
+			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+		});
+		fourbutton.addEventListener("click", function () {
+			finalRateStars(gameid, 4);
+			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+		});
+		fivebutton.addEventListener("click", function () {
+			finalRateStars(gameid, 5);
+			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+		});
+
+		voteforfinalreviewcontent.appendChild(onebutton);
+		voteforfinalreviewcontent.appendChild(twobutton);
+		voteforfinalreviewcontent.appendChild(threebutton);
+		voteforfinalreviewcontent.appendChild(fourbutton);
+		voteforfinalreviewcontent.appendChild(fivebutton);
+
+		var finalcomment = document.createElement('div');
+		finalcomment.classList.add('finalcomment');
+		finalcomment.innerHTML = "Final Comment";
+		finalcomment.classList.add('col-xs-4');
+		finalcomment.addEventListener("click", function(){ displayFinalComment();});
+
+		var commentareacontent = document.createElement('input');
+		commentareacontent.classList.add('postmatchvotecontent');
+		commentareacontent.placeholder = 'YOUR OPINION GOES HERE...';
+
+		var submitfinalcomment = document.createElement('button');
+		submitfinalcomment.classList.add('submitbutton');
+		submitfinalcomment.innerHTML = 'Submit!';
+
+		submitfinalcomment.addEventListener("click", function() {
+			firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
+				if (child.val() == null) {
+					firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').set({
+						finalcomment: commentareacontent.value,
+						timestamp: Math.floor(Date.now() / 1000)
+					});
+					getPointsTable('finalcomment');
+				}
+			});
+
+
+
+		});
+
+
+		var commentarea = document.createElement('div');
+		commentarea.classList.add('postmatchvote');
+		commentarea.id = 'finalcomment';
+		commentarea.appendChild(commentareacontent);
+		commentarea.appendChild(submitfinalcomment);
+
+
+		var innercontainer = postmatchcontainer.getElementsByClassName('innercontainer')[0];
+
+		innercontainer.appendChild(voteformvp);
+		innercontainer.appendChild(voteforfinalreview);
+		innercontainer.appendChild(commentarea);
+
+
+
+		postmatchcontainertitle = document.createElement('div');
+		postmatchcontainertitle.id = 'postmatchcontainertitle';
+		postmatchcontainertitle.innerHTML = "<p>Match is over, but your opinion still counts:</p>";
+		postmatchcontainer.appendChild(postmatchcontainertitle);
+
+		postmatchcontainer.appendChild(MVP);
+		postmatchcontainer.appendChild(finalreview);
+		postmatchcontainer.appendChild(finalcomment);
+		postmatchcontainer.appendChild(innercontainer);
+
+		interactions.appendChild(postmatchcontainer);
+
+	}
+>>>>>>> 124952a89e78bb0943ece99087db44fb58810968
 }
 
 function displayMVP(){

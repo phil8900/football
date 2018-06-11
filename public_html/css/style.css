@@ -649,6 +649,7 @@ button{
 }
 
 .swiper-slide{
+	overflow: scroll;
 	height: auto;
 	padding-bottom: 120px;
 	-webkit-overflow-scrolling: touch;

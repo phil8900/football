@@ -78,7 +78,10 @@
 
 
 <?php include 'includes/footer.php';?>
-
+<style>
+	.swiper-slide{
+		overflow: visible;
+</style>
 
 </body>
 </html>

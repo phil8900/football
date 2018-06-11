@@ -257,28 +257,23 @@ function showActivityBox(activity, event, gameid, reaction){
     getActivityIcon(symbol, activity, description, event, gameid, reaction);
 
     div.appendChild(description);
+    wrapper.appendChild(div);
 
-    var activityarray = wrapper.getElementsByClassName('reactionboxwrapper');
+    var players = $(".reactionboxwrapper");
 
-    if(activityarray.length == 0){
-        wrapper.appendChild(div);
-    }
-    else{
-        [].forEach.call(activityarray, function (el) {
-            if(timestamp < el.id){
-                wrapper.appendChild(div);
-            }
-            else{
-                wrapper.insertBefore(div, el);
-            }
-        });
-    }
+    var orderedDivs = players.sort(function (a, b) {
+        return ($(a).attr("id") > $(b).attr("id")) ? -1 : ($(a).attr("id") < $(b).attr("id")) ? 1 : 0;
+    });
+
+
+    $("#activity").html(orderedDivs);
+
 }
 
 function getTimestampForActivity(activity, event, reaction){
     var timestamp = '';
     if(event != undefined){
-        if(activity == 'checkin'){
+        if(activity == 'checkin' || activity == 'finalcomment'){
             timestamp = event.timestamp;
         }
         else if(activity == 'reaction'){
@@ -287,8 +282,8 @@ function getTimestampForActivity(activity, event, reaction){
         else if(activity == 'starting'){
             timestamp = event.timestamp;
         }
-        else if(activity == 'finalcomment'){
-
+        else if(activity == 'goal'){
+            timestamp = reaction.timestamp;
         }
     }
     return timestamp;
@@ -327,7 +322,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
         activitytext = 'Checked in at';
         getCheckinDetails(description, activitytext, event);
     }
-    else if(activity == 'reaction'){
+    else if(activity == 'reaction' || activity == 'goal'){
         symbol = 'fa-comments';
         activitytext = 'Reacted to';
         getReactionDetails(description, event, activitytext, gameid, reaction);
@@ -340,13 +335,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
     else if(activity == 'finalcomment'){
         symbol = 'fa-comments';
         activitytext = 'Commented';
-        getFinalCommentDetails(description, activitytext, event)
-    }
-
-    else if(activity == 'goal'){
-        symbol = 'fa-futbol';
-        activitytext = 'Rated the goal';
-        getGoalDetails(description, activitytext, event)
+        getFinalCommentDetails(description, activitytext, event);
     }
 
     else if(activity == 'mvp'){
@@ -382,12 +371,22 @@ function getLastActivities() {
             var gameid = child.val().gameid;
             firebase.database().ref('/fixtures/' + gameid + '/events/').once('value', function (snapshot) {
                 snapshot.forEach(function (child) {
+                    if(child.val().type == 'tor'){
+                    firebase.database().ref('/fixtures/' + gameid + '/events/' + child.val().eventId + '/stars/users/' + uid).on('value', function (snapshot) {
+                        var event = child.val();
+                        if ((snapshot.val() != null)) {
+                            showActivityBox('goal', event, gameid, snapshot.val());
+                        }
+                    });
+                    }
+                    else{
                     firebase.database().ref('/fixtures/' + gameid + '/events/' + child.val().eventId + '/reactions/users').on('value', function (snapshot) {
                         var event = child.val();
                         if ((snapshot.val() != null) && (Object.keys(snapshot.val())[0] == uid)) {
                             showActivityBox('reaction', event, gameid, snapshot.val());
                         }
                     });
+                    }
                 });
             });
         });
@@ -401,9 +400,6 @@ function getLastActivities() {
             }
         });
     });
-
-
-
 
 
     firebase.database().ref('/vouchers/waxxies/' + uid ).on('value', function (snapshot) {
@@ -420,64 +416,17 @@ function getLastActivities() {
         snapshot.forEach(function (child) {
             var gameid = child.val().gameid;
             firebase.database().ref('/startingeleven/users/' + uid + '/' + gameid).once('value', function (snapshot) {
-                snapshot.forEach(function (child) {
-                    var key = child.val();
-                    console.log(key);
-                    if (child.val().timestamp != null) {
-                        showActivityBox('starting', child.val(), child.key, null);
+                if(snapshot.val() != null){
+                    if (snapshot.val().timestamp != null) {
+                        showActivityBox('starting', snapshot.val(), snapshot.key, null);
                     }
-                });
+                    if(snapshot.val()['finalcomment'] != null){
+                        showActivityBox('finalcomment', snapshot.val()['finalcomment'], snapshot.key, null);
+                    }
+                }
             });
         });
     });
-
-
-
-
-    firebase.database().ref('/startingeleven/users/' + uid).once('value', function (snapshot) {
-        snapshot.forEach(function (child) {
-            if (child.val().timestamp != null) {
-                showActivityBox('starting', child.val(), child.key, null);
-            }
-        });
-    });
-
-    firebase.database().ref('/fixtures/').once('value').then(function (snapshot) {
-        snapshot.forEach(function (child) {
-            var gameid = child.val().gameid;
-            firebase.database().ref('/startingeleven/users/' + uid + '/' + gameid + '/finalcomment/' ).once('value', function (snapshot) {
-                snapshot.forEach(function (child) {
-                    var finalcommentid = child.key;
-
-                    firebase.database().ref('/startingeleven/users/' + uid + '/' + gameid + '/finalcomment/' + finalcommentid).once('value', function (snapshot) {
-                        snapshot.forEach(function (child) {
-                            showActivityBox('finalcomment', child.val(), child.key, null);
-
-                        });
-
-                        firebase.database().ref('/fixtures/' + gameid + '/events/').on('value', function (snapshot) {
-
-                            snapshot.forEach(function (child) {
-                                firebase.database().ref('/fixtures/' + child.val().gameid + '/events/' + child.key + '/stars/').on('value', function (snapshot) {
-                                    snapshot.forEach(function (child){
-                                        console.log(child.key); //I STOPPED HERE
-                                    });
-
-                                });
-                            });
-
-                        });
-
-
-                    });
-
-                });
-
-            });
-        });
-    });
-
-
 }
 
 function getStartingElevenDetails(description, event, activitytext, gameid){
@@ -529,9 +478,9 @@ function getFinalCommentDetails(description, activitytext, event){
     eventlist.classList.add('eventlistmini');
 
     var finalcomment = document.createElement('p');
-    //if(event != undefined){
-    finalcomment.appendChild(document.createTextNode('"'+ event + '"'));
-    //}
+    if(event != undefined){
+        finalcomment.appendChild(document.createTextNode(event.finalcomment));
+    }
 
     eventlist.appendChild(finalcomment);
     eventwrapper.appendChild(eventlist);
@@ -641,6 +590,8 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
     eventwrapper.appendChild(eventlist);
     var reactionsymbol = document.createElement('i');
     reactionsymbol.classList.add('fas');
+
+    if(event.type != 'tor'){
     if(reaction[uid].reaction == 'positive'){
         reactionsymbol.classList.add('fa-thumbs-up');
     }
@@ -648,6 +599,50 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
         reactionsymbol.classList.add('fa-thumbs-down');
     }
     eventwrapper.appendChild(reactionsymbol);
+    }
+    else{
+        var one = document.createElement('i');
+        one.classList.add('fas');
+        one.classList.add('fa-star');
+        eventwrapper.appendChild(one);
+
+        var two = document.createElement('i');
+        two.classList.add('fas');
+        two.classList.add('fa-star');
+        eventwrapper.appendChild(two);
+
+
+        var three = document.createElement('i');
+        three.classList.add('fas');
+        three.classList.add('fa-star');
+        eventwrapper.appendChild(three);
+
+        var four = document.createElement('i');
+        four.classList.add('fas');
+        four.classList.add('fa-star');
+        eventwrapper.appendChild(four);
+
+        var five = document.createElement('i');
+        five.classList.add('fas');
+        five.classList.add('fa-star');
+        eventwrapper.appendChild(five);
+
+        if(reaction.reaction == 'one' || reaction.reaction == 'two' || reaction.reaction == 'three' || reaction.reaction == 'four' || reaction.reaction == 'five'){
+            one.classList.add('checkedstar');
+        }
+        if(reaction.reaction == 'two' || reaction.reaction == 'three' || reaction.reaction == 'four' || reaction.reaction == 'five'){
+            two.classList.add('checkedstar');
+        }
+        if(reaction.reaction == 'three' || reaction.reaction == 'four' || reaction.reaction == 'five'){
+            three.classList.add('checkedstar');
+        }
+        if(reaction.reaction == 'four' || reaction.reaction == 'five'){
+            four.classList.add('checkedstar');
+        }
+        if(reaction.reaction == 'five'){
+            five.classList.add('checkedstar');
+        }
+    }
     description.appendChild(eventwrapper);
 }
 
@@ -782,7 +777,6 @@ function setupButtons(nextgame){
 }
 
 function manageStartingEleven(playerid, nextgame, button){
-    console.log('Here');
     var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame + '/' + playerid);
     var startingRootRef = firebase.database().ref('startingeleven/users/' + uid + '/' + nextgame);
 
