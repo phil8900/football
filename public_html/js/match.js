@@ -27,6 +27,8 @@ function initMatch(){
         ownprofile = false;
     }
 
+    showGameInformation(gameid);
+
     getLiveGameEvents(gameid);
     hideFooter();
 
@@ -38,6 +40,15 @@ function initMatch(){
     hideSpans();
     slideToUnlock();
 
+}
+
+function showGameInformation(game_id){
+    var currentscorehome = document.getElementById('currentscorehome');
+    currentscorehome.innerText = '0';
+    var currentscoreaway = document.getElementById('currentscoreaway');
+    currentscoreaway.innerHTML = '0';
+
+    getTeamInfo(game_id, null);
 }
 
 function getFutureGames(){
