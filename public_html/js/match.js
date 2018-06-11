@@ -469,41 +469,43 @@ function manageMvp(playerid, gameid, button){
 }
 
 function getPlayerInfo(playerid, event, eventlist){
-    var eventwrapper = document.getElementById(event.eventId);
-    var latestgameevent = document.getElementById("latestgameevent");
-    var playername = playerid;
+	var eventwrapper = document.getElementById(event.eventId);
+	var latestgameevent = document.getElementById("latestgameevent");
+	var playername = playerid;
 
-    firebase.database().ref('/teams/' + event.verein_id + '/squad/' + playerid).once('value', function(snapshot) {
-        if(snapshot.val() != null){
-            playername = snapshot.val().shortname;
-            if(eventwrapper != null){
-                eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
-                latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
-            }
-        }
-        var playerspan = document.createElement("div");
+	firebase.database().ref('/teams/' + event.verein_id + '/squad/' + playerid).once('value', function(snapshot) {
+		if(snapshot.val() != null){
+			playername = snapshot.val().shortname;
+			if(eventwrapper != null){
+				eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+				if(latestgameevent != null){
+					latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+				}
+			}
+		}
+		var playerspan = document.createElement("div");
 
-        if(event.type == 'wechsel'){
-            if(playerid == event.spieler_id_1){
-                playerspan.appendChild(getIconForEventType('auswechsel', null));
-            }
-            else{
-                playerspan.appendChild(getIconForEventType('einwechsel', null));
-            }
-        }
+		if(event.type == 'wechsel'){
+			if(playerid == event.spieler_id_1){
+				playerspan.appendChild(getIconForEventType('auswechsel', null));
+			}
+			else{
+				playerspan.appendChild(getIconForEventType('einwechsel', null));
+			}
+		}
 
-        var player = document.createTextNode(' ' + playername);
-        playerspan.appendChild(player);
-        playerspan.classList.add('player');
-        eventlist.appendChild(playerspan);
-        //latestgameevent.getElementsByClassName("eventlist")[0].innerHTML = playerspan.innerHTML;
-        //latestgameevent.appendChild(playerspan);
+		var player = document.createTextNode(' ' + playername);
+		playerspan.appendChild(player);
+		playerspan.classList.add('player');
+		eventlist.appendChild(playerspan);
+		//latestgameevent.getElementsByClassName("eventlist")[0].innerHTML = playerspan.innerHTML;
+		//latestgameevent.appendChild(playerspan);
 
-        if(eventwrapper != undefined){
-            latestgameevent.innerHTML = eventwrapper.innerHTML;
-        }
+		if(eventwrapper != undefined && latestgameevent != null){
+			latestgameevent.innerHTML = eventwrapper.innerHTML;
+		}
 
-    });
+	});
 }
 
 function getTeamInfo(gameid, wrapper) {
