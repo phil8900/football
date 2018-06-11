@@ -6,6 +6,7 @@
     <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
     <script src="js/firebaseui.js"></script>
+    <title>LoudStand</title>
 </head>
 
 <body>

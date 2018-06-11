@@ -1,5 +1,5 @@
 <?php
-require '../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 use JonnyW\PhantomJs\Client;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
@@ -13,7 +13,7 @@ $firebase = (new Factory)
 
 $database = $firebase->getDatabase();
 
-hQuery::$cache_path = "../cache";
+hQuery::$cache_path = __DIR__ . "/../cache";
 hQuery::$cache_expires = 3600;
 
 $prematch_base = 'https://www.transfermarkt.co.uk/spielbericht/index/spielbericht/';
@@ -159,7 +159,7 @@ function getAlternativeTeamInformation($teamurl) {
 
 	$detailtable = $table->find('.dataContent .dataDaten .dataValue');
 
-	$average_age = $detailtable[1];
+	$average_age = trim(preg_replace('/\s+/', ' ', $detailtable[1]));
 	$ranking = trim(str_replace('Pos ', '', strip_tags($detailtable[4])));
 	$international_titles = 'Not available';
 	$continental_titles = 'Not available';
@@ -289,6 +289,7 @@ function getCurrentMinute($gameid) {
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 		$client->getEngine()->setPath(dirname(__FILE__) . '/../../bin/phantomjs.exe');
 	} else {
+		$client->setBinDir('../../bin/');
 		$client->getEngine()->setPath('../../bin/phantomjs');
 	}
 

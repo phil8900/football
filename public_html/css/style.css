@@ -1,3 +1,5 @@
+/*
+
 @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
 	html {
 		transform: rotate(-90deg);
@@ -9,6 +11,7 @@
 		left: 0;
 	}
 }
+*/
 
 @font-face {
 	font-family: "ds-digitalnormal";
@@ -29,7 +32,7 @@ body:before {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	opacity: 0.5;
+	opacity: 0.7;
 }
 
 body {
@@ -41,11 +44,20 @@ body {
 	margin-bottom: 60px;
 }
 
+.title h2{
+	color: #0b2e13;
+}
+
 .newsitem{
-	height: 340px;
 	width: 90%;
-	background-color: #1dc116;
-	margin-top: 10%;
+	background-color: rgba(255,255,255, 0.7);
+	border-radius: 10px;
+	height: auto;
+	padding: 10px 0px 10px 0px;
+	text-align: center;
+	color: gray;
+	float: left;
+	margin-top: 5%;
 	padding-left: 5%;
 	padding-right: 5%;
 	padding-top: 10%;
@@ -53,19 +65,42 @@ body {
 	margin-left: 5%;
 }
 
+#terms{
+	color: #0F281D;
+	overflow: scroll;
+	height: 500px;
+	padding: 20px 10px 20px 10px;
+	margin-top: 14px;
+	text-align: left;
+}
+
+#terms b{
+	margin-top: 20px;
+}
 
 
 .date, .newstitle, .newslink{
-	font-size: 24px;
+	font-size: 18px;
 	text-align: center;
+}
+
+.newstitle{
+	color: #0b2e13;
+}
+
+.newsitem h2{
+	color:#0b2e13;
 }
 
 .newslink{
 	background-color: #0b2e13;
 	width: 50%;
 	height: 10%;
-	margin:auto;
+	margin: auto;
 	margin-top: 5%;
+	border-radius: 5px;
+	font-size: 18px;
+	padding-top: 20px;
 }
 
 .newslink a{
@@ -75,6 +110,19 @@ body {
 #team, #ownteamranking{
 	margin-top: 60px;
 }
+
+#ownteamrank{
+	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.5);
+	font-size: 38px;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	position: absolute;
+	left: 22%;
+	top: 36px;
+}
+
 
 #rankings{
 	margin-top: 60px;
@@ -97,15 +145,17 @@ body {
 }
 
 #teamranking img{
-	width: 16%;
-	height: auto;
+	width: 54px;
+	height: 56px;
 	border-radius: 0;
+	padding-top: 20px;
 }
 
 .userrankingname{
 	font-size: 16px;
 	width: 100%;
 	margin: 0;
+	color: #0F281D;
 }
 
 .userrankingname p{
@@ -114,13 +164,20 @@ body {
 
 
 .userranking{
-	float:right;
+	float: right;
 	font-size: 36px;
+	margin-top: 14px;
 }
 
 .userrankingpoints{
 	font-size: 24px;
-	color:lightgray;
+	color: #0F281D;;
+}
+.userrankingpointsrankings {
+	font-size: 24px;
+	color: #0F281D;
+	margin-left: 60px;
+	margin-top: -26px;
 }
 
 .checkedstar{
@@ -128,12 +185,13 @@ body {
 }
 
 .userelement{
-	border-bottom: 1px solid lightgray;
+	border-bottom: 1px solid #0F281D;
 	padding-left: 5%;
 	padding-right: 5%;
-	padding-bottom:10px;
+	padding-bottom: 5px;
+	text-align: left;
+	width: 100%;
 	padding-top: 10px;
-/background-color: rgba(0,0,0,0.5);
 }
 
 .rankinglogo{
@@ -149,15 +207,14 @@ body {
 }
 
 #ownteamranking .rankinglogo, #ownprofile .rankinglogo{
-	margin: auto;
 	display: flex;
 }
 
 #fandomlevel{
 	text-align:center;
 /	background-color: rgba(0,0,0,0.5);
-	margin-top: 30px;
-	padding: 15px 15px 15px 15px;
+	margin-top: 10px;
+	/padding: 15px 15px 15px 15px;
 }
 
 #fanbaselevel{
@@ -170,11 +227,12 @@ body {
 #ownteamname{
 	display:block;
 	text-align: center;
+	height: 80px;
 }
 
 #ownteamname p{
-	margin-top: 40px;
-	font-size: 48px;
+	margin-top: 60px;
+	font-size: 34px;
 	font-weight: bolder;
 }
 
@@ -196,7 +254,7 @@ body {
 }
 
 .middle {
-	margin-top:10px;
+	margin-top: -10px;
 	float: left;
 	width: 70%;
 }
@@ -259,13 +317,26 @@ body {
 
 .activitybox{
 	width: 90%;
-	background-color:white;
+	background-color: rgba(255,255,255, 0.7);
 	border-radius: 10px;
-	height: auto;
+	height: 360px;
 	margin-bottom: 5%;
 	margin-left: 5%;
 	padding: 10px 0px 10px 0px;
-	border: 3px solid lightgray;
+	text-align: center;
+	color: gray;
+	float: left;
+}
+
+.activityboxmatchevents{
+	width: 90%;
+	background-color: #f6f6f6;
+	border-radius: 10px;
+	height: 360px;
+	margin-bottom: 5%;
+	margin-left: 5%;
+	padding: 10px 0px 10px 0px;
+
 	text-align:center;
 	color:gray;
 	float: left;
@@ -276,9 +347,10 @@ body {
 	margin-top:2%;
 }
 
+
 #teamprofile #ownteamranking, #ownprofile, #squad{
-	margin-top: 50px;
-	margin-bottom:5%;
+	margin-top: 0px;
+	margin-bottom:0;
 }
 
 .playerimage{
@@ -301,12 +373,13 @@ body {
 }
 
 #squad .userelement, #homesquad .userelement, #awaysquad .userelement {
-	padding-bottom: 1.3%;
+	padding-bottom: 8px;
 }
 
 #teamprofile{
-	clear:both;
-	padding-top: 20px;
+
+	padding-bottom: 76px;
+	margin-top: 65px;
 
 }
 
@@ -316,7 +389,7 @@ body {
 }
 
 .matchbox{
-	background: linear-gradient(to top left, #bee1fc 0%, #bee1fc 50%, #3d82b8 50%, #3d82b8 50.5%, #f6f6f6 50.5%, #f6f6f6 100%);
+	background: linear-gradient(to top left, #d6ebd0 0%, #d6ebd0 50%, #0F281D 50%, #0F281D 50.5%, #f6f6f6 50.5%, #f6f6f6 100%);
 
 }
 
@@ -326,13 +399,13 @@ body {
 	-webkit-transform: skew(-30deg);
 	-moz-transform: skew(-30deg);
 	-o-transform: skew(-30deg);
-	background: #164065;
+	background: #0F281D;
 	margin:auto;
 	margin-top: 24%;
 	text-align: center;
-	border: 1px solid #164065;
+	border: 1px solid #0F281D;
 	padding: 10px;
-	box-shadow: 5px 10px 18px #164065;
+	box-shadow: 5px 10px 18px #0F281D;
 }
 
 .timediv p{
@@ -397,7 +470,7 @@ time p{
 
 .matchhomefans{
 	font-size: 14px;
-	color: #164065;
+	color: #0F281D;
 	text-align: left;
 }
 
@@ -407,8 +480,12 @@ time p{
 
 .matchawayfans{
 	font-size: 14px;
-	color: #164065;
+	color: #0F281D;
 	text-align: right;
+}
+
+#upcoming{
+	margin-top: 20px;
 }
 
 #upcoming .activitybox.matchbox{
@@ -430,19 +507,23 @@ time p{
 }
 
 button{
-	border-radius:10px;
-	border-style: solid;
-	height:50px;
-	width:50px;
-	margin: 0px 10px 0px 0px;
+	border-style: none;
+	height: 30px;
+	width: 30px;
+	background-color: transparent;
+	margin: 0px 16px 0px 0px;
 }
 
 .downbutton{
 	border-color: #f47126;
+	color: #f6f6f6;
+	margin-left: 20px;
 }
 
 .upbutton{
 	border-color: #610fde;
+	color: #f6f6f6;
+	margin-right: 20px;
 }
 
 .eventbox{
@@ -470,12 +551,13 @@ button{
 }
 
 .eventlist{
-	margin-top:10%;
-	margin-bottom: 5%;
-/	background-color: rgba(0,0,0,0.5);
+	margin-top: 40px;
+	height: 170px;
 	color:white;
 	line-height:1.5em;
 	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 10px 0 10px 0;
 }
 
 .reactionbar {
@@ -512,17 +594,38 @@ button{
 	margin-bottom:50px;
 }
 
-.checkinbutton{
+
+.checkinbuttonstarting11{
 	float:right;
 	color:gray;
 }
 
+#stats{
+	//background-color: purple;
+}
+
+#stats p {
+	font-weight: bold;
+}
+
+.statscenter{
+	/background-color: red;
+}
+
+
 .userelement .checkinbutton {
-	margin-top: -51px;
+	margin-top: -40px;
 	font-family: ds-digitalnormal;
 	color: green;
 	float: right;
 	right: 5%;
+}
+
+.checkinbutton{
+	float: right;
+	color: gray;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .startinglist .player{
@@ -536,11 +639,21 @@ button{
 }
 
 .swiper-container{
-	height: 100%;
+	height: 100vh;
+	margin-top: 60px;
 }
 
-.swiper-wrpper{
+.swiper-wrapper{
 	height: 95%;
+	position: fixed;
+}
+
+.swiper-slide{
+	overflow: scroll;
+	height: auto;
+	padding-bottom: 120px;
+	-webkit-overflow-scrolling: touch;
+
 }
 
 .matchescalendar{
@@ -562,6 +675,8 @@ button{
 	padding-right: 10%;
 	padding-bottom:10px;
 	padding-top: 10px;
+	border-bottom: 1px solid #f6f6f6;
+	color: #f6f6f6;
 }
 
 .location:active{
@@ -572,10 +687,17 @@ button{
 .location .userrankingname{
 	width: 100%;
 	text-align: left;
+	color: #f6f6f6;
+}
+
+
+#location{
+	font-size: 14px;
 }
 
 #userprofile{
-	padding-top: 20px;
+	padding-bottom: 500px;
+	margin-top: 65px;
 }
 
 .row {
@@ -595,23 +717,109 @@ button{
 .userprofile img{
 /	background-color: rgba(0, 0, 0, 0.5);
 	border-radius: 50%;
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
+	border: 2px solid #f6f6f6;
+	z-index: 1000;
+	position: relative;
+}
+
+.linebehind{
+	border-top: 2px solid #f6f6f6;
+	width: 100%;
+	top: 65px;
+	position: absolute;
+	z-index: 1;
+	left: 0;
+}
+
+
+#centerpitch{
+	text-align: center;
+	height: 70px;
+	background-color: #0F281D;
+	position: fixed;
+	width: 100%;
+	z-index: 4;
+	top: 60px;
+}
+
+#centerpitchcontainter{
+/	background-color: red;
+}
+#centerpitchrow{
+	height: 0px;
+}
+
+.linebehindpitch{
+	border-top: 2px solid #f6f6f6;
+	width: 100%;
+	top: 164px;
+	position: absolute;
+	z-index: 1;
+}
+
+.matchteamlogohome {
+	width: 50px;
+	height: 36px;
+	position: fixed;
+	top: 70px;
+	left: 5%;
+	z-index: 5;
+	border: 2px solid black;
+	border-radius: 5px;
+}
+
+.matchteamlogoaway{
+	width: 50px;
+	height: 36px;
+	position: fixed;
+	top: 70px;
+	right: 5%;
+	z-index: 5;
+	border: 2px solid black;
+	border-radius: 5px;
+}
+
+.vs{
+	/background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	border: 2px solid #f6f6f6;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+
+.centerdot {
+	height: 10px;
+	width: 10px;
+	background-color: #f6f6f6;
+	border-radius: 50%;
+	position: absolute;
+	top: 160px;
+	left: 49%;
 }
 
 .userteamlogo img{
-	width: 100%;
-	height: auto;
-	border-radius: 0;
-
-
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	position: absolute;
+	right: 22%;
+	top: 36px;
 }
 
 .teamteamlogo img{
-	width: 100%;
-	height: auto;
-
-
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	position: absolute;
+	right: 22%;
+	top: 36px;
 }
 
 #confederation{
@@ -620,10 +828,7 @@ button{
 
 }
 
-#squad h2{
-	font-size: 22px;
-	margin-bottom: 40px;
-}
+
 
 .activityboxmini{
 	width: 90%;
@@ -670,10 +875,6 @@ button{
 
 }
 
-h2{
-	font-size: 22px;
-	text-align: center;
-}
 
 #pac-input{
 	text-align: center;
@@ -683,6 +884,7 @@ h2{
 	font-size: 17px;
 	border-radius: 5px;
 	width: 80%;
+	color: #0b2e13;
 }
 
 .menu-icon{
@@ -722,15 +924,15 @@ h2{
 	height: 250px;
 	margin-bottom: 5%;
 	text-align:center;
-	color: #164065;
+	color: #f6f6f6f6;
 	float: left;
 	margin-left: 5%;
-	background-color: #f6f6f6;
+	background-color: rgba(255,255,255,0.7);
 }
 
 #vouchercontainertitle{
 	width: 100%;
-	background-color: #a9cce7;
+	background-color: #0F281D;
 	padding: 7% 5% 5% 5%;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
@@ -749,13 +951,13 @@ h2{
 	width: 42%;
 	border-radius: 10px;
 	height: 120px;
-	margin-top: 20px;
 	margin-left: 5%;
 	padding-top: 44px;
 	text-align:center;
 	color: #f6f6f6;
 	float: left;
-	background-color: #164065;
+	background-color: #0F281D;
+	margin-top: 28px;
 }
 
 
@@ -778,24 +980,25 @@ h2{
 	position: fixed;
 	display: none;
 	width: 90%;
-	height: 76%;
-	top: 16%;
+	height: 68%;
+	top: 20%;
 	left: 5%;
 	right: 0;
 	bottom: 0;
-	background-color: #a9cce7;
+	background: url(https://aarhusupdate.dk/wp-content/uploads/2013/12/Waxies.jpg) center center no-repeat;
 	z-index: 2;
 	padding-left: 5%;
 	padding-right: 5%;
 	padding-top: 5%;
 	padding-bottom: 12%;
+	border: 4px dashed;
 }
 
 #voucheroverlayinnercontent{
-	background-color: white;
+	background-color: rgba(0,0,0,0.5);
 	height: 82%;
 	border-radius: 50px;
-	border: 3px solid #164065;
+	border: 3px solid black;
 	padding: 5% 5% 5% 5%;
 }
 
@@ -820,8 +1023,13 @@ h2{
 }
 
 .vouchertitle{
-	color: #164065;
-	padding-bottom: 5%;
+	color: #f6f6f6;
+	padding: 2px 2px 2px 2px;
+	background-color: rgba(0,0,0,0.5);
+	margin-bottom: 20px;
+	border-radius: 10px;
+	width: 80%;
+	margin-left: 10%;
 }
 
 .vouchertitle h1{
@@ -830,7 +1038,8 @@ h2{
 }
 
 #voucherdescription{
-	color: #164065;
+	color: #f6f6f6;
+	font-weight: bold;
 }
 
 #voucheroverlayinnercontentcookie{
@@ -849,24 +1058,16 @@ h2{
 }
 
 #postmatchcontainer{
- 	height: 440px;
+	height: 600px;
 	overflow: scroll;
+	padding: 0 0 0 0;
+	margin-top: 20px;
+	-webkit-overflow-scrolling: touch;
+
 }
 
 #postmatchcontainertitle p{
 	font-size: 22px;
-
-}
-
-.MVP{
-
-}
-
-.finalreview{
-
-}
-
-.finalcomment{
 
 }
 
@@ -876,40 +1077,64 @@ h2{
 
 .postmatchvote{
 	text-align: center;
-	padding: 6px;
+	padding-left: 5%;
 	margin-top: 10px;
 	border: none;
 	font-size: 17px;
 	border-radius: 5px;
 	width: 95%;
-	background-color: lightgrey;
 	height: 100%;
 	display: none;
 	margin-bottom: 10px;
 }
 
+.postmatchvote h2{
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
 .postmatchvotecontent{
-	margin-top: 10px;
-	height: 170px;
 	margin-bottom: 20px;
 	width: 90%;
 	border: none;
 	font-size: 17px;
 	border-radius: 5px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.postmatchvotecontent h2{
+	margin-top: 0;
+}
+
+.mvp h2{
+	margin-top: 160px;
 }
 
 .innercontainer{
-	margin-top: 70px;
+	margin-top: 170px;
 	height: 280px;
 	/background-color: red;
 	text-align: center;
-	margin-left: 5%;
+}
+
+.innercontainer h2{
+	padding-left: 5%;
+	padding-right: 5%;
+
+}
+.bench{
+	padding-left: 5%;
 }
 
 .submitbutton{
 	height: 60px;
 	width: 90%;
 	margin: 0;
+	background-color: #0F281D;
+	color: #f6f6f6;
+	margin-bottom: 40px;
+	border-radius: 10px;
 }
 
 #dropdown{
@@ -952,7 +1177,9 @@ h2{
 	height: 400px;
 	overflow: scroll;
 	text-align: left;
-	float: none;
+	padding: 0px 0 10px 0;
+	-webkit-overflow-scrolling: touch;
+
 }
 
 .voucherconfirmation{
@@ -975,10 +1202,10 @@ h2{
 	font-size: 30px;
 	padding-top: 3px;
 	z-index: 1000;
-	-webkit-animation: flickerAnimation 1s infinite;
-	-moz-animation: flickerAnimation 1s infinite;
-	-o-animation: flickerAnimation 1s infinite;
-	animation: flickerAnimation 1s infinite;
+	-webkit-animation: flickerAnimation 2s infinite;
+	-moz-animation: flickerAnimation 2s infinite;
+	-o-animation: flickerAnimation 2s infinite;
+	animation: flickerAnimation 2s infinite;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 
@@ -1003,6 +1230,7 @@ h2{
 #welcometitle h2{
 	font-size: 20px;
 	font-weight: 200;
+	margin-top: 10px;
 }
 
 #authentication{
@@ -1084,53 +1312,338 @@ h2{
 
 #statistics{
 	color: black;
+	height: 410px;
+	padding-top: 20px;
 }
 
 #statistics p{
-	margin: 30px 0 10px 0;
-}
-
-#posession{
-	width: 90%;
-	margin-left: 5%;
-}
-
-#shots{
-	width: 90%;
-	margin-left: 5%;
+	font-weight: bold;
 }
 
 
-#saves{
-	width: 90%;
-	margin-left: 5%;
-}
-
-.statshome{
-	width: 50%;
-	float: left;
+.statscenter{
 	margin-top: -10px;
 }
 
 .statsaway {
-	width: 50%;
-	float: right;
+	width: 120px;
+	/float: left;
 	margin-top: -10px;
+
 }
 
 .innerstatshome{
-	background-color: red;
-	float: right;
+	background-color: #f6f6f6;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	display: inline-block;
+	float: left;
+	text-align: left;
+	padding-left: 14px;
 }
 .innerstatsaway{
-	background-color: green;
+	background-color: #2c7656;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	display: inline-block;
 	float: left;
+	text-align: right;
+	padding-right: 14px;
+	color: #f6f6f6;
 }
 
 #statsstarting11{
 	height: 50px;
 	background-color: red;
 	width: 90%;
+}
+
+#currentscorehome{
+	font-size: 36px;
+	width: 50px;
+	height: 50px;
+	/* background-color: rgba(0,0,0,0.5); */
+	border-radius: 50px;
+	position: absolute;
+	left: 76px;
+	top: 22px;
+	z-index: 4;
+	font-weight: 200;
+}
+
+#currentscoreaway{
+	font-size: 36px;
+	width: 50px;
+	height: 50px;
+	/* background-color: rgba(0,0,0,0.5); */
+	border-radius: 50px;
+	position: absolute;
+	right: 76px;
+	top: 22px;
+	z-index: 4;
+	font-weight: 200;
+
+}
+
+#time{
+	display: block;
+}
+
+#hometeamname{
+	position: fixed;
+	top: 70px;
+	left: 72px;
+	font-size: 14px;
+	z-index: 5;
+}
+
+#awayteamname{
+	position: fixed;
+	top: 70px;
+	right: 72px;
+	font-size: 14px;
+	z-index: 5;
+	text-align: right;
+}
+
+#latestgameevent{
+	width: 90%;
+	border-radius: 10px;
+	height: 360px;
+	margin-bottom: 5%;
+	margin-left: 5%;
+	padding: 10px 0px 10px 0px;
+	text-align: center;
+	float: left;
+
+}
+
+.gamereaction{
+	background-color: rgba(0,0,0,0.5);
+	padding-bottom: 20px;
+	height: 90px;
+}
+
+.activityheader{
+	background-color: #0F281D;
+	color: #f6f6f6;
+	padding: 20px 0px 20px 0px;
+	position: absolute;
+	width: 90%;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	z-index: 4;
+
+}
+
+#finaltabs{
+	padding-top: 90px;
+	text-align: center;
+	font-size: 16px;
+	position: fixed;
+	width: 90%;
+	z-index: 4;
+	position: absolute;
+}
+
+.MVP{
+	height: 60px;
+	background-color: #2c7656;
+	color: #f6f6f6;
+	padding: 20px 0px 20px 0px;
+}
+
+.finalreview{
+	height: 60px;
+	background-color: #0F281D;
+	color: #f6f6f6;
+	padding: 20px 0px 20px 0px;
+}
+
+.finalcomment{
+	height: 60px;
+	background-color: #0F281D;
+	color: #f6f6f6;
+	padding: 20px 0px 20px 0px;
+}
+
+textarea{
+	width: 100%;
+	height: 150px;
+	padding: 12px 20px;
+	box-sizing: border-box;
+	border: 2px solid black;
+	border-radius: 4px;
+	background-color: white;
+	font-size: 16px;
+	resize: none;
+}
+
+h2{
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	margin-top: 10px;
+}
+
+h3{
+	font-size: 18px;
+	font-weight: 200;
+	text-align: center;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+
+
+}
+
+.fa{
+	font-size: 30px;
+}
+
+.fas{
+	font-size: 30px;
+}
+
+.userelement i{
+	margin-top: -52px;
+}
+
+.starting{
+	padding-top: 70px;
+}
+
+.startingtoMVP{
+margin-top: -70px;
+}
+
+#liveminute{
+	display: block;
+	margin-bottom: 40px;
+	height: 40px;
+	border-radius: 50%;
+	position: absolute;
+	left: 16%;
+	top: 8px;
+	width: 40px;
+	padding-top: 16px;
+	color: #f6f6f6;
+	font-size: 20px;
+}
+
+.positive{
+	height: 0;
+}
+
+#barsoverlay{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.7); /* Black background with opacity */
+	z-index: 2;
+	text-align: center;
+}
+
+#password{
+	margin-top: 260px;
+	width: 60%;
+	height: 40px;
+	padding: 12px 20px;
+	box-sizing: border-box;
+	border: 2px solid black;
+	background-color: #f6f6f6;
+	font-size: 16px;
+	resize: none;
+	color: black;
+	left: 20%;
+	border-radius: 10px;
+	position: absolute;
+
+}
+
+#submitpassword{
+	margin-top: 320px;
+	left: 40%;
+	width: 20%;
+	height: 40px;
+	background-color: #f6f6f6;
+	color: #000;
+	border-radius: 10px;
+	position: absolute;
+
+}
+
+#errormessage{
+	position: absolute;
+	left: 42.4%;
+	top: 200px;
+	text-align: center;
+	color: red;
+}
+
+
+.matchinteraction{
+	padding-top: 24px;
+	padding-bottom: 90px;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+
+.megacontainer{
+	height: 100%;
+}
+
+.activityboxprofiles{
+	height: auto;
+}
+
+.activityboxrankings{
+	background-color: red;
+}
+
+.activityboxrankings span{
+color: white;
+}
+
+.ranktext{
+	position: absolute;
+	font-size: 16px;
+	left: 22%;
+	top: -10px;
+}
+
+#matchescontainer{
+	padding-bottom: 0;
+	margin-top: 0;
+
+}
+
+.waxieslogo{
+	position: absolute;
+	top: 404px;
+	left: 8%;
+	height: 12%;
+}
+
+#checkinconfirm{
+	color: #0F281D;
+}
+
+.checkinclose{
+	background-color: #f31e1e;
+	width: 80px;
+}
+
+#checkinconfirmbutton{
+	background-color: #44b755;
+	width: 80px;
+
 }
 
 
@@ -1155,6 +1668,23 @@ h2{
 	.matchawayfans{
 		font-size: 18px;
 		color: #164065;
+		text-align: right;
+	}
+
+	#hometeamname{
+		position: fixed;
+		top: 70px;
+		left: 80px;
+		font-size: 14px;
+		z-index: 5;
+	}
+
+	#awayteamname{
+		position: fixed;
+		top: 70px;
+		right: 80px;
+		font-size: 14px;
+		z-index: 5;
 		text-align: right;
 	}
 }

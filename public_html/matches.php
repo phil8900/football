@@ -28,7 +28,7 @@
 <div id="placesresult" style="display:none;"></div>
 </div>
 
-<div id="teamprofile" class="matches">
+<div id="matchescontainer teamprofile" class="matches">
 	<div id='matches'>
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
@@ -37,10 +37,51 @@
 	</div>
 </div>
 
+<!-- The Modal -->
+<div class="modal" id="checkinconfirmoverlay">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal body -->
+			<div id="checkinconfirm" class="modal-body">
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" id ="checkinconfirmbutton" class="btn">Confirm</button>
+				<button type="button" class="btn checkinclose" onclick="checkinClose()">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	#teamprofile{
+		clear:both;
+		padding-top: 20px;
+
+	}
+
+	#teamprofile.matches, #teamprofile.matches #ownteamranking{
+		display:block;
+		text-align:center;
+	}
+
+	.swiper-container{
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.swiper-wrapper{
+		height: 95%;
+	}
+</style>
+
 
 
 <?php include 'includes/footer.php';?>
-
+<style>
+	.swiper-slide{
+		overflow: visible;
+</style>
 
 </body>
 </html>

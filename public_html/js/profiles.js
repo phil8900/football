@@ -81,32 +81,40 @@ function showOwnProfile(snapshotvalue, entry){
     var imagewrapper = document.createElement('div');
     imagewrapper.classList.add('rankinglogowrapper');
     imagewrapper.classList.add('userteamlogo');
-    imagewrapper.classList.add('col-xs-4');
+    imagewrapper.classList.add('col-xs-3');
 
     var userprofile = document.createElement('div');
     userprofile.id = 'userprofilephoto';
     userprofile.classList.add('userprofile');
-    userprofile.classList.add('col-xs-4');
+    userprofile.classList.add('col-xs-6');
+
+    var linebehind = document.createElement('div');
+    linebehind.classList.add('linebehind');
+
     var profileimage = document.createElement('img');
     profileimage.src = entry.photoURL;
+
+    userprofile.appendChild(linebehind);
     userprofile.appendChild(profileimage);
+
 
     var rankdiv = document.createElement('div');
     rankdiv.id = 'rankdiv';
-    rankdiv.classList.add('col-xs-4');
+    rankdiv.classList.add('col-xs-3');
     var rankparagraph = document.createElement('p');
 
     var ranksymbol = document.createElement('i');
     ranksymbol.classList.add('fas');
     getTrend(entry, ranksymbol);
 
-    rankparagraph.appendChild(ranksymbol);
+ //   rankparagraph.appendChild(ranksymbol);
 
     rankparagraph.appendChild(document.createTextNode(' ' + entry.rank));
     rankparagraph.id = 'ownteamrank';
 
     var ranktext = document.createElement('p');
     ranktext.appendChild(document.createTextNode('Fan ranking'));
+    ranktext.classList.add('ranktext');
 
 
     rankdiv.appendChild(rankparagraph);
@@ -900,7 +908,7 @@ function showReactionOverview(playerid, filter){
 }
 
 function hideCheckinButtons(){
-    $('.checkinbutton').hide();
+    $('.checkinbuttonstarting11').hide(); //BE CAREFUL WITH THIS
 }
 
 function countVotes(type){

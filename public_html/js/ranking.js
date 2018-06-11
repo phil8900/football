@@ -42,7 +42,14 @@ function initReferences(){
 		setTeamRanking(userRanking);
 	});
 
-	updateTeamRanking(false);
+	setTimeout(function () {
+		$(".userrankingpointsrankings").css('color', '#f6f6f6');
+		$(".userrankingname").css('color', '#f6f6f6');
+	}, 1500);
+
+
+
+updateTeamRanking(false);
 }
 
 function updateTeamRanking(profile){
@@ -183,8 +190,8 @@ function createUserRankingElement(entry, id){
 	div.appendChild(firstlinediv);
 
 	var pointsdiv = document.createElement('div');
-	pointsdiv.appendChild(document.createTextNode(Math.round(entry.points)));
-	pointsdiv.classList.add('userrankingpoints');
+	pointsdiv.appendChild(document.createTextNode(Math.round(entry.points)+ ' pts'));
+	pointsdiv.classList.add('userrankingpointsrankings');
 
 	div.appendChild(pointsdiv);
 	link.appendChild(div);
@@ -237,7 +244,7 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 
 	var pointsdiv = document.createElement('div');
 	pointsdiv.appendChild(document.createTextNode(Math.round(entry.points/usercount)));
-	pointsdiv.classList.add('userrankingpoints');
+	pointsdiv.classList.add('userrankingpointsrankings');
 
 	div.appendChild(pointsdiv);
 
@@ -288,16 +295,21 @@ function showOwnTeam(snapshotvalue, entry){
 
 		var imagewrapper = document.createElement('div');
 		imagewrapper.classList.add('rankinglogowrapper');
-		imagewrapper.classList.add('teamteamlogo');
-		imagewrapper.classList.add('col-xs-4');
+		imagewrapper.classList.add('userprofile');
+		imagewrapper.classList.add('col-xs-6');
+
+		var linebehind = document.createElement('div');
+		linebehind.classList.add('linebehind');
+
+		imagewrapper.appendChild(linebehind);
 
 		var rankdiv = document.createElement('div');
 		rankdiv.id = 'rankdiv';
-		rankdiv.classList.add('col-xs-4');
+		rankdiv.classList.add('col-xs-3');
 
 		var confederation = document.createElement('div');
 		confederation.id = 'confederation';
-		confederation.classList.add('col-xs-4');
+		confederation.classList.add('col-xs-3');
 		confederation.classList.add('teamteamlogo');
 
 		bootstrapcontainer.appendChild(wrapper);
@@ -308,16 +320,18 @@ function showOwnTeam(snapshotvalue, entry){
 		ranksymbol.classList.add('fas');
 		getTrend(entry, ranksymbol);
 
-		rankparagraph.appendChild(ranksymbol);
+	//	rankparagraph.appendChild(ranksymbol);
 
 		rankparagraph.appendChild(document.createTextNode(' ' + entry.rank.rank));
 		rankparagraph.id = 'ownteamrank';
 
 		var ranktext = document.createElement('p');
-		ranktext.appendChild(document.createTextNode('team ranking'));
+		ranktext.appendChild(document.createTextNode('Team Ranking'));
+		ranktext.classList.add('ranktext');
 
-		rankdiv.appendChild(rankparagraph);
 		rankdiv.appendChild(ranktext);
+		rankdiv.appendChild(rankparagraph);
+
 
 
 		var image = document.createElement('img');
