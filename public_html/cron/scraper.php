@@ -159,7 +159,7 @@ function getAlternativeTeamInformation($teamurl) {
 
 	$detailtable = $table->find('.dataContent .dataDaten .dataValue');
 
-	$average_age = $detailtable[1];
+	$average_age = trim(preg_replace('/\s+/', ' ', $detailtable[1]));
 	$ranking = trim(str_replace('Pos ', '', strip_tags($detailtable[4])));
 	$international_titles = 'Not available';
 	$continental_titles = 'Not available';
