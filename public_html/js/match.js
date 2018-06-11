@@ -490,7 +490,9 @@ function getPlayerInfo(playerid, event, eventlist){
 			playername = snapshot.val().shortname;
 			if(eventwrapper != null){
 				eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
-				latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+				if(latestgameevent != null){
+					latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+				}
 			}
 		}
 		var playerspan = document.createElement("div");
@@ -511,7 +513,7 @@ function getPlayerInfo(playerid, event, eventlist){
 		//latestgameevent.getElementsByClassName("eventlist")[0].innerHTML = playerspan.innerHTML;
 		//latestgameevent.appendChild(playerspan);
 
-		if(eventwrapper != undefined){
+		if(eventwrapper != undefined && latestgameevent != null){
 			latestgameevent.innerHTML = eventwrapper.innerHTML;
 		}
 

@@ -246,10 +246,11 @@ function showActivityBox(activity, event, gameid, reaction){
     paragraph.appendChild(symbol);
     div.appendChild(paragraph);
     var description = document.createElement('div');
-    getActivityIcon(symbol, activity, description, event, gameid, reaction);
 
     div.appendChild(description);
     wrapper.appendChild(div);
+
+    getActivityIcon(symbol, activity, description, event, gameid, reaction);
 
     var players = $(".reactionboxwrapper");
 
@@ -265,7 +266,7 @@ function showActivityBox(activity, event, gameid, reaction){
 function getTimestampForActivity(activity, event, reaction){
     var timestamp = '';
     if(event != undefined){
-        if(activity == 'checkin' || activity == 'finalcomment'){
+        if(activity == 'checkin' || activity == 'finalcomment' || activity == 'mvp'){
             timestamp = event.timestamp;
         }
         else if(activity == 'reaction'){
@@ -333,7 +334,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
     else if(activity == 'mvp'){
         symbol = 'fa-trophy';
         activitytext = 'Voted for MVP';
-        getMVPDetails(description, activitytext, event)
+        getMVPDetails(description, activitytext, event);
     }
 
     else if(activity == 'voucher'){
@@ -415,10 +416,34 @@ function getLastActivities() {
                     if(snapshot.val()['finalcomment'] != null){
                         showActivityBox('finalcomment', snapshot.val()['finalcomment'], snapshot.key, null);
                     }
+                    if(snapshot.val()['mvp'] != null){
+                        showActivityBox('mvp', snapshot.val()['mvp'], snapshot.key, null);
+                    }
                 }
             });
         });
     });
+}
+
+function getMVPDetails(description, activitytext, event){
+    setActivityText(description, activitytext);
+    var eventwrapper = document.createElement('div');
+    eventwrapper.classList.add('activityreactionmini');
+    var eventlist = document.createElement("div");
+    eventlist.classList.add('eventlistmini');
+
+    var voucher = document.createElement('p');
+    if(event != undefined){
+        event.verein_id = ownteam;
+        event.eventId = event.timestamp;
+
+    getPlayerInfo(event.playerid, event, eventlist);
+    }
+
+
+    eventlist.appendChild(voucher);
+    eventwrapper.appendChild(eventlist);
+    description.appendChild(eventwrapper);
 }
 
 function getStartingElevenDetails(description, event, activitytext, gameid){
