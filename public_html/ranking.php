@@ -29,14 +29,14 @@
 		<div class="swiper-slide">
 			<div id = "rankings">
 				<!-- <h2>USERS WORLWIDE</h2> -->
-				<div id="userranking"></div>
+				<div id="userranking" class="activityboxranking"></div>
 				<div id="ownteamranking"></div>
 			</div>
 		</div>
 		<div class="swiper-slide">
 			<div id='team'>
 				<!--	<h2>TEAMS WORLDWIDE</h2> -->
-				<div id="teamranking"></div>
+				<div id="teamranking" class="activityboxranking"></div>
 			</div>
 		</div>
 	</div>
@@ -47,7 +47,6 @@
 		initialSlide: 0
 	});
 </script>
-
 <?php include 'includes/footer.php';?>
 </body>
 </html>
