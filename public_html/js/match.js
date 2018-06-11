@@ -1286,7 +1286,6 @@ function displayPostMatchEvents (gameid){
 		interactions.appendChild(postmatchcontainer);
 
 	}
->>>>>>> 124952a89e78bb0943ece99087db44fb58810968
 }
 
 function displayMVP(){
