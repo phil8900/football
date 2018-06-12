@@ -1,3 +1,9 @@
+<?php session_start(); 
+
+// Extend cookie life time by an amount of your liking
+$cookieLifetime = 365 * 24 * 60 * 60; // A year in seconds
+setcookie(session_name(),session_id(),time()+$cookieLifetime);
+?>
 <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
@@ -216,4 +222,3 @@
         $('#overlayloading').fadeOut("slow");
 });
 </script>
-
