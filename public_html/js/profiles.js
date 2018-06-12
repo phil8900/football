@@ -775,9 +775,11 @@ function setupButtons(nextgame){
         snapshot.forEach(function(child) {
             if(child.val().playerid != null && child.key != 'mvp'){
                 var div = document.getElementById(child.val().playerid);
-                var button = div.getElementsByClassName('checkinbutton')[0];
-                button.style.color = 'red';
-                counter++;
+                if(div != null){
+                    var button = div.getElementsByClassName('checkinbutton')[0];
+                    button.style.color = 'red';
+                    counter++;
+                }
             }
         });
 

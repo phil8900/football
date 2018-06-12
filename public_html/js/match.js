@@ -79,6 +79,16 @@ function getLiveGameEvents(gameid){
             }
         });
     });
+    setTimeout(function(){showLastGameEvent();}, 2000);
+    
+}
+
+function showLastGameEvent(){
+    var latest = $( "#events .eventbox.activityboxmatchevents:last-child" );
+    var latestgameevent = document.getElementById('latestgameevent');
+
+    latestgameevent.innerHTML = latest.html();
+    latestgameevent.style.backgroundImage = latest.css("background-image");
 }
 
 function displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton){
@@ -263,8 +273,6 @@ function showEvents(event, gameid){
 
     eventwrapper.insertBefore(eventlist, eventwrapper.getElementsByClassName('gamereaction')[0]);
     getEventReaction(event.eventId);
-
-    latestgameevent.innerHTML = eventwrapper.innerHTML;
 
 
 }
@@ -825,7 +833,6 @@ function createWrappers(game_id, event_id, event_type){
         });
 
     }
-
 }
 
 function finalRateStars(gameid, reaction){
