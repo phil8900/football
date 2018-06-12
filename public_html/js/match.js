@@ -839,8 +839,10 @@ function createWrappers(game_id, event_id, event_type){
 function finalRateStars(gameid, reaction){
     firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalreview').once('value', function (child) {
         if (child.val() == null) {
+            var currenttime = Math.floor(Date.now() / 1000);
             firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalreview').set({
-                finalreview: reaction
+                finalreview: reaction,
+                timestamp: currenttime
             });
             getPointsTable('finalreview');
         }
@@ -863,7 +865,6 @@ function rateStars(event_id, reaction){
 
 						if(snapshot.val() == null){
 							var currenttime = Math.floor(Date.now() / 1000);
-							console.log(reaction);
 							var updates = {};
 							updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = reaction;
 

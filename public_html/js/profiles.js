@@ -274,7 +274,7 @@ function showActivityBox(activity, event, gameid, reaction){
 function getTimestampForActivity(activity, event, reaction){
     var timestamp = '';
     if(event != undefined){
-        if(activity == 'checkin' || activity == 'finalcomment' || activity == 'mvp'){
+        if(activity == 'checkin' || activity == 'finalcomment' || activity == 'mvp' || activity == 'finalreview' || activity == 'voucher'){
             timestamp = event.timestamp;
         }
         else if(activity == 'reaction'){
@@ -348,7 +348,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
     else if(activity == 'voucher'){
         symbol = 'fa-ticket-alt';
         activitytext = 'Used a LoudStand discount voucher at';
-        getVoucherDetails(description, activitytext, event)
+        getVoucherDetails(description, activitytext, event, reaction);
     }
 
     else if(activity == 'finalreview'){
@@ -405,10 +405,19 @@ function getLastActivities() {
 
     firebase.database().ref('/vouchers/waxxies/' + uid ).on('value', function (snapshot) {
         snapshot.forEach(function(child){
-            if (child.val()[uid] != null) {
-                var key = Object.keys(child.val()[uid]);
-                showActivityBox('voucher', child.val()[uid][key], gameid, null);
+            if (child.val() != null) {
+                showActivityBox('voucher', child.val(), null, 'ChIJNbq445M_TEYRQFix7VRFbIE');
             }
+        });
+    });
+
+    fixtures.forEach(function(fixture) {
+        firebase.database().ref('/vouchers/' + fixture.gameid + '/' + uid).on('value', function (snapshot) {
+            snapshot.forEach(function(child){
+                if (child.val() != null) {
+                    showActivityBox('voucher', child.val(), null, child.val().placeid);
+                }
+            });
         });
     });
 
@@ -424,6 +433,9 @@ function getLastActivities() {
                     if(snapshot.val()['finalcomment'] != null){
                         showActivityBox('finalcomment', snapshot.val()['finalcomment'], snapshot.key, null);
                     }
+                    if(snapshot.val()['finalreview'] != null){
+                        showActivityBox('finalreview', snapshot.val()['finalreview'], snapshot.key, null);
+                    }
                     if(snapshot.val()['mvp'] != null){
                         showActivityBox('mvp', snapshot.val()['mvp'], snapshot.key, null);
                     }
@@ -431,6 +443,61 @@ function getLastActivities() {
             });
         });
     });
+}
+
+function getFinalReviewlDetails(description, activitytext, event){
+    setActivityText(description, activitytext);
+    var eventwrapper = document.createElement('div');
+    eventwrapper.classList.add('activityreactionmini');
+    var eventlist = document.createElement("div");
+    eventlist.classList.add('eventlistmini');
+
+    var one = document.createElement('i');
+    one.classList.add('fas');
+    one.classList.add('fa-star');
+    eventwrapper.appendChild(one);
+
+    var two = document.createElement('i');
+    two.classList.add('fas');
+    two.classList.add('fa-star');
+    eventwrapper.appendChild(two);
+
+    var three = document.createElement('i');
+    three.classList.add('fas');
+    three.classList.add('fa-star');
+    eventwrapper.appendChild(three);
+
+    var four = document.createElement('i');
+    four.classList.add('fas');
+    four.classList.add('fa-star');
+    eventwrapper.appendChild(four);
+
+    var five = document.createElement('i');
+    five.classList.add('fas');
+    five.classList.add('fa-star');
+    eventwrapper.appendChild(five);
+
+    if(event.finalreview == 1 || event.finalreview == 2 || event.finalreview == 3 || event.finalreview == 4 || event.finalreview == 5){
+        one.classList.add('checkedstar');
+    }
+    if(event.finalreview == 2 || event.finalreview == 3 || event.finalreview == 4 || event.finalreview == 5){
+        two.classList.add('checkedstar');
+    }
+    if(event.finalreview == 3 || event.finalreview == 4 || event.finalreview == 5){
+        three.classList.add('checkedstar');
+    }
+    if(event.finalreview == 4 || event.finalreview == 5){
+        four.classList.add('checkedstar');
+    }
+    if(event.finalreview == 5){
+        five.classList.add('checkedstar');
+    }
+
+
+    eventwrapper.appendChild(eventlist);
+    description.appendChild(eventwrapper);
+
+    
 }
 
 function getMVPDetails(description, activitytext, event){
@@ -512,24 +579,8 @@ function getFinalCommentDetails(description, activitytext, event){
     description.appendChild(eventwrapper);
 }
 
-function getGoalDetails(description, activitytext, event){
-    setActivityText(description, activitytext);
-    var eventwrapper = document.createElement('div');
-    eventwrapper.classList.add('activityreactionmini');
-    var eventlist = document.createElement("div");
-    eventlist.classList.add('eventlistmini');
 
-    var goal = document.createElement('p');
-    //if(event != undefined){
-    goal.appendChild(document.createTextNode(event));
-    //}
-
-    eventlist.appendChild(goal);
-    eventwrapper.appendChild(eventlist);
-    description.appendChild(eventwrapper);
-}
-
-function getVoucherDetails(description, activitytext, event){
+function getVoucherDetails(description, activitytext, event, location){
     setActivityText(description, activitytext);
     var eventwrapper = document.createElement('div');
     eventwrapper.classList.add('activityreactionmini');
@@ -537,9 +588,9 @@ function getVoucherDetails(description, activitytext, event){
     eventlist.classList.add('eventlistmini');
 
     var voucher = document.createElement('p');
-    //if(event != undefined){
-    voucher.appendChild(document.createTextNode(event));
-    //}
+    if(event != undefined){
+        getPlaceNameForId(location, voucher);
+    }
 
     eventlist.appendChild(voucher);
     eventwrapper.appendChild(eventlist);
@@ -773,7 +824,7 @@ function setupButtons(nextgame){
     startingRef.on('value', function(snapshot){
         var counter = 0;
         snapshot.forEach(function(child) {
-            if(child.val().playerid != null && child.key != 'mvp'){
+            if(child.val().playerid != null && child.key != 'mvp' && child.key != 'finalreview' && child.key != 'finalcomment'){
                 var div = document.getElementById(child.val().playerid);
                 if(div != null){
                     var button = div.getElementsByClassName('checkinbutton')[0];

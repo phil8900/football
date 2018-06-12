@@ -192,3 +192,16 @@ function checkinConfirm(result) {
 function checkinClose(){
   $('#checkinconfirmoverlay').fadeOut('slow');
 }
+
+function getPlaceNameForId(placeid, voucher){
+    var service = new google.maps.places.PlacesService(map);
+    var name = '';
+
+    service.getDetails({
+        placeId: placeid
+    }, function(place, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          voucher.appendChild(document.createTextNode(place.name));
+        }
+    });
+}
