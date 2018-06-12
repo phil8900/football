@@ -146,9 +146,9 @@ body {
 
 #teamranking img{
 	width: 54px;
-	height: 56px;
+	height: 42px;
 	border-radius: 0;
-	padding-top: 20px;
+	padding-top: 5px;
 }
 
 .userrankingname{
@@ -162,11 +162,16 @@ body {
 	margin: 0 0 0 0;
 }
 
+.userrankingnamerankings{
+	float: left;
+
+}
 
 .userranking{
 	float: right;
 	font-size: 36px;
-	margin-top: 14px;
+	position: absolute;
+	right: 5%;
 }
 
 .userrankingpoints{
@@ -175,9 +180,17 @@ body {
 }
 .userrankingpointsrankings {
 	font-size: 24px;
-	color: #0F281D;
+	color: #f6f6f6;
 	margin-left: 60px;
-	margin-top: -26px;
+	position: absolute;
+}
+
+.teamrankingpointsrankings {
+	font-size: 24px;
+	color: #f6f6f6;
+	margin-left: 60px;
+	position: absolute;
+	margin-top: 20px;
 }
 
 .checkedstar{
@@ -194,11 +207,24 @@ body {
 	padding-top: 10px;
 }
 
+.userelementranking{
+	border-bottom: 1px solid #f6f6f6;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-bottom: 5px;
+	text-align: left;
+	width: 100%;
+	padding-top: 10px;
+	height: 68px;
+/	background-color: red;
+}
+
 .rankinglogo{
 	height: 50px;
 	width: 50px;
 	margin-right: 2%;
 	border-radius: 50%;
+	float: left;
 }
 
 #team h2{
@@ -1644,6 +1670,14 @@ color: white;
 	background-color: #44b755;
 	width: 80px;
 
+}
+
+#rankingcontainer{
+	margin-top: -20px;
+}
+
+.rankingswipe{
+	padding-bottom: 60px;
 }
 
 

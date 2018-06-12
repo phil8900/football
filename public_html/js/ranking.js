@@ -42,11 +42,6 @@ function initReferences(){
 		setTeamRanking(userRanking);
 	});
 
-	setTimeout(function () {
-		$(".userrankingpointsrankings").css('color', '#f6f6f6');
-		$(".userrankingname").css('color', '#f6f6f6');
-	}, 1500);
-
 
 
 updateTeamRanking(false);
@@ -157,7 +152,7 @@ function createUserRankingElement(entry, id){
 		div.innerHTML = '';
 	}
 
-	div.classList.add('userelement');
+	div.classList.add('userelementranking');
 	var firstlinediv = document.createElement('div');
 	firstlinediv.classList.add('firstlinediv');
 
@@ -174,7 +169,7 @@ function createUserRankingElement(entry, id){
 
 	var namespan = document.createElement('span');
 	namespan.appendChild(document.createTextNode(entry.name));
-	namespan.classList.add('userrankingname');
+	namespan.classList.add('userrankingnameranking');
 
 	firstlinediv.appendChild(namespan);
 
@@ -210,7 +205,7 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 		div.innerHTML = '';
 	}
 
-	div.classList.add('userelement');
+	div.classList.add('userelementranking');
 	var firstlinediv = document.createElement('div');
 	firstlinediv.classList.add('firstlinediv');
 
@@ -225,7 +220,7 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 
 	var namespan = document.createElement('span');
 	namespan.appendChild(document.createTextNode(snapshotvalue['teamname']));
-	namespan.classList.add('userrankingname');
+	namespan.classList.add('teamrankingnamerankings');
 
 	firstlinediv.appendChild(namespan);
 
