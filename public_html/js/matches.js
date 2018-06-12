@@ -28,6 +28,11 @@ function showMatches(){
 	var currenttime = Math.floor(Date.now() / 1000);
 	var nextgame = true;
 
+	var wrapper = document.getElementById('matches');
+	wrapper = $('#matches .swiper-wrapper').get(0);
+
+	if(wrapper != undefined){
+
 	fixtures.sort(function(a, b){return a.timestamp-b.timestamp});
 	fixtures.forEach(function(child) {
 		if((child['timestamp'] < worldCupEnd)){
@@ -45,8 +50,7 @@ function showMatches(){
 				nextgame = false;
 			}
 			else{ */
-				var wrapper = document.getElementById('matches');
-				wrapper = $('#matches .swiper-wrapper').get(0);
+
 
 		//	}
 			var div = document.createElement('div');
@@ -150,7 +154,7 @@ function showMatches(){
 			});
 			div.appendChild(awaydiv);
 			
-			if(wrapper != undefined){
+
 				wrapper.appendChild(div);
 			}
 		}
