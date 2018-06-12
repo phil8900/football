@@ -157,8 +157,9 @@ function showMatches(){
 
 				wrapper.appendChild(div);
 			}
-		}
+		
 	});
+	}
 }
 
 function overlayOn(gameid) {
