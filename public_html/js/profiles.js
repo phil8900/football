@@ -274,7 +274,7 @@ function showActivityBox(activity, event, gameid, reaction){
 function getTimestampForActivity(activity, event, reaction){
     var timestamp = '';
     if(event != undefined){
-        if(activity == 'checkin' || activity == 'finalcomment' || activity == 'mvp'){
+        if(activity == 'checkin' || activity == 'finalcomment' || activity == 'mvp' || activity == 'finalreview'){
             timestamp = event.timestamp;
         }
         else if(activity == 'reaction'){
@@ -424,6 +424,9 @@ function getLastActivities() {
                     if(snapshot.val()['finalcomment'] != null){
                         showActivityBox('finalcomment', snapshot.val()['finalcomment'], snapshot.key, null);
                     }
+                    if(snapshot.val()['finalreview'] != null){
+                        showActivityBox('finalreview', snapshot.val()['finalreview'], snapshot.key, null);
+                    }
                     if(snapshot.val()['mvp'] != null){
                         showActivityBox('mvp', snapshot.val()['mvp'], snapshot.key, null);
                     }
@@ -431,6 +434,61 @@ function getLastActivities() {
             });
         });
     });
+}
+
+function getFinalReviewlDetails(description, activitytext, event){
+    setActivityText(description, activitytext);
+    var eventwrapper = document.createElement('div');
+    eventwrapper.classList.add('activityreactionmini');
+    var eventlist = document.createElement("div");
+    eventlist.classList.add('eventlistmini');
+
+    var one = document.createElement('i');
+    one.classList.add('fas');
+    one.classList.add('fa-star');
+    eventwrapper.appendChild(one);
+
+    var two = document.createElement('i');
+    two.classList.add('fas');
+    two.classList.add('fa-star');
+    eventwrapper.appendChild(two);
+
+    var three = document.createElement('i');
+    three.classList.add('fas');
+    three.classList.add('fa-star');
+    eventwrapper.appendChild(three);
+
+    var four = document.createElement('i');
+    four.classList.add('fas');
+    four.classList.add('fa-star');
+    eventwrapper.appendChild(four);
+
+    var five = document.createElement('i');
+    five.classList.add('fas');
+    five.classList.add('fa-star');
+    eventwrapper.appendChild(five);
+
+    if(event.finalreview == 1 || event.finalreview == 2 || event.finalreview == 3 || event.finalreview == 4 || event.finalreview == 5){
+        one.classList.add('checkedstar');
+    }
+    if(event.finalreview == 2 || event.finalreview == 3 || event.finalreview == 4 || event.finalreview == 5){
+        two.classList.add('checkedstar');
+    }
+    if(event.finalreview == 3 || event.finalreview == 4 || event.finalreview == 5){
+        three.classList.add('checkedstar');
+    }
+    if(event.finalreview == 4 || event.finalreview == 5){
+        four.classList.add('checkedstar');
+    }
+    if(event.finalreview == 5){
+        five.classList.add('checkedstar');
+    }
+
+
+    eventwrapper.appendChild(eventlist);
+    description.appendChild(eventwrapper);
+
+    
 }
 
 function getMVPDetails(description, activitytext, event){
@@ -512,22 +570,6 @@ function getFinalCommentDetails(description, activitytext, event){
     description.appendChild(eventwrapper);
 }
 
-function getGoalDetails(description, activitytext, event){
-    setActivityText(description, activitytext);
-    var eventwrapper = document.createElement('div');
-    eventwrapper.classList.add('activityreactionmini');
-    var eventlist = document.createElement("div");
-    eventlist.classList.add('eventlistmini');
-
-    var goal = document.createElement('p');
-    //if(event != undefined){
-    goal.appendChild(document.createTextNode(event));
-    //}
-
-    eventlist.appendChild(goal);
-    eventwrapper.appendChild(eventlist);
-    description.appendChild(eventwrapper);
-}
 
 function getVoucherDetails(description, activitytext, event){
     setActivityText(description, activitytext);
@@ -773,7 +815,7 @@ function setupButtons(nextgame){
     startingRef.on('value', function(snapshot){
         var counter = 0;
         snapshot.forEach(function(child) {
-            if(child.val().playerid != null && child.key != 'mvp'){
+            if(child.val().playerid != null && child.key != 'mvp' && child.key != 'finalreview' && child.key != 'finalcomment'){
                 var div = document.getElementById(child.val().playerid);
                 if(div != null){
                     var button = div.getElementsByClassName('checkinbutton')[0];
