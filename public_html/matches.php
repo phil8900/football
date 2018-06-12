@@ -9,7 +9,7 @@
 	<title>LoudStand - Profiles</title>
 </head>
 
-<body onload="initMatches()" style="margin-top: 40px">
+<body onload="initMatches(true)" style="margin-top: 40px">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">

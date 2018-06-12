@@ -650,14 +650,16 @@ function showReactionBarValue(reactionbar, reaction){
         percentage = (positive/(positive + negative))*100;
     }
 
-    reactionbar.style.width = percentage + '%';
-    if(percentage == 100){
-        reactionbar.style.borderTopRightRadius = '15px';
-        reactionbar.style.borderBottomRightRadius = '15px';
-    }
-    else{
-        reactionbar.style.borderTopRightRadius = '0px';
-        reactionbar.style.borderBottomRightRadius = '0px';
+    if(reactionbar != undefined){
+        reactionbar.style.width = percentage + '%';
+        if(percentage == 100){
+            reactionbar.style.borderTopRightRadius = '15px';
+            reactionbar.style.borderBottomRightRadius = '15px';
+        }
+        else{
+            reactionbar.style.borderTopRightRadius = '0px';
+            reactionbar.style.borderBottomRightRadius = '0px';
+        }
     }
 }
 

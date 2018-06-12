@@ -12,7 +12,7 @@
         background: url("https://i.ebayimg.com/images/g/m6IAAOSwoydWo8qE/s-l1600.jpg") no-repeat center center;
     }
 </style>
-<body onload="initMatch();initMatches();">
+<body onload="initMatch();initMatches(false);">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 

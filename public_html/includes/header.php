@@ -63,7 +63,7 @@
 <script>
 
     $(document).ready(function() {
-
+		if(swiper != undefined){
         swiper.on('slideChange', function () {
 
             if (swiper.activeIndex == 0) {
@@ -78,7 +78,9 @@
             }
 
         })
+			}
     }); // end ready
+
 
 </script>
 

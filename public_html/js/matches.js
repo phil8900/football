@@ -1,25 +1,27 @@
 var fixtures = JSON.parse(localStorage.getItem("loudstand_fixtures"));
 
-function initMatches(){
+function initMatches(matches){
 	document.getElementById('matchesbutton').src = 'img/calendar_select.svg';
 	updateTeamRanking(true);
 	showMatches();
 
-	var swiper = new Swiper('.swiper-container', {
-		initialSlide: 1,
-		effect: 'coverflow',
-		direction: 'vertical',
-		grabCursor: true,
-		centeredSlides: true,
-		slidesPerView: 'auto',
-		coverflowEffect: {
-			rotate: 50,
-			stretch: 0,
-			depth: 100,
-			modifier: 1,
-			slideShadows : true
-		}
-	});
+	if(matches){
+		var swiper = new Swiper('.swiper-container', {
+			initialSlide: 1,
+			effect: 'coverflow',
+			direction: 'vertical',
+			grabCursor: true,
+			centeredSlides: true,
+			slidesPerView: 'auto',
+			coverflowEffect: {
+				rotate: 50,
+				stretch: 0,
+				depth: 100,
+				modifier: 1,
+				slideShadows : true
+			}
+		});
+	}
 }
 
 function showMatches(){
@@ -45,14 +47,6 @@ function showMatches(){
 			var gameid = child['gameid'];
 			var stadium = child['location'];
 
-		/*	if(nextgame){
-				var wrapper = document.getElementById('upcoming');
-				nextgame = false;
-			}
-			else{ */
-
-
-		//	}
 			var div = document.createElement('div');
 			div.classList.add('activitybox');
 			div.classList.add('matchbox');
@@ -152,12 +146,11 @@ function showMatches(){
 					awaydiv.appendChild(awayfans);
 				}
 			});
-			div.appendChild(awaydiv);
+			div.appendChild(awaydiv);			
 			
-
-				wrapper.appendChild(div);
-			}
-		
+			wrapper.appendChild(div);
+			
+		}
 	});
 	}
 }
