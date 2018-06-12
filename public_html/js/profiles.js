@@ -274,7 +274,7 @@ function showActivityBox(activity, event, gameid, reaction){
 function getTimestampForActivity(activity, event, reaction){
     var timestamp = '';
     if(event != undefined){
-        if(activity == 'checkin' || activity == 'finalcomment' || activity == 'mvp' || activity == 'finalreview'){
+        if(activity == 'checkin' || activity == 'finalcomment' || activity == 'mvp' || activity == 'finalreview' || activity == 'voucher'){
             timestamp = event.timestamp;
         }
         else if(activity == 'reaction'){
@@ -348,7 +348,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
     else if(activity == 'voucher'){
         symbol = 'fa-ticket-alt';
         activitytext = 'Used a LoudStand discount voucher at';
-        getVoucherDetails(description, activitytext, event)
+        getVoucherDetails(description, activitytext, event, reaction);
     }
 
     else if(activity == 'finalreview'){
@@ -405,10 +405,19 @@ function getLastActivities() {
 
     firebase.database().ref('/vouchers/waxxies/' + uid ).on('value', function (snapshot) {
         snapshot.forEach(function(child){
-            if (child.val()[uid] != null) {
-                var key = Object.keys(child.val()[uid]);
-                showActivityBox('voucher', child.val()[uid][key], gameid, null);
+            if (child.val() != null) {
+                showActivityBox('voucher', child.val(), null, 'ChIJNbq445M_TEYRQFix7VRFbIE');
             }
+        });
+    });
+
+    fixtures.forEach(function(fixture) {
+        firebase.database().ref('/vouchers/' + fixture.gameid + '/' + uid).on('value', function (snapshot) {
+            snapshot.forEach(function(child){
+                if (child.val() != null) {
+                    showActivityBox('voucher', child.val(), null, child.val().placeid);
+                }
+            });
         });
     });
 
@@ -571,7 +580,7 @@ function getFinalCommentDetails(description, activitytext, event){
 }
 
 
-function getVoucherDetails(description, activitytext, event){
+function getVoucherDetails(description, activitytext, event, location){
     setActivityText(description, activitytext);
     var eventwrapper = document.createElement('div');
     eventwrapper.classList.add('activityreactionmini');
@@ -579,9 +588,9 @@ function getVoucherDetails(description, activitytext, event){
     eventlist.classList.add('eventlistmini');
 
     var voucher = document.createElement('p');
-    //if(event != undefined){
-    voucher.appendChild(document.createTextNode(event));
-    //}
+    if(event != undefined){
+        getPlaceNameForId(location, voucher);
+    }
 
     eventlist.appendChild(voucher);
     eventwrapper.appendChild(eventlist);

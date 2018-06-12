@@ -4,6 +4,8 @@
 	<script src="js/ranking.js"></script>
 	<script src="js/profiles.js"></script>
 	<script src="js/match.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE0NXJejZApujcdK8c9S7i-G7yblT2kFg&libraries=places&callback=initMap" async defer></script>
+	<script src="js/location.js"></script>
 	<title>LoudStand - Profiles</title>
 </head>
 
@@ -18,7 +20,7 @@
 <body onload="initProfiles()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
-
+<div id="map"></div>
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
 	<div class="firstsubtopnav">
 		<div class="menu-title">PROFILES</div>
