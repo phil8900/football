@@ -22,18 +22,18 @@
 </div>
 
 <!-- Slider main container -->
-<div class="swiper-container" style="height: 2340px;">
+<div class="swiper-container" id="rankingcontainer" style="height: 2340px;">
 	<!-- Additional required wrapper -->
 	<div class="swiper-wrapper">
 		<!-- Slides -->
-		<div class="swiper-slide">
+		<div class="rankingswipe swiper-slide">
 			<div id = "rankings">
 				<!-- <h2>USERS WORLWIDE</h2> -->
 				<div id="userranking" class="activityboxranking"></div>
 				<div id="ownteamranking"></div>
 			</div>
 		</div>
-		<div class="swiper-slide">
+		<div class="rankingswipe swiper-slide">
 			<div id='team'>
 				<!--	<h2>TEAMS WORLDWIDE</h2> -->
 				<div id="teamranking" class="activityboxranking"></div>
