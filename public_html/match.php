@@ -203,16 +203,17 @@
 
     <div id="interactions">
         <div id="postmatchcontainer" class="activitybox">
-            <div class="activityheader"><h3>POST-MATCH INTERACTION</h3>
-                <h2>How did your team do?</h2>
+            <div class="activityheader">
+                <h3 id="activitiyheader1">POST-MATCH INTERACTION</h3>
+                <h2 id="activitiyheader2">How did your team do?</h2>
             </div>
-            <div class="innercontainer">
+            <div id='startingbenchcontainer' class="innercontainer">
 
                 <div id="mvp">
-                    <h2 class="animated fadeIn" style='color:#0F281D; font-weight: 200;'>Who was the best player in the match?<br></h2>
+                    <h2 id="mvptitle" class="animated fadeIn" style='color:#0F281D; font-weight: 200;'>Who was the best player in the match?<br></h2>
                     <div id='upcoming'>
                         <div id='homesquad'>
-                            <div class='starting startingtoMVP'>
+                            <div id="startingtoMVP" class='starting'>
                                 <div class='keeper'></div>
                                 <div class='defender'></div>
                                 <div class='midfielder'></div>

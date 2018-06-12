@@ -39,6 +39,7 @@ function initMatch(){
     $(".submitbutton").hide();
     hideSpans();
     slideToUnlock();
+    manageTimestamps();
 
 }
 
@@ -542,7 +543,7 @@ function getTeamInfo(gameid, wrapper) {
         liveminute.id = 'liveminute';
 
         var liveminutespan = snapshot.val()['minute'];
-        if (liveminutespan != 'notlive') {
+        if (liveminutespan >= 0) {
             liveminute.innerHTML = liveminutespan + "'";
         }
 
@@ -1638,65 +1639,205 @@ function displayStats(gameid){
 
             document.getElementById('awaypossession').innerHTML = snapshot.val()['away']['possession'];
             var awayposessiondiv = document.getElementById('awaypossession');
-            homeposessiondiv.style.width = snapshot.val()['home']['possession'];
-            console.log(snapshot.val()['home']['possession'] + '%');
-            awayposessiondiv.style.width = snapshot.val()['away']['possession'];
+            if((snapshot.val()['home']['possession'] == 0) && (snapshot.val()['away']['possession'] == 0)){
+                homeposessiondiv.style.width = '50%';
+                awayposessiondiv.style.width = '50%';
+            }else{
+                homeposessiondiv.style.width = snapshot.val()['home']['possession'];
+                awayposessiondiv.style.width = snapshot.val()['away']['possession'];
+            }
 
             document.getElementById('awayshotsoverall').innerHTML = snapshot.val()['away']['totalshots'];
             var awayshotsoveralldiv = document.getElementById('awayshotsoverall');
             var x = parseInt(snapshot.val()['home']['totalshots']);
             var y = parseInt(snapshot.val()['away']['totalshots']);
-            homeshotsoveralldiv.style.width = (x/(x+y))*100 + '%';
-            awayshotsoveralldiv.style.width = (y/(x+y))*100 + '%';
+            if((x == 0) && (y == 0)){
+                homeshotsoveralldiv.style.width = '50%';
+                awayshotsoveralldiv.style.width = '50%';
+            }
+
+            if ((x == 0) && (y != 0)){
+                homeshotsoveralldiv.style.display = 'none';
+                awayshotsoveralldiv.style.width = '100%';
+            }
+
+            if ((x != 0) && (y == 0)){
+                homeshotsoveralldiv.style.width = '100%';
+                awayshotsoveralldiv.style.display = 'none';
+            }
+
+            else {
+                homeshotsoveralldiv.style.width = (x / (x + y)) * 100 + '%';
+                awayshotsoveralldiv.style.width = (y / (x + y)) * 100 + '%';
+            }
 
             document.getElementById('awayshotstarget').innerHTML = snapshot.val()['away']['shotstarget'];
             var awayshotstargetdiv = document.getElementById('awayshotstarget');
             var a = parseInt(snapshot.val()['home']['shotstarget']);
             var b = parseInt(snapshot.val()['away']['shotstarget']);
-            homeshotstargetdiv.style.width = (a/(a+b))*100 + '%';
-            awayshotstargetdiv.style.width = (b/(a+b))*100 + '%';
+            if((a == 0) && (b == 0)){
+                homeshotstargetdiv.style.width = '50%';
+                awayshotstargetdiv.style.width = '50%';
+            }
+
+            if ((a == 0) && (b != 0)){
+                homeshotstargetdiv.style.display = 'none';
+                awayshotstargetdiv.style.width = '100%';
+            }
+
+            if ((a != 0) && (b == 0)){
+                homeshotstargetdiv.style.width = '100%';
+                awayshotstargetdiv.style.display = 'none';
+            }
+
+            else {
+                homeshotstargetdiv.style.width = (a / (a + b)) * 100 + '%';
+                awayshotstargetdiv.style.width = (b / (a + b)) * 100 + '%';
+            }
 
             document.getElementById('awayshots').innerHTML = snapshot.val()['away']['shots'];
             var awayshotsdiv = document.getElementById('awayshots');
             var c = parseInt(snapshot.val()['home']['shots']);
             var d = parseInt(snapshot.val()['away']['shots']);
-            homeshotsdiv.style.width = (c/(c+d))*100 + '%';
-            awayshotsdiv.style.width = (d/(c+d))*100 + '%';
+            if((c == 0) && (d == 0)){
+                homeshotsdiv.style.width = '50%';
+                awayshotsdiv.style.width = '50%';
+            }
+
+            if ((c == 0) && (d != 0)){
+                homeshotsdiv.style.display = 'none';
+                awayshotsdiv.style.width = '100%';
+            }
+
+            if ((c != 0) && (d == 0)){
+                homeshotsdiv.style.width = '100%';
+                awayshotsdiv.style.display = 'none';
+            }
+
+            else {
+                homeshotsdiv.style.width = (c / (c + d)) * 100 + '%';
+                awayshotsdiv.style.width = (d / (c + d)) * 100 + '%';
+            }
 
             document.getElementById('awaysaves').innerHTML = snapshot.val()['away']['saves'];
             var awaysavesdiv = document.getElementById('awaysaves');
             var e = parseInt(snapshot.val()['home']['saves']);
             var f = parseInt(snapshot.val()['away']['saves']);
-            homesavesdiv.style.width = (e/(e+f))*100 + '%';
-            awaysavesdiv.style.width = (f/(e+f))*100 + '%';
+            if((e == 0) && (f == 0)){
+                homesavesdiv.style.width = '50%';
+                awaysavesdiv.style.width = '50%';
+            }
+
+            if ((e == 0) && (f != 0)){
+                homesavesdiv.style.display = 'none';
+                awaysavesdiv.style.width = '100%';
+            }
+
+            if ((e != 0) && (f == 0)){
+                homesavesdiv.style.width = '100%';
+                awaysavesdiv.style.display = 'none';
+            }
+
+            else {
+                homesavesdiv.style.width = (e / (e + f)) * 100 + '%';
+                awaysavesdiv.style.width = (f / (e + f)) * 100 + '%';
+            }
 
             document.getElementById('awayfouls').innerHTML = snapshot.val()['away']['fouls'];
             var awayfoulsdiv = document.getElementById('awayfouls');
             var g = parseInt(snapshot.val()['home']['fouls']);
             var h = parseInt(snapshot.val()['away']['fouls']);
-            homefoulsdiv.style.width = (g/(g+h))*100 + '%';
-            awayfoulsdiv.style.width = (h/(g+h))*100 + '%';
+            if((g == 0) && (h == 0)){
+                homefoulsdiv.style.width = '50%';
+                awayfoulsdiv.style.width = '50%';
+            }
+
+            if ((g == 0) && (h != 0)){
+                homefoulsdiv.style.display = 'none';
+                awayfoulsdiv.style.width = '100%';
+            }
+
+            if ((g != 0) && (h == 0)){
+                homefoulsdiv.style.width = '100%';
+                awayfoulsdiv.style.display = 'none';
+            }
+
+            else {
+                homefoulsdiv.style.width = (g / (g + h)) * 100 + '%';
+                awayfoulsdiv.style.width = (h / (h + g)) * 100 + '%';
+            }
 
             document.getElementById('awayfreekicks').innerHTML = snapshot.val()['away']['freekicks'];
             var awayfreekicksdiv = document.getElementById('awayfreekicks');
             var i = parseInt(snapshot.val()['home']['freekicks']);
             var j = parseInt(snapshot.val()['away']['freekicks']);
-            homefreekicksdiv.style.width = (i/(i+j))*100 + '%';
-            awayfreekicksdiv.style.width = (j/(i+j))*100 + '%';
+            if((i == 0) && (j == 0)){
+                homefreekicksdiv.style.width = '50%';
+                awayfreekicksdiv.style.width = '50%';
+            }
+
+            if ((i == 0) && (j != 0)){
+                homefreekicksdiv.style.display = 'none';
+                awayfreekicksdiv.style.width = '100%';
+            }
+
+            if ((i != 0) && (j == 0)){
+                homefreekicksdiv.style.width = '100%';
+                awayfreekicksdiv.style.display = 'none';
+            }
+
+            else {
+                homefreekicksdiv.style.width = (i / (i + j)) * 100 + '%';
+                awayfreekicksdiv.style.width = (j / (i + j)) * 100 + '%';
+            }
 
             document.getElementById('awaycorners').innerHTML = snapshot.val()['away']['corners'];
             var awaycornersdiv = document.getElementById('awaycorners');
             var k = parseInt(snapshot.val()['home']['corners']);
             var l = parseInt(snapshot.val()['away']['corners']);
-            homecornersdiv.style.width = (k/(k+l))*100 + '%';
-            awaycornersdiv.style.width = (l/(k+l))*100 + '%';
+            if((k == 0) && (l == 0)){
+                homecornersdiv.style.width = '50%';
+                awaycornersdiv.style.width = '50%';
+            }
+
+            if ((k == 0) && (l != 0)){
+                homecornersdiv.style.display = 'none';
+                awaycornersdiv.style.width = '100%';
+            }
+
+            if ((k != 0) && (l == 0)){
+                homecornersdiv.style.width = '100%';
+                awaycornersdiv.style.display = 'none';
+            }
+
+            else {
+                homecornersdiv.style.width = (k / (k + l)) * 100 + '%';
+                awaycornersdiv.style.width = (l / (k + l)) * 100 + '%';
+            }
 
             document.getElementById('awayoffside').innerHTML = snapshot.val()['away']['offside'];
             var awayoffsidediv = document.getElementById('awayoffside');
             var m = parseInt(snapshot.val()['home']['offside']);
             var n = parseInt(snapshot.val()['away']['offside']);
-            homeoffsidediv.style.width = (m/(m+n))*100 + '%';
-            awayoffsidediv.style.width = (n/(m+n))*100 + '%';
+            if((m == 0) && (n == 0)){
+                homeoffsidediv.style.width = '50%';
+                awayoffsidediv.style.width = '50%';
+            }
+
+            if ((m == 0) && (n != 0)){
+                homeoffsidediv.style.display = 'none';
+                awayoffsidediv.style.width = '100%';
+            }
+
+            if ((m != 0) && (n == 0)){
+                homeoffsidediv.style.width = '100%';
+                awayoffsidediv.style.display = 'none';
+            }
+
+            else {
+                homeoffsidediv.style.width = (m / (m + n)) * 100 + '%';
+                awayoffsidediv.style.width = (n / (m + n)) * 100 + '%';
+            }
         }
     });
 }
@@ -1742,6 +1883,8 @@ function manageTimestamps () {
             console.log('pre match');
 
             document.getElementById('teamprofile').style.display = 'block';
+            document.getElementById('squad').style.height = '80%';
+            document.getElementById('latestgameevent').style.display = 'none';
 
             var postmatchcontainer = document.getElementById('postmatchcontainer');
             postmatchcontainer.style.display = 'none';
@@ -1762,6 +1905,11 @@ function manageTimestamps () {
 
             var postmatchcontainer = document.getElementById('postmatchcontainer');
             postmatchcontainer.style.display = 'block';
+
+            document.getElementById('activitiyheader1').innerHTML = 'SQUAD';
+            document.getElementById('activitiyheader2').innerHTML = 'Starting 11 + Bench';
+            document.getElementById('mvptitle').style.display = 'none';
+            document.getElementById('startingbenchcontainer').style.marginTop = '36px';
 
             document.getElementById('teamprofile').style.display = 'none';
 
@@ -1786,6 +1934,9 @@ function manageTimestamps () {
 
         else {
             console.log('game ended');
+
+            document.getElementById('startingbenchcontainer').style.marginTop = '170px';
+            document.getElementById('finaltabs').style.paddingTop = '70px';
 
             var postmatchtitle = document.getElementById('postmatchcontainertitle');
             postmatchtitle.style.display = 'block';
