@@ -656,6 +656,11 @@ button{
 	line-height:1.3em;
 }
 
+#startingstarting{
+	margin-top: 106px;
+}
+
+
 #score{
 	text-align: center;
 	margin-bottom: 20px;
@@ -1084,7 +1089,6 @@ button{
 	height: 600px;
 	overflow: scroll;
 	padding: 0 0 0 0;
-	margin-top: 20px;
 	-webkit-overflow-scrolling: touch;
 
 }
@@ -1147,7 +1151,12 @@ button{
 
 }
 .bench{
-	padding-left: 5%;
+	margin-top: 20px;
+}
+
+.bench p{
+	font-size: 20px;
+	margin: 0 20% 0 20%
 }
 
 .submitbutton{
@@ -1533,9 +1542,6 @@ h3{
 	margin-top: -52px;
 }
 
-.starting{
-	padding-top: 70px;
-}
 
 #liveminute{
 	display: block;

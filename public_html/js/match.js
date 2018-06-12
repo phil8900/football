@@ -371,7 +371,7 @@ function showStartingEleven(elementid, teamid, playerarray, startingeleven, game
                 pointsdiv.appendChild(document.createTextNode(player['jerseynumber']));
                 pointsdiv.classList.add('userrankingpoints');
 
-                var countspan = document.createElement('span');
+               var countspan = document.createElement('span');
                 countspan.classList.add('mvpcountspan');
                 countspan.innerHTML = 0;
                 div.appendChild(countspan);
@@ -483,7 +483,7 @@ function manageMvp(playerid, gameid, button){
         }
         else{
             //firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp').remove();
-            $('#mvp .checkinbutton').hide();
+            $('#mvp .checkinbuttonstarting11').hide();
         }
     })
 }
@@ -1319,10 +1319,17 @@ function displayMVP(){
     $(".submitbutton").hide();
     getMvpList();
     displayMvpRanking();
-    setTimeout(function () {
-        $(".userrankingpoints").hide();
-    }, 300);
+
     $("#postmatchcontainer").animate({height: '1512px'}, 1000);
+
+    $('.mvp').css({backgroundColor: "#2c7656"}, 1000);
+    $('.finalcomment').css({backgroundColor: "#0F281D"}, 1000);
+    $('.finalreview').css({backgroundColor: "#0F281D"}, 1000);
+
+    setTimeout(function () {
+        hideSpans();
+    }, 1000);
+
 }
 
 function displayFinalReview(){
@@ -1333,6 +1340,10 @@ function displayFinalReview(){
     // document.getElementById('postmatchcontainer').style.height = '300px';
     $("#postmatchcontainer").animate({height: '340px'}, 1000);
 
+    $('.mvp').css({backgroundColor: "#0F281D"}, 1000);
+    $('.finalcomment').css({backgroundColor: "#0F281D"}, 1000);
+    $('.finalreview').css({backgroundColor: "#2c7656"}, 1000);
+
 }
 
 function displayFinalComment(){
@@ -1341,6 +1352,12 @@ function displayFinalComment(){
     document.getElementById('finalcomment').style.display = 'block';
     $(".submitbutton").show();
     $("#postmatchcontainer").animate({height: '520px'}, 1000);
+
+    $('.mvp').css({backgroundColor: "#0F281D"}, 1000);
+    $('.finalcomment').css({backgroundColor: "#2c7656"}, 1000);
+    $('.finalreview').css({backgroundColor: "#0F281D"}, 1000);
+
+
 
 }
 
@@ -1899,10 +1916,41 @@ function manageTimestamps () {
             setTimeout(function () {
                 hideCheckinButtons();
             }, 4000);
+
+            hideSpans();
         }
+
+        else if ((date >= timestamp) && (date < timestamp + 1200) && (notlive == 'notlive')) {
+            console.log('game started late');
+
+            document.getElementById('teamprofile').style.display = 'block';
+            document.getElementById('squad').style.height = '80%';
+            document.getElementById('latestgameevent').style.display = 'none';
+
+            var postmatchcontainer = document.getElementById('postmatchcontainer');
+            postmatchcontainer.style.display = 'none';
+
+            setTimeout(function () {
+                hideCheckinButtons();
+            }, 1000);
+            setTimeout(function () {
+                hideCheckinButtons();
+            }, 2000);
+            setTimeout(function () {
+                hideCheckinButtons();
+            }, 4000);
+
+            hideSpans();
+
+        }
+
+
+
 
         else if ((date >= timestamp) && (notlive != 'notlive')) {
             console.log('game started');
+
+            document.getElementById('latestgameevent').style.display = 'block';
 
             var postmatchcontainer = document.getElementById('postmatchcontainer');
             postmatchcontainer.style.display = 'block';
@@ -1912,6 +1960,7 @@ function manageTimestamps () {
             document.getElementById('mvptitle').style.display = 'none';
             document.getElementById('startingbenchcontainer').style.marginTop = '36px';
 
+            document.getElementById('startingtoMVP').style.marginTop = '106px';
             document.getElementById('teamprofile').style.display = 'none';
 
             var postmatchtitle = document.getElementById('postmatchcontainertitle');
@@ -1931,9 +1980,14 @@ function manageTimestamps () {
             setTimeout(function () {
                 hideCheckinButtons();
             }, 4000);
+
+            setTimeout(function () {
+                hideSpans();
+            }, 2000);
+
         }
 
-        else {
+        else if ((date >= timestamp) && (date > timestamp + 1200) && (notlive == 'notlive')) {
             console.log('game ended');
 
             document.getElementById('startingbenchcontainer').style.marginTop = '170px';
@@ -1946,6 +2000,10 @@ function manageTimestamps () {
             finaltabs.style.display = 'block';
 
             displayMVP();
+
+            setTimeout(function () {
+                hideSpans();
+            }, 2000);
 
             var postmatchtitle = document.getElementById('postmatchcontainertitle');
             postmatchtitle.innerHTML = "Final Whistle. What's your opinion?";
