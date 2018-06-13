@@ -9,13 +9,22 @@
 	<title>LoudStand - Profiles</title>
 </head>
 
+<script>
+	var body = document.querySelector('body');
+		body.className = 'team' + ownteam;
+</script>
 
 <style>
-	body:before {
-		background: url("img/backgrounds/england.png") no-repeat center center;
-		background-size: cover;
-		margin-top: 60px;
-	}
+	body.team3299:before {
+	background: url("img/backgrounds/england.png") no-repeat center center;
+	background-size: cover;
+	margin-top: 60px;
+}
+	
+
+
+
+
 </style>
 
 <body onload="initProfiles()">
