@@ -28,10 +28,11 @@ for($x=0;$x<$limit;$x++) {
 	$description = $feed[$x]['desc'];
 	$date = date('l F d, Y', strtotime($feed[$x]['date']));
 
-	echo '<div class="activitybox">';
+	echo '<div class="activitybox newsboxes">';
 	echo '<small class="date"><em>'.$date.'</em></small></p>';
 	echo '<p><strong><h2 class="title" style="color: #0b2e13">'.$title.'</h2></strong></p><br />';
-	echo '<p class="newstitle">'.$description.'</p>';
+	echo '<div class="newsdescription"><p class="newstitle">'.$description.'</p></div>';
+	echo '<button class="readmore newslink">Read More...</button>';
 	echo '</div>';
 }
 
@@ -39,7 +40,7 @@ for($x=0;$x<$limit;$x++) {
 ?>
 
 
-<body onload="initHome()">
+<body onload="readMore()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 

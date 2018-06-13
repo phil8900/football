@@ -111,6 +111,9 @@ function showOwnProfile(snapshotvalue, entry){
 
     rankparagraph.appendChild(document.createTextNode(' ' + entry.rank));
     rankparagraph.id = 'ownteamrank';
+    var ranklink = document.createElement('a');
+    ranklink.href = 'ranking.php';
+    rankparagraph.appendChild(ranklink);
 
     var ranktext = document.createElement('p');
     ranktext.appendChild(document.createTextNode('Fan ranking'));
@@ -243,7 +246,7 @@ function showActivityBox(activity, event, gameid, reaction){
     var wrapper = document.getElementById('activity');
     var timestamp = getTimestampForActivity(activity, event, reaction);
     var div = document.createElement('div');
-    div.classList.add('activityboxmini');
+    div.classList.add('activitycontainer');
     div.classList.add('reactionboxwrapper');
     div.id = timestamp;
 
@@ -347,7 +350,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
 
     else if(activity == 'voucher'){
         symbol = 'fa-ticket-alt';
-        activitytext = 'Used a LoudStand discount voucher at';
+        activitytext = 'Used a LoudStand voucher at';
         getVoucherDetails(description, activitytext, event, reaction);
     }
 
@@ -527,7 +530,6 @@ function getStartingElevenDetails(description, event, activitytext, gameid){
     eventwrapper.classList.add('activitybox');
     eventwrapper.classList.add('activityreaction');
     var eventlist = document.createElement("div");
-    eventlist.classList.add('eventlist');
     eventlist.classList.add('startinglist');
 
     var starting = document.createElement('div');
