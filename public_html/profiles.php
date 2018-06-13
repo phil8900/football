@@ -20,6 +20,30 @@
 <body onload="initProfiles()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
+<div id="tutorial">
+	<div id="tutorialcontent">
+		<b>LOUDSTAND TUTORIAL</b>
+		<br>
+		<h1>#2 - Profiles</h1>
+		<br>
+
+		<b>USER PROFILE</b>
+		<p>In this screen you can know everything about the other fellow football supporters!
+			You can see how high in the ranking is the fan, by looking at the top-left corner of the screen
+			See how big of a fan someone is is by looking at their fandom level and how many points do they have.
+			Also, you can check their latest activity, like where did they watch the last match and how did they
+			react to the coach decisions in the last match.</p>
+<br>
+		<b>TEAM PROFILE</b>
+			<p>Here you can know how big a team can be based on the support they get from their fans,
+			by checking how high the team is ranking and looking at their fanbase level. Also, you can see the overall
+				opinion of the fans about the team on different dimensions, such as Goals, Man of The Match, Starting 11,
+				Coach Performance and Team Performance.</p>
+		</p>
+	</div>
+</div>
+
+
 <div id="map"></div>
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
 	<div class="firstsubtopnav">
@@ -107,89 +131,10 @@
 
 <script>
 	var node = document.getElementById('changebackground');
-	node.innerHTML = '<style>body:before {	background: url("../img/backgrounds/belgium.png") no-repeat center center);}</style>';
-
-	firebase.database().ref('teams/' + ownteam + '/information').once('value', function(child){
-			console.log(child.val());
-	});
+	var test = 'img/backgrounds/belgium.png';
+	node.innerHTML = '<style>body:before {	background: url(' + test + ") no-repeat center center);}</style>";
 
 </script>
-
-<style>
-	.slide-to-unlock {
-		position: relative;
-		width: 90%;
-		height: 36px;
-	}
-
-	.slide-to-unlock .dragdealer {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		border-radius: 0;
-		background: none;
-		height: auto;
-	}
-
-	.slide-to-unlock .handle {
-		height: 100%;
-		border-radius: 0;
-	}
-
-	.slide-to-unlock .disabled {
-		background: none;
-	}
-
-	.slide-to-unlock .slide-text {
-		position: absolute;
-		top: 0;
-		height: 80px;
-		font-size: 30px;
-		line-height: 80px;
-		text-align: center;
-	}
-
-	.old-slider {
-		margin-left: 5%;
-		border-radius: 16px;
-		background: #222;
-		background-image: -webkit-linear-gradient(top, #111 0%, #333 100%);
-		background-image: -moz-linear-gradient(top, #111 0%, #333 100%);
-		background-image: -o-linear-gradient(top, #111 0%, #333 100%);
-		background-image: linear-gradient(to bottom, #fff 0%, #f6f6f6 100%);
-		margin-top: 30px;
-	}
-
-	.old-slider .dragdealer {
-		top: 2px;
-		bottom: 2px;
-		left: 2px;
-		right: 2px;
-	}
-
-	.old-slider .slide-text {
-		right: 0;
-		width: 290px;
-		height: 70px;
-		color: #999;
-		line-height: 70px;
-		cursor: default;
-	}
-
-	.old-slider .handle {
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		background: #ccc;
-		background-image: -webkit-linear-gradient(top, #f1f1f1 0%, #aaa 100%);
-		background-image: -moz-linear-gradient(top, #f1f1f1 0%, #aaa 100%);
-		background-image: -o-linear-gradient(top, #f1f1f1 0%, #aaa 100%);
-		background-image: linear-gradient(to bottom, #f1f1f1 0%, #333 100%);
-	}
-
-</style>
 
 </body>
 </html>

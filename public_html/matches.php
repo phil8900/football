@@ -12,6 +12,26 @@
 <body onload="initMatches(true)" style="margin-top: 40px">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
+
+<div id="tutorial">
+	<div id="tutorialcontent">
+		<b>LOUDSTAND TUTORIAL</b>
+		<br>
+		<h1>#4 - Matches Calendar</h1>
+		<br>
+
+		<p>Access the complete list of fixtures of your Team’s Group. Hopefully they will make it to the Knockout Phase
+			thanks to their fans’ support. Right before the next match of your team starts, the word “LIVE” will
+			show up in the match box.
+			All you have to do is to click on the match and check-in by simply choosing your location.
+			Click on one of the options suggested in the list or type in the search bar to find the right location.
+			If you are watching the match in one the LoudStand partners, remember ACABA ISTO DIOGO.
+		</p>
+
+	</div>
+</div>
+
+
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
 	<div class="firstsubtopnav" id="firstsubtopnav">
 		<div class="menu-title" onclick="overlayOff();">MATCHES</div>

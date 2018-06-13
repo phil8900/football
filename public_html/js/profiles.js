@@ -63,6 +63,7 @@ function initProfiles(){
     }
     showCoachInformation();
     displayVouchers(true);
+    tutorialProfiles();
 
     setTimeout(function(){hideCheckinButtons();}, 1000);
 
@@ -1232,4 +1233,16 @@ function displayRatingStarsOverall(){
             var rating = aggrating/counter;
             document.getElementById('statsoverall').appendChild(document.createTextNode(rating));
     });
+}
+
+function tutorialProfiles() {
+    var seenvoucher = JSON.parse(localStorage.getItem("seentutorialprofiles"));
+
+    if (seenvoucher == null) {
+        localStorage.setItem("seentutorialprofiles", true);
+        $('#tutorial').fadeIn('slow');
+        $('#tutorialcontent').fadeIn('slow');
+
+
+    }
 }

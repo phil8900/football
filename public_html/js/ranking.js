@@ -1,6 +1,8 @@
 function initRanking(){
 	document.getElementById('rankingbutton').src = 'img/ranking_select.svg';
 	initReferences();
+	tutorialRankings();
+
 }
 
 var userRanking;
@@ -432,4 +434,15 @@ function getTrend(entry, ranksymbol){
 
 	ranksymbol.classList.add(symbol);
 	ranksymbol.style.color = color;
+}
+
+function tutorialRankings() {
+	var seenvoucher = JSON.parse(localStorage.getItem("seentutorialranking"));
+
+	if (seenvoucher == null) {
+		localStorage.setItem("seentutorialranking", true);
+		$('#tutorial').fadeIn('slow');
+		$('#tutorialcontent').fadeIn('slow');
+
+	}
 }

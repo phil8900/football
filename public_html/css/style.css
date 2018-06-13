@@ -126,7 +126,7 @@ body {
 	position: absolute;
 	left: 22%;
 	top: 36px;
-	padding-top: 6%;
+	padding-top: 4%;
 }
 
 
@@ -1033,24 +1033,25 @@ height: auto;
 	left: 5%;
 	right: 0;
 	bottom: 0;
-	background: url(https://www.ruby-hotels.com/cache/images/rubymarie_bar-3_1cd0e8872f38e1c2571a13ec.jpg) center center no-repeat;
+	background: url(https://images8.alphacoders.com/413/thumb-1920-413078.jpg) -30px center no-repeat;
 	z-index: 2;
 	padding-left: 5%;
 	padding-right: 5%;
 	padding-top: 5%;
 	padding-bottom: 12%;
-	border: 4px dashed;
+	border: 4px solid #f6f6f6;
+	background-size: cover;
+	border-radius: 20px;
 }
 
 #voucheroverlayinnercontent{
 	background-color: rgba(0,0,0,0.5);
 	height: 82%;
-	border-radius: 50px;
-	border: 3px solid black;
+	border-radius: 10px;
 	padding: 5% 5% 5% 5%;
 }
 
-#voucheroverlaycontentborder{
+/*#voucheroverlaycontentborder{
 	border-top: 20px dotted black;
 	border-bottom: 20px dotted black;
 	text-align: center;
@@ -1068,7 +1069,7 @@ height: auto;
 	padding-right: 5%;
 	padding-top: 5%;
 	padding-bottom: 5%;
-}
+}*/
 
 .vouchertitle{
 	color: #f6f6f6;
@@ -1076,8 +1077,8 @@ height: auto;
 	background-color: rgba(0,0,0,0.5);
 	margin-bottom: 20px;
 	border-radius: 10px;
-	width: 80%;
-	margin-left: 10%;
+	width: 100%;
+	margin-left: 0;
 }
 
 .vouchertitle h1{
@@ -1087,7 +1088,7 @@ height: auto;
 
 #voucherdescription{
 	color: #f6f6f6;
-	font-weight: bold;
+	font-weight: 200;
 }
 
 #voucheroverlayinnercontentcookie{
@@ -1572,7 +1573,7 @@ h3{
 	border-radius: 50%;
 	position: absolute;
 	left: 16%;
-	top: 8px;
+	top: -8px;
 	width: 40px;
 	padding-top: 16px;
 	color: #f6f6f6;
@@ -1702,13 +1703,14 @@ color: white;
 
 .newsboxes{
 	padding: 30px 30px 30px 30px;
-	height: 500px;
+	height: auto;
 }
 
 .newsdescription{
 	height: 236px;
 	overflow: hidden;
 	text-align: left;
+	height: auto;
 }
 
 .newsdescription img{
@@ -1739,6 +1741,50 @@ color: white;
 	margin-top: 2px;
 }
 
+#tutorial{
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	z-index: 2;
+	background-color: rgba(0,0,0,0.5)
+}
+
+#tutorialcontent{
+	text-align: center;
+	position: fixed;
+	display: none;
+	width: 90%;
+	height: 68%;
+	top: 20%;
+	left: 5%;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 5%;
+	padding-bottom: 12%;
+	border: 4px solid #f6f6f6;
+	background-size: cover;
+	border-radius: 20px;
+	background-color: #f6f6f6;
+	color: #0b2e13;
+	overflow: scroll;
+}
+
+#tutorialcontent h1 {
+	font-weight: bold;
+}
+
+#tutorialcontent p {
+font-size: 20px;
+}
 
 
 /* ------ Media Queries ---- */
@@ -1802,4 +1848,79 @@ color: white;
 	0%   { opacity:1; }
 	50%  { opacity:0; }
 	100% { opacity:1; }
+}
+
+/*- -------- Slide to Unlock ------ */
+
+.slide-to-unlock {
+	position: relative;
+	width: 90%;
+	height: 36px;
+}
+
+.slide-to-unlock .dragdealer {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-radius: 0;
+	background: none;
+	height: auto;
+}
+
+.slide-to-unlock .handle {
+	height: 100%;
+	border-radius: 0;
+}
+
+.slide-to-unlock .disabled {
+	background: none;
+}
+
+.slide-to-unlock .slide-text {
+	position: absolute;
+	top: 0;
+	height: 80px;
+	font-size: 30px;
+	line-height: 80px;
+	text-align: center;
+}
+
+.old-slider {
+	margin-left: 5%;
+	border-radius: 16px;
+	background: #222;
+	background-image: -webkit-linear-gradient(top, #111 0%, #333 100%);
+	background-image: -moz-linear-gradient(top, #111 0%, #333 100%);
+	background-image: -o-linear-gradient(top, #111 0%, #333 100%);
+	background-image: linear-gradient(to bottom, #fff 0%, #f6f6f6 100%);
+	margin-top: 30px;
+}
+
+.old-slider .dragdealer {
+	top: 2px;
+	bottom: 2px;
+	left: 2px;
+	right: 2px;
+}
+
+.old-slider .slide-text {
+	right: 0;
+	width: 290px;
+	height: 70px;
+	color: #999;
+	line-height: 70px;
+	cursor: default;
+}
+
+.old-slider .handle {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: #ccc;
+	background-image: -webkit-linear-gradient(top, #f1f1f1 0%, #aaa 100%);
+	background-image: -moz-linear-gradient(top, #f1f1f1 0%, #aaa 100%);
+	background-image: -o-linear-gradient(top, #f1f1f1 0%, #aaa 100%);
+	background-image: linear-gradient(to bottom, #f1f1f1 0%, #333 100%);
 }

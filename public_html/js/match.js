@@ -38,7 +38,6 @@ function initMatch(){
     displayPostMatchEvents(gameid);
     $(".submitbutton").hide();
     hideSpans();
-    slideToUnlock();
     manageTimestamps();
 
 
@@ -57,10 +56,6 @@ function initMatch(){
             $(':button').prop('disabled', true)
         }, 15000);
     }
-
-
-    console.log(livegame == false);
-
 
 
 }
@@ -1411,12 +1406,14 @@ function displayVouchers(unlimited){
                         vouchercontainertitle.id = 'vouchercontainertitle';
                         vouchercontainertitle.innerHTML = "<p>PARTNER</p>";
 
+                        if(window.location.href.indexOf("profiles") > -1){
+                            var waxieslogo = document.createElement('img');
+                            waxieslogo.classList.add('waxieslogo');
+                            waxieslogo.src = "http://waxies.dk/wp-content/themes/waxies/images/logo.png";
+                            vouchercontainertitle.appendChild(waxieslogo);
+                            vouchercontainertitle.appendChild(waxieslogo);
+                        }
 
-                        var waxieslogo = document.createElement('img');
-                        waxieslogo.classList.add('waxieslogo');
-                        waxieslogo.src = "http://waxies.dk/wp-content/themes/waxies/images/logo.png";
-
-                        vouchercontainertitle.appendChild(waxieslogo);
 
                         var voucher1 = document.createElement('div');
                         voucher1.id = 'voucher1';
@@ -1546,7 +1543,7 @@ function voucherDescription () {
                             "drinks in this bar during this match! Go to the bar and ask the bartender to swipe the voucher." +
                             " The bartender should do it, not you. If you do it, you lose your right to your discount.";
 
-                        /* var button = document.createElement('button');
+                         var button = document.createElement('button');
                          button.classList.add('voucherconfirmation');
                          button.id = 'voucherconfirmation';
                          button.innerHTML = 'USE VOUCHER';
@@ -1563,7 +1560,7 @@ function voucherDescription () {
                          });
 
                          });
-                         voucherdescription.appendChild(button);*/
+                         voucherdescription.appendChild(button);
 
                         var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
                         vouchersRef.on('value', function (snapshot) {
@@ -1598,59 +1595,43 @@ function waxxiesVoucherDescription () {
             "Show this Coupon and let the bartender swipe the bar to get the discount.<br><br>" +
             "Enjoy the match!";
 
-        var slideslider = document.createElement('div');
-        slideslider.classList.add('slide-to-unlock');
-        slideslider.classList.add('old-slider');
 
-        var slidedragdealer = document.createElement('div');
-        slidedragdealer.id = 'slide-to-unlock-old';
-        slidedragdealer.classList.add('dragdealer');
+        var button = document.createElement('button');
+        button.classList.add('voucherconfirmation');
+        button.classList.add('readmore');
+        button.id = 'voucherconfirmation';
+        button.innerHTML = 'USE VOUCHER';
+        button.disabled = false;
+        button.addEventListener("click", function () {
+            getPointsTable('voucher');
+            hideVoucherOverlay();
 
-        var slidetext = document.createElement('div');
-        slidetext.classList.add('slide-text');
-
-        var slidehandle = document.createElement('div');
-        slidehandle.classList.add('handle');
-
-        slidedragdealer.appendChild(slidetext);
-        slidedragdealer.appendChild(slidehandle);
-        slideslider.appendChild(slidedragdealer);
-        voucherdescription.appendChild(slideslider);
-
-
-        /*var button = document.createElement('button');
-         button.classList.add('voucherconfirmation');
-         button.id = 'voucherconfirmation';
-         button.innerHTML = 'USE VOUCHER';
-         button.disabled = false;
-         button.addEventListener("click", function () {
-         getPointsTable('voucher');
-         hideVoucherOverlay();
-
-         firebase.database().ref('/checkins/').on('value', function (snapshot) {
-         snapshot.forEach(function (child) {
-         if (child.val()[uid] != null) {
-         var key = Object.keys(child.val()[uid]);
-         console.log(key);
-         }
-         });
-         }); */
+            firebase.database().ref('/checkins/').on('value', function (snapshot) {
+                snapshot.forEach(function (child) {
+                    if (child.val()[uid] != null) {
+                        var key = Object.keys(child.val()[uid]);
+                        console.log(key);
+                    }
+                });
+            });
 
 
-        var vouchersRef = firebase.database().ref('/vouchers/waxxies/' + uid);
-        var randomvoucherNumber = Math.floor(Math.random() * Math.floor(10000000));
+            var vouchersRef = firebase.database().ref('/vouchers/waxxies/' + uid);
+            var randomvoucherNumber = Math.floor(Math.random() * Math.floor(10000000));
 
-        vouchersRef.push({
+            vouchersRef.push({
 
-            vouchernumber: randomvoucherNumber,
-            timestamp: Math.floor(Date.now() / 1000)
+                vouchernumber: randomvoucherNumber,
+                timestamp: Math.floor(Date.now() / 1000)
 
+
+            });
 
         });
 
+        voucherdescription.appendChild(button);
     }
 
-    slideToUnlock();
 
 
 }
@@ -1936,6 +1917,7 @@ function manageTimestamps () {
             document.getElementById('squad').style.height = '80%';
             document.getElementById('latestgameevent').style.display = 'none';
 
+
             var postmatchcontainer = document.getElementById('postmatchcontainer');
             postmatchcontainer.style.display = 'none';
 
@@ -2040,8 +2022,8 @@ function manageTimestamps () {
             displayMVP();
 
             /*   setTimeout(function () {
-                hideSpans();
-            }, 2000); */
+             hideSpans();
+             }, 2000); */
 
             var postmatchtitle = document.getElementById('postmatchcontainertitle');
             postmatchtitle.innerHTML = "Final Whistle. What's your opinion?";
@@ -2065,44 +2047,13 @@ function hideSpans(){
 
 }
 
-function slideToUnlock(){
-    $(function() {
-        var slideToUnlockOld = new Dragdealer('slide-to-unlock-old', {
-            steps: 2,
-            callback: function(x, y) {
-                // Only 0 and 1 are the possible values because of "steps: 2"
-                if (x) {
-                    this.disable();
-                    $('#slide-to-unlock-old').fadeOut();
-                    setTimeout(function() {
-                        waxxiesPushDatabase();
-                    }, 2000);
+function tutorialMatchInteractions() {
+    var seenvoucher = JSON.parse(localStorage.getItem("seentutorialmatchinteractions"));
 
+    if (seenvoucher == null) {
+        localStorage.setItem("seentutorialmatchinteractions", true);
+        $('#tutorial').fadeIn('slow');
+        $('#tutorialcontent').fadeIn('slow');
 
-                    /* Bring unlock screen back after a while
-                     setTimeout(function() {
-                     slideToUnlockOld.enable();
-                     slideToUnlockOld.setValue(0, 0, true);
-                     $('#slide-to-unlock-old').fadeIn();
-                     }, 5000);*/
-                }
-            }
-        });
-    });
-}
-
-function waxxiesPushDatabase() {
-    getPointsTable('voucher');
-    hideVoucherOverlay();
-
-    var vouchersRef = firebase.database().ref('/vouchers/waxxies/' + uid);
-    var randomvoucherNumber = Math.floor(Math.random() * Math.floor(10000000));
-
-    vouchersRef.push({
-        vouchernumber: randomvoucherNumber,
-        timestamp: Math.floor(Date.now() / 1000)
-
-
-    });
-
+    }
 }

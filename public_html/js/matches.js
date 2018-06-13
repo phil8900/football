@@ -4,6 +4,7 @@ function initMatches(matches){
 	document.getElementById('matchesbutton').src = 'img/calendar_select.svg';
 	updateTeamRanking(true);
 	showMatches();
+	tutorialMatches();
 
 	if(matches){
 		var swiper = new Swiper('.swiper-container', {
@@ -193,6 +194,18 @@ function topBarBlack (){
 	document.getElementById('topNav').style.backgroundColor = 'black';
 	document.getElementById('firstsubtopnav').style.backgroundColor = 'black';
 
+}
+
+function tutorialMatches() {
+	var seenvoucher = JSON.parse(localStorage.getItem("seentutorialmatches"));
+
+	if (seenvoucher == null) {
+		localStorage.setItem("seentutorialmatches", true);
+		$('#tutorial').fadeIn('slow');
+		$('#tutorialcontent').fadeIn('slow');
+
+
+	}
 }
 
 

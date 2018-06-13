@@ -12,10 +12,26 @@
         background: url("https://i.ebayimg.com/images/g/m6IAAOSwoydWo8qE/s-l1600.jpg") no-repeat center center;
     }
 </style>
-<body onload="initMatch();initMatches(false);">
+<body onload="initMatch();initMatches(false);tutorialMatchInteractions();">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 
+<div id="tutorial">
+    <div id="tutorialcontent">
+        <b>LOUDSTAND TUTORIAL</b>
+        <br>
+        <h1>#5 - Matches Interaction</h1>
+        <br>
+
+        <p>You have checked-in, so now you are inside the virtual stadium! The match events will start popping
+            up in your screen. All you have to do is react to the event with one click. Additionally, you can swipe left
+            the screen to find all the match statistics, and swipe right to get all the match events in one place!
+            So if you have missed some of the events during the match, you can still react to them in this screen!
+            Good match, and enjoy LoudStand!
+        </p>
+
+    </div>
+</div>
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
     <div class="firstsubtopnavmatchinteraction">
@@ -74,11 +90,11 @@
 
 
 <div id="voucheroverlay" class="animated fadeIn" onclick="hideVoucherOverlay();"></div>
+<div id="voucheroverlaycontentborder" class="animated fadeIn"></div>
 <div id="voucheroverlaycontent" class="animated fadeIn">
     <div class="vouchertitle"><h1>DISCOUNT</h1></div>
     <div id="voucheroverlayinnercontent">
-        <div id="voucherdescription">
-        </div>
+        <div id="voucherdescription"></div>
     </div>
 </div>
 

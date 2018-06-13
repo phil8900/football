@@ -91,3 +91,15 @@ function readMore(){
 		});
 	});
 }
+
+function tutorialHome() {
+	var seenvoucher = JSON.parse(localStorage.getItem("seentutorialhome"));
+
+	if (seenvoucher == null) {
+		localStorage.setItem("seentutorialhome", true);
+		$('#tutorial').fadeIn('slow');
+		$('#tutorialcontent').fadeIn('slow');
+
+
+	}
+}
