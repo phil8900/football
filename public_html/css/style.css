@@ -442,7 +442,7 @@ body {
 	-o-transform: skew(-30deg);
 	background: #0F281D;
 	margin:auto;
-	margin-top: 24%;
+	margin-top: 21%;
 	text-align: center;
 	border: 1px solid #0F281D;
 	padding: 10px;
@@ -485,10 +485,10 @@ time p{
 
 .homediv{
 	float: left;
-	margin-top: 4%;
+	margin-top: 1%;
 	width: 70%;
 	text-transform: uppercase;
-	color:black;
+	color: black;
 	max-height: 25%;
 	margin-left: 5%;
 }
