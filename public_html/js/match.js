@@ -1408,6 +1408,11 @@ function displayVouchers(unlimited){
         snapshot.forEach(function(child) {
             firebase.database().ref('/checkins/' + child.val() + '/' + uid).once('value').then(function(snapshot) {
                 if (snapshot.val() != null) {
+                    if(unlimited){
+                        if(!('ChIJNbq445M_TEYRQFix7VRFbIE' == child.val())){
+                            return;
+                        }
+                    }
 
                     var voucherscontainer = document.getElementById('vouchercontainer');
 
