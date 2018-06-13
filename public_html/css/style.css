@@ -447,6 +447,7 @@ body {
 	border: 1px solid #0F281D;
 	padding: 10px;
 	box-shadow: 5px 10px 18px #0F281D;
+	overflow: hidden;
 }
 
 .timediv p{
@@ -454,7 +455,7 @@ body {
 	-moz-transform: skew(30deg);
 	-o-transform: skew(30deg);
 	color: white;
-	font-size: 16px;
+	font-size: 12px;
 }
 
 .matchdate{
@@ -474,9 +475,12 @@ time p{
 }
 
 .homediv .matchlogo{
-	width:33%;
-	padding-right:5%;
+	width: 50px;
+	margin-right: 6px;
 	float: left;
+	height: 36px;
+	border: 2px solid black;
+	border-radius: 5px;
 }
 
 .homediv{
@@ -500,9 +504,12 @@ time p{
 }
 
 .awaydiv .matchlogo{
-	width:33%;
-	padding-left:5%;
+	width: 50px;
+	margin-left: 6px;
 	float: right;
+	height: 36px;
+	border: 2px solid black;
+	border-radius: 5px;
 }
 
 .matchhometeam{
@@ -513,6 +520,7 @@ time p{
 	font-size: 14px;
 	color: #0F281D;
 	text-align: left;
+	margin-top: -4px;
 }
 
 .matchawayteam{
@@ -523,6 +531,7 @@ time p{
 	font-size: 14px;
 	color: #0F281D;
 	text-align: right;
+	margin-top: -4px;
 }
 
 #upcoming{
@@ -1792,6 +1801,7 @@ color: white;
 	background-color: #f6f6f6;
 	color: #0b2e13;
 	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 #tutorialcontent h1 {
