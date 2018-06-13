@@ -1461,10 +1461,10 @@ function displayVouchers(unlimited){
 
                             if(!unlimited){
                                 if(snapshot.numChildren() == 0) {
-                                    voucher1.style.backgroundColor = '#164065';
+                                    voucher1.style.backgroundColor = '#0F281D';
                                     voucher1.style.color = '#f6f6f6';
                                     voucher1.innerHTML = 'Discount #1';
-                                    voucher2.style.backgroundColor = '#164065';
+                                    voucher2.style.backgroundColor = '#0F281D';
                                     voucher2.style.color = '#f6f6f6';
                                     voucher2.innerHTML = 'Discount #2';
                                     voucher1.addEventListener("click", function () { showVoucherOverlay(unlimited);});

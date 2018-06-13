@@ -132,7 +132,7 @@ function showOwnProfile(snapshotvalue, entry){
 
     var image = document.createElement('img');
     image.src = snapshotvalue['teamlogo'];
-    image.classList.add('rankinglogo');
+    image.classList.add('rankinglogoflag');
     imagewrapper.appendChild(image);
 
 
@@ -789,7 +789,7 @@ function showSquad(nextgame){
 
             var countspan = document.createElement('span');
             countspan.classList.add('mvpcountspan');
-            countspan.innerHTML = 0;
+            countspan.innerHTML = 'Voted MVP ' + 0 + ' times';
 //	countspan.style.display = 'none';
             div.appendChild(countspan);
 
@@ -801,7 +801,7 @@ function showSquad(nextgame){
 
             var goalcountspan = document.createElement('span');
             goalcountspan.classList.add('goalcountspan');
-            goalcountspan.innerHTML = 0;
+            goalcountspan.innerHTML =  0;
 //	goalcountspan.style.display = 'none';
             div.appendChild(goalcountspan);
 
@@ -1163,7 +1163,7 @@ function displayStatsGoals(){
     document.getElementById('dropdown').innerHTML = 'Goals';
 
 
-    $('.userelement:gt(2)').show();
+    $('.userelement:gt(4)').show();
 
     var players = $("#squad .userelement");
 
@@ -1172,6 +1172,7 @@ function displayStatsGoals(){
     });
 
     $("#statsgoals").html(orderedDivs);
+    $('.mvpcountspan').hide();
 
     $('.userelement:gt(2)').hide();
 }

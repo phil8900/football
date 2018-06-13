@@ -11,27 +11,210 @@
 
 <script>
 	var body = document.querySelector('body');
-		body.className = 'team' + ownteam;
+	body.className = 'team' + ownteam;
 </script>
 
 <style>
+	body.team3262:before {
+		background: url("img/backgrounds/germany.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
 	body.team3299:before {
-	background: url("img/backgrounds/england.png") no-repeat center center;
-	background-size: cover;
-	margin-top: 60px;
-}
-	
+		background: url("img/backgrounds/england.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
 
+	body.team3300:before {
+		background: url("img/backgrounds/portugal.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
 
+	body.team3375:before {
+		background: url("img/backgrounds/spain.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
 
+	body.team3377:before {
+		background: url("img/backgrounds/france.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3382:before {
+		background: url("img/backgrounds/belgium.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3384:before {
+		background: url("img/backgrounds/switzerland.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3433:before {
+		background: url("img/backgrounds/australia.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3435:before {
+		background: url("img/backgrounds/japan.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3436:before {
+		background: url("img/backgrounds/denmark.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3437:before {
+		background: url("img/backgrounds/argentina.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3438:before {
+		background: url("img/backgrounds/serbia.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3439:before {
+		background: url("img/backgrounds/brazil.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3442:before {
+		background: url("img/backgrounds/poland.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3444:before {
+		background: url("img/backgrounds/nigeria.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3448:before {
+		background: url("img/backgrounds/russia.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3449:before {
+		background: url("img/backgrounds/uruguay.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3499:before {
+		background: url("img/backgrounds/senegal.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3556:before {
+		background: url("img/backgrounds/croatia.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3557:before {
+		background: url("img/backgrounds/sweden.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3574:before {
+		background: url("img/backgrounds/iceland.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3575:before {
+		background: url("img/backgrounds/morocco.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3577:before {
+		background: url("img/backgrounds/panama.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3582:before {
+		background: url("img/backgrounds/iran.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3584:before {
+		background: url("img/backgrounds/peru.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3589:before {
+		background: url("img/backgrounds/southkorea.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3670:before {
+		background: url("img/backgrounds/tunisia.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3672:before {
+		background: url("img/backgrounds/egypt.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3807:before {
+		background: url("img/backgrounds/saudiarabia.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team3816:before {
+		background: url("img/backgrounds/colombia.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team6303:before {
+		background: url("img/backgrounds/mexico.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
+
+	body.team8497:before {
+		background: url("img/backgrounds/costarica.png") no-repeat center center;
+		background-size: cover;
+		margin-top: 60px;
+	}
 
 </style>
 
 <body onload="initProfiles()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
-<div id="tutorial">
+<div id="tutorial" onclick="$('#tutorial').fadeOut();">
 	<div id="tutorialcontent">
+		<div id="closetutorial" onclick="$('#tutorial').fadeOut();">X</div>
 		<b>LOUDSTAND TUTORIAL</b>
 		<br>
 		<h1>#2 - Profiles</h1>
@@ -43,12 +226,12 @@
 			See how big of a fan someone is is by looking at their fandom level and how many points do they have.
 			Also, you can check their latest activity, like where did they watch the last match and how did they
 			react to the coach decisions in the last match.</p>
-<br>
+		<br>
 		<b>TEAM PROFILE</b>
-			<p>Here you can know how big a team can be based on the support they get from their fans,
+		<p>Here you can know how big a team can be based on the support they get from their fans,
 			by checking how high the team is ranking and looking at their fanbase level. Also, you can see the overall
-				opinion of the fans about the team on different dimensions, such as Goals, Man of The Match, Starting 11,
-				Coach Performance and Team Performance.</p>
+			opinion of the fans about the team on different dimensions, such as Goals, Man of The Match, Starting 11,
+			Coach Performance and Team Performance.</p>
 		</p>
 	</div>
 </div>
@@ -93,7 +276,13 @@
 		<div class="swiper-slide">
 			<div class="teamprofilepadding" id="teamprofile">
 				<div id='ownteamranking'></div>
-				<div id='squad' class="activitybox activityboxprofiles">
+				<div id="comingsoon" class="activitybox">
+					<h2 style="color: #0b2e13;">COMING SOON FEATURE</h2>
+					<br>
+					<p style="color: #0b2e13;">Stay tuned as we are preparing a really cool new feature!</p>
+				</div>
+
+			<!--	<div id='squad' class="activitybox activityboxprofiles">   ADD LATER
 					<h2 style="color: #0F281D">TEAM STATISTICS</h2>
 					<br>
 					<div class="dropdown">
@@ -121,7 +310,7 @@
 					<div id='defender'></div>
 					<div id='midfielder'></div>
 					<div id='striker'></div>
-				</div>
+				</div>  -->
 			</div>
 		</div>
 	</div>

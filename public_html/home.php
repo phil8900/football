@@ -43,8 +43,9 @@ for($x=0;$x<$limit;$x++) {
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 
-<div id="tutorial">
+<div id="tutorial" onclick="$('#tutorial').fadeOut();">
 	<div id="tutorialcontent">
+		<div id="closetutorial" onclick="$('#tutorial').fadeOut();">X</div>
 		<b>LOUDSTAND TUTORIAL</b>
 		<br>
 		<h1>#1 - Home Screen</h1>
