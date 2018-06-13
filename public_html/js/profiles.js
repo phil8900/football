@@ -40,7 +40,7 @@ function initProfiles(){
 
         document.getElementById('profilebutton').src = 'img/user_select.svg';
 
-        userRef.on('value', function(snapshot) {
+        userRef.once('value', function(snapshot) {
             var array = new Array();
             snapshot.forEach(function(child) {
                 if(child.val().team == ownteam){
@@ -385,7 +385,7 @@ function getLastActivities() {
                     });
                     }
                     else{
-                    firebase.database().ref('/fixtures/' + gameid + '/events/' + child.val().eventId + '/reactions/users').on('value', function (snapshot) {
+                    firebase.database().ref('/fixtures/' + gameid + '/events/' + child.val().eventId + '/reactions/users').once('value', function (snapshot) {
                         var event = child.val();
                         if ((snapshot.val() != null) && (Object.keys(snapshot.val()).includes(uid))) {
                             showActivityBox('reaction', event, gameid, snapshot.val());
@@ -397,7 +397,7 @@ function getLastActivities() {
         });
     });
 
-    firebase.database().ref('/checkins/').on('value', function (snapshot) {
+    firebase.database().ref('/checkins/').once('value', function (snapshot) {
         snapshot.forEach(function (child) {
             if (child.val()[uid] != null) {
                 var key = Object.keys(child.val()[uid]);
@@ -407,7 +407,7 @@ function getLastActivities() {
     });
 
 
-    firebase.database().ref('/vouchers/waxxies/' + uid ).on('value', function (snapshot) {
+    firebase.database().ref('/vouchers/waxxies/' + uid ).once('value', function (snapshot) {
         snapshot.forEach(function(child){
             if (child.val() != null) {
                 showActivityBox('voucher', child.val(), null, 'ChIJNbq445M_TEYRQFix7VRFbIE');
@@ -416,7 +416,7 @@ function getLastActivities() {
     });
 
     fixtures.forEach(function(fixture) {
-        firebase.database().ref('/vouchers/' + fixture.gameid + '/' + uid).on('value', function (snapshot) {
+        firebase.database().ref('/vouchers/' + fixture.gameid + '/' + uid).once('value', function (snapshot) {
             snapshot.forEach(function(child){
                 if (child.val() != null) {
                     showActivityBox('voucher', child.val(), null, child.val().placeid);
