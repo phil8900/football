@@ -41,6 +41,28 @@ function initMatch(){
     slideToUnlock();
     manageTimestamps();
 
+
+    var livegame = getLiveGame();
+    if (livegame == false) {
+        setTimeout(function () {
+            $(':button').prop('disabled', true)
+        }, 5000);
+        setTimeout(function () {
+            $(':button').prop('disabled', true)
+        }, 10000);
+        setTimeout(function () {
+            $(':button').prop('disabled', true)
+        }, 12000);
+        setTimeout(function () {
+            $(':button').prop('disabled', true)
+        }, 15000);
+    }
+
+
+    console.log(livegame == false);
+
+
+
 }
 
 function showGameInformation(game_id){
@@ -81,7 +103,7 @@ function getLiveGameEvents(gameid){
         });
     });
     setTimeout(function(){showLastGameEvent();}, 2000);
-    
+
 }
 
 function showLastGameEvent(){
@@ -485,49 +507,49 @@ function manageMvp(playerid, gameid, button){
         }
         else{
             //firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp').remove();
-            $('#mvp .checkinbutton').hide();
+            $('#mvp .checkinbuttonstarting11').hide();
         }
     })
 }
 
 function getPlayerInfo(playerid, event, eventlist){
-	var eventwrapper = document.getElementById(event.eventId);
-	var latestgameevent = document.getElementById("latestgameevent");
-	var playername = playerid;
+    var eventwrapper = document.getElementById(event.eventId);
+    var latestgameevent = document.getElementById("latestgameevent");
+    var playername = playerid;
 
-	firebase.database().ref('/teams/' + event.verein_id + '/squad/' + playerid).once('value', function(snapshot) {
-		if(snapshot.val() != null){
-			playername = snapshot.val().shortname;
-			if(eventwrapper != null){
-				eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
-				if(latestgameevent != null){
-					latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
-				}
-			}
-		}
-		var playerspan = document.createElement("div");
+    firebase.database().ref('/teams/' + event.verein_id + '/squad/' + playerid).once('value', function(snapshot) {
+        if(snapshot.val() != null){
+            playername = snapshot.val().shortname;
+            if(eventwrapper != null){
+                eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+                if(latestgameevent != null){
+                    latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+                }
+            }
+        }
+        var playerspan = document.createElement("div");
 
-		if(event.type == 'wechsel'){
-			if(playerid == event.spieler_id_1){
-				playerspan.appendChild(getIconForEventType('auswechsel', null));
-			}
-			else{
-				playerspan.appendChild(getIconForEventType('einwechsel', null));
-			}
-		}
+        if(event.type == 'wechsel'){
+            if(playerid == event.spieler_id_1){
+                playerspan.appendChild(getIconForEventType('auswechsel', null));
+            }
+            else{
+                playerspan.appendChild(getIconForEventType('einwechsel', null));
+            }
+        }
 
-		var player = document.createTextNode(' ' + playername);
-		playerspan.appendChild(player);
-		playerspan.classList.add('player');
-		eventlist.appendChild(playerspan);
-		//latestgameevent.getElementsByClassName("eventlist")[0].innerHTML = playerspan.innerHTML;
-		//latestgameevent.appendChild(playerspan);
+        var player = document.createTextNode(' ' + playername);
+        playerspan.appendChild(player);
+        playerspan.classList.add('player');
+        eventlist.appendChild(playerspan);
+        //latestgameevent.getElementsByClassName("eventlist")[0].innerHTML = playerspan.innerHTML;
+        //latestgameevent.appendChild(playerspan);
 
-		if(eventwrapper != undefined && latestgameevent != null){
-			latestgameevent.innerHTML = eventwrapper.innerHTML;
-		}
+        if(eventwrapper != undefined && latestgameevent != null){
+            latestgameevent.innerHTML = eventwrapper.innerHTML;
+        }
 
-	});
+    });
 }
 
 function getTeamInfo(gameid, wrapper) {
@@ -865,14 +887,14 @@ function rateStars(event_id, reaction){
 
                     userReactionRef.once('value').then(function(snapshot) {
 
-						if(snapshot.val() == null){
-							var currenttime = Math.floor(Date.now() / 1000);
-							var updates = {};
-							updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = reaction;
+                        if(snapshot.val() == null){
+                            var currenttime = Math.floor(Date.now() / 1000);
+                            var updates = {};
+                            updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/reaction'] = reaction;
 
-							reactionRef.child(reaction).transaction(function(reaction) {
-								
-								updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/timestamp'] = currenttime;
+                            reactionRef.child(reaction).transaction(function(reaction) {
+
+                                updates['/fixtures/' + child.key + '/events/' + event_id + '/stars/users/' + uid + '/timestamp'] = currenttime;
 
                                 firebase.database().ref().update(updates);
 
@@ -1141,177 +1163,177 @@ function displayPostMatchEvents (gameid){
         interactions.appendChild(postmatchcontainer);
 
     }
-	var interactions = document.getElementById('interactions');
-	var postmatchcontainer = document.getElementById('postmatchcontainer');
+    var interactions = document.getElementById('interactions');
+    var postmatchcontainer = document.getElementById('postmatchcontainer');
 
-	var postmatchcontainertitle = document.getElementById('postmatchcontainertitle');
+    var postmatchcontainertitle = document.getElementById('postmatchcontainertitle');
 
-	if(postmatchcontainertitle == null){
+    if(postmatchcontainertitle == null){
 
-		var MVP = document.createElement('div');
-		MVP.classList.add('MVP');
-		MVP.classList.add('col-xs-4');
-		MVP.innerHTML = "MVP";
-		MVP.addEventListener("click", function(){ displayMVP();});
+        var MVP = document.createElement('div');
+        MVP.classList.add('MVP');
+        MVP.classList.add('col-xs-4');
+        MVP.innerHTML = "MVP";
+        MVP.addEventListener("click", function(){ displayMVP();});
 
-		var submitmvp = document.createElement('button');
-		submitmvp.classList.add('submitbutton');
-		submitmvp.innerHTML = 'Submit!';
+        var submitmvp = document.createElement('button');
+        submitmvp.classList.add('submitbutton');
+        submitmvp.innerHTML = 'Submit!';
 
-		var voteformvpcontent = document.createElement('div');
-		voteformvpcontent.classList.add('postmatchvotecontent');
-		voteformvpcontent.innerHTML = 'VOTE FOR MVP HERE';
+        var voteformvpcontent = document.createElement('div');
+        voteformvpcontent.classList.add('postmatchvotecontent');
+        voteformvpcontent.innerHTML = 'VOTE FOR MVP HERE';
 
-		var voteformvp = document.getElementById("mvp");
-		voteformvp.appendChild(voteformvpcontent);
-		voteformvp.appendChild(submitmvp);
+        var voteformvp = document.getElementById("mvp");
+        voteformvp.appendChild(voteformvpcontent);
+        voteformvp.appendChild(submitmvp);
 
-		var finalreview = document.createElement('div');
-		finalreview.classList.add('finalreview');
-		finalreview.innerHTML = "Final Review";
-		finalreview.classList.add('col-xs-4');
-		finalreview.addEventListener("click", function(){ displayFinalReview();});
+        var finalreview = document.createElement('div');
+        finalreview.classList.add('finalreview');
+        finalreview.innerHTML = "Final Review";
+        finalreview.classList.add('col-xs-4');
+        finalreview.addEventListener("click", function(){ displayFinalReview();});
 
-		var submitfinalreview = document.createElement('button');
-		submitfinalreview.classList.add('submitbutton');
-		submitfinalreview.innerHTML = 'Submit!';
+        var submitfinalreview = document.createElement('button');
+        submitfinalreview.classList.add('submitbutton');
+        submitfinalreview.innerHTML = 'Submit!';
 
-		var voteforfinalreviewcontent = document.createElement('div');
-		voteforfinalreviewcontent.classList.add('postmatchvotecontent');
+        var voteforfinalreviewcontent = document.createElement('div');
+        voteforfinalreviewcontent.classList.add('postmatchvotecontent');
 
-		var voteforfinalreview = document.createElement('div');
-		voteforfinalreview.classList.add('postmatchvote');
-		voteforfinalreview.id = 'finalreview';
-		voteforfinalreview.appendChild(voteforfinalreviewcontent);
-		voteforfinalreview.appendChild(submitfinalreview);
+        var voteforfinalreview = document.createElement('div');
+        voteforfinalreview.classList.add('postmatchvote');
+        voteforfinalreview.id = 'finalreview';
+        voteforfinalreview.appendChild(voteforfinalreviewcontent);
+        voteforfinalreview.appendChild(submitfinalreview);
 
-		var onesymbol = document.createElement('i');
-		onesymbol.classList.add('fas');
-		onesymbol.classList.add('fa-star');
+        var onesymbol = document.createElement('i');
+        onesymbol.classList.add('fas');
+        onesymbol.classList.add('fa-star');
 
-		var twosymbol = document.createElement('i');
-		twosymbol.classList.add('fas');
-		twosymbol.classList.add('fa-star');
+        var twosymbol = document.createElement('i');
+        twosymbol.classList.add('fas');
+        twosymbol.classList.add('fa-star');
 
-		var threesymbol = document.createElement('i');
-		threesymbol.classList.add('fas');
-		threesymbol.classList.add('fa-star');
+        var threesymbol = document.createElement('i');
+        threesymbol.classList.add('fas');
+        threesymbol.classList.add('fa-star');
 
-		var foursymbol = document.createElement('i');
-		foursymbol.classList.add('fas');
-		foursymbol.classList.add('fa-star');
+        var foursymbol = document.createElement('i');
+        foursymbol.classList.add('fas');
+        foursymbol.classList.add('fa-star');
 
-		var fivesymbol = document.createElement('i');
-		fivesymbol.classList.add('fas');
-		fivesymbol.classList.add('fa-star');
+        var fivesymbol = document.createElement('i');
+        fivesymbol.classList.add('fas');
+        fivesymbol.classList.add('fa-star');
 
-		var onebutton = document.createElement("button");
-		onebutton.classList.add('onebutton');
-		onebutton.appendChild(onesymbol);
+        var onebutton = document.createElement("button");
+        onebutton.classList.add('onebutton');
+        onebutton.appendChild(onesymbol);
 
-		var twobutton = document.createElement("button");
-		twobutton.appendChild(twosymbol);
-		twobutton.classList.add('twobutton');
+        var twobutton = document.createElement("button");
+        twobutton.appendChild(twosymbol);
+        twobutton.classList.add('twobutton');
 
-		var threebutton = document.createElement("button");
-		threebutton.appendChild(threesymbol);
-		threebutton.classList.add('threebutton');
+        var threebutton = document.createElement("button");
+        threebutton.appendChild(threesymbol);
+        threebutton.classList.add('threebutton');
 
-		var fourbutton = document.createElement("button");
-		fourbutton.appendChild(foursymbol);
-		fourbutton.classList.add('fourbutton');
+        var fourbutton = document.createElement("button");
+        fourbutton.appendChild(foursymbol);
+        fourbutton.classList.add('fourbutton');
 
-		var fivebutton = document.createElement("button");
-		fivebutton.appendChild(fivesymbol);
-		fivebutton.classList.add('fivebutton');
+        var fivebutton = document.createElement("button");
+        fivebutton.appendChild(fivesymbol);
+        fivebutton.classList.add('fivebutton');
 
-		displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+        displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
 
-		onebutton.addEventListener("click", function () {
-			finalRateStars(gameid, 1);
-			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-		});
-		twobutton.addEventListener("click", function () {
-			finalRateStars(gameid, 2);
-			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-		});
-		threebutton.addEventListener("click", function () {
-			finalRateStars(gameid, 3);
-			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-		});
-		fourbutton.addEventListener("click", function () {
-			finalRateStars(gameid, 4);
-			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-		});
-		fivebutton.addEventListener("click", function () {
-			finalRateStars(gameid, 5);
-			displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-		});
+        onebutton.addEventListener("click", function () {
+            finalRateStars(gameid, 1);
+            displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+        });
+        twobutton.addEventListener("click", function () {
+            finalRateStars(gameid, 2);
+            displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+        });
+        threebutton.addEventListener("click", function () {
+            finalRateStars(gameid, 3);
+            displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+        });
+        fourbutton.addEventListener("click", function () {
+            finalRateStars(gameid, 4);
+            displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+        });
+        fivebutton.addEventListener("click", function () {
+            finalRateStars(gameid, 5);
+            displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+        });
 
-		voteforfinalreviewcontent.appendChild(onebutton);
-		voteforfinalreviewcontent.appendChild(twobutton);
-		voteforfinalreviewcontent.appendChild(threebutton);
-		voteforfinalreviewcontent.appendChild(fourbutton);
-		voteforfinalreviewcontent.appendChild(fivebutton);
+        voteforfinalreviewcontent.appendChild(onebutton);
+        voteforfinalreviewcontent.appendChild(twobutton);
+        voteforfinalreviewcontent.appendChild(threebutton);
+        voteforfinalreviewcontent.appendChild(fourbutton);
+        voteforfinalreviewcontent.appendChild(fivebutton);
 
-		var finalcomment = document.createElement('div');
-		finalcomment.classList.add('finalcomment');
-		finalcomment.innerHTML = "Final Comment";
-		finalcomment.classList.add('col-xs-4');
-		finalcomment.addEventListener("click", function(){ displayFinalComment();});
+        var finalcomment = document.createElement('div');
+        finalcomment.classList.add('finalcomment');
+        finalcomment.innerHTML = "Final Comment";
+        finalcomment.classList.add('col-xs-4');
+        finalcomment.addEventListener("click", function(){ displayFinalComment();});
 
-		var commentareacontent = document.createElement('input');
-		commentareacontent.classList.add('postmatchvotecontent');
-		commentareacontent.placeholder = 'YOUR OPINION GOES HERE...';
+        var commentareacontent = document.createElement('input');
+        commentareacontent.classList.add('postmatchvotecontent');
+        commentareacontent.placeholder = 'YOUR OPINION GOES HERE...';
 
-		var submitfinalcomment = document.createElement('button');
-		submitfinalcomment.classList.add('submitbutton');
-		submitfinalcomment.innerHTML = 'Submit!';
+        var submitfinalcomment = document.createElement('button');
+        submitfinalcomment.classList.add('submitbutton');
+        submitfinalcomment.innerHTML = 'Submit!';
 
-		submitfinalcomment.addEventListener("click", function() {
-			firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
-				if (child.val() == null) {
-					firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').set({
-						finalcomment: commentareacontent.value,
-						timestamp: Math.floor(Date.now() / 1000)
-					});
-					getPointsTable('finalcomment');
-				}
-			});
-
-
-
-		});
-
-
-		var commentarea = document.createElement('div');
-		commentarea.classList.add('postmatchvote');
-		commentarea.id = 'finalcomment';
-		commentarea.appendChild(commentareacontent);
-		commentarea.appendChild(submitfinalcomment);
-
-
-		var innercontainer = postmatchcontainer.getElementsByClassName('innercontainer')[0];
-
-		innercontainer.appendChild(voteformvp);
-		innercontainer.appendChild(voteforfinalreview);
-		innercontainer.appendChild(commentarea);
+        submitfinalcomment.addEventListener("click", function() {
+            firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
+                if (child.val() == null) {
+                    firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').set({
+                        finalcomment: commentareacontent.value,
+                        timestamp: Math.floor(Date.now() / 1000)
+                    });
+                    getPointsTable('finalcomment');
+                }
+            });
 
 
 
-		postmatchcontainertitle = document.createElement('div');
-		postmatchcontainertitle.id = 'postmatchcontainertitle';
-		postmatchcontainertitle.innerHTML = "<p>Match is over, but your opinion still counts:</p>";
-		postmatchcontainer.appendChild(postmatchcontainertitle);
+        });
 
-		postmatchcontainer.appendChild(MVP);
-		postmatchcontainer.appendChild(finalreview);
-		postmatchcontainer.appendChild(finalcomment);
-		postmatchcontainer.appendChild(innercontainer);
 
-		interactions.appendChild(postmatchcontainer);
+        var commentarea = document.createElement('div');
+        commentarea.classList.add('postmatchvote');
+        commentarea.id = 'finalcomment';
+        commentarea.appendChild(commentareacontent);
+        commentarea.appendChild(submitfinalcomment);
 
-	}
+
+        var innercontainer = postmatchcontainer.getElementsByClassName('innercontainer')[0];
+
+        innercontainer.appendChild(voteformvp);
+        innercontainer.appendChild(voteforfinalreview);
+        innercontainer.appendChild(commentarea);
+
+
+
+        postmatchcontainertitle = document.createElement('div');
+        postmatchcontainertitle.id = 'postmatchcontainertitle';
+        postmatchcontainertitle.innerHTML = "<p>Match is over, but your opinion still counts:</p>";
+        postmatchcontainer.appendChild(postmatchcontainertitle);
+
+        postmatchcontainer.appendChild(MVP);
+        postmatchcontainer.appendChild(finalreview);
+        postmatchcontainer.appendChild(finalcomment);
+        postmatchcontainer.appendChild(innercontainer);
+
+        interactions.appendChild(postmatchcontainer);
+
+    }
 }
 
 function displayMVP(){
@@ -1321,10 +1343,27 @@ function displayMVP(){
     $(".submitbutton").hide();
     getMvpList();
     displayMvpRanking();
-    setTimeout(function () {
-        $(".userrankingpoints").hide();
-    }, 300);
+
+    var livegame = getLiveGame();
+    console.log(livegame);
+    if (livegame == false){
+        $(':button').prop('disabled', true);
+    }
+
     $("#postmatchcontainer").animate({height: '1512px'}, 1000);
+
+    $('.mvp').css({backgroundColor: "#2c7656"}, 1000);
+    $('.finalcomment').css({backgroundColor: "#0F281D"}, 1000);
+    $('.finalreview').css({backgroundColor: "#0F281D"}, 1000);
+
+    setTimeout(function () {
+        hideSpans();
+    }, 1000);
+    if (livegame == false) {
+        setTimeout(function () {
+            $(':button').prop('disabled', true)
+        }, 1000);
+    }
 }
 
 function displayFinalReview(){
@@ -1335,6 +1374,10 @@ function displayFinalReview(){
     // document.getElementById('postmatchcontainer').style.height = '300px';
     $("#postmatchcontainer").animate({height: '340px'}, 1000);
 
+    $('.mvp').css({backgroundColor: "#0F281D"}, 1000);
+    $('.finalcomment').css({backgroundColor: "#0F281D"}, 1000);
+    $('.finalreview').css({backgroundColor: "#2c7656"}, 1000);
+
 }
 
 function displayFinalComment(){
@@ -1343,6 +1386,12 @@ function displayFinalComment(){
     document.getElementById('finalcomment').style.display = 'block';
     $(".submitbutton").show();
     $("#postmatchcontainer").animate({height: '520px'}, 1000);
+
+    $('.mvp').css({backgroundColor: "#0F281D"}, 1000);
+    $('.finalcomment').css({backgroundColor: "#2c7656"}, 1000);
+    $('.finalreview').css({backgroundColor: "#0F281D"}, 1000);
+
+
 
 }
 
@@ -1572,34 +1621,34 @@ function waxxiesVoucherDescription () {
 
 
         /*var button = document.createElement('button');
-        button.classList.add('voucherconfirmation');
-        button.id = 'voucherconfirmation';
-        button.innerHTML = 'USE VOUCHER';
-        button.disabled = false;
-        button.addEventListener("click", function () {
-            getPointsTable('voucher');
-            hideVoucherOverlay();
+         button.classList.add('voucherconfirmation');
+         button.id = 'voucherconfirmation';
+         button.innerHTML = 'USE VOUCHER';
+         button.disabled = false;
+         button.addEventListener("click", function () {
+         getPointsTable('voucher');
+         hideVoucherOverlay();
 
-            firebase.database().ref('/checkins/').on('value', function (snapshot) {
-                snapshot.forEach(function (child) {
-                    if (child.val()[uid] != null) {
-                        var key = Object.keys(child.val()[uid]);
-                        console.log(key);
-                    }
-                });
-            }); */
-
-
-            var vouchersRef = firebase.database().ref('/vouchers/waxxies/' + uid);
-            var randomvoucherNumber = Math.floor(Math.random() * Math.floor(10000000));
-
-            vouchersRef.push({
-
-                vouchernumber: randomvoucherNumber,
-                timestamp: Math.floor(Date.now() / 1000)
+         firebase.database().ref('/checkins/').on('value', function (snapshot) {
+         snapshot.forEach(function (child) {
+         if (child.val()[uid] != null) {
+         var key = Object.keys(child.val()[uid]);
+         console.log(key);
+         }
+         });
+         }); */
 
 
-            });
+        var vouchersRef = firebase.database().ref('/vouchers/waxxies/' + uid);
+        var randomvoucherNumber = Math.floor(Math.random() * Math.floor(10000000));
+
+        vouchersRef.push({
+
+            vouchernumber: randomvoucherNumber,
+            timestamp: Math.floor(Date.now() / 1000)
+
+
+        });
 
     }
 
@@ -1873,16 +1922,16 @@ function countGameMvpvotes(playerid){
 
 function manageTimestamps () {
     var game = getLiveGame();
-    var timestamp = game.timestamp;
+    var timestamp = parseInt(game.timestamp);
     var date = Math.floor(Date.now() / 1000);
 
     firebase.database().ref('/fixtures/' + game.gameid + '/').on('value', function(snapshot) {
         var notlive = snapshot.val()['minute'];
-        console.log(notlive);
         console.log(date);
         console.log(timestamp);
+        console.log(date < timestamp + 1200);
 
-        if ((date > timestamp - 3600) && (date < timestamp )) {  // Test this
+        if ((date > timestamp - 3600) && (date < timestamp )) {
             console.log('pre match');
 
             document.getElementById('teamprofile').style.display = 'block';
@@ -1901,10 +1950,37 @@ function manageTimestamps () {
             setTimeout(function () {
                 hideCheckinButtons();
             }, 4000);
+
+            hideSpans();
+        }
+
+        if ((notlive == 'notlive') && (date < timestamp + 1200)) {
+            console.log('game started late');
+
+            document.getElementById('teamprofile').style.display = 'block';
+            document.getElementById('squad').style.height = '80%';
+            document.getElementById('latestgameevent').style.display = 'none';
+
+            var postmatchcontainer = document.getElementById('postmatchcontainer');
+            postmatchcontainer.style.display = 'none';
+
+            setTimeout(function () {
+                hideCheckinButtons();
+            }, 1000);
+            setTimeout(function () {
+                hideCheckinButtons();
+            }, 2000);
+            setTimeout(function () {
+                hideCheckinButtons();
+            }, 4000);
+
+            hideSpans();
         }
 
         else if ((date >= timestamp) && (notlive != 'notlive')) {
             console.log('game started');
+
+            document.getElementById('latestgameevent').style.display = 'block';
 
             var postmatchcontainer = document.getElementById('postmatchcontainer');
             postmatchcontainer.style.display = 'block';
@@ -1914,6 +1990,7 @@ function manageTimestamps () {
             document.getElementById('mvptitle').style.display = 'none';
             document.getElementById('startingbenchcontainer').style.marginTop = '36px';
 
+            document.getElementById('startingtoMVP').style.marginTop = '106px';
             document.getElementById('teamprofile').style.display = 'none';
 
             var postmatchtitle = document.getElementById('postmatchcontainertitle');
@@ -1933,13 +2010,28 @@ function manageTimestamps () {
             setTimeout(function () {
                 hideCheckinButtons();
             }, 4000);
+
+            setTimeout(function () {
+                hideSpans();
+            }, 2000);
+
         }
 
-        else {
+
+        else if ((date >= timestamp) && (notlive == 'notlive')) {
             console.log('game ended');
+
+            var postmatchcontainer = document.getElementById('postmatchcontainer');
+            postmatchcontainer.style.display = 'block';
+
+            document.getElementById('startingbenchcontainer').style.display = 'block';
+            document.getElementById('finaltabs').style.display = 'block';
 
             document.getElementById('startingbenchcontainer').style.marginTop = '170px';
             document.getElementById('finaltabs').style.paddingTop = '70px';
+
+            document.getElementById('activitiyheader1').innerHTML = 'POST MATCH INTERACTION';
+            document.getElementById('activitiyheader2').innerHTML = 'How do you rate your team?';
 
             var postmatchtitle = document.getElementById('postmatchcontainertitle');
             postmatchtitle.style.display = 'block';
@@ -1948,6 +2040,10 @@ function manageTimestamps () {
             finaltabs.style.display = 'block';
 
             displayMVP();
+
+            /*   setTimeout(function () {
+                hideSpans();
+            }, 2000); */
 
             var postmatchtitle = document.getElementById('postmatchcontainertitle');
             postmatchtitle.innerHTML = "Final Whistle. What's your opinion?";

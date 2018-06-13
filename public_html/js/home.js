@@ -76,3 +76,18 @@ function showNews(news, limit, ownnews){
 				wrapper.appendChild(div);
 			});
 }
+
+function readMore(){
+	$(document).ready(function() {
+		$('.readmore').click(function() {
+
+			$(this).siblings('.newsdescription').animate({
+				height: '100%',
+				duration: 1000,
+			});
+
+			$(this).hide();
+
+		});
+	});
+}

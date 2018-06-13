@@ -43,7 +43,7 @@
 </div>
 
 <!-- Slider main container -->
-<div class="swiper-container">
+<div id ="swiperprofiles" class="swiper-container">
 	<!-- Additional required wrapper -->
 	<div class="swiper-wrapper">
 		<!-- Slides -->
@@ -57,7 +57,7 @@
 			</div>
 		</div>
 		<div class="swiper-slide">
-			<div id="teamprofile">
+			<div class="teamprofilepadding" id="teamprofile">
 				<div id='ownteamranking'></div>
 				<div id='squad' class="activitybox activityboxprofiles">
 					<h2 style="color: #0F281D">TEAM STATISTICS</h2>
@@ -108,6 +108,11 @@
 <script>
 	var node = document.getElementById('changebackground');
 	node.innerHTML = '<style>body:before {	background: url("../img/backgrounds/belgium.png") no-repeat center center);}</style>';
+
+	firebase.database().ref('teams/' + ownteam + '/information').once('value', function(child){
+			console.log(child.val());
+	});
+
 </script>
 
 <style>

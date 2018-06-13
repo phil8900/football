@@ -86,6 +86,7 @@ body {
 
 .newstitle{
 	color: #0b2e13;
+	text-align: left;
 }
 
 .newsitem h2{
@@ -95,16 +96,20 @@ body {
 .newslink{
 	background-color: #0b2e13;
 	width: 50%;
-	height: 10%;
+	height: 42px;
 	margin: auto;
 	margin-top: 5%;
 	border-radius: 5px;
 	font-size: 18px;
-	padding-top: 20px;
+	color: #f6f6f6;
 }
 
 .newslink a{
 	color: white;
+}
+
+.teamprofilepadding{
+	margin-top: 30px;
 }
 
 #team, #ownteamranking{
@@ -121,6 +126,7 @@ body {
 	position: absolute;
 	left: 22%;
 	top: 36px;
+	padding-top: 6%;
 }
 
 
@@ -362,7 +368,8 @@ body {
 	margin-bottom: 5%;
 	margin-left: 5%;
 	padding: 10px 0px 10px 0px;
-
+	margin-top: 10px;
+	margin-bottom: 10px;
 	text-align:center;
 	color:gray;
 	float: left;
@@ -404,6 +411,7 @@ body {
 
 #teamprofile{
 	padding-bottom: 76px;
+	margin-top: 40px;
 }
 
 #teamprofile.matches, #teamprofile.matches #ownteamranking{
@@ -593,10 +601,10 @@ button{
 }
 
 .activityreaction{
-	width:80%;
-	margin-left:10%;
-	margin-right:10%;
-	border:none;
+	margin-top: 5px;
+	border-radius: 15px;
+	color: #0F281D;
+	background-color: transparent;
 }
 
 .activityreaction .eventlist{
@@ -605,7 +613,7 @@ button{
 }
 
 #userprofile .activitybox{
-	height:45%;
+	height: auto;
 }
 
 #userprofile .fa-thumbs-up, #userprofile .fa-thumbs-down {
@@ -655,6 +663,11 @@ button{
 	font-size:16px;
 	line-height:1.3em;
 }
+
+#startingstarting{
+	margin-top: 106px;
+}
+
 
 #score{
 	text-align: center;
@@ -720,7 +733,11 @@ button{
 
 #userprofile{
 	padding-bottom: 500px;
-	margin-top: 65px;
+	margin-top: 40px;
+
+}
+#swiperprofiles{
+	margin-top: 36px;
 }
 
 .row {
@@ -879,7 +896,6 @@ button{
 	width:80%;
 	margin-left:10%;
 	margin-right:10%;
-	margin-top: 10%;
 }
 
 .activityreactionmini .eventlist{
@@ -888,14 +904,23 @@ button{
 }
 
 .activitytextmini{
-	color: #164065;
+	color: #0b2e13;
 	text-align: center;
 	font-size: 18px;
 	font-weight: bolder;
+	width: 74%;
+	/* text-align: center; */
+	/* float: left; */
+	margin-left: 13%;
+}
+
+.activitytextmini p{
+	width: 80%;
 }
 
 .eventlistmini{
-
+	color: #0b2e13;
+height: auto;
 }
 
 
@@ -956,7 +981,7 @@ button{
 #vouchercontainertitle{
 	width: 100%;
 	background-color: #0F281D;
-	padding: 7% 5% 5% 5%;
+	padding: 20px 20px 20px 20px;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 }
@@ -1008,7 +1033,7 @@ button{
 	left: 5%;
 	right: 0;
 	bottom: 0;
-	background: url(https://aarhusupdate.dk/wp-content/uploads/2013/12/Waxies.jpg) center center no-repeat;
+	background: url(https://www.ruby-hotels.com/cache/images/rubymarie_bar-3_1cd0e8872f38e1c2571a13ec.jpg) center center no-repeat;
 	z-index: 2;
 	padding-left: 5%;
 	padding-right: 5%;
@@ -1084,7 +1109,6 @@ button{
 	height: 600px;
 	overflow: scroll;
 	padding: 0 0 0 0;
-	margin-top: 20px;
 	-webkit-overflow-scrolling: touch;
 
 }
@@ -1147,7 +1171,12 @@ button{
 
 }
 .bench{
-	padding-left: 5%;
+	margin-top: 20px;
+}
+
+.bench p{
+	font-size: 20px;
+	margin: 0 20% 0 20%
 }
 
 .submitbutton{
@@ -1337,6 +1366,7 @@ button{
 	color: black;
 	height: 410px;
 	padding-top: 20px;
+	margin-top: 10px;
 }
 
 #statistics p{
@@ -1438,6 +1468,7 @@ button{
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	float: left;
+	margin-top: 10px;
 
 }
 
@@ -1533,9 +1564,6 @@ h3{
 	margin-top: -52px;
 }
 
-.starting{
-	padding-top: 70px;
-}
 
 #liveminute{
 	display: block;
@@ -1645,8 +1673,7 @@ color: white;
 
 .waxieslogo{
 	position: absolute;
-	top: 404px;
-	left: 8%;
+	top: 378px;	left: 8%;
 	height: 12%;
 }
 
@@ -1673,6 +1700,44 @@ color: white;
 	padding-bottom: 60px;
 }
 
+.newsboxes{
+	padding: 30px 30px 30px 30px;
+	height: 500px;
+}
+
+.newsdescription{
+	height: 236px;
+	overflow: hidden;
+	text-align: left;
+}
+
+.newsdescription img{
+
+	float: left;
+	height: auto;
+	border-radius: 10px;
+	display: block;
+
+}
+
+.activitycontainer{
+	display: inline-block;
+	width: 90%;
+	border-radius: 10px;
+	height: auto;
+	margin-bottom: 5%;
+	text-align: center;
+	color: #f6f6f6f6;
+	float: left;
+	margin-left: 5%;
+	background-color: rgba(255,255,255,0.7);
+	padding: 10px 10px 10px 10px;
+}
+
+.activitycontainer i{
+	color: #0b2e13;
+	margin-top: 2px;
+}
 
 
 

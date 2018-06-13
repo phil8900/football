@@ -189,7 +189,7 @@
                 <h3>PRE-MATCH INTERACTION</h3>
                 <h2>Suggest your starting 11</h2>
             </div>
-            <div class='starting'>
+            <div id ="startingstarting" class='starting'>
                 <div id='keeper'></div>
                 <div id='defender'></div>
                 <div id='midfielder'></div>
@@ -214,12 +214,14 @@
                     <div id='upcoming'>
                         <div id='homesquad'>
                             <div id="startingtoMVP" class='starting'>
+                                Starting 11
                                 <div class='keeper'></div>
                                 <div class='defender'></div>
                                 <div class='midfielder'></div>
                                 <div class='striker'></div>
                             </div>
                             <div class="bench">
+                                <p>Bench</p>
                             </div>
                         </div>
                     </div>
