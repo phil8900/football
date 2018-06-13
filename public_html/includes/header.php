@@ -37,7 +37,12 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
 
+
+
+
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes"/>
 <!-- Chrome, Firefox OS and Opera -->
 <meta name="theme-color" content="#0F281D">
 <!-- Windows Phone -->
