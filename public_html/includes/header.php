@@ -38,10 +38,15 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 </script>
 
 
-
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<!-- Chrome, Firefox OS and Opera -->
+<meta name="theme-color" content="#0F281D">
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#0F281D">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <meta charset="utf-8">
-<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!-- Chrome, Firefox OS and Opera -->
 <meta name="theme-color" content="#0F281D">
 <!-- Windows Phone -->
