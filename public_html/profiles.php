@@ -9,21 +9,6 @@
 	<title>LoudStand - Profiles</title>
 </head>
 
-<script>
-
-	.test:before		{
-		content: "testing";
-		color: red;
-	}
-
-	var div = document.getElementById("testDiv");
-	div.pseudoStyle("before","color","purple");
-
-	<div id="testDiv" class="test">test2</div>
-
-
-	node.innerHTML = "<style>body:before {background: url('img/backgrounds/belgium.png') no-repeat center center);}</style>";
-</script>
 
 <style>
 	body:before {
