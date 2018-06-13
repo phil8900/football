@@ -436,6 +436,7 @@ function getLastActivities() {
                     }
                     if(snapshot.val()['finalcomment'] != null){
                         showActivityBox('finalcomment', snapshot.val()['finalcomment'], snapshot.key, null);
+                        console.log(snapshot.val());
                     }
                     if(snapshot.val()['finalreview'] != null){
                         showActivityBox('finalreview', snapshot.val()['finalreview'], snapshot.key, null);

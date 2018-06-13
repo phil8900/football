@@ -1120,7 +1120,7 @@ function displayPostMatchEvents (gameid){
         submitfinalcomment.addEventListener("click", function() {
             firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
                 if (child.val() == null) {
-                    firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').push({
+                    firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').set({
                         finalcomment: commentareacontent.value,
                         timestamp: Math.floor(Date.now() / 1000)
                     });
@@ -1553,7 +1553,7 @@ function voucherDescription () {
                 firebase.database().ref('/checkins/' + placeid + '/' + uid).once('value').then(function(snapshot) {
                     snapshot.forEach(function (child) {
                         var placecheckedin = child.val().placeid;
-                        console.log(child.val().placename);
+                        //console.log(child.val().placename);
 
 
                         var voucherdescription = document.getElementById('voucherdescription');
@@ -1571,6 +1571,7 @@ function voucherDescription () {
 
                          var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
                          var randomvoucherNumber = Math.floor(Math.random() * Math.floor(1000000000));
+                         console.log(randomvoucherNumber);
                          vouchersRef.push({
                          vouchernumber: randomvoucherNumber,
                          placeid: placecheckedin,
