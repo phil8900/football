@@ -561,14 +561,17 @@ function getTeamInfo(gameid, wrapper) {
     var location = document.getElementById("location");
     var time = document.getElementById("time");
     var liveminute = document.getElementById("liveminute");
-    liveminute.classList.add('livenow');
 
     firebase.database().ref('/fixtures/' + gameid + '/').on('value', function (snapshot) {
+        if(liveminute != null){
+        liveminute.classList.add('livenow');
+
         liveminute.id = 'liveminute';
 
         var liveminutespan = snapshot.val()['minute'];
         if (liveminutespan >= 0) {
             liveminute.innerHTML = liveminutespan + "'";
+        }
         }
 
         var gameheader = document.getElementById('gameheader');
@@ -607,25 +610,34 @@ function getTeamInfo(gameid, wrapper) {
                 var homespan = document.createElement('img');
                 homespan.classList.add('matchteamlogohome');
                 homespan.src = home;
+                if(hometeamflag != null){
                 hometeamflag.appendChild(homespan);
+                }
 
                 var homename = snapshot.val().teamname;
                 var homenamespan = document.getElementById('hometeamname');
+                if(homenamespan != null){
                 homenamespan.innerHTML = homename;
-
+                }
 
 
             });
             firebase.database().ref('/teams/' + awayteam + '/information').once('value', function (snapshot) {
+                if(snapshot.val() != null){
                 var away = snapshot.val().teamlogo;
                 var awayspan = document.createElement('img');
                 awayspan.classList.add('matchteamlogoaway');
                 awayspan.src = away;
-                awayteamflag.appendChild(awayspan);
+                if(awayteamflag != null){
+                    awayteamflag.appendChild(awayspan);
+                }
 
                 var awayname = snapshot.val().teamname;
                 var awaynamespan = document.getElementById('awayteamname');
-                awaynamespan.innerHTML = awayname;
+                if(awaynamespan != null){
+                    awaynamespan.innerHTML = awayname;
+                    }
+                }
 
             });
         });

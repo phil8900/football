@@ -720,6 +720,7 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
         if(reaction.reaction == 'five'){
             five.classList.add('checkedstar');
         }
+        console.log(reaction);
     }
     description.appendChild(eventwrapper);
 }

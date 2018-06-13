@@ -200,7 +200,7 @@ body {
 }
 
 .checkedstar{
-	color:orange;
+	color:orange !important;
 }
 
 .userelement{
