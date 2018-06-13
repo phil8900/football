@@ -41,8 +41,7 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 
 
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!-- Chrome, Firefox OS and Opera -->
 <meta name="theme-color" content="#0F281D">
 <!-- Windows Phone -->
