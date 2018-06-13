@@ -153,8 +153,8 @@ body {
 #teamranking img{
 	width: 54px;
 	height: 42px;
-	border-radius: 0;
-	padding-top: 5px;
+	border-radius: 5px;
+	border: 2px solid black;
 }
 
 .userrankingname{

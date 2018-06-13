@@ -9,6 +9,22 @@
 	<title>LoudStand - Profiles</title>
 </head>
 
+<script>
+
+	.test:before		{
+		content: "testing";
+		color: red;
+	}
+
+	var div = document.getElementById("testDiv");
+	div.pseudoStyle("before","color","purple");
+
+	<div id="testDiv" class="test">test2</div>
+
+
+	node.innerHTML = "<style>body:before {background: url('img/backgrounds/belgium.png') no-repeat center center);}</style>";
+</script>
+
 <style>
 	body:before {
 		background: url("img/backgrounds/england.png") no-repeat center center;
@@ -129,12 +145,6 @@
 	});
 </script>
 
-<script>
-	var node = document.getElementById('changebackground');
-	var test = 'img/backgrounds/belgium.png';
-	node.innerHTML = '<style>body:before {	background: url(' + test + ") no-repeat center center);}</style>";
-
-</script>
 
 </body>
 </html>
