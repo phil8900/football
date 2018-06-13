@@ -16,14 +16,13 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117378298-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120812054-1"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'UA-117378298-1');
-    gtag('set', {'user_id': uid}); // Legen Sie die User ID mithilfe des Parameters "user_id" des angemeldeten Nutzers fest.
+    gtag('config', 'UA-120812054-1');
 </script>
 
 <!-- Hotjar Tracking Code for www.loudstand.com -->

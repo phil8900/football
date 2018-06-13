@@ -9,6 +9,7 @@
 	<title>LoudStand - Profiles</title>
 </head>
 
+
 <style>
 	body:before {
 		background: url("img/backgrounds/england.png") no-repeat center center;
@@ -129,12 +130,6 @@
 	});
 </script>
 
-<script>
-	var node = document.getElementById('changebackground');
-	var test = 'img/backgrounds/belgium.png';
-	node.innerHTML = '<style>body:before {	background: url(' + test + ") no-repeat center center);}</style>";
-
-</script>
 
 </body>
 </html>
