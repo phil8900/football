@@ -132,6 +132,8 @@ function initAutocomplete(map) {
   // var defaultBounds = map.getBounds();
   console.log(map.center);
 
+  if(input != null){
+
   input.addEventListener("keyup", function(){
     if(input.value == ''){
       document.getElementById("placesresult").style.display = "none";
@@ -144,6 +146,7 @@ function initAutocomplete(map) {
     }
 
   });
+  }
 
 }
 
