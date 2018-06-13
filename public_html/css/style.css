@@ -68,7 +68,7 @@ body {
 #terms{
 	color: #0F281D;
 	overflow: scroll;
-	height: 500px;
+	height: 68%;
 	padding: 20px 10px 20px 10px;
 	margin-top: 14px;
 	text-align: left;
@@ -442,7 +442,7 @@ body {
 	-o-transform: skew(-30deg);
 	background: #0F281D;
 	margin:auto;
-	margin-top: 21%;
+	margin-top: 25%;
 	text-align: center;
 	border: 1px solid #0F281D;
 	padding: 10px;
@@ -1812,6 +1812,21 @@ color: white;
 
 #tutorialcontent p {
 font-size: 20px;
+}
+
+#buttons{
+	text-align: center;
+}
+
+.acceptdecline{
+	border-style: none;
+	height: 60px;
+	width: 120px;
+	background-color: rgba(255,255,255, 0.7);
+	margin: 0px 10px 0px 10px;
+	border-radius: 5px;
+	text-align: center;
+	color: #0F281D;
 }
 
 
