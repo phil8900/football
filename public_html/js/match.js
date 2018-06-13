@@ -88,6 +88,8 @@ function showLastGameEvent(){
     var latest = $( "#events .eventbox.activityboxmatchevents:last-child" );
     var latestgameevent = document.getElementById('latestgameevent');
 
+    console.log("here");
+
     latestgameevent.innerHTML = latest.html();
     latestgameevent.style.backgroundImage = latest.css("background-image");
 }
