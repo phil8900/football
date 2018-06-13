@@ -386,7 +386,7 @@ function getLastActivities() {
                     else{
                     firebase.database().ref('/fixtures/' + gameid + '/events/' + child.val().eventId + '/reactions/users').on('value', function (snapshot) {
                         var event = child.val();
-                        if ((snapshot.val() != null) && (Object.keys(snapshot.val())[0] == uid)) {
+                        if ((snapshot.val() != null) && (Object.keys(snapshot.val()).includes(uid))) {
                             showActivityBox('reaction', event, gameid, snapshot.val());
                         }
                     });
@@ -608,6 +608,7 @@ function setActivityText(description, activitytext){
 }
 
 function getReactionDetails(description, event, activitytext, gameid, reaction){
+
     setActivityText(description, activitytext);
     var eventwrapper = document.createElement('div');
     eventwrapper.classList.add('activitybox');
