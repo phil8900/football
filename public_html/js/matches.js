@@ -38,7 +38,7 @@ function showMatches(){
 
 	fixtures.sort(function(a, b){return a.timestamp-b.timestamp});
 	fixtures.forEach(function(child) {
-		if((child['timestamp'] < worldCupEnd)){
+		if((child['timestamp'] > worldCupStart) && (child['timestamp'] < worldCupEnd)){
 			var hometeam = child['hometeamid'];
 			var awayteam = child['awayteamid'];
 			var date = child['date'];
