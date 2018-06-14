@@ -55,14 +55,18 @@ for($x=0;$x<$limit;$x++) {
 		<br>
 		<h1>#1 - Home Screen</h1>
 		<br>
-		<p>Welcome to LoudStand! We're really  This is the Newsfeed. Here you can read all the latest news
-			of the World Cup Russia 2018!</p>
+		<p>Thank you for helping us testing the BETA version of LoudStand, a digital stadium that
+			brings football back to fans! Yes, it might be slow and have some bugs here and there,
+			but we are counting on you to help us improve :) </p>
+
+		<p>In the News screen, you will find the latest news on the World Cup. Enjoy the experience!</p>
+		</p>
 	</div>
 </div>
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
 	<div class="firstsubtopnav">
-		<div class="menu-title">NEWSFEED</div>
+		<div class="menu-title">NEWS</div>
 	</div>
 </div>
 

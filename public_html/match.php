@@ -29,13 +29,36 @@
         <h1>#5 - Matches Interaction</h1>
         <br>
 
-        <p>You have checked-in, so now you are inside the virtual stadium! The match events will start popping
-            up in your screen. All you have to do is react to the event with one click. Additionally, you can swipe left
-            the screen to find all the match statistics, and swipe right to get all the match events in one place!
-            So if you have missed some of the events during the match, you can still react to them in this screen!
-            Good match, and enjoy LoudStand!
-        </p>
+        <p>You have checked-in, so now you are inside the virtual stadium! The match events will start popping up in
+            your screen. All you have to do is react to the event with one click. So let’s say there is a substitution!
+            The event pops up and you just need to vote up or down to give your opinion about the coach decision.
+            One second later the overall fan opinion shows up.</p>
 
+           <p><b>Swipe right</b> to see all the match events in one place! So if you have missed some of
+            the  events during the match, you can still react to them in this screen!</p>
+
+            <p><b>Swipe left</b> to find the most accurate Match Statistics of the match.</p>
+
+            <p>If you are watching the match in one the LoudStand partners remember to use your discount vouchers
+                in the bottom of the screen.</p>
+
+        <p>Enjoy the match, and may the glory be with your team! :)</p>
+
+
+    </div>
+</div>
+
+<div class="modal" id="checkinconfirmoverlay" style="height: 30%">
+    <div class="modal-dialog">
+        <div class="modal-content" id="matchmodal">
+            <!-- Modal body -->
+            <div id="checkinconfirm" class="modal-body">
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn checkinclose" onclick="$('#checkinconfirmoverlay').fadeOut('slow');">Fechar</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -98,6 +121,7 @@
 <div id="voucheroverlay" class="animated fadeIn" onclick="hideVoucherOverlay();"></div>
 <div id="voucheroverlaycontentborder" class="animated fadeIn"></div>
 <div id="voucheroverlaycontent" class="animated fadeIn">
+    <div id="closetutorial" onclick="$('#voucheroverlay').fadeOut(); $('#voucheroverlaycontent').fadeOut();">X</div>
     <div class="vouchertitle"><h1>DISCOUNT</h1></div>
     <div id="voucheroverlayinnercontent">
         <div id="voucherdescription"></div>

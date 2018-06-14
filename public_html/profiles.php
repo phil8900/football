@@ -226,17 +226,16 @@
 		<br>
 
 		<b>USER PROFILE</b>
-		<p>In this screen you can know everything about the other fellow football supporters!
-			You can see how high in the ranking is the fan, by looking at the top-left corner of the screen
-			See how big of a fan someone is is by looking at their fandom level and how many points do they have.
-			Also, you can check their latest activity, like where did they watch the last match and how did they
-			react to the coach decisions in the last match.</p>
+		<p>In this screen you can know everything about a football fan! You can see how high in the ranking is the
+			fan, by looking at the top-left corner of the screen. See how big of a fan someone is by
+			looking at their fandom level and how many points do they have. Also, you can check
+			their latest activity, like where did they watch the last match and how did they react to the
+			coach decisions in the last match.</p>
 		<br>
 		<b>TEAM PROFILE</b>
-		<p>Here you can know how big a team can be based on the support they get from their fans,
-			by checking how high the team is ranking and looking at their fanbase level. Also, you can see the overall
-			opinion of the fans about the team on different dimensions, such as Goals, Man of The Match, Starting 11,
-			Coach Performance and Team Performance.</p>
+		<p>By clicking “MY TEAM” on the upper right corner, you can see how big a national team is based on
+			the support they get from their fans! Check how high the team is ranked and look at their fan level. We are
+		soon launching a new feature that will give you the best statistics of your team based on your team's fans opinion.</p>
 		</p>
 	</div>
 </div>
@@ -249,15 +248,16 @@
 	</div>
 	<div class="secondsubtopnav">
 
-		<div class="left" onclick="displayUserProfile()">USER</div>
+		<div class="left" onclick="displayUserProfile()">ME</div>
 
-		<div class="right" onclick="displayTeamProfile()">TEAM</div>
+		<div class="right" onclick="displayTeamProfile()">MY TEAM</div>
 	</div>
 </div>
 
 <div id="voucheroverlay" class="animated fadeIn" onclick="hideVoucherOverlay();"></div>
 <div id="voucheroverlaycontentborder" class="animated fadeIn"></div>
-<div id="voucheroverlaycontent" class="animated fadeIn">
+<div id="voucheroverlaycontent" class="animated fadeIn" style="top: 20%;">
+	<div id="closetutorial" onclick="$('#voucheroverlay').fadeOut(); $('#voucheroverlaycontent').fadeOut();">X</div>
 	<div class="vouchertitle"><h1>DISCOUNT</h1></div>
 	<div id="voucheroverlayinnercontent">
 		<div id="voucherdescription"></div>

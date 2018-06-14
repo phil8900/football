@@ -518,7 +518,7 @@ function getPlayerInfo(playerid, event, eventlist){
             if(eventwrapper != null){
                 eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
                 //if(latestgameevent != null){
-                    //latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+                //latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
                 //}
             }
         }
@@ -559,14 +559,14 @@ function getTeamInfo(gameid, wrapper) {
 
     firebase.database().ref('/fixtures/' + gameid + '/').on('value', function (snapshot) {
         if(liveminute != null){
-        liveminute.classList.add('livenow');
+            liveminute.classList.add('livenow');
 
-        liveminute.id = 'liveminute';
+            liveminute.id = 'liveminute';
 
-        var liveminutespan = snapshot.val()['minute'];
-        if (liveminutespan >= 0) {
-            liveminute.innerHTML = liveminutespan + "'";
-        }
+            var liveminutespan = snapshot.val()['minute'];
+            if (liveminutespan >= 0) {
+                liveminute.innerHTML = liveminutespan + "'";
+            }
         }
 
         var gameheader = document.getElementById('gameheader');
@@ -606,31 +606,31 @@ function getTeamInfo(gameid, wrapper) {
                 homespan.classList.add('matchteamlogohome');
                 homespan.src = home;
                 if(hometeamflag != null){
-                hometeamflag.appendChild(homespan);
+                    hometeamflag.appendChild(homespan);
                 }
 
                 var homename = snapshot.val().teamname;
                 var homenamespan = document.getElementById('hometeamname');
                 if(homenamespan != null){
-                homenamespan.innerHTML = homename;
+                    homenamespan.innerHTML = homename;
                 }
 
 
             });
             firebase.database().ref('/teams/' + awayteam + '/information').once('value', function (snapshot) {
                 if(snapshot.val() != null){
-                var away = snapshot.val().teamlogo;
-                var awayspan = document.createElement('img');
-                awayspan.classList.add('matchteamlogoaway');
-                awayspan.src = away;
-                if(awayteamflag != null){
-                    awayteamflag.appendChild(awayspan);
-                }
+                    var away = snapshot.val().teamlogo;
+                    var awayspan = document.createElement('img');
+                    awayspan.classList.add('matchteamlogoaway');
+                    awayspan.src = away;
+                    if(awayteamflag != null){
+                        awayteamflag.appendChild(awayspan);
+                    }
 
-                var awayname = snapshot.val().teamname;
-                var awaynamespan = document.getElementById('awayteamname');
-                if(awaynamespan != null){
-                    awaynamespan.innerHTML = awayname;
+                    var awayname = snapshot.val().teamname;
+                    var awaynamespan = document.getElementById('awayteamname');
+                    if(awaynamespan != null){
+                        awaynamespan.innerHTML = awayname;
                     }
                 }
 
@@ -1539,7 +1539,10 @@ function voucherDescription () {
     if (seenvoucher == null) {
         localStorage.setItem("seenvoucher", true);
         var voucherdescription = document.getElementById('voucherdescription');
-        voucherdescription.innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
+        voucherdescription.innerHTML = "<div class='firstvoucher'>To have your discount validated you must " +
+            "show your voucher to the bartender. Only the bartender can confirm it by clicking the button. " +
+            "If not, the discount is wasted and the voucher is locked permanently. Just make sure you don’t " +
+            "loose your next beer! </div>";
 
     }
     else {
@@ -1557,35 +1560,39 @@ function voucherDescription () {
 
 
                         var voucherdescription = document.getElementById('voucherdescription');
-                        voucherdescription.innerHTML = "LoudStand offers you discounts on " +
-                            "drinks in this bar during this match! Go to the bar and ask the bartender to swipe the voucher." +
-                            " The bartender should do it, not you. If you do it, you lose your right to your discount.";
+                        voucherdescription.innerHTML =  "<b>Don't press 'USE VOUCHER' or you'll lose your drink!</b>" +
+                            "<br>Show this voucher and let the bartender confirm the discount.<br>";
 
-                         var button = document.createElement('button');
-                         button.classList.add('voucherconfirmation');
-                         button.id = 'voucherconfirmation';
-                         button.innerHTML = 'USE VOUCHER';
-                         button.addEventListener("click", function () {
-                         getPointsTable('voucher');
-                         hideVoucherOverlay();
+                        var button = document.createElement('button');
+                        button.classList.add('voucherconfirmation');
+                        button.id = 'voucherconfirmation';
+                        button.innerHTML = 'USE VOUCHER';
+                        button.classList.add('acceptdecline');
+                        button.addEventListener("click", function () {
+                            getPointsTable('voucher');
+                            hideVoucherOverlay();
+                            $('#checkinconfirmoverlay').fadeIn('slow');
+                            document.getElementById('checkinconfirm').innerHTML = 'Voucher used. Enjoy the match!'
 
-                         var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
-                         var randomvoucherNumber = Math.floor(Math.random() * Math.floor(1000000000));
-                         console.log(randomvoucherNumber);
-                         vouchersRef.push({
-                         vouchernumber: randomvoucherNumber,
-                         placeid: placecheckedin,
-                         timestamp: Math.floor(Date.now() / 1000)
-                         });
+                            var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
+                            var randomvoucherNumber = Math.floor(Math.random() * Math.floor(1000000000));
+                            console.log(randomvoucherNumber);
+                            vouchersRef.push({
+                                vouchernumber: randomvoucherNumber,
+                                placeid: placecheckedin,
+                                timestamp: Math.floor(Date.now() / 1000)
+                            });
 
-                         });
-                         voucherdescription.appendChild(button);
+                        });
+                        voucherdescription.appendChild(button);
 
                         var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
                         vouchersRef.on('value', function (snapshot) {
                             if (snapshot.numChildren() >= 2) {
                                 button.style.display = 'none';
-                                voucherdescription.innerHTML = 'Já não chega de beber, boi?';
+                                voucherdescription.innerHTML = "Looks like you've used all your discounts..." +
+                                    "But the good news is new LoudStand vouchers apply on your team's next game! " +
+                                    "Just go to any of our partner bars and redeem your discount!";
                             }
                         });
                     });
@@ -1610,14 +1617,14 @@ function waxxiesVoucherDescription () {
     else {
 
         var voucherdescription = document.getElementById('voucherdescription');
-        voucherdescription.innerHTML = "Enjoy 10% off your next Order! <br><br>" +
-            "Show this Coupon and let the bartender swipe the bar to get the discount.<br><br>" +
-            "Enjoy the match!";
+        voucherdescription.innerHTML =    "<b>Don't press 'USE VOUCHER'.</b><br>"
+                        +"Get a 5kr discount on any large beer." +
+                        "<br>Show this voucher and let the bartender confirm the discount.<br>";
 
 
         var button = document.createElement('button');
         button.classList.add('voucherconfirmation');
-        button.classList.add('readmore');
+        button.classList.add('acceptdecline');
         button.id = 'voucherconfirmation';
         button.innerHTML = 'USE VOUCHER';
         button.disabled = false;
@@ -1925,137 +1932,137 @@ function manageTimestamps () {
 
     firebase.database().ref('/fixtures/' + game.gameid + '/').on('value', function(snapshot) {
         if(snapshot.val() != null && snapshot.val()['minute'] != null){
-        var notlive = snapshot.val()['minute'];
-        console.log(date);
-        console.log(timestamp);
-        console.log(date < timestamp + 1200);
+            var notlive = snapshot.val()['minute'];
+            console.log(date);
+            console.log(timestamp);
+            console.log(date < timestamp + 1200);
 
-        if ((date > timestamp - 3600) && (date < timestamp )) {
-            console.log('pre match');
+            if ((date > timestamp - 3600) && (date < timestamp )) {
+                console.log('pre match');
 
-            document.getElementById('teamprofile').style.display = 'block';
-            document.getElementById('squad').style.height = '80%';
-            document.getElementById('latestgameevent').style.display = 'none';
+                document.getElementById('teamprofile').style.display = 'block';
+                document.getElementById('squad').style.height = '80%';
+                document.getElementById('latestgameevent').style.display = 'none';
 
 
-            var postmatchcontainer = document.getElementById('postmatchcontainer');
-            postmatchcontainer.style.display = 'none';
+                var postmatchcontainer = document.getElementById('postmatchcontainer');
+                postmatchcontainer.style.display = 'none';
 
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 1000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 2000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 4000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 1000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 2000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 4000);
 
-            hideSpans();
-        }
-
-        if ((notlive == 'notlive') && (date < timestamp + 1200)) {
-            console.log('game started late');
-
-            document.getElementById('teamprofile').style.display = 'block';
-            document.getElementById('squad').style.height = '80%';
-            document.getElementById('latestgameevent').style.display = 'none';
-
-            var postmatchcontainer = document.getElementById('postmatchcontainer');
-            postmatchcontainer.style.display = 'none';
-
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 1000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 2000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 4000);
-
-            hideSpans();
-        }
-
-        else if ((date >= timestamp) && (notlive != 'notlive')) {
-            console.log('game started');
-
-            document.getElementById('latestgameevent').style.display = 'block';
-
-            var postmatchcontainer = document.getElementById('postmatchcontainer');
-            postmatchcontainer.style.display = 'block';
-
-            document.getElementById('activitiyheader1').innerHTML = 'SQUAD';
-            document.getElementById('activitiyheader2').innerHTML = 'Starting 11 + Bench';
-            document.getElementById('mvptitle').style.display = 'none';
-            document.getElementById('startingbenchcontainer').style.marginTop = '36px';
-
-            document.getElementById('startingtoMVP').style.marginTop = '106px';
-            document.getElementById('teamprofile').style.display = 'none';
-
-            var postmatchtitle = document.getElementById('postmatchcontainertitle');
-            postmatchtitle.style.display = 'none';
-
-            var finaltabs = document.getElementById('finaltabs');
-            finaltabs.style.display = 'none';
-
-            displayMVP();
-
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 1000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 2000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 4000);
-
-            setTimeout(function () {
                 hideSpans();
-            }, 2000);
+            }
 
-        }
+            if ((notlive == 'notlive') && (date < timestamp + 1200)) {
+                console.log('game started late');
+
+                document.getElementById('teamprofile').style.display = 'block';
+                document.getElementById('squad').style.height = '80%';
+                document.getElementById('latestgameevent').style.display = 'none';
+
+                var postmatchcontainer = document.getElementById('postmatchcontainer');
+                postmatchcontainer.style.display = 'none';
+
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 1000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 2000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 4000);
+
+                hideSpans();
+            }
+
+            else if ((date >= timestamp) && (notlive != 'notlive')) {
+                console.log('game started');
+
+                document.getElementById('latestgameevent').style.display = 'block';
+
+                var postmatchcontainer = document.getElementById('postmatchcontainer');
+                postmatchcontainer.style.display = 'block';
+
+                document.getElementById('activitiyheader1').innerHTML = 'SQUAD';
+                document.getElementById('activitiyheader2').innerHTML = 'Starting 11 + Bench';
+                document.getElementById('mvptitle').style.display = 'none';
+                document.getElementById('startingbenchcontainer').style.marginTop = '36px';
+
+                document.getElementById('startingtoMVP').style.marginTop = '106px';
+                document.getElementById('teamprofile').style.display = 'none';
+
+                var postmatchtitle = document.getElementById('postmatchcontainertitle');
+                postmatchtitle.style.display = 'none';
+
+                var finaltabs = document.getElementById('finaltabs');
+                finaltabs.style.display = 'none';
+
+                displayMVP();
+
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 1000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 2000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 4000);
+
+                setTimeout(function () {
+                    hideSpans();
+                }, 2000);
+
+            }
 
 
-        else if ((date >= timestamp) && (notlive == 'notlive')) {
-            console.log('game ended');
+            else if ((date >= timestamp) && (notlive == 'notlive')) {
+                console.log('game ended');
 
-            var postmatchcontainer = document.getElementById('postmatchcontainer');
-            postmatchcontainer.style.display = 'block';
+                var postmatchcontainer = document.getElementById('postmatchcontainer');
+                postmatchcontainer.style.display = 'block';
 
-            document.getElementById('startingbenchcontainer').style.display = 'block';
-            document.getElementById('finaltabs').style.display = 'block';
+                document.getElementById('startingbenchcontainer').style.display = 'block';
+                document.getElementById('finaltabs').style.display = 'block';
 
-            document.getElementById('startingbenchcontainer').style.marginTop = '170px';
-            document.getElementById('finaltabs').style.paddingTop = '70px';
+                document.getElementById('startingbenchcontainer').style.marginTop = '170px';
+                document.getElementById('finaltabs').style.paddingTop = '70px';
 
-            document.getElementById('activitiyheader1').innerHTML = 'POST MATCH INTERACTION';
-            document.getElementById('activitiyheader2').innerHTML = 'How do you rate your team?';
+                document.getElementById('activitiyheader1').innerHTML = 'POST MATCH INTERACTION';
+                document.getElementById('activitiyheader2').innerHTML = 'How do you rate your team?';
 
-            var postmatchtitle = document.getElementById('postmatchcontainertitle');
-            postmatchtitle.style.display = 'block';
+                var postmatchtitle = document.getElementById('postmatchcontainertitle');
+                postmatchtitle.style.display = 'block';
 
-            var finaltabs = document.getElementById('finaltabs');
-            finaltabs.style.display = 'block';
+                var finaltabs = document.getElementById('finaltabs');
+                finaltabs.style.display = 'block';
 
-            displayMVP();
+                displayMVP();
 
-            /*   setTimeout(function () {
-             hideSpans();
-             }, 2000); */
+                /*   setTimeout(function () {
+                 hideSpans();
+                 }, 2000); */
 
-            var postmatchtitle = document.getElementById('postmatchcontainertitle');
-            postmatchtitle.innerHTML = "Final Whistle. What's your opinion?";
+                var postmatchtitle = document.getElementById('postmatchcontainertitle');
+                postmatchtitle.innerHTML = "Final Whistle. What's your opinion?";
 
-            var finaltabs = document.getElementById('finaltabs');
-            finaltabs.style.display = 'block';
+                var finaltabs = document.getElementById('finaltabs');
+                finaltabs.style.display = 'block';
 
-            document.getElementById('teamprofile').style.display = 'none';
+                document.getElementById('teamprofile').style.display = 'none';
 
 
 
-        }
+            }
         }
 
     });

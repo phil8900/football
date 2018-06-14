@@ -311,7 +311,7 @@ function showOwnTeam(snapshotvalue, entry){
 
 		bootstrapcontainer.appendChild(wrapper);
 
-		var rankparagraph = document.createElement('p');
+		var rankparagraph = document.createElement('a');
 
 		var ranksymbol = document.createElement('i');
 		ranksymbol.classList.add('fas');
@@ -321,6 +321,7 @@ function showOwnTeam(snapshotvalue, entry){
 
 		rankparagraph.appendChild(document.createTextNode(' ' + entry.rank.rank));
 		rankparagraph.id = 'ownteamrank';
+		rankparagraph.href = "ranking.php";
 
 		var ranktext = document.createElement('p');
 		ranktext.appendChild(document.createTextNode('Team Ranking'));

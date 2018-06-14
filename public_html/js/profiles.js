@@ -102,7 +102,7 @@ function showOwnProfile(snapshotvalue, entry){
     var rankdiv = document.createElement('div');
     rankdiv.id = 'rankdiv';
     rankdiv.classList.add('col-xs-3');
-    var rankparagraph = document.createElement('p');
+    var rankparagraph = document.createElement('a');
 
     var ranksymbol = document.createElement('i');
     ranksymbol.classList.add('fas');
@@ -112,9 +112,7 @@ function showOwnProfile(snapshotvalue, entry){
 
     rankparagraph.appendChild(document.createTextNode(' ' + entry.rank));
     rankparagraph.id = 'ownteamrank';
-    var ranklink = document.createElement('a');
-    ranklink.href = 'ranking.php';
-    rankparagraph.appendChild(ranklink);
+    rankparagraph.href = "ranking.php";
 
     var ranktext = document.createElement('p');
     ranktext.appendChild(document.createTextNode('Fan ranking'));

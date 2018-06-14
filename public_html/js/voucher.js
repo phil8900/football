@@ -171,7 +171,7 @@ function showVouchersWaxxies() {
 			firebase.database().ref('/vouchers/waxxies/' + allusers).once('value', function (snapshot) {
 				snapshot.forEach(function (child) {
 					console.log(child.val());
-					
+
 					var div = document.createElement('div');
 					var text = document.createTextNode("Voucher nº: " + child.val().vouchernumber + " was used at " + (new Date(child.val().timestamp * 1000)) + ' at Waxies');
 					div.appendChild(text);
