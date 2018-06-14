@@ -56,13 +56,14 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 <meta name="msapplication-navbutton-color" content="#0F281D">
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/fan%20teste%203-02.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/fan.png"/>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
 <script src="js/dragdealer.js"></script>
+<link rel="manifest" href="manifest.json">
 
 
 <!-- Swiper API -->
@@ -228,3 +229,4 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
         $('#overlayloading').fadeOut("slow");
 });
 </script>
+

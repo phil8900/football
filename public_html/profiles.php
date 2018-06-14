@@ -284,7 +284,7 @@
 				<div id="comingsoon" class="activitybox">
 					<h2 style="color: #0b2e13;">COMING SOON FEATURE</h2>
 					<br>
-					<p style="color: #0b2e13;">Stay tuned as we are preparing a really cool new feature!</p>
+					<p style="color: #0b2e13;">Stay tuned as we are preparing a really cool new feature to be launched here!</p>
 				</div>
 
 			<!--	<div id='squad' class="activitybox activityboxprofiles">   ADD LATER
