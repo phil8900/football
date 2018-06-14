@@ -1866,6 +1866,20 @@ font-size: 20px;
 	color: #0F281D;
 }
 
+#comingsoon{
+	width: 90%;
+	background-color: rgba(255,255,255, 0.7);
+	border-radius: 10px;
+	height: auto;
+	margin-bottom: 5%;
+	margin-left: 5%;
+	text-align: center;
+	color: gray;
+	float: left;
+	padding: 12px 12px 12px 12px;
+
+}
+
 
 /* ------ Media Queries ---- */
 
