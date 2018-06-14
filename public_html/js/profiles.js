@@ -145,7 +145,7 @@ function showOwnProfile(snapshotvalue, entry){
 
     var fanbasediv = document.createElement('div');
     var fanbaseparagraph = document.createElement('p');
-    fanbaseparagraph.appendChild(document.createTextNode('FANDOM LEVEL'));
+    fanbaseparagraph.appendChild(document.createTextNode('FAN LEVEL'));
     fanbasediv.appendChild(fanbaseparagraph);
     fanbasediv.id = 'fandomlevel';
 

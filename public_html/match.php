@@ -6,6 +6,8 @@
     <script src="js/home.js"></script>
     <script src="js/profiles.js"></script>
     <script src="js/matches.js"></script>
+    <title>LoudStand</title>
+
 </head>
 <style>
     body:before {

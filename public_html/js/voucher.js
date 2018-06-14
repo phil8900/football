@@ -29,7 +29,7 @@ function showVouchersCinderela() {
 }
 
 function showVouchersOpen() {
-	fixtures.forEach(function (child) {
+	firebase.database().ref('fixtures/').forEach(function (child) {
 		var gameid = child['gameid'];
 		firebase.database().ref('/vouchers/' + gameid + '/').once('value', function (snapshot) {
 			snapshot.forEach(function (child) {

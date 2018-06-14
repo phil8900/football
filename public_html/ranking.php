@@ -2,7 +2,7 @@
 <head>
 	<?php include 'includes/header.php';?>
 	<script src="js/ranking.js"></script>
-	<title>LoudStand - Rankings</title>
+	<title>LoudStand</title>
 </head>
 
 <body onload="initRanking()">
@@ -40,9 +40,9 @@
 	</div>
 	<div class="secondsubtopnav">
 
-		<div class="left" onclick="displayUserRanking()">USER</div>
+		<div class="left" onclick="displayUserRanking()">FANS</div>
 
-		<div class="right"onclick="displayTeamRanking()">TEAM</div>
+		<div class="right"onclick="displayTeamRanking()">TEAMS</div>
 	</div>
 </div>
 

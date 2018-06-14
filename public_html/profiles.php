@@ -6,7 +6,7 @@
 	<script src="js/match.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE0NXJejZApujcdK8c9S7i-G7yblT2kFg&libraries=places&callback=initMap" async defer></script>
 	<script src="js/location.js"></script>
-	<title>LoudStand - Profiles</title>
+	<title>LoudStand</title>
 </head>
 
 <script>
