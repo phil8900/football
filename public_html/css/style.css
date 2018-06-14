@@ -1152,7 +1152,7 @@ height: auto;
 	overflow: scroll;
 	padding: 0 0 0 0;
 	-webkit-overflow-scrolling: touch;
-
+	margin-bottom: 0;
 }
 
 #postmatchcontainertitle p{
@@ -1630,7 +1630,7 @@ h3{
 	height: 40px;
 	border-radius: 50%;
 	position: absolute;
-	left: 16%;
+	left: 12%;
 	top: -8px;
 	width: 40px;
 	padding-top: 16px;
