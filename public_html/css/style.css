@@ -1916,7 +1916,7 @@ font-size: 20px;
 	}
 }
 
-@media screen and (min-height: 560px) {
+@media screen and (min-height: 650px) {
 	#voucherdescription {
 		font-size: 24px;
 	}

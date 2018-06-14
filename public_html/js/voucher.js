@@ -29,7 +29,7 @@ function showVouchersCinderela() {
 }
 
 function showVouchersOpen() {
-	firebase.database().ref('fixtures/').forEach(function (child) {
+	fixtures.forEach(function (child) {
 		var gameid = child['gameid'];
 		firebase.database().ref('/vouchers/' + gameid + '/').once('value', function (snapshot) {
 			snapshot.forEach(function (child) {
@@ -172,6 +172,7 @@ function showVouchersWaxxies() {
 				snapshot.forEach(function (child) {
 					console.log(child.val());
 
+
 					var div = document.createElement('div');
 					var text = document.createTextNode("Voucher nº: " + child.val().vouchernumber + " was used at " + (new Date(child.val().timestamp * 1000)) + ' at Waxies');
 					div.appendChild(text);
@@ -188,6 +189,7 @@ function showVouchersWaxxies() {
 	setTimeout(function () {
 		numberOfTransactions();
 	}, 3000);
+
 
 
 }
