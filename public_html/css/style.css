@@ -1617,6 +1617,7 @@ h3{
 	font-size: 30px;
 }
 
+
 .userelement i{
 	margin-top: -52px;
 }
@@ -1880,6 +1881,18 @@ font-size: 20px;
 
 }
 
+.gamereaction{
+	color: #f6f6f6;
+	height: auto;
+}
+
+.fa-thumbs-down{
+	color: #f6f6f6;
+}
+
+.fa-thumbs-up{
+	color: #f6f6f6;
+}
 
 /* ------ Media Queries ---- */
 
@@ -2034,4 +2047,3 @@ font-size: 20px;
 	background-image: linear-gradient(to bottom, #f1f1f1 0%, #333 100%);
 }
 
-/* ------- Team Backgrounds ------- */

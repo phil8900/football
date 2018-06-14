@@ -484,6 +484,10 @@ function displayMvpRanking(){
 
             $("#mvp #homesquad").html(orderedDivs);
             $('#mvp #homesquad .userelement:gt(2)').hide();
+            $("#postmatchcontainer").animate({height: '510px'}, 1000);
+            document.getElementById('mvptitle').innerHTML = 'Most voted for best player of the match by fans:';
+
+
         }
     });
 }
@@ -722,13 +726,16 @@ function createWrappers(game_id, event_id, event_type){
         var reactiondiv = document.createElement('div');
         reactiondiv.classList.add('gamereaction');
 
+        var prereaction = document.createElement('div');
+        prereaction.innerHTML = "<br>Vote:";
+
         var positive = document.createElement('div');
         positive.classList.add('positive');
         var negative = document.createElement('div');
         negative.classList.add('negative');
 
 
-
+        reactiondiv.appendChild(prereaction);
         reactiondiv.appendChild(positive);
         reactiondiv.appendChild(negative);
         wrapper.appendChild(eventwrapper);
@@ -754,6 +761,7 @@ function createWrappers(game_id, event_id, event_type){
                 upbutton.disabled = true;
                 downbutton.disabled = true;
                 displayButtonPercentages(event_id, upbutton, downbutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
 
 
@@ -762,16 +770,19 @@ function createWrappers(game_id, event_id, event_type){
                 downbutton.disabled = true;
                 upbutton.disabled = true;
                 displayButtonPercentages(event_id, upbutton, downbutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
 
             reactiondiv.appendChild(upbutton);
             reactiondiv.appendChild(downbutton);
+
 
             firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/reactions/users/' + uid).once('value').then(function(snapshot) {
                 if(snapshot.val() != null){
                     upbutton.disabled = true;
                     downbutton.disabled = true;
                     displayButtonPercentages(event_id, upbutton, downbutton);
+                    prereaction.innerHTML = "<br>Overall fans opinion:"
                 }
             });
         }
@@ -819,23 +830,28 @@ function createWrappers(game_id, event_id, event_type){
             onebutton.addEventListener("click", function () {
                 rateStars(event_id, 'one');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
 
             });
             twobutton.addEventListener("click", function () {
                 rateStars(event_id, 'two');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
             threebutton.addEventListener("click", function () {
                 rateStars(event_id, 'three');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
             fourbutton.addEventListener("click", function () {
                 rateStars(event_id, 'four');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
             fivebutton.addEventListener("click", function () {
                 rateStars(event_id, 'five');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
 
             reactiondiv.appendChild(onebutton);
@@ -852,6 +868,7 @@ function createWrappers(game_id, event_id, event_type){
                     fourbutton.disabled = true;
                     fivebutton.disabled = true;
                     displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                    prereaction.innerHTML = "<br>Overall fans opinion:"
                 }
             });
 
@@ -986,6 +1003,8 @@ function displayPostMatchEvents (gameid){
         voteformvp.appendChild(voteformvpcontent);
         voteformvp.appendChild(submitmvp);
 
+
+
         var finalreview = document.createElement('div');
         finalreview.classList.add('finalreview');
         finalreview.innerHTML = "Final Review";
@@ -1089,7 +1108,7 @@ function displayPostMatchEvents (gameid){
                 fourbutton.disabled = true;
                 fivebutton.disabled = true;
                 displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-                voteforfinalreviewcontent.innerHTML = "<h2 class='animated fadeIn' style='color:#0F281D; font-weight: 200;'>You've voted! This is your team's fans overall opinion:</h2>";
+                voteforfinalreviewcontent.innerHTML = "<h2 id='finalreviewtitle' class='animated fadeIn' style='color:#0F281D; font-weight: 200;'>You've voted! This is your team's fans overall opinion:</h2>";
 
             }
 
@@ -1128,13 +1147,18 @@ function displayPostMatchEvents (gameid){
                 }
             });
 
-
+            setTimeout(function(){
+                $('.submitbutton').fadeOut('slow');
+                $('.postmatchvotecontent').fadeOut('slow');
+                document.getElementById('finalcommenttitle').innerHTML = 'Your comment was submitted! Thank you.';
+                $("#postmatchcontainer").animate({height: '340px'}, 1000);
+            }, 500);
 
         });
 
 
         var commentareatext = document.createElement('p');
-        commentareatext.innerHTML = "<h2 class='animated fadeIn' style='color:#0F281D; font-weight: 200;'>What is your final comment on the match?</h2>";
+        commentareatext.innerHTML = "<h2 id='finalcommenttitle' class='animated fadeIn' style='color:#0F281D; font-weight: 200;'>What is your final comment on the match?</h2>";
 
         var commentarea = document.createElement('div');
         commentarea.classList.add('postmatchvote');
@@ -1308,8 +1332,6 @@ function displayPostMatchEvents (gameid){
                 }
             });
 
-
-
         });
 
 
@@ -1351,13 +1373,27 @@ function displayMVP(){
     getMvpList();
     displayMvpRanking();
 
+
+
     var livegame = getLiveGame();
     console.log(livegame);
     if (livegame == false){
         $(':button').prop('disabled', true);
     }
 
-    $("#postmatchcontainer").animate({height: '1512px'}, 1000);
+
+    var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp');
+    startingRef.on('value', function(snapshot) {
+
+        if (snapshot.val() != null) {
+            $("#postmatchcontainer").animate({height: '510px'}, 1000);
+            document.getElementById('mvptitle').innerHTML = 'Most voted for best player of the match by fans:';
+        }
+        else {
+            $("#postmatchcontainer").animate({height: '1512px'}, 1000);
+        }
+    });
+
 
     $('.mvp').css({backgroundColor: "#2c7656"}, 1000);
     $('.finalcomment').css({backgroundColor: "#0F281D"}, 1000);
@@ -1384,6 +1420,9 @@ function displayFinalReview(){
     $('.mvp').css({backgroundColor: "#0F281D"}, 1000);
     $('.finalcomment').css({backgroundColor: "#0F281D"}, 1000);
     $('.finalreview').css({backgroundColor: "#2c7656"}, 1000);
+    $('#finalreviewtitle').show();
+    $(".postmatchvotecontent").show();
+
 
 }
 
@@ -1391,12 +1430,24 @@ function displayFinalComment(){
     document.getElementById('mvp').style.display = 'none';
     document.getElementById('finalreview').style.display = 'none';
     document.getElementById('finalcomment').style.display = 'block';
-    $(".submitbutton").show();
-    $("#postmatchcontainer").animate({height: '520px'}, 1000);
 
     $('.mvp').css({backgroundColor: "#0F281D"}, 1000);
     $('.finalcomment').css({backgroundColor: "#2c7656"}, 1000);
     $('.finalreview').css({backgroundColor: "#0F281D"}, 1000);
+
+        firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
+            if (child.val() == null) {
+                $(".submitbutton").show();
+                $("#postmatchcontainer").animate({height: '520px'}, 1000);
+            }
+            else{
+                $("#postmatchcontainer").animate({height: '340px'}, 1000);
+                $(".postmatchvotecontent").hide();
+                document.getElementById('finalcommenttitle').innerHTML = 'Your comment was submitted! Thank you.';
+
+            }
+        });
+
 
 
 
@@ -1534,19 +1585,7 @@ function hideVoucherOverlay(){
 
 function voucherDescription () {
 
-    var seenvoucher = JSON.parse(localStorage.getItem("seenvoucher"));
-
-    if (seenvoucher == null) {
-        localStorage.setItem("seenvoucher", true);
-        var voucherdescription = document.getElementById('voucherdescription');
-        voucherdescription.innerHTML = "<div class='firstvoucher'>To have your discount validated you must " +
-            "show your voucher to the bartender. Only the bartender can confirm it by clicking the button. " +
-            "If not, the discount is wasted and the voucher is locked permanently. Just make sure you don’t " +
-            "loose your next beer! </div>";
-
-    }
-    else {
-        firebase.database().ref('/checkins/').once('value').then(function(snapshot) {
+    firebase.database().ref('/checkins/').once('value').then(function(snapshot) {
             snapshot.forEach(function (child) {
                 var placeid = child.key;
                 console.log(placeid);
@@ -1601,21 +1640,11 @@ function voucherDescription () {
 
         });
 
-    }
+
 
 }
 
 function waxxiesVoucherDescription () {
-    var seenvoucher = JSON.parse(localStorage.getItem("seenvoucher"));
-
-    if (seenvoucher == null) {
-        localStorage.setItem("seenvoucher", true);
-        var voucherdescription = document.getElementById('voucherdescription');
-        voucherdescription.innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU. WAXIES VERSION.</style>";
-
-    }
-    else {
-
         var voucherdescription = document.getElementById('voucherdescription');
         voucherdescription.innerHTML =    "<b>Don't press 'USE VOUCHER'.</b><br>"
                         +"Get a 5kr discount on any large beer." +
@@ -1656,7 +1685,7 @@ function waxxiesVoucherDescription () {
         });
 
         voucherdescription.appendChild(button);
-    }
+
 
 
 

@@ -229,7 +229,9 @@
 
 
 <div class="swiper-slide matchinteraction">
-    <div id="latestgameevent"></div>
+    <div id="latestgameevent">
+        <div id="waitinglatestevent" class="eventbox activityboxmatchevents" style="display: none">Match events will pop up here</div>
+    </div>
     <div id="teamprofile" style="margin-top: 10px;">
         <div id='ownteamranking' style="display: none;"></div>
         <div id='squad' class="starting11 activitybox">
