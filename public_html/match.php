@@ -230,7 +230,7 @@
 
 <div class="swiper-slide matchinteraction">
     <div id="latestgameevent"></div>
-    <div id="teamprofile">
+    <div id="teamprofile" style="margin-top: 10px;">
         <div id='ownteamranking' style="display: none;"></div>
         <div id='squad' class="starting11 activitybox">
             <div class="activityheader">

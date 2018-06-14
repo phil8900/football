@@ -999,6 +999,7 @@ height: auto;
 	float: left;
 	margin-left: 5%;
 	background-color: rgba(255,255,255,0.7);
+	margin-top: 20px;
 }
 
 #vouchercontainertitle{
@@ -1731,7 +1732,8 @@ color: white;
 
 .waxieslogo{
 	position: absolute;
-	top: 378px;	left: 8%;
+	top: 398px;
+	left: 8%;
 	height: 12%;
 }
 
