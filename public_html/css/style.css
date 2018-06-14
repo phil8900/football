@@ -68,6 +68,7 @@ body {
 #terms{
 	color: #0F281D;
 	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
 	height: 68%;
 	padding: 20px 10px 20px 10px;
 	margin-top: 14px;
@@ -1293,6 +1294,12 @@ height: auto;
 
 #welcometitle{
 	animation-delay: 1s;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	transform: translate(-50%, -50%);
 }
 
 #welcometitle h1{
@@ -1319,7 +1326,7 @@ height: auto;
 #authentication h2{
 	font-size: 20px;
 	font-weight: 200;
-	margin-bottom: 80px;
+	margin-bottom: 16px;
 }
 
 #getstarted{
@@ -1349,9 +1356,9 @@ height: auto;
 	background-position:center center !important;
 	width: 18% !important;
 	height: 50px !important;
-	border-style: none;
-	border-radius: 0;
 	margin: 10px 10px 10px 10px;
+	border: 2px solid black;
+	border-radius:  5px;
 }
 
 #teamselect h1{
@@ -1867,6 +1874,13 @@ font-size: 20px;
 		font-size: 14px;
 		z-index: 5;
 		text-align: right;
+	}
+}
+
+@media screen and (min-width: 500px) {
+	body {
+		visibility: hidden;
+		display: none;
 	}
 }
 

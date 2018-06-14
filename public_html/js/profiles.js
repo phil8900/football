@@ -351,7 +351,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
 
     else if(activity == 'voucher'){
         symbol = 'fa-ticket-alt';
-        activitytext = 'Used a LoudStand voucher at';
+        activitytext = 'Used a LoudStand voucher';
         getVoucherDetails(description, activitytext, event, reaction);
     }
 

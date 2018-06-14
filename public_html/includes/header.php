@@ -25,6 +25,14 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
     gtag('config', 'UA-120812054-1');
 </script>
 
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-593ZT37');</script>
+<!-- End Google Tag Manager -->
+
 <!-- Hotjar Tracking Code for https://loudstandbeta.com/ -->
 <script>
     (function(h,o,t,j,a,r){
@@ -39,7 +47,6 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 
 
 
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -49,7 +56,7 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 <meta name="msapplication-navbutton-color" content="#0F281D">
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon-precomposed" sizes="57x57" href="fan%20teste%203-02.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/fan%20teste%203-02.png"/>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
