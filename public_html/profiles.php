@@ -282,7 +282,7 @@
 		<div class="swiper-slide">
 			<div class="teamprofilepadding" id="teamprofile">
 				<div id='ownteamranking'></div>
-				<div id='squad' class="activitybox activityboxprofiles">   ADD LATER
+				<div id='squad' class="activitybox activityboxprofiles">
 					<h2 style="color: #0F281D">TEAM STATISTICS</h2>
 					<br>
 					<div class="dropdown">

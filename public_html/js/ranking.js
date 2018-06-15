@@ -186,6 +186,11 @@ function createUserRankingElement(entry, id){
 		div.innerHTML = '';
 	}
 
+	if(entry['uid'] == uid){
+		div.classList.add('highlightuserranking');
+	}
+
+
 	div.classList.add('userelementranking');
 	var firstlinediv = document.createElement('div');
 	firstlinediv.classList.add('firstlinediv');
@@ -253,6 +258,7 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 	}
 
 	div.classList.add('userelementranking');
+//	div.classList.add(entry.)
 	var firstlinediv = document.createElement('div');
 	firstlinediv.classList.add('firstlinediv');
 
