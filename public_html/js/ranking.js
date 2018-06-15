@@ -130,6 +130,10 @@ function getPointsForTeams(){
 				});
 			});
 
+			if(isNaN(points)){
+				points = 0;
+			}
+
 			if(child.val().points != points){
 				var updates = {};
 
@@ -237,15 +241,22 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 	firstlinediv.appendChild(rankspan);
 	div.appendChild(firstlinediv);
 
-	var usercount = $('#userranking .userranking').length;
+	var usercount = 0;
 
-	var pointsdiv = document.createElement('div');
-	pointsdiv.appendChild(document.createTextNode(Math.round(entry.points/usercount)));
-	pointsdiv.classList.add('userrankingpointsrankings');
+	firebase.database().ref('/rankings/users').once('value', function(snapshot) {
+		snapshot.forEach(function(child){
+			if(child.val()['team'] == entry['teamid']){
+				usercount++;
+			}
 
-	div.appendChild(pointsdiv);
+		});
+		var pointsdiv = document.createElement('div');
+		pointsdiv.appendChild(document.createTextNode(Math.round(entry.points/usercount)));
+		pointsdiv.classList.add('userrankingpointsrankings');
+		div.appendChild(pointsdiv);
 
-	document.getElementById(id).appendChild(div);
+		document.getElementById(id).appendChild(div);
+		});
 }
 
 function showTeamRanking(entry, profile){
