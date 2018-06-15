@@ -568,6 +568,7 @@ button{
 	background-color: transparent;
 	margin-left: -5px;
 	margin-right: -5px;
+	overflow: visible;
 }
 
 .downbutton{
