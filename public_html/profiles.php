@@ -281,13 +281,7 @@
 		<div class="swiper-slide">
 			<div class="teamprofilepadding" id="teamprofile">
 				<div id='ownteamranking'></div>
-				<div id="comingsoon" class="activitybox">
-					<h2 style="color: #0b2e13;">COMING SOON FEATURE</h2>
-					<br>
-					<p style="color: #0b2e13;">Stay tuned as we are preparing a really cool new feature to be launched here!</p>
-				</div>
-
-			<!--	<div id='squad' class="activitybox activityboxprofiles">   ADD LATER
+				<div id='squad' class="activitybox activityboxprofiles">   ADD LATER
 					<h2 style="color: #0F281D">TEAM STATISTICS</h2>
 					<br>
 					<div class="dropdown">
@@ -315,7 +309,7 @@
 					<div id='defender'></div>
 					<div id='midfielder'></div>
 					<div id='striker'></div>
-				</div>  -->
+				</div>  
 			</div>
 		</div>
 	</div>

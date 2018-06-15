@@ -437,7 +437,6 @@ function getLastActivities() {
                     }
                     if(snapshot.val()['finalcomment'] != null){
                         showActivityBox('finalcomment', snapshot.val()['finalcomment'], snapshot.key, null);
-                        console.log(snapshot.val());
                     }
                     if(snapshot.val()['finalreview'] != null){
                         showActivityBox('finalreview', snapshot.val()['finalreview'], snapshot.key, null);
@@ -538,7 +537,7 @@ function getStartingElevenDetails(description, event, activitytext, gameid){
     var starting = document.createElement('div');
 
     Object.keys(event).forEach(function(child){
-        if(child != 'timestamp'){
+        if(child != 'timestamp' && child != 'mvp' && child != 'finalcomment' && child != 'finalreview'){
             var tmpevent = [];
             tmpevent['verein_id'] = ownteam;
             getPlayerInfo(event[child].playerid, tmpevent, eventlist);
@@ -720,7 +719,6 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
         if(reaction.reaction == 'five'){
             five.classList.add('checkedstar');
         }
-        console.log(reaction);
     }
     description.appendChild(eventwrapper);
 }
@@ -786,9 +784,11 @@ function showSquad(nextgame){
 
             var countspan = document.createElement('span');
             countspan.classList.add('mvpcountspan');
-            countspan.innerHTML = 'Voted MVP ' + 0 + ' times';
+            countspan.innerHTML = 0;
 //	countspan.style.display = 'none';
+            div.appendChild(document.createTextNode('Voted MVP '));
             div.appendChild(countspan);
+            div.appendChild(document.createTextNode(' times'));
 
             var startingcountspan = document.createElement('span');
             startingcountspan.classList.add('startingcountspan');
@@ -827,6 +827,7 @@ function setupButtons(nextgame){
     startingRef.on('value', function(snapshot){
         var counter = 0;
         snapshot.forEach(function(child) {
+            console.log(child.val());
             if(child.val().playerid != null && child.key != 'mvp' && child.key != 'finalreview' && child.key != 'finalcomment'){
                 var div = document.getElementById(child.val().playerid);
                 if(div != null){
