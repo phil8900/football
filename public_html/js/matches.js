@@ -42,7 +42,7 @@ function showMatches(){
 			var hometeam = child['hometeamid'];
 			var awayteam = child['awayteamid'];
 			var date = child['date'];
-			var calcdate = new Date(child.timestamp * 1000 + new Date().getTimezoneOffset() - 7140000);
+			var calcdate = new Date(child.timestamp * 1000 + new Date().getTimezoneOffset());
 			var time = calcdate.toString("hh:mm tt");
 
 			var gameid = child['gameid'];
