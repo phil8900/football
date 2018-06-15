@@ -54,7 +54,7 @@ function updateTeamRanking(profile){
 		snapshot.forEach(function(child) {
 			array.push(child.val());
 		});
-		array.sort(function(a, b){return b.points-a.points});
+		array.sort(function(a, b){return b.averagepoints-a.averagepoints});
 		teamRanking = array;
 
 		if(!profile){
@@ -93,6 +93,17 @@ function updateTeamRanking(profile){
 			rank++;
 		});
 	});
+}
+
+function sortTeamRanking(){
+		    var players = $("#teamranking .userelementranking");
+
+    var orderedDivs = players.sort(function (a, b) {
+        return (parseInt($(a).find('.userranking').text()) < parseInt($(b).find('.userranking').text())) ? -1 : (parseInt($(a).find('.userranking').text()) > parseInt($(b).find('.userranking').text())) ? 1 : 0;
+    });
+    console.log(orderedDivs);
+
+    $("#teamranking").html(orderedDivs);
 }
 
 function setTeamRanking(userRanking){
@@ -135,13 +146,29 @@ function getPointsForTeams(){
 				points = 0;
 			}
 
-			if(child.val().points != points){
-				var updates = {};
+	var usercount = 0;
 
+	firebase.database().ref('/rankings/users').once('value', function(snapshot) {
+		snapshot.forEach(function(userchild){
+			if(userchild.val()['team'] == teamid){
+				usercount++;
+			}
+
+		});
+		var teampoints = Math.round(points/usercount);
+		if(!isFinite(teampoints)){
+			teampoints = 0;
+		}
+
+			if(child.val().points != points || child.val().averagepoints != teampoints){
+				var updates = {};
+				updates['rankings/teams/' + teamid + '/averagepoints'] = teampoints;
 				updates['rankings/teams/' + teamid + '/points'] = points;
 				updates['rankings/teams/' + teamid + '/teamid'] = teamid;
+
 				firebase.database().ref().update(updates);
 			}
+				});
 		});
 	});
 }
@@ -312,6 +339,8 @@ function displayTeamRanking(){
 
 	$(".left").css('background-color', '#0F281D');
 	$(".right").css('background-color', '#2c7656');
+	sortTeamRanking();
+
 
 	swiper.slideNext();
 }
