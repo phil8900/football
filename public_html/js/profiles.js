@@ -93,6 +93,9 @@ function showOwnProfile(snapshotvalue, entry){
     linebehind.classList.add('linebehind');
 
     var profileimage = document.createElement('img');
+    if(entry.photoURL == 'null?type=large'){
+        entry.photoURL = 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Nelson_Neves_picuture.gif';
+    }    
     profileimage.src = entry.photoURL;
 
     userprofile.appendChild(linebehind);
