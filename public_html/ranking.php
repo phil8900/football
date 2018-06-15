@@ -72,6 +72,21 @@
 		initialSlide: 0
 	});
 </script>
+
+<script>
+	$(document).ready(function() {
+		swiper.on('slideChange', function () {
+
+			console.log(swiper.activeIndex);
+
+			if (swiper.activeIndex == 1) {
+				sortTeamRanking();
+			}
+		});
+	});
+
+</script>
+
 <?php include 'includes/footer.php';?>
 </body>
 </html>
