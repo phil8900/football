@@ -99,6 +99,7 @@ function setTeamRanking(userRanking){
 	var rank = 1;
 	document.getElementById('userranking').innerHTML = '';
 	userRanking.forEach(function(entry) {
+		if(entry['uid'] != null){
 		if(entry['rank'] == null){
 			entry['previous'] = -1;
 		}
@@ -111,6 +112,7 @@ function setTeamRanking(userRanking){
 		entry['rank'] = rank;
 		createUserRankingElement(entry, 'userranking');
 		rank++;
+		}
 	});
 	getPointsForTeams();
 }
