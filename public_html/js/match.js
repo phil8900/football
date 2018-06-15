@@ -1975,6 +1975,10 @@ function manageTimestamps () {
                 console.log('pre match');
 
                 document.getElementById('teamprofile').style.display = 'block';
+                document.getElementById('squad').style.display = 'block';
+                $('.mvpcountspan').hide();
+
+
                 document.getElementById('squad').style.height = '80%';
                 document.getElementById('latestgameevent').style.display = 'none';
 
@@ -1997,6 +2001,8 @@ function manageTimestamps () {
 
             if ((notlive == 'notlive') && (date < timestamp + 1200)) {
                 console.log('game started late');
+                $('.mvpcountspan').hide();
+
 
                 document.getElementById('teamprofile').style.display = 'block';
                 document.getElementById('squad').style.height = '80%';

@@ -786,9 +786,9 @@ function showSquad(nextgame){
             countspan.classList.add('mvpcountspan');
             countspan.innerHTML = 0;
 //	countspan.style.display = 'none';
-            div.appendChild(document.createTextNode('Voted MVP '));
+   //         div.appendChild(document.createTextNode('Voted MVP '));
             div.appendChild(countspan);
-            div.appendChild(document.createTextNode(' times'));
+     //       div.appendChild(document.createTextNode(' times'));
 
             var startingcountspan = document.createElement('span');
             startingcountspan.classList.add('startingcountspan');
@@ -806,7 +806,7 @@ function showSquad(nextgame){
 
             if(ownprofile){
                 var button = document.createElement('button');
-                button.appendChild(document.createTextNode('11'));
+                button.appendChild(document.createTextNode('Choose'));
                 button.classList.add('checkinbutton');
                 button.addEventListener("click", function(){
                     manageStartingEleven(button.parentElement.id, nextgame, button);
