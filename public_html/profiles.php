@@ -236,7 +236,7 @@
 		<b>TEAM PROFILE</b>
 		<p>By clicking “MY TEAM” on the upper right corner, you can see how big a national team is based on
 			the support they get from their fans! Check how high the team is ranked and look at their fan level. We are
-		soon launching a new feature that will give you the best statistics of your team based on your team's fans opinion.</p>
+			soon launching a new feature that will give you the best statistics of your team based on your team's fans opinion.</p>
 		</p>
 	</div>
 </div>
@@ -310,7 +310,7 @@
 					<div id='defender'></div>
 					<div id='midfielder'></div>
 					<div id='striker'></div>
-				</div>  
+				</div>
 			</div>
 		</div>
 	</div>
@@ -326,6 +326,7 @@
 	var swiper = new Swiper('.swiper-container', {
 		initialSlide: 0
 	});
+
 </script>
 
 
