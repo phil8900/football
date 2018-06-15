@@ -167,6 +167,9 @@ function createUserRankingElement(entry, id){
 	firstlinediv.appendChild(imagewrapper);
 
 	var image = document.createElement('img');
+	if(entry.photoURL == 'null?type=large'){
+		entry.photoURL = 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Nelson_Neves_picuture.gif';
+	}
 	image.src = entry.photoURL; //AQUI CARALHO
 	image.classList.add('rankinglogo');
 	imagewrapper.appendChild(image);
