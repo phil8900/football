@@ -35,7 +35,7 @@ function initReferences(){
 		var array = new Array();
 		snapshot.forEach(function(child) {
 				array.push(child.val());
-			
+
 		});
 
 		array.sort(function(a, b){return b.points-a.points});
@@ -169,17 +169,17 @@ function createUserRankingElement(entry, id){
 	if(entry.photoURL == 'null?type=large'){
 		entry.photoURL = 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Nelson_Neves_picuture.gif';
 	}
-	image.src = entry.photoURL; //AQUI CARALHO
+	image.src = entry.photoURL;
 	image.classList.add('rankinglogo');
 	imagewrapper.appendChild(image);
 
 	firebase.database().ref('/teams/' + entry['team'] + '/information').once('value', function(snapshot) {
-		
+
 		if(snapshot.val() != null){
 			var teamimage = document.createElement('img');
 
 			teamimage.src = snapshot.val()['teamlogo']; //AQUI CARALHO
-			teamimage.classList.add('rankinglogo');
+			teamimage.classList.add('rankinglogoteamimage');
 			imagewrapper.appendChild(teamimage);
 		}
 	});
