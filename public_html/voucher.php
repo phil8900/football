@@ -7,6 +7,13 @@
 
 <body onload="enterButton()">
 
+<style>
+	body{
+		display: block;
+		visibility: visible;
+	}
+</style>
+
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
 	<div class="firstsubtopnav">
 		<div class="menu-title">USED VOUCHERS</div>

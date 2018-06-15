@@ -25,18 +25,25 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
     gtag('config', 'UA-120812054-1');
 </script>
 
-<!-- Hotjar Tracking Code for www.loudstand.com -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-593ZT37');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Hotjar Tracking Code for https://loudstandbeta.com/ -->
 <script>
     (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:910619,hjsv:6};
+        h._hjSettings={hjid:915168,hjsv:6};
         a=o.getElementsByTagName('head')[0];
         r=o.createElement('script');r.async=1;
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
-
 
 
 
@@ -49,13 +56,14 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 <meta name="msapplication-navbutton-color" content="#0F281D">
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon-precomposed" sizes="57x57" href="fan%20teste%203-02.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/fan.png"/>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
 <script src="js/dragdealer.js"></script>
+<link rel="manifest" href="manifest.json">
 
 
 <!-- Swiper API -->
@@ -93,7 +101,7 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 <link rel="stylesheet" href="css/animate.css">
 <link rel='stylesheet' href='css/slidetounlock.css'>
 <link rel="stylesheet" type="text/css" href="css/overwrittenstylesheet.css">
-<link rel="stylesheet" href="css/style.css?ver=1.18" media="screen" />
+<link rel="stylesheet" href="css/style.css?ver=1.2" media="screen" />
 
 
 
@@ -221,3 +229,4 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
         $('#overlayloading').fadeOut("slow");
 });
 </script>
+

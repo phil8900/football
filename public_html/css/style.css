@@ -68,7 +68,8 @@ body {
 #terms{
 	color: #0F281D;
 	overflow: scroll;
-	height: 500px;
+	-webkit-overflow-scrolling: touch;
+	height: 68%;
 	padding: 20px 10px 20px 10px;
 	margin-top: 14px;
 	text-align: left;
@@ -127,6 +128,8 @@ body {
 	left: 22%;
 	top: 36px;
 	padding-top: 4%;
+	color: #f6f6f6;
+	text-decoration: none;
 }
 
 
@@ -231,6 +234,16 @@ body {
 	margin-right: 2%;
 	border-radius: 50%;
 	float: left;
+	border: 2px solid black;
+}
+
+.rankinglogoflag{
+	height: 50px;
+	width: 50px;
+	margin-right: 2%;
+	border-radius: 50%;
+	float: left;
+	border: 2px solid #f6f6f6;
 }
 
 #team h2{
@@ -432,11 +445,12 @@ body {
 	-o-transform: skew(-30deg);
 	background: #0F281D;
 	margin:auto;
-	margin-top: 24%;
+	margin-top: 25%;
 	text-align: center;
 	border: 1px solid #0F281D;
 	padding: 10px;
 	box-shadow: 5px 10px 18px #0F281D;
+	overflow: hidden;
 }
 
 .timediv p{
@@ -444,7 +458,7 @@ body {
 	-moz-transform: skew(30deg);
 	-o-transform: skew(30deg);
 	color: white;
-	font-size: 16px;
+	font-size: 12px;
 }
 
 .matchdate{
@@ -464,35 +478,43 @@ time p{
 }
 
 .homediv .matchlogo{
-	width:33%;
-	padding-right:5%;
+	width: 50px;
+	margin-right: 6px;
 	float: left;
+	height: 36px;
+	border: 2px solid black;
+	border-radius: 5px;
 }
 
 .homediv{
 	float: left;
-	margin-top: 4%;
+	margin-top: 1%;
 	width: 70%;
 	text-transform: uppercase;
-	color:black;
+	color: black;
 	max-height: 25%;
 	margin-left: 5%;
 }
 
 .awaydiv{
 	float: right;
-	margin-top: 6%;
 	width: 70%;
 	text-transform: uppercase;
-	color:black;
+	color: black;
 	max-height: 25%;
 	margin-right: 5%;
+	position: absolute;
+	bottom: 3%;
+	right: 0;
 }
 
 .awaydiv .matchlogo{
-	width:33%;
-	padding-left:5%;
+	width: 50px;
+	margin-left: 6px;
 	float: right;
+	height: 36px;
+	border: 2px solid black;
+	border-radius: 5px;
 }
 
 .matchhometeam{
@@ -503,6 +525,7 @@ time p{
 	font-size: 14px;
 	color: #0F281D;
 	text-align: left;
+	margin-top: -4px;
 }
 
 .matchawayteam{
@@ -513,6 +536,7 @@ time p{
 	font-size: 14px;
 	color: #0F281D;
 	text-align: right;
+	margin-top: -4px;
 }
 
 #upcoming{
@@ -540,9 +564,11 @@ time p{
 button{
 	border-style: none;
 	height: 30px;
-	width: 30px;
+	width: 70px;
 	background-color: transparent;
-	margin: 0px 16px 0px 0px;
+	margin-left: -10px;
+	margin-right: -10px;
+	overflow: visible;
 }
 
 .downbutton{
@@ -856,7 +882,6 @@ button{
 .teamteamlogo img{
 	width: 60px;
 	height: 60px;
-	border-radius: 50%;
 	position: absolute;
 	right: 22%;
 	top: 36px;
@@ -976,6 +1001,7 @@ height: auto;
 	float: left;
 	margin-left: 5%;
 	background-color: rgba(255,255,255,0.7);
+	margin-top: 20px;
 }
 
 #vouchercontainertitle{
@@ -1023,13 +1049,27 @@ height: auto;
 	opacity: 0.6;
 }
 
+#voucheroverlaywaxies{
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	z-index: 2;
+	opacity: 0.6;
+}
+
 #voucheroverlaycontent{
 	text-align: center;
 	position: fixed;
 	display: none;
 	width: 90%;
-	height: 68%;
-	top: 20%;
+	height: 66%;
+	top: 140px;
 	left: 5%;
 	right: 0;
 	bottom: 0;
@@ -1046,9 +1086,9 @@ height: auto;
 
 #voucheroverlayinnercontent{
 	background-color: rgba(0,0,0,0.5);
-	height: 82%;
+	height: auto;
 	border-radius: 10px;
-	padding: 5% 5% 5% 5%;
+	padding: 6px 2px 2px 2px;
 }
 
 /*#voucheroverlaycontentborder{
@@ -1083,12 +1123,14 @@ height: auto;
 
 .vouchertitle h1{
 	font-weight: bold;
-	font-size: 2.2em;
+	font-size: 1.5em;
+	margin-top: 12px;
 }
 
 #voucherdescription{
 	color: #f6f6f6;
 	font-weight: 200;
+	font-style: 18px;
 }
 
 #voucheroverlayinnercontentcookie{
@@ -1104,6 +1146,7 @@ height: auto;
 	height: 100%;
 	padding-top: 14%;
 	color: black;
+	overflow: scroll;
 }
 
 #postmatchcontainer{
@@ -1111,7 +1154,7 @@ height: auto;
 	overflow: scroll;
 	padding: 0 0 0 0;
 	-webkit-overflow-scrolling: touch;
-
+	margin-bottom: 0;
 }
 
 #postmatchcontainertitle p{
@@ -1226,6 +1269,10 @@ height: auto;
 	margin-top: 40px;
 }
 
+#matchmodal {
+	height: 120px;
+}
+
 .starting11{
 	height: 400px;
 	overflow: scroll;
@@ -1236,9 +1283,16 @@ height: auto;
 }
 
 .voucherconfirmation{
-	width: 80%;
 	margin-top: 20px;
 	z-index: 1000;
+}
+
+
+#voucherconfirmation{
+	margin-top: 20px;
+	z-index: 1000;
+	width: 200px;
+	margin-bottom: 10px;
 }
 
 .livenow {
@@ -1273,6 +1327,12 @@ height: auto;
 
 #welcometitle{
 	animation-delay: 1s;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	transform: translate(-50%, -50%);
 }
 
 #welcometitle h1{
@@ -1299,7 +1359,7 @@ height: auto;
 #authentication h2{
 	font-size: 20px;
 	font-weight: 200;
-	margin-bottom: 80px;
+	margin-bottom: 16px;
 }
 
 #getstarted{
@@ -1329,9 +1389,9 @@ height: auto;
 	background-position:center center !important;
 	width: 18% !important;
 	height: 50px !important;
-	border-style: none;
-	border-radius: 0;
 	margin: 10px 10px 10px 10px;
+	border: 2px solid black;
+	border-radius:  5px;
 }
 
 #teamselect h1{
@@ -1461,16 +1521,14 @@ height: auto;
 }
 
 #latestgameevent{
-	width: 90%;
+	width: 100%;
 	border-radius: 10px;
 	height: 360px;
-	margin-bottom: 5%;
-	margin-left: 5%;
+	margin-bottom: 40px;
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	float: left;
-	margin-top: 10px;
-
+	margin-top: -10px;
 }
 
 .gamereaction{
@@ -1561,6 +1619,7 @@ h3{
 	font-size: 30px;
 }
 
+
 .userelement i{
 	margin-top: -52px;
 }
@@ -1572,7 +1631,7 @@ h3{
 	height: 40px;
 	border-radius: 50%;
 	position: absolute;
-	left: 16%;
+	left: 12%;
 	top: -8px;
 	width: 40px;
 	padding-top: 16px;
@@ -1674,7 +1733,8 @@ color: white;
 
 .waxieslogo{
 	position: absolute;
-	top: 378px;	left: 8%;
+	top: 398px;
+	left: 8%;
 	height: 12%;
 }
 
@@ -1755,13 +1815,20 @@ color: white;
 	background-color: rgba(0,0,0,0.5)
 }
 
+#closetutorial{
+	text-align: left;
+	font-size: 28px;
+	margin-bottom: 10px;
+	width: 40px;
+}
+
 #tutorialcontent{
 	text-align: center;
 	position: fixed;
 	display: none;
 	width: 90%;
 	height: 68%;
-	top: 20%;
+	top: 140px;
 	left: 5%;
 	right: 0;
 	bottom: 0;
@@ -1776,6 +1843,7 @@ color: white;
 	background-color: #f6f6f6;
 	color: #0b2e13;
 	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 #tutorialcontent h1 {
@@ -1786,12 +1854,53 @@ color: white;
 font-size: 20px;
 }
 
+#buttons{
+	text-align: center;
+}
+
+.acceptdecline{
+	border-style: none;
+	height: 60px;
+	width: 120px;
+	background-color: rgba(255,255,255, 0.7);
+	margin: 0px 10px 0px 10px;
+	border-radius: 5px;
+	text-align: center;
+	color: #0F281D;
+}
+
+#comingsoon{
+	width: 90%;
+	background-color: rgba(255,255,255, 0.7);
+	border-radius: 10px;
+	height: auto;
+	margin-bottom: 5%;
+	margin-left: 5%;
+	text-align: center;
+	color: gray;
+	float: left;
+	padding: 12px 12px 12px 12px;
+
+}
+
+.gamereaction{
+	color: #f6f6f6;
+	height: auto;
+}
+
+.fa-thumbs-down{
+	color: #f6f6f6;
+}
+
+.fa-thumbs-up{
+	color: #f6f6f6;
+}
 
 /* ------ Media Queries ---- */
 
 @media only screen and (min-width: 400px) {
 	.timediv p{
-		font-size: 19px;
+		font-size: 17px;
 	}
 	.stadium{
 		 padding-top: 2.5%;
@@ -1824,6 +1933,21 @@ font-size: 20px;
 		font-size: 14px;
 		z-index: 5;
 		text-align: right;
+	}
+
+}
+
+
+@media screen and (min-width: 500px) {
+	body {
+		visibility: hidden;
+		display: none;
+	}
+}
+
+@media screen and (min-height: 650px) {
+	#voucherdescription {
+		font-size: 24px;
 	}
 }
 
@@ -1924,3 +2048,4 @@ font-size: 20px;
 	background-image: -o-linear-gradient(top, #f1f1f1 0%, #aaa 100%);
 	background-image: linear-gradient(to bottom, #f1f1f1 0%, #333 100%);
 }
+

@@ -488,6 +488,10 @@ function displayMvpRanking(){
 
             $("#mvp #homesquad").html(orderedDivs);
             $('#mvp #homesquad .userelement:gt(2)').hide();
+            $("#postmatchcontainer").animate({height: '510px'}, 1000);
+            document.getElementById('mvptitle').innerHTML = 'Most voted for best player of the match by fans:';
+
+
         }
     });
 }
@@ -522,7 +526,7 @@ function getPlayerInfo(playerid, event, eventlist){
             if(eventwrapper != null){
                 eventwrapper.style.backgroundImage = "url('" + snapshot.val().picture + "')";
                 //if(latestgameevent != null){
-                    //latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
+                //latestgameevent.style.backgroundImage = "url('" + snapshot.val().picture + "')";
                 //}
             }
         }
@@ -563,14 +567,14 @@ function getTeamInfo(gameid, wrapper) {
 
     firebase.database().ref('/fixtures/' + gameid + '/').on('value', function (snapshot) {
         if(liveminute != null){
-        liveminute.classList.add('livenow');
+            liveminute.classList.add('livenow');
 
-        liveminute.id = 'liveminute';
+            liveminute.id = 'liveminute';
 
-        var liveminutespan = snapshot.val()['minute'];
-        if (liveminutespan >= 0) {
-            liveminute.innerHTML = liveminutespan + "'";
-        }
+            var liveminutespan = snapshot.val()['minute'];
+            if (liveminutespan >= 0) {
+                liveminute.innerHTML = liveminutespan + "'";
+            }
         }
 
         var gameheader = document.getElementById('gameheader');
@@ -610,31 +614,31 @@ function getTeamInfo(gameid, wrapper) {
                 homespan.classList.add('matchteamlogohome');
                 homespan.src = home;
                 if(hometeamflag != null){
-                hometeamflag.appendChild(homespan);
+                    hometeamflag.appendChild(homespan);
                 }
 
                 var homename = snapshot.val().teamname;
                 var homenamespan = document.getElementById('hometeamname');
                 if(homenamespan != null){
-                homenamespan.innerHTML = homename;
+                    homenamespan.innerHTML = homename;
                 }
 
 
             });
             firebase.database().ref('/teams/' + awayteam + '/information').once('value', function (snapshot) {
                 if(snapshot.val() != null){
-                var away = snapshot.val().teamlogo;
-                var awayspan = document.createElement('img');
-                awayspan.classList.add('matchteamlogoaway');
-                awayspan.src = away;
-                if(awayteamflag != null){
-                    awayteamflag.appendChild(awayspan);
-                }
+                    var away = snapshot.val().teamlogo;
+                    var awayspan = document.createElement('img');
+                    awayspan.classList.add('matchteamlogoaway');
+                    awayspan.src = away;
+                    if(awayteamflag != null){
+                        awayteamflag.appendChild(awayspan);
+                    }
 
-                var awayname = snapshot.val().teamname;
-                var awaynamespan = document.getElementById('awayteamname');
-                if(awaynamespan != null){
-                    awaynamespan.innerHTML = awayname;
+                    var awayname = snapshot.val().teamname;
+                    var awaynamespan = document.getElementById('awayteamname');
+                    if(awaynamespan != null){
+                        awaynamespan.innerHTML = awayname;
                     }
                 }
 
@@ -727,13 +731,16 @@ function createWrappers(game_id, event_id, event_type){
         var reactiondiv = document.createElement('div');
         reactiondiv.classList.add('gamereaction');
 
+        var prereaction = document.createElement('div');
+        prereaction.innerHTML = "<br>Vote:";
+
         var positive = document.createElement('div');
         positive.classList.add('positive');
         var negative = document.createElement('div');
         negative.classList.add('negative');
 
 
-
+        reactiondiv.appendChild(prereaction);
         reactiondiv.appendChild(positive);
         reactiondiv.appendChild(negative);
         wrapper.appendChild(eventwrapper);
@@ -759,6 +766,7 @@ function createWrappers(game_id, event_id, event_type){
                 upbutton.disabled = true;
                 downbutton.disabled = true;
                 displayButtonPercentages(event_id, upbutton, downbutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
 
 
@@ -767,16 +775,19 @@ function createWrappers(game_id, event_id, event_type){
                 downbutton.disabled = true;
                 upbutton.disabled = true;
                 displayButtonPercentages(event_id, upbutton, downbutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
 
             reactiondiv.appendChild(upbutton);
             reactiondiv.appendChild(downbutton);
+
 
             firebase.database().ref('/fixtures/' + game_id + '/events/' + event_id + '/reactions/users/' + uid).once('value').then(function(snapshot) {
                 if(snapshot.val() != null){
                     upbutton.disabled = true;
                     downbutton.disabled = true;
                     displayButtonPercentages(event_id, upbutton, downbutton);
+                    prereaction.innerHTML = "<br>Overall fans opinion:"
                 }
             });
         }
@@ -824,23 +835,28 @@ function createWrappers(game_id, event_id, event_type){
             onebutton.addEventListener("click", function () {
                 rateStars(event_id, 'one');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
 
             });
             twobutton.addEventListener("click", function () {
                 rateStars(event_id, 'two');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
             threebutton.addEventListener("click", function () {
                 rateStars(event_id, 'three');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
             fourbutton.addEventListener("click", function () {
                 rateStars(event_id, 'four');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
             fivebutton.addEventListener("click", function () {
                 rateStars(event_id, 'five');
                 displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                prereaction.innerHTML = "<br>Overall fans opinion:"
             });
 
             reactiondiv.appendChild(onebutton);
@@ -857,6 +873,7 @@ function createWrappers(game_id, event_id, event_type){
                     fourbutton.disabled = true;
                     fivebutton.disabled = true;
                     displayAverageStars(event_id, onebutton, twobutton, threebutton, fourbutton, fivebutton);
+                    prereaction.innerHTML = "<br>Overall fans opinion:"
                 }
             });
 
@@ -991,6 +1008,8 @@ function displayPostMatchEvents (gameid){
         voteformvp.appendChild(voteformvpcontent);
         voteformvp.appendChild(submitmvp);
 
+
+
         var finalreview = document.createElement('div');
         finalreview.classList.add('finalreview');
         finalreview.innerHTML = "Final Review";
@@ -1094,7 +1113,7 @@ function displayPostMatchEvents (gameid){
                 fourbutton.disabled = true;
                 fivebutton.disabled = true;
                 displayRatingStars(gameid, onebutton, twobutton, threebutton, fourbutton, fivebutton);
-                voteforfinalreviewcontent.innerHTML = "<h2 class='animated fadeIn' style='color:#0F281D; font-weight: 200;'>You've voted! This is your team's fans overall opinion:</h2>";
+                voteforfinalreviewcontent.innerHTML = "<h2 id='finalreviewtitle' class='animated fadeIn' style='color:#0F281D; font-weight: 200;'>You've voted! This is your team's fans overall opinion:</h2>";
 
             }
 
@@ -1133,13 +1152,18 @@ function displayPostMatchEvents (gameid){
                 }
             });
 
-
+            setTimeout(function(){
+                $('.submitbutton').fadeOut('slow');
+                $('.postmatchvotecontent').fadeOut('slow');
+                document.getElementById('finalcommenttitle').innerHTML = 'Your comment was submitted! Thank you.';
+                $("#postmatchcontainer").animate({height: '340px'}, 1000);
+            }, 500);
 
         });
 
 
         var commentareatext = document.createElement('p');
-        commentareatext.innerHTML = "<h2 class='animated fadeIn' style='color:#0F281D; font-weight: 200;'>What is your final comment on the match?</h2>";
+        commentareatext.innerHTML = "<h2 id='finalcommenttitle' class='animated fadeIn' style='color:#0F281D; font-weight: 200;'>What is your final comment on the match?</h2>";
 
         var commentarea = document.createElement('div');
         commentarea.classList.add('postmatchvote');
@@ -1313,8 +1337,6 @@ function displayPostMatchEvents (gameid){
                 }
             });
 
-
-
         });
 
 
@@ -1356,13 +1378,27 @@ function displayMVP(){
     getMvpList();
     displayMvpRanking();
 
+
+
     var livegame = getLiveGame();
     console.log(livegame);
     if (livegame == false){
         $(':button').prop('disabled', true);
     }
 
-    $("#postmatchcontainer").animate({height: '1512px'}, 1000);
+
+    var startingRef = firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/mvp');
+    startingRef.on('value', function(snapshot) {
+
+        if (snapshot.val() != null) {
+            $("#postmatchcontainer").animate({height: '510px'}, 1000);
+            document.getElementById('mvptitle').innerHTML = 'Most voted for best player of the match by fans:';
+        }
+        else {
+            $("#postmatchcontainer").animate({height: '1512px'}, 1000);
+        }
+    });
+
 
     $('.mvp').css({backgroundColor: "#2c7656"}, 1000);
     $('.finalcomment').css({backgroundColor: "#0F281D"}, 1000);
@@ -1389,6 +1425,9 @@ function displayFinalReview(){
     $('.mvp').css({backgroundColor: "#0F281D"}, 1000);
     $('.finalcomment').css({backgroundColor: "#0F281D"}, 1000);
     $('.finalreview').css({backgroundColor: "#2c7656"}, 1000);
+    $('#finalreviewtitle').show();
+    $(".postmatchvotecontent").show();
+
 
 }
 
@@ -1396,12 +1435,24 @@ function displayFinalComment(){
     document.getElementById('mvp').style.display = 'none';
     document.getElementById('finalreview').style.display = 'none';
     document.getElementById('finalcomment').style.display = 'block';
-    $(".submitbutton").show();
-    $("#postmatchcontainer").animate({height: '520px'}, 1000);
 
     $('.mvp').css({backgroundColor: "#0F281D"}, 1000);
     $('.finalcomment').css({backgroundColor: "#2c7656"}, 1000);
     $('.finalreview').css({backgroundColor: "#0F281D"}, 1000);
+
+        firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
+            if (child.val() == null) {
+                $(".submitbutton").show();
+                $("#postmatchcontainer").animate({height: '520px'}, 1000);
+            }
+            else{
+                $("#postmatchcontainer").animate({height: '340px'}, 1000);
+                $(".postmatchvotecontent").hide();
+                document.getElementById('finalcommenttitle').innerHTML = 'Your comment was submitted! Thank you.';
+
+            }
+        });
+
 
 
 
@@ -1466,10 +1517,10 @@ function displayVouchers(unlimited){
 
                             if(!unlimited){
                                 if(snapshot.numChildren() == 0) {
-                                    voucher1.style.backgroundColor = '#164065';
+                                    voucher1.style.backgroundColor = '#0F281D';
                                     voucher1.style.color = '#f6f6f6';
                                     voucher1.innerHTML = 'Discount #1';
-                                    voucher2.style.backgroundColor = '#164065';
+                                    voucher2.style.backgroundColor = '#0F281D';
                                     voucher2.style.color = '#f6f6f6';
                                     voucher2.innerHTML = 'Discount #2';
                                     voucher1.addEventListener("click", function () { showVoucherOverlay(unlimited);});
@@ -1539,16 +1590,7 @@ function hideVoucherOverlay(){
 
 function voucherDescription () {
 
-    var seenvoucher = JSON.parse(localStorage.getItem("seenvoucher"));
-
-    if (seenvoucher == null) {
-        localStorage.setItem("seenvoucher", true);
-        var voucherdescription = document.getElementById('voucherdescription');
-        voucherdescription.innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU</style>";
-
-    }
-    else {
-        firebase.database().ref('/checkins/').once('value').then(function(snapshot) {
+    firebase.database().ref('/checkins/').once('value').then(function(snapshot) {
             snapshot.forEach(function (child) {
                 var placeid = child.key;
                 console.log(placeid);
@@ -1562,35 +1604,39 @@ function voucherDescription () {
 
 
                         var voucherdescription = document.getElementById('voucherdescription');
-                        voucherdescription.innerHTML = "LoudStand offers you discounts on " +
-                            "drinks in this bar during this match! Go to the bar and ask the bartender to swipe the voucher." +
-                            " The bartender should do it, not you. If you do it, you lose your right to your discount.";
+                        voucherdescription.innerHTML =  "<b>Don't press 'USE VOUCHER' or you'll lose your drink!</b>" +
+                            "<br>Show this voucher and let the bartender confirm the discount.<br>";
 
-                         var button = document.createElement('button');
-                         button.classList.add('voucherconfirmation');
-                         button.id = 'voucherconfirmation';
-                         button.innerHTML = 'USE VOUCHER';
-                         button.addEventListener("click", function () {
-                         getPointsTable('voucher');
-                         hideVoucherOverlay();
+                        var button = document.createElement('button');
+                        button.classList.add('voucherconfirmation');
+                        button.id = 'voucherconfirmation';
+                        button.innerHTML = 'USE VOUCHER';
+                        button.classList.add('acceptdecline');
+                        button.addEventListener("click", function () {
+                            getPointsTable('voucher');
+                            hideVoucherOverlay();
+                            $('#checkinconfirmoverlay').fadeIn('slow');
+                            document.getElementById('checkinconfirm').innerHTML = 'Voucher used. Enjoy the match!'
 
-                         var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
-                         var randomvoucherNumber = Math.floor(Math.random() * Math.floor(1000000000));
-                         console.log(randomvoucherNumber);
-                         vouchersRef.push({
-                         vouchernumber: randomvoucherNumber,
-                         placeid: placecheckedin,
-                         timestamp: Math.floor(Date.now() / 1000)
-                         });
+                            var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
+                            var randomvoucherNumber = Math.floor(Math.random() * Math.floor(1000000000));
+                            console.log(randomvoucherNumber);
+                            vouchersRef.push({
+                                vouchernumber: randomvoucherNumber,
+                                placeid: placecheckedin,
+                                timestamp: Math.floor(Date.now() / 1000)
+                            });
 
-                         });
-                         voucherdescription.appendChild(button);
+                        });
+                        voucherdescription.appendChild(button);
 
                         var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
                         vouchersRef.on('value', function (snapshot) {
                             if (snapshot.numChildren() >= 2) {
                                 button.style.display = 'none';
-                                voucherdescription.innerHTML = 'Já não chega de beber, boi?';
+                                voucherdescription.innerHTML = "Looks like you've used all your discounts..." +
+                                    "But the good news is new LoudStand vouchers apply on your team's next game! " +
+                                    "Just go to any of our partner bars and redeem your discount!";
                             }
                         });
                     });
@@ -1599,30 +1645,20 @@ function voucherDescription () {
 
         });
 
-    }
+
 
 }
 
 function waxxiesVoucherDescription () {
-    var seenvoucher = JSON.parse(localStorage.getItem("seenvoucher"));
-
-    if (seenvoucher == null) {
-        localStorage.setItem("seenvoucher", true);
         var voucherdescription = document.getElementById('voucherdescription');
-        voucherdescription.innerHTML = "<div class='firstvoucher'>THE BARTENDER SHOULD CONFIRM. NOT YOU. WAXIES VERSION.</style>";
-
-    }
-    else {
-
-        var voucherdescription = document.getElementById('voucherdescription');
-        voucherdescription.innerHTML = "Enjoy 10% off your next Order! <br><br>" +
-            "Show this Coupon and let the bartender swipe the bar to get the discount.<br><br>" +
-            "Enjoy the match!";
+        voucherdescription.innerHTML =    "<b>Don't press 'USE VOUCHER'.</b><br>"
+                        +"Get a 5kr discount on any large beer." +
+                        "<br>Show this voucher and let the bartender confirm the discount.<br>";
 
 
         var button = document.createElement('button');
         button.classList.add('voucherconfirmation');
-        button.classList.add('readmore');
+        button.classList.add('acceptdecline');
         button.id = 'voucherconfirmation';
         button.innerHTML = 'USE VOUCHER';
         button.disabled = false;
@@ -1654,7 +1690,7 @@ function waxxiesVoucherDescription () {
         });
 
         voucherdescription.appendChild(button);
-    }
+
 
 
 
@@ -1930,137 +1966,137 @@ function manageTimestamps () {
 
     firebase.database().ref('/fixtures/' + game.gameid + '/').on('value', function(snapshot) {
         if(snapshot.val() != null && snapshot.val()['minute'] != null){
-        var notlive = snapshot.val()['minute'];
-        console.log(date);
-        console.log(timestamp);
-        console.log(date < timestamp + 1200);
+            var notlive = snapshot.val()['minute'];
+            console.log(date);
+            console.log(timestamp);
+            console.log(date < timestamp + 1200);
 
-        if ((date > timestamp - 3600) && (date < timestamp )) {
-            console.log('pre match');
+            if ((date > timestamp - 3600) && (date < timestamp )) {
+                console.log('pre match');
 
-            document.getElementById('teamprofile').style.display = 'block';
-            document.getElementById('squad').style.height = '80%';
-            document.getElementById('latestgameevent').style.display = 'none';
+                document.getElementById('teamprofile').style.display = 'block';
+                document.getElementById('squad').style.height = '80%';
+                document.getElementById('latestgameevent').style.display = 'none';
 
 
-            var postmatchcontainer = document.getElementById('postmatchcontainer');
-            postmatchcontainer.style.display = 'none';
+                var postmatchcontainer = document.getElementById('postmatchcontainer');
+                postmatchcontainer.style.display = 'none';
 
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 1000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 2000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 4000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 1000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 2000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 4000);
 
-            hideSpans();
-        }
-
-        if ((notlive == 'notlive') && (date < timestamp + 1200)) {
-            console.log('game started late');
-
-            document.getElementById('teamprofile').style.display = 'block';
-            document.getElementById('squad').style.height = '80%';
-            document.getElementById('latestgameevent').style.display = 'none';
-
-            var postmatchcontainer = document.getElementById('postmatchcontainer');
-            postmatchcontainer.style.display = 'none';
-
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 1000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 2000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 4000);
-
-            hideSpans();
-        }
-
-        else if ((date >= timestamp) && (notlive != 'notlive')) {
-            console.log('game started');
-
-            document.getElementById('latestgameevent').style.display = 'block';
-
-            var postmatchcontainer = document.getElementById('postmatchcontainer');
-            postmatchcontainer.style.display = 'block';
-
-            document.getElementById('activitiyheader1').innerHTML = 'SQUAD';
-            document.getElementById('activitiyheader2').innerHTML = 'Starting 11 + Bench';
-            document.getElementById('mvptitle').style.display = 'none';
-            document.getElementById('startingbenchcontainer').style.marginTop = '36px';
-
-            document.getElementById('startingtoMVP').style.marginTop = '106px';
-            document.getElementById('teamprofile').style.display = 'none';
-
-            var postmatchtitle = document.getElementById('postmatchcontainertitle');
-            postmatchtitle.style.display = 'none';
-
-            var finaltabs = document.getElementById('finaltabs');
-            finaltabs.style.display = 'none';
-
-            displayMVP();
-
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 1000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 2000);
-            setTimeout(function () {
-                hideCheckinButtons();
-            }, 4000);
-
-            setTimeout(function () {
                 hideSpans();
-            }, 2000);
+            }
 
-        }
+            if ((notlive == 'notlive') && (date < timestamp + 1200)) {
+                console.log('game started late');
+
+                document.getElementById('teamprofile').style.display = 'block';
+                document.getElementById('squad').style.height = '80%';
+                document.getElementById('latestgameevent').style.display = 'none';
+
+                var postmatchcontainer = document.getElementById('postmatchcontainer');
+                postmatchcontainer.style.display = 'none';
+
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 1000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 2000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 4000);
+
+                hideSpans();
+            }
+
+            else if ((date >= timestamp) && (notlive != 'notlive')) {
+                console.log('game started');
+
+                document.getElementById('latestgameevent').style.display = 'block';
+
+                var postmatchcontainer = document.getElementById('postmatchcontainer');
+                postmatchcontainer.style.display = 'block';
+
+                document.getElementById('activitiyheader1').innerHTML = 'SQUAD';
+                document.getElementById('activitiyheader2').innerHTML = 'Starting 11 + Bench';
+                document.getElementById('mvptitle').style.display = 'none';
+                document.getElementById('startingbenchcontainer').style.marginTop = '36px';
+
+                document.getElementById('startingtoMVP').style.marginTop = '106px';
+                document.getElementById('teamprofile').style.display = 'none';
+
+                var postmatchtitle = document.getElementById('postmatchcontainertitle');
+                postmatchtitle.style.display = 'none';
+
+                var finaltabs = document.getElementById('finaltabs');
+                finaltabs.style.display = 'none';
+
+                displayMVP();
+
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 1000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 2000);
+                setTimeout(function () {
+                    hideCheckinButtons();
+                }, 4000);
+
+                setTimeout(function () {
+                    hideSpans();
+                }, 2000);
+
+            }
 
 
-        else if ((date >= timestamp) && (notlive == 'notlive')) {
-            console.log('game ended');
+            else if ((date >= timestamp) && (notlive == 'notlive')) {
+                console.log('game ended');
 
-            var postmatchcontainer = document.getElementById('postmatchcontainer');
-            postmatchcontainer.style.display = 'block';
+                var postmatchcontainer = document.getElementById('postmatchcontainer');
+                postmatchcontainer.style.display = 'block';
 
-            document.getElementById('startingbenchcontainer').style.display = 'block';
-            document.getElementById('finaltabs').style.display = 'block';
+                document.getElementById('startingbenchcontainer').style.display = 'block';
+                document.getElementById('finaltabs').style.display = 'block';
 
-            document.getElementById('startingbenchcontainer').style.marginTop = '170px';
-            document.getElementById('finaltabs').style.paddingTop = '70px';
+                document.getElementById('startingbenchcontainer').style.marginTop = '170px';
+                document.getElementById('finaltabs').style.paddingTop = '70px';
 
-            document.getElementById('activitiyheader1').innerHTML = 'POST MATCH INTERACTION';
-            document.getElementById('activitiyheader2').innerHTML = 'How do you rate your team?';
+                document.getElementById('activitiyheader1').innerHTML = 'POST MATCH INTERACTION';
+                document.getElementById('activitiyheader2').innerHTML = 'How do you rate your team?';
 
-            var postmatchtitle = document.getElementById('postmatchcontainertitle');
-            postmatchtitle.style.display = 'block';
+                var postmatchtitle = document.getElementById('postmatchcontainertitle');
+                postmatchtitle.style.display = 'block';
 
-            var finaltabs = document.getElementById('finaltabs');
-            finaltabs.style.display = 'block';
+                var finaltabs = document.getElementById('finaltabs');
+                finaltabs.style.display = 'block';
 
-            displayMVP();
+                displayMVP();
 
-            /*   setTimeout(function () {
-             hideSpans();
-             }, 2000); */
+                /*   setTimeout(function () {
+                 hideSpans();
+                 }, 2000); */
 
-            var postmatchtitle = document.getElementById('postmatchcontainertitle');
-            postmatchtitle.innerHTML = "Final Whistle. What's your opinion?";
+                var postmatchtitle = document.getElementById('postmatchcontainertitle');
+                postmatchtitle.innerHTML = "Final Whistle. What's your opinion?";
 
-            var finaltabs = document.getElementById('finaltabs');
-            finaltabs.style.display = 'block';
+                var finaltabs = document.getElementById('finaltabs');
+                finaltabs.style.display = 'block';
 
-            document.getElementById('teamprofile').style.display = 'none';
+                document.getElementById('teamprofile').style.display = 'none';
 
 
 
-        }
+            }
         }
 
     });

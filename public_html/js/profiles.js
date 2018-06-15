@@ -102,7 +102,7 @@ function showOwnProfile(snapshotvalue, entry){
     var rankdiv = document.createElement('div');
     rankdiv.id = 'rankdiv';
     rankdiv.classList.add('col-xs-3');
-    var rankparagraph = document.createElement('p');
+    var rankparagraph = document.createElement('a');
 
     var ranksymbol = document.createElement('i');
     ranksymbol.classList.add('fas');
@@ -112,9 +112,7 @@ function showOwnProfile(snapshotvalue, entry){
 
     rankparagraph.appendChild(document.createTextNode(' ' + entry.rank));
     rankparagraph.id = 'ownteamrank';
-    var ranklink = document.createElement('a');
-    ranklink.href = 'ranking.php';
-    rankparagraph.appendChild(ranklink);
+    rankparagraph.href = "ranking.php";
 
     var ranktext = document.createElement('p');
     ranktext.appendChild(document.createTextNode('Fan ranking'));
@@ -132,7 +130,7 @@ function showOwnProfile(snapshotvalue, entry){
 
     var image = document.createElement('img');
     image.src = snapshotvalue['teamlogo'];
-    image.classList.add('rankinglogo');
+    image.classList.add('rankinglogoflag');
     imagewrapper.appendChild(image);
 
 
@@ -147,7 +145,7 @@ function showOwnProfile(snapshotvalue, entry){
 
     var fanbasediv = document.createElement('div');
     var fanbaseparagraph = document.createElement('p');
-    fanbaseparagraph.appendChild(document.createTextNode('FANDOM LEVEL'));
+    fanbaseparagraph.appendChild(document.createTextNode('FAN LEVEL'));
     fanbasediv.appendChild(fanbaseparagraph);
     fanbasediv.id = 'fandomlevel';
 
@@ -351,7 +349,7 @@ function getActivityIcon(activitysymbol, activity, description, event, gameid, r
 
     else if(activity == 'voucher'){
         symbol = 'fa-ticket-alt';
-        activitytext = 'Used a LoudStand voucher at';
+        activitytext = 'Used a LoudStand voucher';
         getVoucherDetails(description, activitytext, event, reaction);
     }
 
@@ -629,11 +627,7 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
     eventlist.classList.add('eventlist');
 
     var minutespan = document.createElement("div");
-    var clock = document.createElement('i');
-    clock.classList.add('fas');
-    clock.classList.add('fa-stopwatch');
-    minutespan.appendChild(clock);
-    var minute = document.createTextNode(' ' + event.minute);
+    var minute = document.createTextNode(' ' + event.minute + "'");
     minutespan.appendChild(minute);
     minutespan.classList.add('minute');
     eventlist.appendChild(minutespan);
@@ -789,7 +783,7 @@ function showSquad(nextgame){
 
             var countspan = document.createElement('span');
             countspan.classList.add('mvpcountspan');
-            countspan.innerHTML = 0;
+            countspan.innerHTML = 'Voted MVP ' + 0 + ' times';
 //	countspan.style.display = 'none';
             div.appendChild(countspan);
 
@@ -801,7 +795,7 @@ function showSquad(nextgame){
 
             var goalcountspan = document.createElement('span');
             goalcountspan.classList.add('goalcountspan');
-            goalcountspan.innerHTML = 0;
+            goalcountspan.innerHTML =  0;
 //	goalcountspan.style.display = 'none';
             div.appendChild(goalcountspan);
 
@@ -1163,7 +1157,7 @@ function displayStatsGoals(){
     document.getElementById('dropdown').innerHTML = 'Goals';
 
 
-    $('.userelement:gt(2)').show();
+    $('.userelement:gt(4)').show();
 
     var players = $("#squad .userelement");
 
@@ -1172,6 +1166,7 @@ function displayStatsGoals(){
     });
 
     $("#statsgoals").html(orderedDivs);
+    $('.mvpcountspan').hide();
 
     $('.userelement:gt(2)').hide();
 }

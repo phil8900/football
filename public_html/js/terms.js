@@ -5,6 +5,7 @@ function redirect(){
       if(snapshot.val() == null || !(snapshot.val()['terms'] == 'true')){
         var e = document.createElement('div');
         var acceptbutton = document.createElement('button');
+        acceptbutton.classList.add('acceptdecline');
         var acceptbuttontext = document.createTextNode("Accept");
         acceptbutton.appendChild(acceptbuttontext);
 
@@ -16,6 +17,7 @@ function redirect(){
         });
 
         var declinebutton = document.createElement('button');
+        declinebutton.classList.add('acceptdecline');
         var declinebuttontext = document.createTextNode("Decline");
         declinebutton.appendChild(declinebuttontext);
 

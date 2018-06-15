@@ -143,6 +143,76 @@ function showVouchersCouch() {
 	setTimeout(function() { numberOfTransactions(); }, 3000);
 }
 
+function showVouchersWaxxies() {
+	fixtures.forEach(function (child) {
+		var gameid = child['gameid'];
+		firebase.database().ref('/vouchers/' + gameid + '/').once('value', function (snapshot) {
+			snapshot.forEach(function (child) {
+				var allusers = child.key;
+
+				firebase.database().ref('/vouchers/' + gameid + '/' + allusers).once('value', function (snapshot) {
+					snapshot.forEach(function (child) {
+						if (child.val().placeid == "ChIJNbq445M_TEYRQFix7VRFbIE") {
+							var div = document.createElement('div');
+							var text = document.createTextNode("Voucher nº: " + child.val().vouchernumber + " was used at " + (new Date(child.val().timestamp * 1000)) + ' at Waxies');
+							div.appendChild(text);
+							document.getElementById('vouchers').appendChild(div);
+						}
+					});
+				});
+			});
+		});
+	});
+
+	firebase.database().ref('/vouchers/waxxies/').once('value', function (snapshot) {
+		snapshot.forEach(function (child) {
+			var allusers = child.key;
+
+			firebase.database().ref('/vouchers/waxxies/' + allusers).once('value', function (snapshot) {
+				snapshot.forEach(function (child) {
+					console.log(child.val());
+
+
+					var div = document.createElement('div');
+					var text = document.createTextNode("Voucher nº: " + child.val().vouchernumber + " was used at " + (new Date(child.val().timestamp * 1000)) + ' at Waxies');
+					div.appendChild(text);
+					document.getElementById('vouchers').appendChild(div);
+
+				});
+
+			});
+
+		});
+	});
+
+
+	setTimeout(function () {
+		numberOfTransactions();
+	}, 3000);
+}
+
+function showVouchersLaPina() {
+	fixtures.forEach(function (child) {
+		var gameid = child['gameid'];
+		firebase.database().ref('/vouchers/' + gameid + '/').once('value', function (snapshot) {
+			snapshot.forEach(function (child) {
+				var allusers = child.key;
+
+				firebase.database().ref('/vouchers/' + gameid + '/' + allusers).once('value', function (snapshot) {
+					snapshot.forEach(function (child) {
+						if(child.val().placeid == "ChIJO7tqaJ85GQ0RA62FU4k6zoU"){
+							var div = document.createElement('div');
+							var text = document.createTextNode("Voucher nº: " + child.val().vouchernumber + " was used at " + (new Date(child.val().timestamp*1000)) + ' at La Piña Bar');
+							div.appendChild(text);
+							document.getElementById('vouchers').appendChild(div);
+						}
+					});
+				});
+			});
+		});
+	});
+	setTimeout(function() { numberOfTransactions(); }, 3000);
+}
 
 
 
@@ -187,6 +257,16 @@ function barsLogin() {
 
 	if (x == 'thecouch190') {
 		showVouchersCouch();
+		hideOverlay();
+	}
+
+	if (x == 'waxies190') {
+		showVouchersWaxxies();
+		hideOverlay();
+	}
+
+	if (x == 'lapina190') {
+		showVouchersLaPina();
 		hideOverlay();
 	}
 
