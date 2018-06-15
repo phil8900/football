@@ -11,6 +11,7 @@
 
 <script>
 	var body = document.querySelector('body');
+
 	body.className = 'team' + ownteam;
 </script>
 
