@@ -564,10 +564,10 @@ time p{
 button{
 	border-style: none;
 	height: 30px;
-	width: 60px;
+	width: 70px;
 	background-color: transparent;
-	margin-left: -5px;
-	margin-right: -5px;
+	margin-left: -10px;
+	margin-right: -10px;
 	overflow: visible;
 }
 
