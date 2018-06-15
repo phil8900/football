@@ -34,9 +34,8 @@ function initReferences(){
 	userRef.once('value', function(snapshot) {
 		var array = new Array();
 		snapshot.forEach(function(child) {
-			if(child.val().team == ownteam){
 				array.push(child.val());
-			}
+			
 		});
 
 		array.sort(function(a, b){return b.points-a.points});
@@ -130,7 +129,7 @@ function getPointsForTeams(){
 				});
 			});
 
-			if(isNaN(points)){
+			if(!isFinite(points)){
 				points = 0;
 			}
 
@@ -174,6 +173,16 @@ function createUserRankingElement(entry, id){
 	image.classList.add('rankinglogo');
 	imagewrapper.appendChild(image);
 
+	firebase.database().ref('/teams/' + entry['team'] + '/information').once('value', function(snapshot) {
+		
+		if(snapshot.val() != null){
+			var teamimage = document.createElement('img');
+
+			teamimage.src = snapshot.val()['teamlogo']; //AQUI CARALHO
+			teamimage.classList.add('rankinglogo');
+			imagewrapper.appendChild(teamimage);
+		}
+	});
 
 
 	var namespan = document.createElement('span');
@@ -254,7 +263,11 @@ function createTeamRankingElement(snapshotvalue, entry, id){
 
 		});
 		var pointsdiv = document.createElement('div');
-		pointsdiv.appendChild(document.createTextNode(Math.round(entry.points/usercount)));
+		var teampoints = Math.round(entry.points/usercount);
+		if(!isFinite(teampoints)){
+			teampoints = 0;
+		}
+		pointsdiv.appendChild(document.createTextNode(teampoints));
 		pointsdiv.classList.add('userrankingpointsrankings');
 		div.appendChild(pointsdiv);
 
