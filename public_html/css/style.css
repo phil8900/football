@@ -566,7 +566,6 @@ button{
 	height: 30px;
 	width: 30px;
 	background-color: transparent;
-	margin: 0px 16px 0px 0px;
 }
 
 .downbutton{
@@ -1610,11 +1609,11 @@ h3{
 }
 
 .fa{
-	font-size: 20px;
+	font-size: 30px;
 }
 
 .fas{
-	font-size: 20px;
+	font-size: 30px;
 }
 
 
