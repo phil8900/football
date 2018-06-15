@@ -1,18 +1,3 @@
-/*
-
-@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
-	html {
-		transform: rotate(-90deg);
-		transform-origin: left top;
-		width: 100vh;
-		overflow-x: hidden;
-		position: absolute;
-		top: 100%;
-		left: 0;
-	}
-}
-*/
-
 @font-face {
 	font-family: "ds-digitalnormal";
 	src: url(../includes/DS-DIGI.TTF) format("truetype");
@@ -1152,7 +1137,7 @@ height: auto;
 #voucherdescription{
 	color: #f6f6f6;
 	font-weight: 200;
-	font-style: 18px;
+	font-size: 18px;
 }
 
 #voucheroverlayinnercontentcookie{
