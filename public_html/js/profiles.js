@@ -627,11 +627,7 @@ function getReactionDetails(description, event, activitytext, gameid, reaction){
     eventlist.classList.add('eventlist');
 
     var minutespan = document.createElement("div");
-    var clock = document.createElement('i');
-    clock.classList.add('fas');
-    clock.classList.add('fa-stopwatch');
-    minutespan.appendChild(clock);
-    var minute = document.createTextNode(' ' + event.minute);
+    var minute = document.createTextNode(' ' + event.minute + "'");
     minutespan.appendChild(minute);
     minutespan.classList.add('minute');
     eventlist.appendChild(minutespan);
