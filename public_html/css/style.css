@@ -440,6 +440,10 @@ body {
 	padding-bottom: 8px;
 }
 
+#squad{
+	display: none;
+}
+
 #teamprofile{
 	padding-bottom: 76px;
 	margin-top: 40px;
