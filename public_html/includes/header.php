@@ -101,7 +101,7 @@ setcookie(session_name(),session_id(),time()+$cookieLifetime);
 <link rel="stylesheet" href="css/animate.css">
 <link rel='stylesheet' href='css/slidetounlock.css'>
 <link rel="stylesheet" type="text/css" href="css/overwrittenstylesheet.css">
-<link rel="stylesheet" href="css/style.css?ver=1.18" media="screen" />
+<link rel="stylesheet" href="css/style.css?ver=1.2" media="screen" />
 
 
 
