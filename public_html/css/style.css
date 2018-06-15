@@ -176,6 +176,11 @@ body {
 
 }
 
+.userrankingnameranking{
+	font-size: 16px;
+	overflow: hidden;
+}
+
 .userranking{
 	float: right;
 	font-size: 36px;
