@@ -564,6 +564,7 @@ time p{
 button{
 	border-style: none;
 	height: 30px;
+	width: 50px;
 	background-color: transparent;
 }
 
