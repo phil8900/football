@@ -1938,13 +1938,6 @@ font-size: 20px;
 }
 
 
-@media screen and (min-width: 500px) {
-	body {
-		visibility: hidden;
-		display: none;
-	}
-}
-
 @media screen and (min-height: 650px) {
 	#voucherdescription {
 		font-size: 24px;
