@@ -274,11 +274,14 @@
 
             if (swiper.activeIndex == 0) {
                 $(".menu-title").text("STATS");
+                console.log(swiper.previousIndex);
             }
 
             if (swiper.activeIndex == 1) {
                 $(".menu-title").text("VIRTUAL STADIUM");
+                if(swiper.previousIndex != 0){
                 showLastGameEvent();
+                }
             }
 
             if (swiper.activeIndex == 2) {

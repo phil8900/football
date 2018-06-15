@@ -97,7 +97,7 @@ function getLiveGameEvents(gameid){
             }
         });
     });
-    setTimeout(function(){showLastGameEvent();}, 2000);
+    //setTimeout(function(){showLastGameEvent();}, 2000);
 
 }
 
@@ -293,6 +293,10 @@ function showEvents(event, gameid){
 
     eventwrapper.insertBefore(eventlist, eventwrapper.getElementsByClassName('gamereaction')[0]);
     getEventReaction(event.eventId);
+
+    if(swiper.activeIndex == 1){
+        showLastGameEvent();
+    }
 
 
 }
@@ -704,6 +708,7 @@ function showReactionBarValue(reactionbar, reaction){
 }
 
 function createWrappers(game_id, event_id, event_type){
+    appendLastGameEventToList();
 
     var wrapper = document.getElementById(game_id);
     var eventwrapper = document.getElementById(event_id);
