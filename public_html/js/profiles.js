@@ -827,7 +827,6 @@ function setupButtons(nextgame){
     startingRef.on('value', function(snapshot){
         var counter = 0;
         snapshot.forEach(function(child) {
-            console.log(child.val());
             if(child.val().playerid != null && child.key != 'mvp' && child.key != 'finalreview' && child.key != 'finalcomment'){
                 var div = document.getElementById(child.val().playerid);
                 if(div != null){
@@ -845,9 +844,11 @@ function setupButtons(nextgame){
                     all[i].disabled = true;
                     all[i].style.color = 'lightgray';
 
-                    var updates = {};
-                    updates['startingeleven/users/' + uid + '/' + nextgame + '/timestamp'] = Math.floor(Date.now() / 1000);
-                    firebase.database().ref().update(updates);
+                    if(snapshot.val()['timestamp'] == null || snapshot.val()['timestamp'] == undefined){
+                        var updates = {};
+                        updates['startingeleven/users/' + uid + '/' + nextgame + '/timestamp'] = Math.floor(Date.now() / 1000);
+                        firebase.database().ref().update(updates);
+                    }
                 }
             }
             else if(all[i].style.color != 'red'){
