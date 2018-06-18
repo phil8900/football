@@ -1752,6 +1752,10 @@ h3{
 	height: 12%;
 }
 
+#checkinconfirmoverlay{
+	z-index: 10000;
+}
+
 #checkinconfirm{
 	color: #0F281D;
 }

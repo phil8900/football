@@ -55,7 +55,7 @@ function showMatches(){
 				div.classList.add('matchescalendar');
 				div.id = gameid;
 				div.addEventListener('click', function(){
-					overlayOn(gameid); topBarBlack();
+					enterMatch(gameid); topBarBlack();
 				});
 
 
@@ -156,9 +156,17 @@ function showMatches(){
 	}
 }
 
+function enterMatch(gameid){
+	firebase.database().ref('fixtures/' + gameid).once('value', function(snapshot){
+			window.location = "match.php?gameid=" + gameid;
+	});
+}
+
 function overlayOn(gameid) {
 	var livegame = getLiveGame();
-	if(gameid == livegame.gameid){
+	console.log(livegame.gameid);
+	console.log(gameid);
+	if(livegame.gameid == gameid){
 		firebase.database().ref('checkins').once('value', function(snapshot){
 			snapshot.forEach(function(child){
 
@@ -174,25 +182,21 @@ function overlayOn(gameid) {
 		});
 		document.getElementById('overlay').style.display = 'block';
 		setLocationGameId(gameid);
+	} else{
+		alert("Check in is not available")
 	}
-	else{
-		firebase.database().ref('fixtures/' + gameid).once('value', function(snapshot){
-			if(snapshot.val()['timestamp'] < Math.floor(Date.now() / 1000)){
-				window.location = "match.php?gameid=" + gameid;
-			}
-		});
-	}
+
 }
 
 function overlayOff() {
 	document.getElementById('overlay').style.display = 'none';
 	document.getElementById('topNav').style.backgroundColor = '#0F281D';
-	document.getElementById('firstsubtopnav').style.backgroundColor = '#0F281D';
+	document.getElementById('firstsubtopnavmatchinteraction').style.backgroundColor = '#0F281D';
 }
 
 function topBarBlack (){
 	document.getElementById('topNav').style.backgroundColor = 'black';
-	document.getElementById('firstsubtopnav').style.backgroundColor = 'black';
+	document.getElementById('firstsubtopnavmatchinteraction').style.backgroundColor = 'black';
 
 }
 

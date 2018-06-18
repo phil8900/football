@@ -64,21 +64,6 @@
 	</div>
 </div>
 
-<!-- The Modal -->
-<div class="modal" id="checkinconfirmoverlay">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<!-- Modal body -->
-			<div id="checkinconfirm" class="modal-body">
-			</div>
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button type="button" id ="checkinconfirmbutton" class="btn">Confirm</button>
-				<button type="button" class="btn checkinclose" onclick="checkinClose()">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
 
 <style>
 	#teamprofile{

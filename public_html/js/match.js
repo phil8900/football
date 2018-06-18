@@ -44,19 +44,21 @@ function initMatch(){
     var livegame = getLiveGame();
     if (livegame == false) {
         setTimeout(function () {
-            $(':button').prop('disabled', true)
+            $(':button').prop('disabled', true);
         }, 5000);
+
         setTimeout(function () {
-            $(':button').prop('disabled', true)
+            $(':button').prop('disabled', true);
         }, 10000);
         setTimeout(function () {
-            $(':button').prop('disabled', true)
+            $(':button').prop('disabled', true);
         }, 12000);
         setTimeout(function () {
-            $(':button').prop('disabled', true)
+            $(':button').prop('disabled', true);
         }, 15000);
     }
 
+    hideCheckin();
 
 }
 
@@ -716,6 +718,11 @@ function createWrappers(game_id, event_id, event_type){
 
     var wrapper = document.getElementById(game_id);
     var eventwrapper = document.getElementById(event_id);
+
+    var checkin = document.getElementById('onmatchcheckin');
+    checkin.addEventListener("click", function() {
+        overlayOn(game_id); topBarBlack();
+    });
 
     if(wrapper == null){
         wrapper = document.createElement("div");
@@ -2125,5 +2132,29 @@ function tutorialMatchInteractions() {
         $('#tutorial').fadeIn('slow');
         $('#tutorialcontent').fadeIn('slow');
 
+    }
+}
+
+function hideCheckin() {
+    var livegame = getLiveGame();
+    console.log(livegame.gameid);
+    console.log(gameid);
+    if(livegame.gameid == gameid){
+        firebase.database().ref('checkins').once('value', function(snapshot){
+            snapshot.forEach(function(child){
+
+                for(var key in child.val()[uid]){
+                    if(child.val()[uid][key]['gameid'] != undefined){
+                        if(gameid == child.val()[uid][key]['gameid']){
+                            document.getElementById('onmatchcheckin').style.display = 'none';
+                        }
+
+                    }
+                }
+
+
+            });
+
+        });
     }
 }

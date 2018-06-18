@@ -7,6 +7,7 @@
     <script src="js/home.js"></script>
     <script src="js/profiles.js"></script>
     <script src="js/matches.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE0NXJejZApujcdK8c9S7i-G7yblT2kFg&libraries=places&callback=initMap" async defer></script>
     <title>LoudStand</title>
 
 </head>
@@ -59,7 +60,8 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn checkinclose" onclick="$('#checkinconfirmoverlay').fadeOut('slow');">Fechar</button>
+                <button type="button" id ="checkinconfirmbutton" class="btn">Confirm</button>
+                <button type="button" class="btn checkinclose" onclick="checkinClose()">Close</button>
             </div>
         </div>
     </div>
