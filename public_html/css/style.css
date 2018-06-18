@@ -262,7 +262,7 @@ body {
 	text-align:center;
 /	background-color: rgba(0,0,0,0.5);
 	margin-top: 10px;
-	/padding: 15px 15px 15px 15px;
+/padding: 15px 15px 15px 15px;
 }
 
 #fanbaselevel{
@@ -352,7 +352,7 @@ body {
 	height: 100%;
 	width: 100%;
 	position: fixed;
-	z-index: 3;
+	z-index: 9999;
 	text-align: center;
 	overflow: scroll;
 }
@@ -665,7 +665,7 @@ button{
 }
 
 #stats{
-	//background-color: purple;
+//background-color: purple;
 }
 
 #stats p {
@@ -673,7 +673,7 @@ button{
 }
 
 .statscenter{
-	/background-color: red;
+/background-color: red;
 }
 
 
@@ -855,7 +855,7 @@ button{
 }
 
 .vs{
-	/background-color: rgba(0, 0, 0, 0.3);
+/background-color: rgba(0, 0, 0, 0.3);
 	border-radius: 50%;
 	width: 120px;
 	height: 120px;
@@ -952,7 +952,7 @@ button{
 
 .eventlistmini{
 	color: #0b2e13;
-height: auto;
+	height: auto;
 }
 
 
@@ -987,7 +987,7 @@ height: auto;
 	line-height: 1.8;
 }
 
-.firstsubtopnavmatchinteraction{
+#firstsubtopnavmatchinteraction{
 	display: flex;
 	align-items: center;
 	padding-top: 6px;
@@ -995,6 +995,13 @@ height: auto;
 	background-color: #0F281D;
 	padding-left: 12px;
 	padding-right: 24px;
+}
+
+.fa-comment{
+	position: absolute;
+	top: 20px;
+	right: 5%;
+	font-size: 30px;
 }
 
 .vouchercontainer{
@@ -1212,7 +1219,7 @@ height: auto;
 .innercontainer{
 	margin-top: 170px;
 	height: 280px;
-	/background-color: red;
+/background-color: red;
 	text-align: center;
 }
 
@@ -1303,7 +1310,7 @@ height: auto;
 }
 
 .livenow {
-	/background-color: black;
+/background-color: black;
 	width: 40%;
 	margin-left: 30%;
 	height: 40px;
@@ -1448,7 +1455,7 @@ height: auto;
 
 .statsaway {
 	width: 120px;
-	/float: left;
+/float: left;
 	margin-top: -10px;
 
 }
@@ -1722,7 +1729,7 @@ h3{
 }
 
 .activityboxrankings span{
-color: white;
+	color: white;
 }
 
 .ranktext{
@@ -1858,7 +1865,7 @@ color: white;
 }
 
 #tutorialcontent p {
-font-size: 20px;
+	font-size: 20px;
 }
 
 #buttons{
@@ -1907,6 +1914,75 @@ font-size: 20px;
 	background-color: rgba(0, 0, 0, 0.7);
 }
 
+#onmatchcheckin{
+	text-align: center;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	position: absolute;
+	top: 130px;
+	left: 15%;
+	background-color: #0F281D;
+	width: 70%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#feedbackoverlay{
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.8);
+	z-index: 2;
+}
+
+#feedbackoverlaycontent{
+	display: inline-block;
+	width: 90%;
+	border-radius: 10px;
+	margin-bottom: 5%;
+	text-align: center;
+	color: #f6f6f6f6;
+	float: left;
+	margin-left: 5%;
+	margin-top: 60px;
+	font-size: 30px;
+}
+
+#feedbacktext{
+	width: 100%;
+	height: 350px;
+	padding: 12px 20px;
+	box-sizing: border-box;
+	border-radius: 4px;
+	background-color: white;
+	font-size: 16px;
+	resize: none;
+	border:none;
+	color: black;
+}
+
+#feedbackoverlaycross{
+	position: absolute;
+	top: 20px;
+	left: 20px;
+}
+
+#feedbackoverlaysubmit{
+	height: 60px;
+	width: 90%;
+	margin: 0;
+	background-color: #f6f6f6;
+	color: black;
+	margin-bottom: 40px;
+	border-radius: 10px;
+	margin-left: 5%;
+}
+
 /* ------ Media Queries ---- */
 
 @media only screen and (min-width: 400px) {
@@ -1914,8 +1990,8 @@ font-size: 20px;
 		font-size: 17px;
 	}
 	.stadium{
-		 padding-top: 2.5%;
-	 }
+		padding-top: 2.5%;
+	}
 
 	.matchhomefans{
 		font-size: 18px;

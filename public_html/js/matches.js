@@ -36,123 +36,123 @@ function showMatches(){
 
 	if(wrapper != undefined){
 
-	fixtures.sort(function(a, b){return a.timestamp-b.timestamp});
-	fixtures.forEach(function(child) {
-		if((child['timestamp'] > worldCupStart) && (child['timestamp'] < worldCupEnd)){
-			var hometeam = child['hometeamid'];
-			var awayteam = child['awayteamid'];
-			var date = child['date'];
-			var calcdate = new Date(child.timestamp * 1000 + new Date().getTimezoneOffset() + 60000);
-			var time = calcdate.toString("hh:mm tt");
+		fixtures.sort(function(a, b){return a.timestamp-b.timestamp});
+		fixtures.forEach(function(child) {
+			if((child['timestamp'] > worldCupStart) && (child['timestamp'] < worldCupEnd)){
+				var hometeam = child['hometeamid'];
+				var awayteam = child['awayteamid'];
+				var date = child['date'];
+				var calcdate = new Date(child.timestamp * 1000 + new Date().getTimezoneOffset() + 60000);
+				var time = calcdate.toString("hh:mm tt");
 
-			var gameid = child['gameid'];
-			var stadium = child['location'];
+				var gameid = child['gameid'];
+				var stadium = child['location'];
 
-			var div = document.createElement('div');
-			div.classList.add('activitybox');
-			div.classList.add('matchbox');
-			div.classList.add('swiper-slide');
-			div.classList.add('matchescalendar');
-			div.id = gameid;
-			div.addEventListener('click', function(){
-				overlayOn(gameid); topBarBlack();
-			});
+				var div = document.createElement('div');
+				div.classList.add('activitybox');
+				div.classList.add('matchbox');
+				div.classList.add('swiper-slide');
+				div.classList.add('matchescalendar');
+				div.id = gameid;
+				div.addEventListener('click', function(){
+					overlayOn(gameid); topBarBlack();
+				});
 
 
-			var livegame = getLiveGame();
-			if (child['timestamp'] == livegame['timestamp']) {
-				var livenow = document.createElement('div');
-				livenow.classList.add('livenow');
-				livenow.innerHTML = '• LIVE';
-				div.appendChild(livenow);
-				livenow.innerHTML = '• LIVE';
+				var livegame = getLiveGame();
+				if (child['timestamp'] == livegame['timestamp']) {
+					var livenow = document.createElement('div');
+					livenow.classList.add('livenow');
+					livenow.innerHTML = '• LIVE';
+					div.appendChild(livenow);
+					livenow.innerHTML = '• LIVE';
 				}
 
-			var homediv = document.createElement('div');
-			homediv.classList.add('homediv');
+				var homediv = document.createElement('div');
+				homediv.classList.add('homediv');
 
-			firebase.database().ref('/teams/' + hometeam + '/information').once('value', function(snapshot) {
-				if(snapshot.val() != null){
-					var logo = document.createElement('img');
-					logo.src = snapshot.val().teamlogo;
-					logo.classList.add('matchlogo');
+				firebase.database().ref('/teams/' + hometeam + '/information').once('value', function(snapshot) {
+					if(snapshot.val() != null){
+						var logo = document.createElement('img');
+						logo.src = snapshot.val().teamlogo;
+						logo.classList.add('matchlogo');
 
-					var home = document.createElement('div');
-					home.appendChild(document.createTextNode(snapshot.val().teamname));
-					home.classList.add('matchhometeam');
+						var home = document.createElement('div');
+						home.appendChild(document.createTextNode(snapshot.val().teamname));
+						home.classList.add('matchhometeam');
 
-					var homefans = document.createElement('div');
+						var homefans = document.createElement('div');
 
-					firebase.database().ref('fixtures/' + gameid + '/' + hometeam).once('value', function(snapshot){
-						var online = 0;
-						if(snapshot.val() != null){
-							online = snapshot.val();
-						}
-						homefans.appendChild(document.createTextNode("Fans online: " + online));
-					});
+						firebase.database().ref('fixtures/' + gameid + '/' + hometeam).once('value', function(snapshot){
+							var online = 0;
+							if(snapshot.val() != null){
+								online = snapshot.val();
+							}
+							homefans.appendChild(document.createTextNode("Fans online: " + online));
+						});
 
-					homefans.classList.add('matchhomefans');
+						homefans.classList.add('matchhomefans');
 
-					homediv.appendChild(logo);
-					homediv.appendChild(home);
-					homediv.appendChild(homefans);
-				}
-			});
-			div.appendChild(homediv);
+						homediv.appendChild(logo);
+						homediv.appendChild(home);
+						homediv.appendChild(homefans);
+					}
+				});
+				div.appendChild(homediv);
 
-			var timediv = document.createElement('div');
-			timediv.classList.add('timediv');
-			var paragraph = document.createElement('p');
-			paragraph.appendChild(document.createTextNode(time));
-			paragraph.classList.add('time');
-			var dateparagraph = document.createElement('p');
-			dateparagraph.appendChild(document.createTextNode(date));
-			dateparagraph.classList.add('matchdate');
-			var location = document.createElement('p');
-			location.appendChild(document.createTextNode(stadium));
-			location.classList.add('stadium');
+				var timediv = document.createElement('div');
+				timediv.classList.add('timediv');
+				var paragraph = document.createElement('p');
+				paragraph.appendChild(document.createTextNode(time));
+				paragraph.classList.add('time');
+				var dateparagraph = document.createElement('p');
+				dateparagraph.appendChild(document.createTextNode(date));
+				dateparagraph.classList.add('matchdate');
+				var location = document.createElement('p');
+				location.appendChild(document.createTextNode(stadium));
+				location.classList.add('stadium');
 
-			timediv.appendChild(location);
-			timediv.appendChild(paragraph);
-			timediv.appendChild(dateparagraph);
-			div.appendChild(timediv);
+				timediv.appendChild(location);
+				timediv.appendChild(paragraph);
+				timediv.appendChild(dateparagraph);
+				div.appendChild(timediv);
 
-			var awaydiv = document.createElement('div');
-			awaydiv.classList.add('awaydiv');
+				var awaydiv = document.createElement('div');
+				awaydiv.classList.add('awaydiv');
 
-			firebase.database().ref('/teams/' + awayteam + '/information').once('value', function(snapshot) {
-				if(snapshot.val() != null){
-					var logo = document.createElement('img');
-					logo.src = snapshot.val().teamlogo;
-					logo.classList.add('matchlogo');
+				firebase.database().ref('/teams/' + awayteam + '/information').once('value', function(snapshot) {
+					if(snapshot.val() != null){
+						var logo = document.createElement('img');
+						logo.src = snapshot.val().teamlogo;
+						logo.classList.add('matchlogo');
 
-					var away = document.createElement('div');
-					away.appendChild(document.createTextNode(snapshot.val().teamname));
-					away.classList.add('matchawayteam');
+						var away = document.createElement('div');
+						away.appendChild(document.createTextNode(snapshot.val().teamname));
+						away.classList.add('matchawayteam');
 
-					var awayfans = document.createElement('div');
+						var awayfans = document.createElement('div');
 
-					firebase.database().ref('fixtures/' + gameid + '/' + awayteam).once('value', function(snapshot){
-						var online = 0;
-						if(snapshot.val() != null){
-							online = snapshot.val();
-						}
-						awayfans.appendChild(document.createTextNode("Fans online: " + online));
-					});
+						firebase.database().ref('fixtures/' + gameid + '/' + awayteam).once('value', function(snapshot){
+							var online = 0;
+							if(snapshot.val() != null){
+								online = snapshot.val();
+							}
+							awayfans.appendChild(document.createTextNode("Fans online: " + online));
+						});
 
-					awayfans.classList.add('matchawayfans');
+						awayfans.classList.add('matchawayfans');
 
-					awaydiv.appendChild(logo);
-					awaydiv.appendChild(away);
-					awaydiv.appendChild(awayfans);
-				}
-			});
-			div.appendChild(awaydiv);			
-			
-			wrapper.appendChild(div);
-			
-		}
-	});
+						awaydiv.appendChild(logo);
+						awaydiv.appendChild(away);
+						awaydiv.appendChild(awayfans);
+					}
+				});
+				div.appendChild(awaydiv);
+
+				wrapper.appendChild(div);
+
+			}
+		});
 	}
 }
 
@@ -167,21 +167,21 @@ function overlayOn(gameid) {
 						if(gameid == child.val()[uid][key]['gameid']){
 							window.location = "match.php?gameid=" + gameid;
 						}
+					}
 				}
-			}
 
+			});
 		});
-	});
-	document.getElementById('overlay').style.display = 'block';
-	setLocationGameId(gameid);
-}
-else{
-	firebase.database().ref('fixtures/' + gameid).once('value', function(snapshot){
-		if(snapshot.val()['timestamp'] < Math.floor(Date.now() / 1000)){
-			window.location = "match.php?gameid=" + gameid;
-		}
-	});
-}
+		document.getElementById('overlay').style.display = 'block';
+		setLocationGameId(gameid);
+	}
+	else{
+		firebase.database().ref('fixtures/' + gameid).once('value', function(snapshot){
+			if(snapshot.val()['timestamp'] < Math.floor(Date.now() / 1000)){
+				window.location = "match.php?gameid=" + gameid;
+			}
+		});
+	}
 }
 
 function overlayOff() {
@@ -207,5 +207,4 @@ function tutorialMatches() {
 
 	}
 }
-
 

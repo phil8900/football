@@ -237,7 +237,6 @@
 		<p>By clicking “MY TEAM” on the upper right corner, you can see how big a national team is based on
 			the support they get from their fans! Check how high the team is ranked and look at their fan level. We are
 			soon launching a new feature that will give you the best statistics of your team based on your team's fans opinion.</p>
-		</p>
 	</div>
 </div>
 
@@ -246,6 +245,13 @@
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
 	<div class="firstsubtopnav">
 		<div class="menu-title">PROFILES</div>
+		<div id="feedback"><i class="far fa-comment" onclick="openFeedback();"></i></div>
+		<div id="feedbackoverlay">
+			<div id="feedbackoverlaycross" onclick="closeFeedback();">X</div>
+		<div id="feedbackoverlaycontent">Give us your feedback! How can we improve?<br><br>
+			<textarea id="feedbacktext"></textarea></div>
+			<button id="feedbackoverlaysubmit">Submit!</button>
+		</div>
 	</div>
 	<div class="secondsubtopnav">
 

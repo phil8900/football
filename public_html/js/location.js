@@ -67,8 +67,6 @@ function showResults(results){
     document.getElementById("results").appendChild(e);
     addListener(e, results[i]);
 
-
-
   }
 }
 
@@ -82,9 +80,6 @@ function addListener(button, result){
     });
 
   });
-
-
-
 
 }
 

@@ -1,5 +1,4 @@
-
-  // Initialize Firebase
+// Initialize Firebase
   var config = {
     apiKey: "AIzaSyAtzTpRzaaxKuBBz95lu3PNyDHwJgktV3A",
     authDomain: "football-362b6.firebaseapp.com",

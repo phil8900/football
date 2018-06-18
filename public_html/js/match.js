@@ -1440,18 +1440,18 @@ function displayFinalComment(){
     $('.finalcomment').css({backgroundColor: "#2c7656"}, 1000);
     $('.finalreview').css({backgroundColor: "#0F281D"}, 1000);
 
-        firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
-            if (child.val() == null) {
-                $(".submitbutton").show();
-                $("#postmatchcontainer").animate({height: '520px'}, 1000);
-            }
-            else{
-                $("#postmatchcontainer").animate({height: '340px'}, 1000);
-                $(".postmatchvotecontent").hide();
-                document.getElementById('finalcommenttitle').innerHTML = 'Your comment was submitted! Thank you.';
+    firebase.database().ref('startingeleven/users/' + uid + '/' + gameid + '/finalcomment').once('value', function (child) {
+        if (child.val() == null) {
+            $(".submitbutton").show();
+            $("#postmatchcontainer").animate({height: '520px'}, 1000);
+        }
+        else{
+            $("#postmatchcontainer").animate({height: '340px'}, 1000);
+            $(".postmatchvotecontent").hide();
+            document.getElementById('finalcommenttitle').innerHTML = 'Your comment was submitted! Thank you.';
 
-            }
-        });
+        }
+    });
 
 
 
@@ -1591,105 +1591,105 @@ function hideVoucherOverlay(){
 function voucherDescription () {
 
     firebase.database().ref('/checkins/').once('value').then(function(snapshot) {
-            snapshot.forEach(function (child) {
-                var placeid = child.key;
-                console.log(placeid);
-                console.log(gameid);
+        snapshot.forEach(function (child) {
+            var placeid = child.key;
+            console.log(placeid);
+            console.log(gameid);
 
 
-                firebase.database().ref('/checkins/' + placeid + '/' + uid).once('value').then(function(snapshot) {
-                    snapshot.forEach(function (child) {
-                        var placecheckedin = child.val().placeid;
-                        //console.log(child.val().placename);
+            firebase.database().ref('/checkins/' + placeid + '/' + uid).once('value').then(function(snapshot) {
+                snapshot.forEach(function (child) {
+                    var placecheckedin = child.val().placeid;
+                    //console.log(child.val().placename);
 
 
-                        var voucherdescription = document.getElementById('voucherdescription');
-                        voucherdescription.innerHTML =  "<b>Don't press 'USE VOUCHER' or you'll lose your drink!</b>" +
-                            "<br>Show this voucher and let the bartender confirm the discount.<br>";
+                    var voucherdescription = document.getElementById('voucherdescription');
+                    voucherdescription.innerHTML =  "<b>Don't press 'USE VOUCHER' or you'll lose your drink!</b>" +
+                        "<br>Show this voucher and let the bartender confirm the discount.<br>";
 
-                        var button = document.createElement('button');
-                        button.classList.add('voucherconfirmation');
-                        button.id = 'voucherconfirmation';
-                        button.innerHTML = 'USE VOUCHER';
-                        button.classList.add('acceptdecline');
-                        button.addEventListener("click", function () {
-                            getPointsTable('voucher');
-                            hideVoucherOverlay();
-                            $('#checkinconfirmoverlay').fadeIn('slow');
-                            document.getElementById('checkinconfirm').innerHTML = 'Voucher used. Enjoy the match!'
-
-                            var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
-                            var randomvoucherNumber = Math.floor(Math.random() * Math.floor(1000000000));
-                            console.log(randomvoucherNumber);
-                            vouchersRef.push({
-                                vouchernumber: randomvoucherNumber,
-                                placeid: placecheckedin,
-                                timestamp: Math.floor(Date.now() / 1000)
-                            });
-
-                        });
-                        voucherdescription.appendChild(button);
+                    var button = document.createElement('button');
+                    button.classList.add('voucherconfirmation');
+                    button.id = 'voucherconfirmation';
+                    button.innerHTML = 'USE VOUCHER';
+                    button.classList.add('acceptdecline');
+                    button.addEventListener("click", function () {
+                        getPointsTable('voucher');
+                        hideVoucherOverlay();
+                        $('#checkinconfirmoverlay').fadeIn('slow');
+                        document.getElementById('checkinconfirm').innerHTML = 'Voucher used. Enjoy the match!'
 
                         var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
-                        vouchersRef.on('value', function (snapshot) {
-                            if (snapshot.numChildren() >= 2) {
-                                button.style.display = 'none';
-                                voucherdescription.innerHTML = "Looks like you've used all your discounts..." +
-                                    "But the good news is new LoudStand vouchers apply on your team's next game! " +
-                                    "Just go to any of our partner bars and redeem your discount!";
-                            }
+                        var randomvoucherNumber = Math.floor(Math.random() * Math.floor(1000000000));
+                        console.log(randomvoucherNumber);
+                        vouchersRef.push({
+                            vouchernumber: randomvoucherNumber,
+                            placeid: placecheckedin,
+                            timestamp: Math.floor(Date.now() / 1000)
                         });
+
+                    });
+                    voucherdescription.appendChild(button);
+
+                    var vouchersRef = firebase.database().ref('/vouchers/' + gameid + '/' + uid);
+                    vouchersRef.on('value', function (snapshot) {
+                        if (snapshot.numChildren() >= 2) {
+                            button.style.display = 'none';
+                            voucherdescription.innerHTML = "Looks like you've used all your discounts..." +
+                                "But the good news is new LoudStand vouchers apply on your team's next game! " +
+                                "Just go to any of our partner bars and redeem your discount!";
+                        }
                     });
                 });
             });
-
         });
+
+    });
 
 
 
 }
 
 function waxxiesVoucherDescription () {
-        var voucherdescription = document.getElementById('voucherdescription');
-        voucherdescription.innerHTML =    "<b>Don't press 'USE VOUCHER'.</b><br>"
-                        +"Get a 5kr discount on any large beer." +
-                        "<br>Show this voucher and let the bartender confirm the discount.<br>";
+    var voucherdescription = document.getElementById('voucherdescription');
+    voucherdescription.innerHTML =    "<b>Don't press 'USE VOUCHER'.</b><br>"
+        +"Get a 5kr discount on any large beer." +
+        "<br>Show this voucher and let the bartender confirm the discount.<br>";
 
 
-        var button = document.createElement('button');
-        button.classList.add('voucherconfirmation');
-        button.classList.add('acceptdecline');
-        button.id = 'voucherconfirmation';
-        button.innerHTML = 'USE VOUCHER';
-        button.disabled = false;
-        button.addEventListener("click", function () {
-            getPointsTable('voucher');
-            hideVoucherOverlay();
+    var button = document.createElement('button');
+    button.classList.add('voucherconfirmation');
+    button.classList.add('acceptdecline');
+    button.id = 'voucherconfirmation';
+    button.innerHTML = 'USE VOUCHER';
+    button.disabled = false;
+    button.addEventListener("click", function () {
+        getPointsTable('voucher');
+        hideVoucherOverlay();
 
-            firebase.database().ref('/checkins/').on('value', function (snapshot) {
-                snapshot.forEach(function (child) {
-                    if (child.val()[uid] != null) {
-                        var key = Object.keys(child.val()[uid]);
-                        console.log(key);
-                    }
-                });
+        firebase.database().ref('/checkins/').on('value', function (snapshot) {
+            snapshot.forEach(function (child) {
+                if (child.val()[uid] != null) {
+                    var key = Object.keys(child.val()[uid]);
+                    console.log(key);
+                }
             });
+        });
 
 
-            var vouchersRef = firebase.database().ref('/vouchers/waxxies/' + uid);
-            var randomvoucherNumber = Math.floor(Math.random() * Math.floor(10000000));
+        var vouchersRef = firebase.database().ref('/vouchers/waxxies/' + uid);
+        var randomvoucherNumber = Math.floor(Math.random() * Math.floor(10000000));
 
-            vouchersRef.push({
+        vouchersRef.push({
 
-                vouchernumber: randomvoucherNumber,
-                timestamp: Math.floor(Date.now() / 1000)
+            vouchernumber: randomvoucherNumber,
+            timestamp: Math.floor(Date.now() / 1000)
 
-
-            });
 
         });
 
-        voucherdescription.appendChild(button);
+    });
+
+    voucherdescription.appendChild(button);
 
 
 

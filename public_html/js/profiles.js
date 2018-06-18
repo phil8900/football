@@ -806,7 +806,7 @@ function showSquad(nextgame){
 
             if(ownprofile){
                 var button = document.createElement('button');
-                button.appendChild(document.createTextNode('Choose'));
+                button.appendChild(document.createTextNode('PICK'));
                 button.classList.add('checkinbutton');
                 button.addEventListener("click", function(){
                     manageStartingEleven(button.parentElement.id, nextgame, button);
@@ -1247,4 +1247,38 @@ function tutorialProfiles() {
 
 
     }
+}
+
+function openFeedback(){
+    $('#feedbackoverlay').fadeIn('slow');
+    $('#feedbackoverlaycontent').fadeIn('slow');
+    $('#feedbackoverlaycross').fadeIn('slow');
+    $('#feedbackoverlaysubmit').fadeIn('slow');
+
+    var feedbacksubmit = document.getElementById('feedbackoverlaysubmit');
+    var feedbacktext = document.getElementById('feedbacktext');
+
+    feedbacksubmit.addEventListener('click', function(){
+        firebase.database().ref('feedback/').push({
+                    feedback: feedbacktext.value,
+                    timestamp: Math.floor(Date.now() / 1000),
+                    uid: uid
+                });
+
+        setTimeout(function(){
+            document.getElementById('feedbackoverlaycontent').innerHTML = 'Your comment was submitted! Thank you.';
+            $('#feedbackoverlaysubmit').fadeOut('slow');
+        }, 300);
+
+        });
+
+
+}
+
+function closeFeedback(){
+    $('#feedbackoverlay').fadeOut('slow');
+    $('#feedbackoverlaycontent').fadeOut('slow');
+    $('#feedbackoverlaycross').fadeOut('slow');
+    $('#feedbackoverlaysubmit').fadeOut('slow');
+
 }

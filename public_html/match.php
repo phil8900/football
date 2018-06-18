@@ -3,6 +3,7 @@
     <?php include 'includes/header.php';?>
     <script src="js/match.js"></script>
     <script src="js/ranking.js"></script>
+    <script src="js/location.js"></script>
     <script src="js/home.js"></script>
     <script src="js/profiles.js"></script>
     <script src="js/matches.js"></script>
@@ -65,12 +66,13 @@
 </div>
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
-    <div class="firstsubtopnavmatchinteraction">
+    <div id="firstsubtopnavmatchinteraction">
         <div class="menu-icon">
             <a href="matches.php"><img src="img/back.png"></a>
         </div>
-        <div class="menu-title">VIRTUAL STADIUM</div>
+        <div class="menu-title" onclick="overlayOff();">VIRTUAL STADIUM</div>
     </div>
+    <div id="onmatchcheckin">Check-in</div>
 </div>
 
 <!--
@@ -83,7 +85,13 @@
 		<h2>My Matches</h2>
 
 		-->
+<div id='overlay' class="overlay animated fadeIn" style="padding-top: 40px;">
+    <input id="pac-input" class="controls" type="text" placeholder="Search location...">
 
+    <div id="map"></div>
+    <div id="results"></div>
+    <div id="placesresult" style="display:none;"></div>
+</div>
 
 <div class="matchinteractionheader">
 
