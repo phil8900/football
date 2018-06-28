@@ -7,6 +7,7 @@
 
 <?php
 $rss = new DOMDocument();
+$rss->encoding = 'utf-8';
 $rss->load('http://www.espnfc.com/fifa-world-cup/4/rss');
 
 
@@ -22,7 +23,7 @@ foreach ($rss->getElementsByTagName('item') as $node) {
 }
 
 $limit = 20;
-for($x=0;$x<$limit;$x++) {
+for($x=0; $x<$limit && $x<count($feed) ;$x++) {
 	$title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
 	$link = $feed[$x]['link'];
 	$description = $feed[$x]['desc'];
@@ -39,7 +40,7 @@ for($x=0;$x<$limit;$x++) {
 ?>
 
 
-<body onload="tutorialHome()">
+<body onload="tutorialHome();initHome()">
 <!-- The surrounding HTML is left untouched by FirebaseUI.
      Your app may use that space for branding, controls and other customizations.-->
 

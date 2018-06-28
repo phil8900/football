@@ -31,7 +31,7 @@ function redirect(){
       }
 			else{
         if(ownteam > -1){
-        window.location = "home.php";
+        window.location = "matches.php";
         }
         else{
           window.location = "teamselect.php";
