@@ -1978,6 +1978,10 @@ function manageTimestamps () {
             console.log(timestamp);
             console.log(date < timestamp + 1200);
 
+            if (livegame == false){
+                console.log('game has not started');
+            }
+
             if ((date > timestamp - 3600) && (date < timestamp )) {
                 console.log('pre match');
 

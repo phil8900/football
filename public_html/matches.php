@@ -41,7 +41,7 @@
 
 <div id="topNav" class="col-xs-12 navbar-inverse navbar-fixed-top">
 	<div class="firstsubtopnav" id="firstsubtopnav">
-		<div class="menu-title" onclick="overlayOff();">CALENDAR</div>
+		<div class="menu-title" onclick="overlayOff();">ENTER STADIUM</div>
 	</div>
 </div>
 

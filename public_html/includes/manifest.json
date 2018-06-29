@@ -1,7 +1,7 @@
 {
   "name": "LoudStand",
   "short_name": "LoudStand",
-  "start_url": "https://loudstandbeta.com/home.php",
+  "start_url": "https://loudstandbeta.com/matches.php",
   "display": "standalone",
   "background_color": "#f6f6f6",
   "description": "Bringing football back to fans",
