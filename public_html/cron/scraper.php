@@ -138,6 +138,11 @@ function getAlternativeTeamInformation($teamurl) {
 	$sel = '.dataHeader.dataExtended.nationalmannschaft.wm18';
 	$table = getElementForSelector($teamurl, $sel);
 
+	if ($table == null) {
+		$sel = '.dataHeader.dataExtended.nationalmannschaft';
+		$table = getElementForSelector($teamurl, $sel);
+	}
+
 	$teamname = trim($table->find('.dataMain .dataTop .dataName b'));
 
 	$coachtable = getElementForSelector($teamurl, '.mitarbeiterVereinSlider .container-inhalt');
@@ -302,10 +307,9 @@ function getCurrentMinute($gameid) {
 
 		if ($doc->find('.live-spielminute-header') != '') {
 			$minute = strip_tags(trim(str_replace('Minute', '', $doc->find('.live-spielminute-header'))));
-			if($minute == ''){
+			if ($minute == '') {
 				return 'notlive';
-			}
-			else{
+			} else {
 				return $minute;
 			}
 		}
